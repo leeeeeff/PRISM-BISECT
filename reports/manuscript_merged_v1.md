@@ -31,10 +31,9 @@ Tool), a twelve-module pipeline that applies Pfam domain annotation, AlphaFold/E
 confidence, STRING PPI network validation, and UCSC phyloP 100-vertebrate evolutionary conservation
 to 53 candidate pairs. Of 26 Stage 2 domain-change cases, 13 (50%) received STRING experimental
 PPI support, with marked cell-type stratification (inhibitory neurons 5/7, 71%). Three Tier A
-candidates — KIF21B (kinesin motor → WD40 β-propeller gain-of-fold), PTPRF (phosphatase →
-dominant-negative Liprin-α scaffold), and FANCA (DNA repair complex loss, AD exon phyloP = −0.493)
-— illustrate distinct modes of functional identity reprogramming with convergent multi-evidence
-support. Together, DIFFUSE and BISECT establish a sequence-first, tissue-agnostic framework for
+candidates — KIF21B (kinesin motor → WD40 β-propeller gain-of-fold), NDUFS4 (TSS co-option
+displacing Complex I subunit by a 379 aa novel NNIC isoform), and DLG1 (NIC/NNIC-based OPC
+isoform state transition) — represent novel-sequence switches with complete multi-evidence support. Together, DIFFUSE and BISECT establish a sequence-first, tissue-agnostic framework for
 isoform-resolution functional prediction and evidence-integrated biological characterisation of
 disease isoform switches.
 
@@ -115,9 +114,10 @@ We demonstrate that DIFFUSE achieves mean AUPRC of 0.685 across 11 Type-B sarcop
 and applied zero-shot to 63,994 brain isoforms from the Samsung AD cohort, integrates with DTU
 testing to identify three Alzheimer's-disease-specific isoform switches. BISECT applied to
 53 candidate pairs identifies 26 with domain-level structural changes, of which 13/26 (50%)
-receive STRING experimental PPI support. Three Tier A candidates — KIF21B, PTPRF, and FANCA —
-collectively illustrate distinct modes of functional identity reprogramming with convergent
-structural, interactomic, and evolutionary evidence.
+receive STRING experimental PPI support. Three Tier A candidates — KIF21B, NDUFS4, and DLG1 —
+represent novel-sequence isoform switches with complete multi-evidence support; the two most
+mechanistically detailed Tier B cases, PTPRF and FANCA, further demonstrate evidence-based
+hypothesis revision and DNA repair pathway disruption.
 
 ---
 
@@ -650,7 +650,7 @@ negative phyloP: FANCA (−0.493), BSG (−0.473), IFI16 (−0.089) — all acce
 
 #### 3.8.3 Tier A: Functionally reprogrammed isoforms with complete multi-evidence support
 
-Three cases received Tier A classification: KIF21B, PTPRF, and FANCA.
+Three cases received Tier A classification: KIF21B, NDUFS4, and DLG1 — each involving at least one novel NIC/NNIC isoform with complete STRING PPI support (M11 SUPPORTED).
 
 *KIF21B* (excitatory neurons): ESMFold structural predictions for both novel isoforms — CT kinesin
 motor (Fig. 2a) (aa 1–380; pLDDT = 93.2) and AD WD40 β-propeller core (aa 370–620; pLDDT = 94.6) — both
@@ -660,44 +660,18 @@ complement links to TRIM3 (765), STK36 (691), SMO (694) — non-canonical kinesi
 exon sets show very high conservation (AD phyloP = 4.067; CT phyloP = 3.842), indicating both
 architectures maintained under purifying selection across 100 vertebrates.
 
-*PTPRF* (Fig. 2b) (inhibitory neurons): Domain-level pLDDT from canonical AlphaFold model (UniProt P10586)
-reveals CT isoform retains phosphatase catalytic domains (Y_phosphatase pLDDT = 72.3; DSPc = 78.6)
-absent from AD isoform, which contains only extracellular Ig-fold modules (pLDDT = 84–87).
-STRING: PPFIA1 = 997, PPFIA3 = 996, CTNNB1 = 982. M11 contradicted the initial SLIT2 decoy hypothesis (STRING score = 0 for SLIT2–PTPRF) and revised the model to Liprin-α dominant-negative: AD isoform
-sequesters synaptic scaffold partners without phosphatase output. CT PTP exons more conserved
-(phyloP = 4.341) than AD Ig exons (2.835), consistent with ancestral phosphatase-active isoform
-under stronger purifying selection.
+*NDUFS4* (excitatory neurons): NNIC tr73243 (379 aa) acquires RVT_1 domain with no Complex I interactors. CT isoform (UniProt O43181, pLDDT = 84.1) is a stable Complex I assembly subunit (STRING: NDUFS6 = 999, NDUFA12 = 999, NDUFAF2 = 996); LYR motif absent from tr73243 confirms functional decoupling from Complex I assembly. AD RVT_1 exons: mean phyloP = 2.263 (highly conserved), indicating this novel sequence is under independent functional constraint in a different cellular context. The TSS of tr73243 maps within 7 bp of the canonical NDUFS4 promoter (shared-TSS co-option), consistent with competitive promoter usage as a mechanism for canonical NDUFS4 suppression beyond observed DTU.
 
-*FANCA* (excitatory neurons): AD isoform (297 aa) loses Fanconi_A domain required for core complex
-scaffolding. STRING: FANCF = 999, FANCC = 999, FANCE = 999, BRCA1 = 995, UBE2T = 998 — entire
-Fanconi Anemia repair complex confirmed for CT isoform. Decisive M12 evidence: CT exons (33 exons)
-mean phyloP = 1.321; AD exon = −0.493 (only negative phyloP in the panel), indicating accelerated
-evolution inconsistent with functional constraint; this is consistent with the AD-specific exon being
-under relaxed purifying selection, but does not by itself establish a pathomechanism. The primary
-functional consequence supported by the multi-evidence data is selective suppression of DNA
-interstrand crosslink repair in AD excitatory neurons. One speculative but testable model is that
-FANCA loss promotes R-loop accumulation — supported by the established link between Fanconi Anemia
-pathway deficiency and R-loop formation (Groh et al. 2014; Walker et al. 2021) — which in turn
-activates ATM-mediated DNA damage signalling. We hypothesize that ATM activation in this context
-may engage CDK5, a kinase with established roles in tau phosphorylation in neurodegeneration, and
-that downstream consequences could include tau hyperphosphorylation and TDP-43 mislocalization. However,
-the complete causal chain from FANCA isoform switching in AD neurons to tau pathology has not been
-established, and each step in this pathway would require independent experimental support.
-Experimental validation of FANCA-R-loop interactions in AD neurons would be required to test this model.
+*DLG1* (OPC): CT-specific NNIC tr319500 (187 aa) declines from 80.9% CT OPC usage to 11.9% in AD (p = 9.03×10⁻¹⁰). AlphaFold (Q12959, pLDDT = 73.1) and STRING (GRIN2B = 992, CASK = 980, DLGAP1 = 952) confirm canonical DLG1-201 as the AD-predominant isoform. CT-specific exons mean phyloP = 2.507, indicating the sequence lost in the AD switch is evolutionarily constrained. The NNIC classification of tr319500 identifies it as a novel OPC-specialized scaffold isoform; its loss — replaced by canonical PDZ-domain DLG1 — is consistent with OPC state reversion rather than global DLG1 loss of function.
 
 #### 3.8.4 Tier B: Domain-loss isoforms with consistent functional predictions
 
-Five candidates — NDUFS4, DLG1, IFT122, SYNE1, RGS3 — were classified Tier B on the basis of
-consistent M11 support plus mechanistically coherent domain-loss narratives.
+Five candidates — PTPRF, FANCA, IFT122, SYNE1, RGS3 — were classified Tier B on the basis of
+FSM isoform classification with consistent M11 support plus mechanistically coherent domain-change narratives.
 
-*NDUFS4*: CT isoform (UniProt O43181, pLDDT = 84.1) is a stable Complex I assembly subunit
-(STRING: NDUFS6 = 999, NDUFA12 = 999, NDUFAF2 = 996). AD isoform acquires RVT_1 domain with no
-Complex I interactors. AD RVT_1 exons: mean phyloP = 2.263 (highly conserved), suggesting this
-sequence performs a constrained function in a different context.
+*PTPRF* (Fig. 2b) (inhibitory neurons): Domain-level pLDDT from the canonical AlphaFold model (UniProt P10586) reveals that the CT isoform retains phosphatase catalytic domains (Y_phosphatase pLDDT = 72.3; DSPc = 78.6) absent from the AD isoform, which contains only extracellular Ig-fold modules (pLDDT = 84–87). STRING: PPFIA1 = 997, PPFIA3 = 996, CTNNB1 = 982. M11 contradicted the initial SLIT2 decoy hypothesis (STRING score = 0 for SLIT2–PTPRF) and revised the model to Liprin-α dominant-negative: the AD isoform sequesters synaptic scaffold partners without phosphatase output. CT PTP exons more conserved (phyloP = 4.341) than AD Ig exons (2.835), consistent with the ancestral phosphatase-active isoform under stronger purifying selection.
 
-*DLG1*: AD isoform (Q12959, pLDDT = 73.1) confirmed by STRING (GRIN2B = 992, CASK = 980,
-DLGAP1 = 952). CT-specific exons: mean phyloP = 2.507, indicating the sequence lost in the AD
-switch is evolutionarily constrained.
+*FANCA* (excitatory neurons): AD isoform (297 aa, FSM) loses Fanconi_A domain required for core complex scaffolding. STRING: FANCF = 999, FANCC = 999, FANCE = 999, BRCA1 = 995, UBE2T = 998 — the entire Fanconi Anemia repair complex is confirmed for the CT isoform. M12 evidence: CT exons (33 exons) mean phyloP = 1.321; AD exon = −0.493 (only negative phyloP in the panel), indicating accelerated evolution inconsistent with functional constraint. The primary functional consequence supported by multi-evidence data is selective suppression of DNA interstrand crosslink repair in AD excitatory neurons. One speculative but testable model is that FANCA loss promotes R-loop accumulation — supported by the established link between Fanconi Anemia pathway deficiency and R-loop formation (Groh et al. 2014; Walker et al. 2021) — which in turn activates ATM-mediated DNA damage signalling. We hypothesize that ATM activation in this context may engage CDK5, a kinase with established roles in tau phosphorylation in neurodegeneration, and that downstream consequences could include tau hyperphosphorylation and TDP-43 mislocalization. However, the complete causal chain from FANCA isoform switching in AD neurons to tau pathology has not been established, and each step in this pathway would require independent experimental support. Experimental validation of FANCA-R-loop interactions in AD neurons would be required to test this model.
 
 *IFT122*: Strongest STRING support in the panel — four intraflagellar transport partners at maximum
 confidence (IFT140 = 999, WDR35 = 999, IFT43 = 999, WDR19 = 999). Both AD-specific (phyloP = 4.826)
@@ -954,12 +928,12 @@ score for all 26 Stage 2 PASS cases, coloured by M11 verdict. Tier A cases annot
 
 **Figure 2 | Domain architecture changes at Tier A isoform switches.** Scaled protein domain maps
 for three Tier A candidates. Top track: CT-predominant isoform; bottom track: AD-predominant
-isoform. Domain blocks coloured by Pfam family (Kinesin in teal, WD40 in green, Y_phosphatase
-in orange, Ig-folds in blue, Fanconi_A in red). Novel junctions indicated by dashed borders.
-*(a)* KIF21B: 419-aa CT kinesin motor fragment vs 711-aa AD WD40 β-propeller. *(b)* PTPRF:
-CT retains Y_phosphatase + DSPc catalytic apparatus (orange); AD isoform retains only extracellular
-Ig-fold modules (blue). *(c)* FANCA: CT 1455-aa Fanconi_A domain-bearing isoform vs AD 297-aa
-truncation.
+isoform. Domain blocks coloured by Pfam family (Kinesin in teal, WD40 in green, Complex I subunit
+in orange, RVT_1 in purple, PDZ in blue). Novel junctions indicated by dashed borders.
+*(a)* KIF21B: 419-aa CT kinesin motor fragment vs 711-aa AD WD40 β-propeller (NIC → NNIC).
+*(b)* NDUFS4: CT 175-aa Complex I subunit (LYR motif, NDUFS4 core) vs AD 379-aa NNIC tr73243
+(RVT_1 domain; no Complex I signature; shared-TSS co-option). *(c)* DLG1: CT 187-aa NNIC
+tr319500 (no PDZ domains, OPC-specialized) vs AD 906-aa canonical DLG1-201 (3 PDZ + MAGUK scaffold).
 
 ### Figure 3 — Multi-evidence heatmap (26-case BISECT panel)
 
