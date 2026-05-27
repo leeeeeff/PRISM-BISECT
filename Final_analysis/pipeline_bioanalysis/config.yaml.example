@@ -1,0 +1,147 @@
+# BISECT config.yaml.example
+# ============================================================
+# Copy this file to config.yaml and replace all /PATH/TO/...
+# entries with your local paths.
+#
+#   cp config.yaml.example config.yaml
+#   # then edit config.yaml
+# ============================================================
+
+# BISECT Configuration (Biological Isoform-Switch Evidence Characterization Tool)
+# ==========================================================================
+
+# --- Paths ---
+paths:
+  brain_faa: /PATH/TO/sqanti3_output/isoforms_corrected.faa
+  brain_gtf: /PATH/TO/sqanti3_output/isoforms_corrected.gtf
+  brain_classification: /PATH/TO/sqanti3_output/isoforms_classification.txt
+  brain_pep: /PATH/TO/sqanti3_output/TD2/isoforms_corrected.fasta.TD2.pep
+  muscle_faa: /PATH/TO/muscle_transdecoder.pep
+  pfam_db: /PATH/TO/pfam_db/Pfam-A.hmm
+  hmmscan_bin: hmmscan
+  output_dir: ./outputs
+
+# --- Stage 1 Filter (DIFFUSE + DTU) ---
+stage1:
+  min_abs_diffuse_delta: 0.5      # |DIFFUSE score CT - AD| threshold
+  max_dtu_pvalue: 1.0e-5          # DTU Dirichlet-multinomial p-value threshold (Bonferroni-adj)
+
+# --- Stage 2 Filter (Domain Change) ---
+stage2:
+  require_domain_change: true     # At least one domain gained/lost between CT and AD isoform
+  min_domain_evalue: 0.01         # Pfam hit E-value cutoff
+  domain_filter_mode: strict      # strict: Pfam ID set diff | relaxed: coverage diff
+  domain_coverage_diff: 0.2       # relaxed mode: flag if domain coverage changes by > 20%
+
+# --- Motif Definitions ---
+motifs:
+  mts:
+    min_net_charge_30aa: 2        # K+R - D+E in first 30aa >= 2
+    max_de_40aa: 3                # D+E count in first 40aa <= 3
+    min_hydrophobic_moment: 0.12  # Eisenberg μH >= 0.12
+    hhh_window: 30                # Search HHH in first N aa
+  functional:
+    kinesin_ploop: "GxGxxGKT"    # ATP binding
+    kinesin_switch1: "SSRSHA"
+    kinesin_switch2: "DxxG"
+    pdz_glgf: ["GLGF", "GVGF", "GMGF"]
+    lyr_motif: "LYR"
+    wd40_motif: "WD"
+    coiled_coil_heptad: "LxxLxxL"
+
+# --- RepeatMasker ---
+repeatmasker:
+  ucsc_api: "https://api.genome.ucsc.edu/getData/track"
+  genome: hg38
+  track: rmsk
+  window_extend: 5000             # bp to extend around exon boundaries
+  young_l1_max_div: 15.0          # % divergence threshold for "young" L1
+  target_classes: ["LINE", "SINE", "LTR", "DNA"]
+
+repeatmasker_api:
+  rate_limit_delay: 1.0           # seconds between API calls (avoid throttling)
+
+# --- M10: AlphaFold Structural Confidence ---
+alphafold:
+  db_url: "https://alphafold.ebi.ac.uk/api/prediction"
+  esmfold_url: "https://esmatlas.com/api/fold"
+  # NOTE: Local ESMFold v1 requires openfold (CUDA build).
+  # Install: pip install git+https://github.com/aqlaboratory/openfold.git
+  # Until installed, novel junctions fall back to ESMAtlas API (rate-limited).
+  uniprot_lookup_url: "https://rest.uniprot.org/uniprotkb/search"
+  timeout: 120                     # ESMFold can be slow
+  rate_delay: 2.0                  # seconds between CT and AD API calls
+  plddt_high_threshold: 70.0       # above = structurally confident
+  plddt_very_high_threshold: 90.0  # above = crystal-quality confidence
+
+# --- M11: PPI Network Validation ---
+string_db:
+  url: "https://string-db.org/api/json/interaction_partners"
+  species: 9606                    # Homo sapiens
+  limit: 50                        # top N partners to retrieve
+  min_score: 150                   # filter hits below this combined score (0-1000 scale)
+  rate_delay: 1.0                  # seconds between gene queries
+  high_score: 700                  # combined_score >= 700 → high confidence
+  medium_score: 400                # combined_score 400-700 → medium confidence
+  partner_hypotheses:
+    # KIF21B: AD isoform gains WD40/Nup160 (APC/C + nuclear pore) + known Hh pathway partners
+    KIF21B: ["TRIM3", "SMO", "STK36", "KIF21A", "ANAPC4", "NUP160", "RANBP2", "KIF1B"]
+    # PTPRF: LAR-RPTP / Liprin interaction (revised from decoy receptor hypothesis)
+    # STRING evidence: PPFIA1=997, PPFIA3=996, LRRC4B=982, CTNNB1=982
+    PTPRF:  ["PPFIA1", "PPFIA2", "PPFIA3", "PPFIA4", "LRRC4B", "CTNNB1", "PTPRD", "PTPRS"]
+    # NDUFS4: Complex I assembly; LYR motif mediates NDUFAF2 interaction
+    NDUFS4: ["NDUFAF2", "NDUFS6", "NDUFB9", "NDUFA12", "NDUFS1", "ACAD9", "ECSIT"]
+    # DLG1: PDZ-scaffold interactions at synapse
+    DLG1:   ["CASK", "SHANK3", "GRIN2B", "LIN7C", "MPP2", "DLGAP1", "BAIAP2"]
+    IFT122: ["IFT140", "WDR19", "IFT43", "TULP3", "WDR35", "IFT25", "CLUAP1"]
+    # FANCA: Fanconi Anemia core complex; AD isoform loses Fanconi_A domain
+    FANCA:  ["FANCF", "FANCC", "FANCE", "FANCG", "FANCL", "FANCM", "BRCA1", "BRCA2", "UBE2T"]
+    # SYNE1: LINC complex (nesprin-1); AD isoform loses Spectrin domain → nuclear envelope anchoring disruption
+    SYNE1:  ["SUN1", "SUN2", "EMD", "LMNA", "LMNB1", "VIM", "FLNB"]
+    # RGS3: Gα-GAP; AD isoform loses C2+PDZ domains; EFNB2/ephrin pathway (STRING top)
+    RGS3:   ["GNAI1", "GNAI2", "GNAI3", "GNAO1", "GNAQ", "EFNB2", "EFNB1", "GNA13"]
+    # ADGRB2: BAI3 adhesion GPCR; HRM domain gained in AD; nuclear transport pathway (STRING)
+    ADGRB2: ["RANBP2", "MAGI1", "DOCK1", "C1QTNF4", "MEGF10", "ELMO1", "RAC1"]
+    # DMD: Dystrophin; AD isoform loses DAPC-anchoring domain in inhibitory neurons
+    # STRING evidence: DAG1=999, SNTA1=999, SNTB1=999, UTRN=999
+    DMD:    ["DAG1", "SNTA1", "SNTB1", "SNTG1", "UTRN", "DTNB", "NOS1", "SGCA", "SGCB"]
+    # SNTG1: Syntrophin-γ1; DAPC component; top STRING = DMD=992, UTRN=992
+    SNTG1:  ["DMD", "UTRN", "DAG1", "SNTA1", "SNTB1", "NOS1", "SSPN"]
+    # PTPRS: LAR-RPTP (astrocytes); parallel to PTPRF; STRING PPFIA1=985, LRRC4B=989
+    PTPRS:  ["PPFIA1", "PPFIA2", "PPFIA3", "LRRC4B", "NTRK3", "SLITRK1", "CTNNB1"]
+    # BSG: CD147/Basigin; oligodendrocyte MCT1 regulator; AD isoform loses Ig domains
+    # STRING: SLC16A1=999, SLC16A3=999 (MCT1/4 lactate transporters)
+    BSG:    ["SLC16A1", "SLC16A3", "SLC16A8", "MMP2", "MMP9", "PPIA", "CD44"]
+
+# --- M12: Evolutionary Conservation ---
+conservation:
+  track: "phyloP100way"            # UCSC 100-vertebrate phyloP
+  ucsc_api: "https://api.genome.ucsc.edu/getData/track"
+  genome: "hg38"
+  high_threshold: 1.5              # mean phyloP >= 1.5 → highly_conserved
+  conserved_threshold: 0.5         # mean phyloP 0.5-1.5 → conserved
+  background_intron_samples: 5     # intronic windows for background estimate
+  rate_delay: 0.5                  # seconds between UCSC API calls
+
+# --- Figure ---
+figure:
+  width_per_100aa: 1.0            # inches per 100 aa
+  min_width: 8
+  max_width: 20
+  domain_colors:
+    L27_1: "#E74C3C"
+    MAGUK_N_PEST: "#E67E22"
+    PDZ: "#3498DB"
+    SH3: "#9B59B6"
+    GK: "#1ABC9C"
+    Pkinase: "#F39C12"
+    RVT_1: "#C0392B"
+    WD40: "#2ECC71"
+    Kinesin: "#16A085"
+    Coiled_coil: "#7F8C8D"
+    default: "#BDC3C7"
+  repeat_colors:
+    LINE: "#E74C3C"
+    SINE: "#3498DB"
+    LTR: "#2ECC71"
+    DNA: "#F39C12"

@@ -1,0 +1,76 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Environment ---
+*.env
+.env
+.venv/
+venv/
+
+# --- Data (large / sensitive) ---
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.pickle
+*.faa
+*.fasta
+*.fa
+*.gtf
+*.gff
+*.bam
+*.sam
+*.vcf
+*.bed
+
+# --- DIFFUSE: model checkpoints and training data ---
+hMuscle/data/
+hMuscle/saved_models/
+*.safetensors
+
+# --- BISECT: local configuration (contains absolute paths) ---
+Final_analysis/pipeline_bioanalysis/config.yaml
+
+# --- BISECT: pipeline run outputs ---
+Final_analysis/pipeline_bioanalysis/outputs/
+Final_analysis/pipeline_bioanalysis/logs/
+
+# --- R figure outputs ---
+*.pdf
+*.png
+Rplots.pdf
+
+# --- Logs ---
+*.log
+*.out
+logs_isoform/
+nohup.out
+
+# --- Claude / local config ---
+CLAUDE.local.md
+.claude/settings.local.json
+cloudflared
+tunnel.log
+web/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# --- Temporary ---
+temp_*.npy
+tmp/

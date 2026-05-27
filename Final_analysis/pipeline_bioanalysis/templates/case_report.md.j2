@@ -1,0 +1,284 @@
+# {{ meta.gene }} — {{ meta.cell_type }} Isoform Switching Analysis
+
+**Generated**: {{ meta.analysis_date }} | BISECT v{{ meta.pipeline_version }}
+
+---
+
+## Key Statistics
+
+| Parameter | Value |
+|-----------|-------|
+| Gene | {{ meta.gene }} |
+| Cell type | {{ meta.cell_type }} |
+| CT isoform | {{ meta.ct_transcript_id }} |
+| AD isoform | {{ meta.ad_transcript_id }} |
+| DIFFUSE Δ | {{ "%.3f"|format(stats.diffuse_delta) }} ({{ stats.direction }}) |
+| DTU p-value | {{ "%.2e"|format(stats.dtu_p) }} |
+| Priority | {{ stats.priority }} |
+| Domain change | {{ "YES" if domain_analysis.domain_change.has_domain_change else "NO" }} |
+
+---
+
+## Methods (draft)
+
+Differential transcript usage (DTU) analysis identified **{{ meta.gene }}** as showing
+significant isoform switching in **{{ meta.cell_type }}** cells
+(DIFFUSE Δ = {{ "%.3f"|format(stats.diffuse_delta) }}, DTU p = {{ "%.2e"|format(stats.dtu_p) }}).
+The AD-associated isoform ({{ meta.ad_transcript_id }}, {{ sequences.ad_length }} aa)
+was compared against the CT-predominant isoform ({{ meta.ct_transcript_id }},
+{{ sequences.ct_length }} aa; length difference: {{ sequences.length_diff }} aa).
+Protein domain annotation was performed using HMMER 3.3.2 hmmscan against
+Pfam-A (release 36.0; E-value threshold 0.01). Motif analysis employed Eisenberg
+hydrophobicity scale for MTS scoring (MitoFates criteria) and regex-based detection
+for LYR, HHH, and kinesin catalytic motifs. Genomic coordinates were extracted from
+SQANTI3 classification and GTF output. Repeat element annotation used the UCSC
+RepeatMasker REST API (hg38).
+
+---
+
+## Results (draft)
+
+### Domain Architecture
+
+**CT isoform** ({{ meta.ct_transcript_id }}, {{ sequences.ct_length }} aa):
+
+{% if domain_analysis.ct_domains %}
+| Domain | Position | E-value | Score |
+|--------|----------|---------|-------|
+{% for d in domain_analysis.ct_domains %}
+| {{ d.domain }} | aa {{ d.ali_from }}–{{ d.ali_to }} | {{ "%.1e"|format(d.evalue) }} | {{ "%.1f"|format(d.score) }} |
+{% endfor %}
+{% else %}
+*No Pfam domains detected (E < 0.01)*
+{% endif %}
+
+**AD isoform** ({{ meta.ad_transcript_id }}, {{ sequences.ad_length }} aa):
+
+{% if domain_analysis.ad_domains %}
+| Domain | Position | E-value | Score |
+|--------|----------|---------|-------|
+{% for d in domain_analysis.ad_domains %}
+| {{ d.domain }} | aa {{ d.ali_from }}–{{ d.ali_to }} | {{ "%.1e"|format(d.evalue) }} | {{ "%.1f"|format(d.score) }} |
+{% endfor %}
+{% else %}
+*No Pfam domains detected (E < 0.01)*
+{% endif %}
+
+### Domain Change Summary
+
+{% if domain_analysis.domain_change.domains_lost %}
+**Domains lost in AD**: {{ domain_analysis.domain_change.domains_lost | join(', ') }}
+{% else %}
+**Domains lost in AD**: None
+{% endif %}
+{% if domain_analysis.domain_change.domains_gained %}
+**Domains gained in AD**: {{ domain_analysis.domain_change.domains_gained | join(', ') }}
+{% else %}
+**Domains gained in AD**: None
+{% endif %}
+**Domains shared**: {{ domain_analysis.domain_change.domains_shared | join(', ') or 'None' }}
+
+### MTS Feature Analysis
+
+{% if motifs.ct_mts or motifs.ad_mts %}
+| Feature | CT isoform | AD isoform |
+|---------|------------|------------|
+| Net charge (first 30aa) | {{ motifs.ct_mts.net_charge_30aa if motifs.ct_mts else 'N/A' }} | {{ motifs.ad_mts.net_charge_30aa if motifs.ad_mts else 'N/A' }} |
+| D+E count (first 40aa) | {{ motifs.ct_mts.de_count_40aa if motifs.ct_mts else 'N/A' }} | {{ motifs.ad_mts.de_count_40aa if motifs.ad_mts else 'N/A' }} |
+| Hydrophobic moment | {{ motifs.ct_mts.hydrophobic_moment if motifs.ct_mts else 'N/A' }} | {{ motifs.ad_mts.hydrophobic_moment if motifs.ad_mts else 'N/A' }} |
+| MTS composite score | {{ motifs.ct_mts.composite_score if motifs.ct_mts else 'N/A' }}/5 | {{ motifs.ad_mts.composite_score if motifs.ad_mts else 'N/A' }}/5 |
+| HHH motif | {{ motifs.ct_mts.hhh_motif or 'ABSENT' if motifs.ct_mts else 'N/A' }} | {{ motifs.ad_mts.hhh_motif or 'ABSENT' if motifs.ad_mts else 'N/A' }} |
+| LYR motif | {{ motifs.ct_mts.lyr_motif or 'ABSENT' if motifs.ct_mts else 'N/A' }} | {{ motifs.ad_mts.lyr_motif or 'ABSENT' if motifs.ad_mts else 'N/A' }} |
+| MTS prediction | {{ motifs.ct_mts.prediction if motifs.ct_mts else 'N/A' }} | {{ motifs.ad_mts.prediction if motifs.ad_mts else 'N/A' }} |
+{% endif %}
+
+### Genomic Context
+
+{% if genomic.ad %}
+| Feature | AD isoform |
+|---------|------------|
+| Chromosome | {{ genomic.ad.chrom or 'N/A' }} |
+| Strand | {{ genomic.ad.strand or 'N/A' }} |
+| Structural category | {{ genomic.ad.structural_category or 'N/A' }} |
+| Exon count | {{ genomic.ad.exon_count or 'N/A' }} |
+| Genomic span | {{ "%.1f"|format(genomic.ad.get('genomic_span_kb') or 0) }} kb |
+{% if genomic.ad.is_nat %}
+| **NAT status** | **{{ genomic.ad.nat_relationship.description }}** |
+{% endif %}
+{% endif %}
+
+### Repeat Element Analysis
+
+{% if repeat_elements.ad %}
+{% if repeat_elements.ad.has_l1_in_cds %}
+**Young L1 elements in CDS detected:**
+
+{% for hit in repeat_elements.ad.cds_young_l1_hits %}
+- **{{ hit.name }}** ({{ hit.strand }} strand, {{ hit.pct_divergence }}% divergence, SW={{ hit.sw_score }}):
+  CDS overlap {{ hit.cds_overlap_bp }} bp
+{% endfor %}
+{% else %}
+*No young LINE-1 elements detected in CDS region.*
+{% endif %}
+
+Locus queried: `{{ repeat_elements.ad.locus_queried or '—' }}`
+Total repeat hits: {{ repeat_elements.ad.total_repeat_hits or 0 }}
+{% if repeat_elements.ad.summary %}(LINE: {{ repeat_elements.ad.summary.LINE }}, SINE: {{ repeat_elements.ad.summary.SINE }},
+LTR: {{ repeat_elements.ad.summary.LTR }}, DNA: {{ repeat_elements.ad.summary.DNA }}){% endif %}
+{% endif %}
+
+{% if nmd_screen %}
+### NMD Susceptibility (M9)
+
+**{{ nmd_screen.summary }}**
+
+| Isoform | Transcript | NMD susceptible | Distance to last EEJ | Source |
+|---------|-----------|-----------------|----------------------|--------|
+| CT | {{ meta.ct_transcript_id }} | {{ nmd_screen.ct.nmd_susceptible if nmd_screen.ct else '?' }} | {{ nmd_screen.ct.ptc_to_last_junction_nt if nmd_screen.ct else '—' }} nt | {{ nmd_screen.ct.source if nmd_screen.ct else '—' }} |
+| AD | {{ meta.ad_transcript_id }} | {{ nmd_screen.ad.nmd_susceptible if nmd_screen.ad else '?' }} | {{ nmd_screen.ad.ptc_to_last_junction_nt if nmd_screen.ad else '—' }} nt | {{ nmd_screen.ad.source if nmd_screen.ad else '—' }} |
+
+{% if nmd_screen.ct %}*CT conclusion*: {{ nmd_screen.ct.conclusion }}{% endif %}
+
+{% if nmd_screen.ad %}*AD conclusion*: {{ nmd_screen.ad.conclusion }}{% endif %}
+
+{% endif %}
+{% if seq_validation and not seq_validation.skipped %}
+### Genomic Sequence Validation (M8)
+
+**Conclusion**: {{ seq_validation.conclusion }}
+
+{% for elem in seq_validation.elements %}
+{% if not elem.get('error') %}
+**Element**: {{ elem.element }} (exon {{ elem.exon }}) — `{{ elem.coordinates }}`
+
+| Parameter | Value |
+|-----------|-------|
+| Divergence | {{ elem.pct_divergence }}% |
+| Query region | {{ elem.query_region }} ({{ elem.query_length }} aa) |
+| DNA fetched | {{ elem.dna_fetched_bp }} bp |
+| Best frame | {{ elem.best_6frame.frame_id }} |
+| SW score | {{ "%.0f"|format(elem.best_6frame.score) }} |
+| % Identity | {{ "%.1f"|format(elem.best_6frame.pct_identity) }}% |
+| Coverage | {{ "%.1f"|format(elem.best_6frame.coverage) }}% |
+| n identical | {{ elem.best_6frame.n_identical }}/{{ elem.best_6frame.n_aligned }} aa |
+
+{% if elem.best_6frame.q_aligned_preview %}
+```
+Query : {{ elem.best_6frame.q_aligned_preview }}
+L1ORF : {{ elem.best_6frame.t_aligned_preview }}
+```
+{% endif %}
+{% if elem.cds_frame_alignment %}
+*CDS-frame alignment*: frame {{ elem.cds_frame_alignment.frame_id }}, score={{ "%.0f"|format(elem.cds_frame_alignment.score) }}, identity={{ "%.1f"|format(elem.cds_frame_alignment.pct_identity) }}%
+{% endif %}
+{% else %}
+**Element**: {{ elem.element }} — {{ elem.error }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+---
+
+{% if alphafold and not alphafold.get('error') %}
+## AlphaFold Structural Confidence (M10)
+
+| | CT isoform | AD isoform |
+|--|-----------|-----------|
+| Source | {{ alphafold.ct.source or '—' }} | {{ alphafold.ad.source or '—' }} |
+| UniProt | {{ alphafold.ct.uniprot_id or '—' }} | {{ alphafold.ad.uniprot_id or '—' }} |
+| Mean pLDDT | {{ alphafold.ct.plddt_mean or '—' }} | {{ alphafold.ad.plddt_mean or '—' }} |
+| Fraction >70 | {{ "%.0f"|format((alphafold.ct.plddt_high_fraction or 0)*100) }}% | {{ "%.0f"|format((alphafold.ad.plddt_high_fraction or 0)*100) }}% |
+
+{% set all_doms = (alphafold.ct.domain_plddt.keys() | list) + (alphafold.ad.domain_plddt.keys() | list) %}
+{% if all_doms %}
+**Per-domain pLDDT:**
+
+| Domain | CT pLDDT | CT conf | AD pLDDT | AD conf |
+|--------|----------|---------|----------|---------|
+{% for dom in all_doms | unique %}
+| {{ dom }} | {{ alphafold.ct.domain_plddt.get(dom, {}).get('mean', '—') }} | {{ alphafold.ct.domain_plddt.get(dom, {}).get('confidence', '—') }} | {{ alphafold.ad.domain_plddt.get(dom, {}).get('mean', '—') }} | {{ alphafold.ad.domain_plddt.get(dom, {}).get('confidence', '—') }} |
+{% endfor %}
+{% endif %}
+
+> {{ alphafold.comparison.interpretation }}
+
+{% endif %}
+{% if ppi and not ppi.get('error') %}
+## PPI Network Validation (M11) {% if ppi.summary_verdict == 'SUPPORTED' %}✅{% elif ppi.summary_verdict == 'PARTIAL' %}⚠️{% else %}❌{% endif %}
+
+**Verdict**: {{ ppi.summary_verdict }}
+
+**Interpretation**: {{ ppi.interpretation }}
+
+{% if ppi.hypothesis_support %}
+**Hypothesis partner support:**
+
+| Partner | Score | Confidence | Evidence |
+|---------|-------|-----------|---------|
+{% for partner, info in ppi.hypothesis_support.items() %}
+| {{ partner }} | {{ info.combined_score }} | {{ info.confidence }} | {{ info.evidence_types | join(', ') or 'none' }} |
+{% endfor %}
+{% endif %}
+
+{% if ppi.string_hits %}
+**Top STRING partners:**
+
+| Partner | Score | Exp score | Evidence |
+|---------|-------|-----------|---------|
+{% for h in ppi.string_hits[:5] %}
+| {{ h.partner }} | {{ h.combined_score }} | {{ h.experimental_score }} | {{ h.evidence_types | join(', ') }} |
+{% endfor %}
+{% endif %}
+
+{% if ppi.domain_interaction_link and ppi.domain_interaction_link.domain_links %}
+**Domain–interaction links:**
+{% for link in ppi.domain_interaction_link.domain_links %}
+- **{{ link.domain }}** ({{ link.change }}): {{ link.interaction_role }}
+{% endfor %}
+{% endif %}
+
+{% endif %}
+{% if conservation and not conservation.get('error') %}
+## Evolutionary Conservation (M12)
+
+**Track**: {{ conservation.track }} | **Genome**: {{ conservation.genome }}
+
+| Region | N exons | Mean phyloP | Class |
+|--------|---------|-------------|-------|
+| AD-specific exons | {{ conservation.ad_specific_exons | length }} | {{ conservation.summary.ad_specific_mean_phyloP or '—' }} | {% if conservation.summary.ad_specific_mean_phyloP and conservation.summary.ad_specific_mean_phyloP >= 1.5 %}highly_conserved{% elif conservation.summary.ad_specific_mean_phyloP and conservation.summary.ad_specific_mean_phyloP >= 0.5 %}conserved{% else %}low{% endif %} |
+| CT-specific exons | {{ conservation.ct_specific_exons | length }} | {{ conservation.summary.ct_specific_mean_phyloP or '—' }} | {% if conservation.summary.ct_specific_mean_phyloP and conservation.summary.ct_specific_mean_phyloP >= 1.5 %}highly_conserved{% elif conservation.summary.ct_specific_mean_phyloP and conservation.summary.ct_specific_mean_phyloP >= 0.5 %}conserved{% else %}low{% endif %} |
+| Intronic background | {{ conservation.background.intronic_sample_n }} windows | {{ conservation.background.intronic_phyloP_mean or '—' }} | — |
+
+**Interpretation**: {{ conservation.summary.interpretation }}
+
+{% if conservation.ad_specific_exons %}
+**Top conserved AD-specific exons:**
+
+| Exon | Coords | phyloP | Class | Domain |
+|------|--------|--------|-------|--------|
+{% for e in conservation.ad_specific_exons[:3] %}
+| {{ e.rank }} | {{ e.chrom }}:{{ e.start }}-{{ e.end }} | {{ e.phyloP_mean or '—' }} | {{ e.conservation_class }} | {{ e.domain_overlap or '—' }} |
+{% endfor %}
+{% endif %}
+
+{% endif %}
+---
+
+## Figure
+
+![Domain Map](domain_map.png)
+
+---
+
+### Functional Implications
+
+<!-- TODO: Manual annotation required -->
+<!-- Key questions to address:
+     1. What is the biological consequence of {{ domain_analysis.domain_change.domains_lost | join('+') or 'domain changes' }}?
+     2. Does the AD isoform act as dominant-negative, loss-of-function, or gain-of-function?
+     3. Cell-type restriction mechanism?
+-->
+
+---
+
+*Generated by BISECT v{{ meta.pipeline_version }}*
