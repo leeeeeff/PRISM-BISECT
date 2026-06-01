@@ -1,0 +1,134 @@
+# hmmscan :: search sequence(s) against a profile database
+# HMMER 3.3.2 (Nov 2020); http://hmmer.org/
+# Copyright (C) 2020 Howard Hughes Medical Institute.
+# Freely distributed under the BSD open source license.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query sequence file:             /home/welcome1/sw1686/DIFFUSE/Final_analysis/08_biological_deepening/dlg1_domain/targets.faa
+# target HMM database:             /home/welcome1/sw1686/DIFFUSE/hMuscle/results_isoform/features/pfam_db/Pfam-A.hmm
+# per-dom hits tabular output:     /home/welcome1/sw1686/DIFFUSE/Final_analysis/08_biological_deepening/dlg1_domain/hmmscan_tblout.txt
+# profile reporting threshold:     E-value <= 0.01
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       tr319500_DLG1_OPC_CT  [L=186]
+Scores for complete sequence (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Model        Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------     -----------
+    3.7e-30  103.7   2.6    5.4e-30  103.2   2.6    1.2  1  L27_1         L27_1
+      9e-12   45.5   0.0      2e-11   44.4   0.0    1.7  1  MAGUK_N_PEST  Polyubiquitination (PEST) N-terminal domain of 
+    1.5e-06   28.8   0.1    1.5e-06   28.8   0.1    2.2  3  PDZ_assoc     PDZ-associated domain of NMDA receptors
+
+
+Domain annotation for each model (and alignments):
+>> L27_1  L27_1
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  103.2   2.6   7.8e-34   5.4e-30       1      58 [.       6      63 ..       6      64 .. 0.98
+
+  Alignments for each domain:
+  == domain 1  score: 103.2 bits;  conditional E-value: 7.8e-34
+                 L27_1  1 edaerAlelLeeyhakLsrpedeeLRtaiekvisiFksnLfqaLlDIqefYevTLlee 58
+                          +d++rAl+lLeey++kLs++ed++LR++ie+vi+iF+snLfqaL+DIqefYevTLl++
+  tr319500_DLG1_OPC_CT  6 QDTQRALHLLEEYRSKLSQTEDRQLRSSIERVINIFQSNLFQALIDIQEFYEVTLLDN 63
+                          79******************************************************97 PP
+
+>> MAGUK_N_PEST  Polyubiquitination (PEST) N-terminal domain of MAGUK
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !   44.4   0.0   2.9e-15     2e-11       1      38 [.     107     144 ..     107     171 .. 0.94
+
+  Alignments for each domain:
+  == domain 1  score: 44.4 bits;  conditional E-value: 2.9e-15
+          MAGUK_N_PEST   1 kyryqdedtppqehsspklaeeakspelvqvseknlsk 38 
+                           kyryqdedtppqeh sp++++e+ +pelv+vsekn+s 
+  tr319500_DLG1_OPC_CT 107 KYRYQDEDTPPQEHISPQITNEVIGPELVHVSEKNTSD 144
+                           8**********************************996 PP
+
+>> PDZ_assoc  PDZ-associated domain of NMDA receptors
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 ?   -1.2   0.4      0.49   3.4e+03      42      62 ..      93     114 ..      81     118 .. 0.58
+   2 ?   -2.6   0.0       1.4   9.8e+03      27      31 ..     120     124 ..     112     141 .. 0.62
+   3 !   28.8   0.1   2.2e-10   1.5e-06       1      21 [.     152     172 ..     152     176 .. 0.91
+
+  Alignments for each domain:
+  == domain 1  score: -1.2 bits;  conditional E-value: 0.49
+             PDZ_assoc  42 lppvspsrYSP.vpksllgedd 62 
+                            +++ ps+ SP v k   +++d
+  tr319500_DLG1_OPC_CT  93 TSETLPSSLSPsVEKYRYQDED 114
+                           4556677788733344445555 PP
+
+  == domain 2  score: -2.6 bits;  conditional E-value: 1.4
+             PDZ_assoc  27 hishs 31 
+                           his++
+  tr319500_DLG1_OPC_CT 120 HISPQ 124
+                           55543 PP
+
+  == domain 3  score: 28.8 bits;  conditional E-value: 2.2e-10
+             PDZ_assoc   1 KptsvflndsyaPPDitssys 21 
+                           Kpts+++nd yaPPDit+  s
+  tr319500_DLG1_OPC_CT 152 KPTSMYMNDGYAPPDITNCKS 172
+                           9****************9766 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query sequence(s):                         1  (186 residues searched)
+Target model(s):                       20795  (3450268 nodes)
+Passed MSV filter:                       734  (0.0352969); expected 415.9 (0.02)
+Passed bias filter:                      561  (0.0269776); expected 415.9 (0.02)
+Passed Vit filter:                        50  (0.00240442); expected 20.8 (0.001)
+Passed Fwd filter:                         4  (0.000192354); expected 0.2 (1e-05)
+Initial search space (Z):              20795  [actual number of targets]
+Domain search space  (domZ):               3  [number of targets reported over threshold]
+# CPU time: 0.63u 1.07s 00:00:01.70 Elapsed: 00:00:05.38
+# Mc/sec: 119.18
+//
+Query:       tr73243_NDUFS4_AD  [L=378]
+Scores for complete sequence (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Model    Description
+    ------- ------ -----    ------- ------ -----   ---- --  -------- -----------
+    6.6e-44  150.3   1.1    9.6e-44  149.7   1.1    1.2  1  RVT_1     Reverse transcriptase (RNA-dependent DNA polymerase
+
+
+Domain annotation for each model (and alignments):
+>> RVT_1  Reverse transcriptase (RNA-dependent DNA polymerase)
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  149.7   1.1   4.6e-48   9.6e-44       1     193 [.     141     366 ..     141     376 .. 0.95
+
+  Alignments for each domain:
+  == domain 1  score: 149.7 bits;  conditional E-value: 4.6e-48
+              RVT_1   1 ipKkg.....lgkyRpisllsvdykalnkiikkrLkpv.ekllsepqpgfrpgrstldav....eklvkalkklkkaklllklDlkkaFdsv 82 
+                        ipK+g     ++++Rpisl+++d+k+lnki+++r++++ +kl+++ q+gf pg + + ++    +++++ ++++ k+++++++D +kaFd++
+  tr73243_NDUFS4_AD 141 IPKPGrdttkKDNFRPISLMNIDVKILNKILANRIQQHiKKLIHHHQVGFIPGMQGWFNIcksiNVIQHVNRANDKNHMIISIDAEKAFDKI 232
+                        788888888889*******************************************99999**9999************************** PP
+
+              RVT_1  83 pldellrkltafkipek..eliksll.........ngee.egryewkglpqGlvlSPllfqlfmnellrelrkra..........gltllrY 152
+                        + ++ l++l +++i+ +  ++i+++          ng++ e ++ ++g++qG +lSPllf+++++ l r +r++           +++l+++
+  tr73243_NDUFS4_AD 233 QQHFMLKTLSKLGIDGTylKIIRAICdkptaniilNGQKlEAFPLKTGTRQGYPLSPLLFNIVLEVLVRAIRQEKeikgiqlgkeEVKLSLF 324
+                        ***************99999999999************88*********************************99***************** PP
+
+              RVT_1 153 aDDililsks.eeeleelleeveeflkesglkinpeKtkfvl 193
+                        aDD++++ ++    +++ll+ + +f k sg+kin +K++ +l
+  tr73243_NDUFS4_AD 325 ADDMIVYLENpIISAQNLLKLIGNFSKVSGYKINVQKSQSFL 366
+                        **********6666*************************986 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query sequence(s):                         1  (378 residues searched)
+Target model(s):                       20795  (3450268 nodes)
+Passed MSV filter:                       752  (0.0361625); expected 415.9 (0.02)
+Passed bias filter:                      522  (0.0251022); expected 415.9 (0.02)
+Passed Vit filter:                        29  (0.00139457); expected 20.8 (0.001)
+Passed Fwd filter:                         1  (4.80885e-05); expected 0.2 (1e-05)
+Initial search space (Z):              20795  [actual number of targets]
+Domain search space  (domZ):               1  [number of targets reported over threshold]
+# CPU time: 0.62u 0.39s 00:00:01.01 Elapsed: 00:00:01.79
+# Mc/sec: 727.38
+//
+[ok]

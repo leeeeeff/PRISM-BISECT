@@ -1,0 +1,10 @@
+Train Splicing Delta Statistics
+================================
+Total train isoforms:          31668
+NM_→ENST mapped:               31154 (98.4%)
+NM_→ENST unmapped (zero-filled):514 (1.6%)
+Exon matrix non-zero rows:     14499 (45.8%)
+Splicing delta non-zero rows:  11771 (37.2%)
+Matrix shape:                  (31668, 150)
+Mean |delta|:                  0.0089
+Max |delta|:                   1.0000

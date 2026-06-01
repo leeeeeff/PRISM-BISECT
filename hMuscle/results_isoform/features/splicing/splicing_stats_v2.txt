@@ -1,0 +1,12 @@
+Exon Matrix v2 Statistics
+========================
+Shape:               (36748, 150)
+Non-zero rows:       28486
+Value range:         [0.003, 1.000]
+Fractional values (0<x<1): 40251
+
+Splicing Delta v2 Statistics
+===========================
+Non-zero delta rows: 19160
+Mean |delta|:        0.0137
+Fractional deltas:   38322

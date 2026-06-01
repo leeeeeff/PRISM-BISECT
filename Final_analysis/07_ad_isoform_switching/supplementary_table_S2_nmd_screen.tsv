@@ -1,0 +1,7 @@
+Gene	Cell_type	Role	Transcript_ID	SQANTI3_structural_category	mRNA_length_nt	Exon_count	ORF_length_aa	SQANTI3_predicted_NMD	In_coding_nonNMD_set	NMD_source	NMD_conclusion	Isoform_switch_mechanism
+KIF21B	Excitatory	CT	transcript293004.chr1.nic	novel_in_catalog	2785	8	419	FALSE	YES	SQANTI3	NMD_ESCAPE	Domain replacement: Kinesin+Microtub_bd → WD40×15 in AD; NMD not involved
+KIF21B	Excitatory	AD	transcript292978.chr1.nnic	novel_not_in_catalog	2735	19	711	FALSE	YES	SQANTI3	NMD_ESCAPE	AD isoform (711 aa) is larger than CT (419 aa); both proteins are translated
+NDUFS4	Excitatory	CT	NDUFS4-201	reference_annotated	NA	9	119	NA (reference)	NA (reference)	reference_transcript	NMD_ESCAPE (assumed)	CT = canonical complex I subunit; reference transcript assumed NMD-exempt
+NDUFS4	Excitatory	AD	transcript73243.chr5.nnic	novel_not_in_catalog	2888	6	379	FALSE	YES	SQANTI3	NMD_ESCAPE	AD encodes L1PA11-derived RT domain (RVT_1); NAT hijacking mechanism; NMD not involved
+DLG1	OPC	CT	transcript319500.chr3.nnic	novel_not_in_catalog	3739	6	187	FALSE	YES	SQANTI3	NMD_ESCAPE	CT isoform (187 aa) lacks scaffold domains present in DLG1-201; both translated
+DLG1	OPC	AD	DLG1-201	reference_annotated	NA	27	926	NA (reference)	NA (reference)	reference_transcript	NMD_ESCAPE (assumed)	AD = canonical full-length DLG1 with PDZ×3+SH3+GK; reference transcript assumed NMD-exempt

@@ -90,6 +90,14 @@ Thumbs.db
 *.swp
 *~
 
+# --- Evaluation run outputs (per-run score files) ---
+hMuscle/results_isoform/GO_*/
+
+# --- Large reference databases (publicly downloadable, exceed GitHub 100MB limit) ---
+hMuscle/results_isoform/features/pfam_db/
+hMuscle/results_isoform/features/hpa_isoform/
+hMuscle/results_isoform/features/hmmscan_train.domtblout
+
 # --- Temporary ---
 temp_*.npy
 tmp/

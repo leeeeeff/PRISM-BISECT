@@ -1,0 +1,11 @@
+Exon Matrix Statistics
+======================
+Shape:             (36748, 50)
+Non-zero rows:     36634
+Max exons per row: 50
+Mean exons/row:    11.24
+
+Splicing Delta Statistics
+=========================
+Non-zero delta rows: 13706
+Mean |delta|:        0.0684
