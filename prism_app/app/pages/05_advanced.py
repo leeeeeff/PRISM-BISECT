@@ -34,6 +34,10 @@ with st.expander("📖 이 페이지 사용법", expanded=False):
 DEMO_DIR = Path(__file__).parents[2] / 'data' / 'demo'
 
 from prism_app.core.go_utils import TISSUE_PRESETS, GO_FULL_NAMES
+from prism_app.app.components.interpretation import render_data_context_banner
+
+cfg_main = st.session_state.get('cfg', {})
+render_data_context_banner(cfg_main)
 
 # ── Tab layout ────────────────────────────────────────────────────────────────
 tab_cross, tab_expr, tab_nmd = st.tabs([

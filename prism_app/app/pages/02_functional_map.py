@@ -13,6 +13,9 @@ from prism_app.visualization.umap_plot import (
 )
 from prism_app.visualization.heatmap import build_type_go_heatmap, build_go_cooccurrence_network
 from prism_app.visualization.scatter import build_within_gene_chart
+from prism_app.app.components.interpretation import (
+    render_data_context_banner, render_umap_interpretation, render_within_gene_interpretation,
+)
 
 st.set_page_config(page_title="Functional Map — PRISM", layout="wide")
 st.title("🗺️ Functional Map")
@@ -38,6 +41,8 @@ cfg = st.session_state.get('cfg', {})
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page."); st.stop()
+
+render_data_context_banner(cfg)
 
 ids    = cfg['isoform_ids']
 types  = cfg.get('isoform_types')
@@ -112,6 +117,7 @@ with tab_umap:
         "Each point = one isoform projected into 2D using its GO-score vector (UMAP, cosine distance). "
         "Isoforms with similar predicted functions cluster together."
     )
+    render_umap_interpretation(embed_method, n_total, len(sample_idx), color_by)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Tab 2: Type × GO Heatmap
@@ -155,6 +161,15 @@ with tab_gene:
                 chart_type=chart_type,
             )
         st.plotly_chart(fig_gene, use_container_width=True)
+        # Count isoforms for this gene
+        ids_arr = np.asarray(ids, dtype=str)
+        if genes is not None:
+            g_arr = np.asarray(genes, dtype=str)
+            n_gene_iso = int((g_arr == gene_input).sum())
+        else:
+            n_gene_iso = int(np.array([gene_input.lower() in i.lower() for i in ids_arr]).sum())
+        if n_gene_iso > 0:
+            render_within_gene_interpretation(gene_input, n_gene_iso)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Tab 4: GO Co-occurrence Network

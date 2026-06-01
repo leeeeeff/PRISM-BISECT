@@ -28,6 +28,7 @@ st.set_page_config(
 )
 
 from prism_app.app.components.sidebar import render_sidebar
+from prism_app.app.components.interpretation import render_onboarding_guide, render_data_context_banner
 
 if 'cfg' not in st.session_state:
     st.session_state.cfg = None
@@ -227,6 +228,7 @@ python hMuscle/model/v15d_bp_clean.py --predict \\
         """)
 
     st.info("👈 왼쪽 사이드바에서 **Demo** 또는 **Upload** 를 선택하면 분석이 시작됩니다.", icon="ℹ️")
+    render_onboarding_guide()
     st.stop()
 
 
@@ -240,6 +242,8 @@ n_go   = sm.shape[1]
 n_high = int((sm > thr).any(axis=1).sum())
 
 st.divider()
+render_data_context_banner(cfg)
+
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("로드된 아이소폼",       f"{n_iso:,}")
 col2.metric("GO 기능 패널",          f"{n_go}개")

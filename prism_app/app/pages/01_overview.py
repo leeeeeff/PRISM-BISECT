@@ -14,6 +14,13 @@ from prism_app.reports.coverage import generate_coverage_report
 from prism_app.reports.novel_summary import generate_novel_summary
 from prism_app.reports.validation import generate_validation_report
 from prism_app.core.classifier import classify_isoforms, scenario_summary
+from prism_app.app.components.interpretation import (
+    render_data_context_banner,
+    render_coverage_interpretation,
+    render_scenario_interpretation,
+    render_novel_interpretation,
+    render_auprc_interpretation,
+)
 
 st.set_page_config(page_title="Overview — PRISM", layout="wide")
 st.title("📊 Overview")
@@ -39,12 +46,14 @@ with st.expander("📖 이 페이지 사용법", expanded=False):
 > DTU 파일을 업로드하지 않으면 모든 아이소폼은 DTU(-) 처리되어 S3/S4만 존재합니다.
     """)
 
-# ── Get data from session ────────────────────────────────────────────────────
+# ── Get data from session ─────────────────────────────────────────────────
 cfg = st.session_state.get('cfg', {})
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page and select a data source.")
     st.stop()
+
+render_data_context_banner(cfg)
 
 ids   = cfg['isoform_ids']
 types = cfg.get('isoform_types')
@@ -101,6 +110,8 @@ with col_a:
 with col_b:
     st.plotly_chart(fig_go, use_container_width=True)
 
+render_coverage_interpretation(rep, thr, types is not None)
+
 st.divider()
 
 # ── Scenario Summary ─────────────────────────────────────────────────────────
@@ -138,6 +149,8 @@ with col_d:
     st.dataframe(summ[['scenario', 'scenario_label', 'count', 'pct']],
                  use_container_width=True, hide_index=True)
 
+render_scenario_interpretation(summ, has_dtu=dtu is not None)
+
 st.divider()
 
 # ── Novel Isoform Summary ────────────────────────────────────────────────────
@@ -153,6 +166,7 @@ if types is not None and np.isin(np.asarray(types, dtype=str), ['nic', 'nnic', '
     nc2.metric(f"With score>{thr}", f"{novel_rep.n_novel_with_any_high:,}", f"{novel_rep.pct_novel_with_high:.1f}%")
     nc3.metric("GO terms with novel predictions", novel_rep.n_prism18_terms_with_novel + novel_rep.n_extended_terms_with_novel)
 
+    render_novel_interpretation(novel_rep)
     st.dataframe(novel_rep.to_dataframe(), use_container_width=True, hide_index=True)
 else:
     st.info("Isoform type labels not provided — novel isoform summary unavailable. "
@@ -256,6 +270,8 @@ else:
                 hide_index=True,
                 height=min(400, len(per_go_df) * 36 + 40),
             )
+
+        render_auprc_interpretation(val_rep)
 
         csv_val = per_go_df.to_csv(index=False).encode('utf-8')
         st.download_button(

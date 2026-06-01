@@ -17,6 +17,7 @@ from prism_app.pipeline.dtu_connector import (
     consequence_summary,
 )
 from prism_app.pipeline.go_enrichment import enrich_dtu_switched
+from prism_app.app.components.interpretation import render_data_context_banner, render_condition_interpretation
 
 st.set_page_config(page_title="Condition Analysis — PRISM", layout="wide")
 st.title("🔄 Condition Analysis")
@@ -56,6 +57,8 @@ cfg = st.session_state.get('cfg', {})
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page."); st.stop()
+
+render_data_context_banner(cfg)
 
 ids    = cfg['isoform_ids']
 genes  = cfg.get('gene_ids')

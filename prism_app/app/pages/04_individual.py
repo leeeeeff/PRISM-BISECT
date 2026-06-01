@@ -11,6 +11,7 @@ import numpy as np
 import plotly.express as px
 
 from prism_app.core.classifier import get_scenario_candidates, IsoformScenario
+from prism_app.app.components.interpretation import render_data_context_banner
 
 st.set_page_config(page_title="Individual Analysis — PRISM", layout="wide")
 st.title("🔬 Individual Isoform Analysis")
@@ -41,6 +42,8 @@ cfg = st.session_state.get('cfg', {})
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page."); st.stop()
+
+render_data_context_banner(cfg)
 
 ids    = cfg['isoform_ids']
 genes  = cfg.get('gene_ids')
@@ -79,7 +82,25 @@ def _render_scenario_table(scenario_id: int) -> None:
 
     cands = get_scenario_candidates(classified, scenario_id, min_score=thr)
     if cands.empty:
-        st.write("No isoforms in this scenario with current settings.")
+        if scenario_id in (1, 2) and cfg.get('dtu_df') is None:
+            st.markdown(
+                f"""<div style='background:#fffbeb;border-left:4px solid #f59e0b;
+                padding:16px 20px;border-radius:8px;margin:8px 0'>
+                <b>⚠️ Scenario {scenario_id}가 비어있는 이유</b><br><br>
+                이 시나리오는 <b>DTU (Differential Transcript Usage)</b> 분석 결과가 필요합니다.
+                DTU 분석은 두 조건(예: 질병 vs. 정상) 간에 아이소폼 사용 비율이 통계적으로
+                달라진 전사체를 식별합니다.<br><br>
+                <b>활성화 방법:</b><br>
+                1. satuRn / DEXSeq / IsoformSwitchAnalyzeR 등으로 DTU 분석 실행<br>
+                2. 사이드바 → <b>Upload 모드</b> → DTU 결과 파일(.tsv) 업로드<br>
+                3. 필요 컬럼: <code>isoform_id</code>, <code>delta_IF</code> (또는 <code>dIF</code>), <code>pvalue</code><br><br>
+                Demo 데이터는 단일 조건이므로 DTU를 계산할 수 없습니다.
+                <b>Scenario 3 (신규 기능)</b>은 DTU 없이도 분석 가능합니다.
+                </div>""",
+                unsafe_allow_html=True,
+            )
+        else:
+            st.write(f"현재 설정(Score > {thr})에서 이 시나리오에 해당하는 아이소폼이 없습니다. 임계값을 낮춰보세요.")
         return
 
     st.metric("Isoforms in scenario", len(cands))

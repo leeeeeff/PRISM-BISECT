@@ -100,13 +100,62 @@ def render_sidebar() -> dict:
     # ── Demo mode: load bundled data ──────────────────────────────────────
     if mode_key == 'demo':
         cfg.update(_load_demo_data(tissue_key, go_terms))
+        _render_demo_context(tissue_key)
 
     # ── Upload mode ───────────────────────────────────────────────────────
     else:
         st.sidebar.subheader("Upload files")
         cfg.update(_upload_section(go_terms))
+        _render_upload_context(cfg)
 
     return cfg
+
+
+def _render_demo_context(tissue: str) -> None:
+    """Show demo data info in sidebar."""
+    info = {
+        'muscle':         ("근골격근", "36,748", "18"),
+        'brain':          ("뇌 (zero-shot)", "63,994", "18"),
+        'brain_extended': ("뇌 확장", "7,903", "73"),
+        'muscle_only':    ("근골격근", "36,748", "18"),
+    }.get(tissue, ("—", "—", "—"))
+
+    st.sidebar.divider()
+    st.sidebar.markdown(
+        f"""<div style='background:#f0f7ff;border-radius:6px;padding:8px 10px;
+        font-size:0.8rem;color:#1e40af'>
+        📂 <b>Demo 데이터</b><br>
+        조직: {info[0]}<br>
+        아이소폼: {info[1]}개<br>
+        GO 패널: {info[2]}개 term<br>
+        DTU: <span style='color:#dc2626'>미포함</span> → S1·S2 비활성<br>
+        PRISM 스코어: 논문 사전 계산값
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+
+def _render_upload_context(cfg: dict) -> None:
+    """Show upload status in sidebar."""
+    sm = cfg.get('score_matrix')
+    has_dtu = cfg.get('dtu_df') is not None
+
+    if sm is None:
+        return
+
+    n_iso, n_go = sm.shape
+    dtu_str = "✅ 로드됨 → S1·S2 활성" if has_dtu else "❌ 없음 → S1·S2 비활성"
+
+    st.sidebar.divider()
+    st.sidebar.markdown(
+        f"""<div style='background:#f0fdf4;border-radius:6px;padding:8px 10px;
+        font-size:0.8rem;color:#14532d'>
+        📂 <b>업로드 데이터</b><br>
+        아이소폼: {n_iso:,}개 · GO: {n_go}개<br>
+        DTU: {dtu_str}
+        </div>""",
+        unsafe_allow_html=True,
+    )
 
 
 # ── Demo data loader ──────────────────────────────────────────────────────────
