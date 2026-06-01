@@ -1,0 +1,5619 @@
+[
+  {
+    "gene_name": "ABITRAM",
+    "ct_transcript_id": "ABITRAM-201",
+    "ad_transcript_id": "ABITRAM-204",
+    "cell_type": "Cardiomyocyte",
+    "diffuse_delta": 0.5209,
+    "dtu_pvalue": 1.0,
+    "direction": "CT_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T08:52:02.190551",
+    "ct_seq": {
+      "seq": "MATEPEAAEPVVPSLVDRYFTRWYKPDVKGKFCEDHCILQHSNRICVITLAESHPVLQSGKTIKSISYQISTNCSRLQNKVSGKFKRGAQFLTELAPLCKIYCSDGEEYTVSSCVRGRLMEVNENILHKPSILQEKPSTEGYIAVVLPKFEESKSITEGLLTQKQYEEVMVKRINATTATS",
+      "length": 181,
+      "source": "ensembl_txname_faa"
+    },
+    "ad_seq": {
+      "seq": "",
+      "length": 0,
+      "source": null
+    },
+    "ct_domains": [
+      {
+        "domain": "GCV_H",
+        "evalue": 1.9e-10,
+        "score": 27.0,
+        "ali_from": 111,
+        "ali_to": 171,
+        "hmm_from": 63,
+        "hmm_to": 120,
+        "pfam_family": "GCV_H"
+      }
+    ],
+    "ad_domains": [],
+    "domain_change": {
+      "has_domain_change": true,
+      "domains_lost": [
+        "GCV_H"
+      ],
+      "domains_gained": [],
+      "domains_shared": [],
+      "ct_domain_count": 1,
+      "ad_domain_count": 0
+    },
+    "stage2_pass": true,
+    "ct_motifs": {
+      "length": 181,
+      "mts": {
+        "net_charge_30aa": -1,
+        "pos_aa_30": 4,
+        "neg_aa_30": 5,
+        "de_count_40aa": 7,
+        "hydrophobic_moment": 0.3271,
+        "hhh_motif": null,
+        "lyr_motif": null,
+        "composite_score": 2,
+        "prediction": "INTERMEDIATE (uncertain)",
+        "criteria_passed": {
+          "net_charge_ge_2": false,
+          "de_le_3": false,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": false
+        }
+      },
+      "functional_motifs": {
+        "hydrophobic_core_n30": [
+          [
+            10,
+            "PVVPSLV"
+          ],
+          [
+            11,
+            "VVPSLVD"
+          ]
+        ]
+      },
+      "composition": {
+        "K": 15,
+        "R": 8,
+        "D": 4,
+        "E": 17,
+        "H": 4,
+        "pct_charged": 24.30939226519337
+      }
+    },
+    "ct_info": {
+      "transcript_id": "ABITRAM-201",
+      "chrom": "chr9",
+      "strand": "+",
+      "associated_gene": "ABITRAM",
+      "structural_category": "protein_coding",
+      "transcript_length": null,
+      "exon_count": 6,
+      "exons": [
+        [
+          108934400,
+          108934565
+        ],
+        [
+          108935638,
+          108935689
+        ],
+        [
+          108936308,
+          108936437
+        ],
+        [
+          108939196,
+          108939272
+        ],
+        [
+          108939385,
+          108939454
+        ],
+        [
+          108939549,
+          108940954
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 108934400,
+      "genomic_span_end": 108940954,
+      "genomic_span_kb": 6.554
+    },
+    "ad_info": {
+      "transcript_id": "ABITRAM-204",
+      "chrom": "chr9",
+      "strand": "+",
+      "associated_gene": "ABITRAM",
+      "structural_category": "protein_coding_CDS_not_defined",
+      "transcript_length": null,
+      "exon_count": 2,
+      "exons": [
+        [
+          108934443,
+          108934565
+        ],
+        [
+          108935638,
+          108936075
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 108934443,
+      "genomic_span_end": 108936075,
+      "genomic_span_kb": 1.632
+    },
+    "ad_repeats": {
+      "locus_queried": "chr9:108929443-108941075",
+      "total_repeat_hits": 11,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {},
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 4,
+        "SINE": 4,
+        "LTR": 0,
+        "DNA": 3
+      }
+    },
+    "ct_repeats": {
+      "locus_queried": "chr9:108929400-108945954",
+      "total_repeat_hits": 16,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {
+        "E6": [
+          {
+            "name": "L1ME4a",
+            "class": "LINE",
+            "family": "L1",
+            "strand": "-",
+            "start": 108939949,
+            "end": 108940061,
+            "pct_divergence": 24.6,
+            "sw_score": 253,
+            "is_young_l1": false,
+            "exon_overlap_bp": 112
+          },
+          {
+            "name": "MER8",
+            "class": "DNA",
+            "family": "TcMar-Tigger",
+            "strand": "+",
+            "start": 108940064,
+            "end": 108940300,
+            "pct_divergence": 24.7,
+            "sw_score": 1021,
+            "is_young_l1": false,
+            "exon_overlap_bp": 236
+          }
+        ]
+      },
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 6,
+        "SINE": 5,
+        "LTR": 0,
+        "DNA": 5
+      }
+    },
+    "m6_nmd_screen": {
+      "ct": {
+        "transcript_id": "ABITRAM-201",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "ad": {
+        "transcript_id": "ABITRAM-204",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "summary": "NMD status could not be determined for one or both isoforms.",
+      "nmd_relevant": false
+    },
+    "nmd_gate_active": false,
+    "m7_seq_validation": {
+      "skipped": true,
+      "skip_reason": "no young LINE-1 in CDS"
+    },
+    "m8_regulatory_context": {
+      "mechanism_type": "transcriptional",
+      "cell_type_full": "Cardiomyocyte",
+      "deg_n_genes_loaded": 0,
+      "significant_regulators": [],
+      "top_regulators": [],
+      "motif_analysis": null,
+      "l1_details": null,
+      "evidence_strength": "weak",
+      "evidence_details": {
+        "level": "weak",
+        "n_significant_regulators": 0,
+        "interpretation": "Insufficient transcriptional regulator evidence.",
+        "caveat": "mRNA expression levels may not reflect protein activity. TARDBP in particular: mRNA UP in AD may reflect nuclear depletion compensation (cytoplasmic aggregation), not increased splicing activity. All causal claims require functional validation."
+      },
+      "summary": "The ABITRAM isoform switch may reflect transcriptional changes. Top regulators: none. Evidence strength: weak."
+    },
+    "m9_promoter_usage": {
+      "tss_diff_bp": 43,
+      "tts_diff_bp": 4879,
+      "ct_tss": 108934400,
+      "ad_tss": 108934443,
+      "tss_class": "same_promoter",
+      "apa_class": "moderate_apa",
+      "ct_ccre": null,
+      "ad_ccre": null,
+      "ct_screen_hits": [],
+      "ad_screen_hits": [],
+      "promoter_evidence": "none",
+      "mechanism_reclassify": false,
+      "apa_motifs": {},
+      "summary": "ABITRAM: CT and AD isoforms share the same promoter region (TSS_diff=43 bp, same_promoter). Mechanism classification unchanged from M14."
+    },
+    "m10_apa": {
+      "tts_diff_bp": 4879,
+      "ct_tts": 108940954,
+      "ad_tts": 108936075,
+      "apa_class": "moderate_apa",
+      "ct_polyasite": [],
+      "ad_polyasite": [],
+      "ct_utr_scan": {
+        "available": true,
+        "length": 2000,
+        "pas_count": 17,
+        "pas_hits": {
+          "AATAAA": 3,
+          "ATTAAA": 2,
+          "AGTAAA": 2,
+          "TATAAA": 3,
+          "CATAAA": 1,
+          "GATAAA": 4,
+          "AATATA": 2
+        },
+        "are_count": 4,
+        "are_hits": {
+          "class_I_pentamer": 4
+        },
+        "mirna_seeds": {
+          "miR-132": 2,
+          "miR-9": 1,
+          "miR-34a": 1
+        },
+        "genomic": true,
+        "coords": "chr9:108940954-108942954",
+        "seq_len": 2000
+      },
+      "ad_utr_scan": {
+        "available": true,
+        "length": 2000,
+        "pas_count": 9,
+        "pas_hits": {
+          "ATTAAA": 4,
+          "TATAAA": 1,
+          "GATAAA": 1,
+          "AATATA": 2,
+          "AATACA": 1
+        },
+        "are_count": 6,
+        "are_hits": {
+          "class_I_pentamer": 6
+        },
+        "mirna_seeds": {
+          "miR-9": 1
+        },
+        "genomic": true,
+        "coords": "chr9:108936075-108938075",
+        "seq_len": 2000
+      },
+      "utr_changes": {
+        "comparable": true,
+        "gains": {
+          "ARE_destabilizing": 2
+        },
+        "losses": {
+          "PAS_sites": 8,
+          "miR-132_seed": 2,
+          "miR-34a_seed": 1
+        },
+        "predicted_stability": "AD_escapes_miR-132_repression"
+      },
+      "apa_evidence": "correlative",
+      "summary": "ABITRAM: CT and AD isoforms differ in 3' end by 4,879 bp (moderate_apa). AD isoform gains: ARE_destabilizing. AD isoform loses: PAS_sites, miR-132_seed, miR-34a_seed. Predicted mRNA stability effect: AD_escapes_miR-132_repression. APA evidence strength: correlative. Caution: 3'UTR changes require RIP-seq or poly-A-seq validation for functional confirmation."
+    },
+    "m11_alphafold": {
+      "ct": {
+        "transcript_id": "ABITRAM-201",
+        "uniprot_id": "Q9NX38",
+        "source": "alphafold_db",
+        "plddt_mean": 79.75,
+        "plddt_high_fraction": 0.773,
+        "domain_plddt": {
+          "GCV_H": {
+            "pfam_id": "GCV_H",
+            "residues": "111-171",
+            "mean": 85.47,
+            "min": 69.19,
+            "max": 91.19,
+            "confidence": "high"
+          }
+        },
+        "error": null
+      },
+      "ad": {
+        "transcript_id": "ABITRAM-204",
+        "uniprot_id": "Q9NX38",
+        "source": "alphafold_db",
+        "plddt_mean": 79.75,
+        "plddt_high_fraction": 0.773,
+        "domain_plddt": {},
+        "error": null
+      },
+      "comparison": {
+        "gained_domain_confident": [],
+        "lost_domain_confident": [
+          "GCV_H (pLDDT=85.47)"
+        ],
+        "degraded_domains": [],
+        "interpretation": "AD loses confident domain(s): GCV_H (pLDDT=85.47)."
+      }
+    },
+    "m12_ppi": {
+      "gene": "ABITRAM",
+      "hypothesized_partners": [],
+      "string_hits": [
+        {
+          "partner": "FRRS1L",
+          "combined_score": 882,
+          "experimental_score": 0,
+          "evidence_types": [
+            "textmining"
+          ]
+        },
+        {
+          "partner": "PEX26",
+          "combined_score": 879,
+          "experimental_score": 0,
+          "evidence_types": [
+            "textmining"
+          ]
+        },
+        {
+          "partner": "PEX6",
+          "combined_score": 866,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "SYNJ2BP",
+          "combined_score": 826,
+          "experimental_score": 0,
+          "evidence_types": [
+            "textmining"
+          ]
+        },
+        {
+          "partner": "PUS10",
+          "combined_score": 801,
+          "experimental_score": 801,
+          "evidence_types": [
+            "experimental"
+          ]
+        },
+        {
+          "partner": "GPN3",
+          "combined_score": 540,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression"
+          ]
+        },
+        {
+          "partner": "ELP1",
+          "combined_score": 524,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "SPRYD7",
+          "combined_score": 459,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "C8A",
+          "combined_score": 453,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "CTNNAL1",
+          "combined_score": 453,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        }
+      ],
+      "hypothesis_support": {},
+      "domain_interaction_link": {
+        "domain_links": []
+      },
+      "summary_verdict": "UNSUPPORTED",
+      "interpretation": "None of the hypothesized partners ([]) found with sufficient STRING evidence. PPI claim requires experimental validation (co-IP / proximity-ligation)."
+    },
+    "m13_conservation": {
+      "track": "phyloP100way",
+      "genome": "hg38",
+      "ad_specific_exons": [],
+      "ct_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr9",
+          "start": 108936308,
+          "end": 108936437,
+          "length_bp": 129,
+          "phyloP_mean": 4.618,
+          "phyloP_positive_fraction": 0.961,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "GCV_H",
+          "note": null
+        },
+        {
+          "rank": 2,
+          "chrom": "chr9",
+          "start": 108939196,
+          "end": 108939272,
+          "length_bp": 76,
+          "phyloP_mean": 4.456,
+          "phyloP_positive_fraction": 0.921,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "GCV_H",
+          "note": null
+        },
+        {
+          "rank": 3,
+          "chrom": "chr9",
+          "start": 108939385,
+          "end": 108939454,
+          "length_bp": 69,
+          "phyloP_mean": 4.244,
+          "phyloP_positive_fraction": 0.913,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "GCV_H",
+          "note": null
+        },
+        {
+          "rank": 4,
+          "chrom": "chr9",
+          "start": 108939549,
+          "end": 108940954,
+          "length_bp": 1405,
+          "phyloP_mean": 0.255,
+          "phyloP_positive_fraction": 0.475,
+          "conservation_class": "low",
+          "domain_overlap": "GCV_H",
+          "note": null
+        }
+      ],
+      "background": {
+        "intronic_phyloP_mean": -0.133,
+        "intronic_sample_n": 5
+      },
+      "summary": {
+        "ad_specific_mean_phyloP": null,
+        "ct_specific_mean_phyloP": 3.393,
+        "fold_difference": null,
+        "interpretation": "Insufficient data for conservation comparison."
+      }
+    }
+  },
+  {
+    "gene_name": "ADAR",
+    "ct_transcript_id": "ENST00000648231",
+    "ad_transcript_id": "ENST00000649042",
+    "cell_type": "Oligodendrocyte",
+    "diffuse_delta": 0.7148,
+    "dtu_pvalue": 5.82e-13,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:23:52.955192",
+    "ct_seq": {
+      "seq": "MAEIKEKICDYLFNVSDSSALNLAKNIGLTKARDINAVLIDMERQGDVYRQGTTPPIWHLTDKKRERMQIKRNTNSVPETAPAAIPETKRNAEFLTCNIPTSNASNNMVTTEKVENGQEPVIKLENRQEARPEPARLKPPVHYNGPSKAGYVDFENGQWATDDIPDDLNSIRAAPGEFRAIMEMPSFYSHGLPRCSPYKKLTECQLKNPISGLLEYAQFASQTCEFNMIEQSGPPHEPRFKFQVVINGREFPPAEAGSKKVAKQDAAMKAMTILLEEAKAKDSGKSEESSHYSTEKESEKTAESQTPTPSATSFFSGKSPVTTLLECMHKLGNSCEFRLLSKEGPAHEPKFQYCVAVGAQTFPSVSAPSKKVAKQMAAEEAMKALHGEATNSMASDNQPEGMISESLDNLESMMPNKVRKIGELVRYLNTNPVGGLLEYARSHGFAAEFKLVDQSGPPHEPKFVYQAKVGGRWFPAVCAHSKKQGKQEAADAALRVLIGENEKAERMGFTEVTPVTGASLRRTMLLLSRSPEAQPKTLPLTGSTFHDQIAMLSHRCFNTLTNSFQPSLLGRKILAAIIMKKDSEDMGVVVSLGTGNRCVKGDSLSLKGETVNDCHAEIISRRGFIRFLYSELMKYNSQTAKDSIFEPAKGGEKLQIKKTVSFHLYISTAPCGDGALFDKSCSDRAMESTESRHYPVFENPKQGKLRTKVENGEGTIPVESSDIVPTWDGIRLGERLRTMSCSDKILRWNVLGLQGALLTHFLQPIYLKSVTLGYLFSQGHLTRAICCRVTRDGSAFEDGLRHPFIVNHPKVGRVSIYDSKRQSGKTKETSVNWCLADGYDLEILDGTRGTVDGPRNELSRVSKKNIFLLFKKLCSFRYRRDLLRLSYGEAKKAARDYETAKNYFKKGLKDMGYGNWISKPQEEKNFYLCPV",
+      "length": 931,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MAEIKEKICDYLFNVSDSSALNLAKNIGLTKARDINAVLIDMERQGDVYRQGTTPPIWHLTDKKRERMQIKRNTNSVPETAPAAIPETKRNAEFLTCNIPTSNASNNMVTTEKVENGQEPVIKLENRQEARPEPARLKPPVHYNGPSKAGYVDFENGQWATDDIPDDLNSIRAAPGEFRAIMEMPSFYSHGLPRCSPYKKLTECQLKNPISGLLEYAQFASQTCEFNMIEQSGPPHEPRFKFQVVINGREFPPAEAGSKKVAKQDAAMKAMTILLEEAKAKDSGKSEESSHYSTEKESEKTAESQTPTPSATSFFSGKSPVTTLLECMHKLGNSCEFRLLSKEGPAHEPKFQYCVAVGAQTFPSVSAPSKKVAKQMAAEEAMKALHGEATNSMASDNQPEGMISESLDNLESMMPNKVRKIGELVRYLNTNPVGGLLEYARSHGFAAEFKLVDQSGPPHEPKFVYQAKVGGRWFPAVCAHSKKQGKQEAADAALRVLIGENEKAERMGFTEVTPVTGASLRRTMLLLSRSPEAQPKTLPLTGSTFHDQIAMLSHRCFNTLTNSFQPSLLGRKILAAIIMKKDSEDMGVVVSLGTGNRCVKGDSLSLKGETVNDCHAEIISRRGFIRFLYSELMKYNSQTAKDSIFEPAKGGEKLQIKKTVSFHLYISTAPCGDGALFDKSCSDRAMESTESRHYPVFENPKQGKLRTKVENGEGTIPVESSDIVPTWDGIRLGERLRTMSCSDKILRWNVLGLQGALLTHFLQPIYLKSVTLGYLFSQGHLTRAICCRVTRDGSAFEDGLRHPFIVNHPKVGRVSIYDSKRQSGKTKETSVNWCLADGYDLEILDGTRGTVDGPRNELSRVSKKNIFLLFKKLCSFRYRRDLLRLSYGEAKKAARDYETAKNYFKKGLKDMGYGNWISKPQEEKNFYLCPV",
+      "length": 931,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "z-alpha",
+        "evalue": 7.3e-30,
+        "score": 91.1,
+        "ali_from": 1,
+        "ali_to": 63,
+        "hmm_from": 2,
+        "hmm_to": 66,
+        "pfam_family": "z-alpha"
+      },
+      {
+        "domain": "dsrm",
+        "evalue": 7.1e-18,
+        "score": 53.2,
+        "ali_from": 209,
+        "ali_to": 272,
+        "hmm_from": 1,
+        "hmm_to": 64,
+        "pfam_family": "dsrm"
+      },
+      {
+        "domain": "DND1_DSRM",
+        "evalue": 0.0002,
+        "score": 9.9,
+        "ali_from": 226,
+        "ali_to": 268,
+        "hmm_from": 21,
+        "hmm_to": 73,
+        "pfam_family": "DND1_DSRM"
+      },
+      {
+        "domain": "dsrm",
+        "evalue": 2e-14,
+        "score": 42.2,
+        "ali_from": 320,
+        "ali_to": 384,
+        "hmm_from": 1,
+        "hmm_to": 65,
+        "pfam_family": "dsrm"
+      },
+      {
+        "domain": "DND1_DSRM",
+        "evalue": 0.00014,
+        "score": 10.4,
+        "ali_from": 336,
+        "ali_to": 385,
+        "hmm_from": 20,
+        "hmm_to": 79,
+        "pfam_family": "DND1_DSRM"
+      },
+      {
+        "domain": "dsrm",
+        "evalue": 5e-14,
+        "score": 40.9,
+        "ali_from": 432,
+        "ali_to": 497,
+        "hmm_from": 1,
+        "hmm_to": 66,
+        "pfam_family": "dsrm"
+      },
+      {
+        "domain": "A_deamin",
+        "evalue": 7.4e-107,
+        "score": 345.6,
+        "ali_from": 591,
+        "ali_to": 920,
+        "hmm_from": 1,
+        "hmm_to": 329,
+        "pfam_family": "A_deamin"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "z-alpha",
+        "evalue": 7.3e-30,
+        "score": 91.1,
+        "ali_from": 1,
+        "ali_to": 63,
+        "hmm_from": 2,
+        "hmm_to": 66,
+        "pfam_family": "z-alpha"
+      },
+      {
+        "domain": "dsrm",
+        "evalue": 7.1e-18,
+        "score": 53.2,
+        "ali_from": 209,
+        "ali_to": 272,
+        "hmm_from": 1,
+        "hmm_to": 64,
+        "pfam_family": "dsrm"
+      },
+      {
+        "domain": "DND1_DSRM",
+        "evalue": 0.0002,
+        "score": 9.9,
+        "ali_from": 226,
+        "ali_to": 268,
+        "hmm_from": 21,
+        "hmm_to": 73,
+        "pfam_family": "DND1_DSRM"
+      },
+      {
+        "domain": "dsrm",
+        "evalue": 2e-14,
+        "score": 42.2,
+        "ali_from": 320,
+        "ali_to": 384,
+        "hmm_from": 1,
+        "hmm_to": 65,
+        "pfam_family": "dsrm"
+      },
+      {
+        "domain": "DND1_DSRM",
+        "evalue": 0.00014,
+        "score": 10.4,
+        "ali_from": 336,
+        "ali_to": 385,
+        "hmm_from": 20,
+        "hmm_to": 79,
+        "pfam_family": "DND1_DSRM"
+      },
+      {
+        "domain": "dsrm",
+        "evalue": 5e-14,
+        "score": 40.9,
+        "ali_from": 432,
+        "ali_to": 497,
+        "hmm_from": 1,
+        "hmm_to": 66,
+        "pfam_family": "dsrm"
+      },
+      {
+        "domain": "A_deamin",
+        "evalue": 7.4e-107,
+        "score": 345.6,
+        "ali_from": 591,
+        "ali_to": 920,
+        "hmm_from": 1,
+        "hmm_to": 329,
+        "pfam_family": "A_deamin"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": false,
+      "domains_lost": [],
+      "domains_gained": [],
+      "domains_shared": [
+        "A_deamin",
+        "DND1_DSRM",
+        "dsrm",
+        "z-alpha"
+      ],
+      "ct_domain_count": 4,
+      "ad_domain_count": 4
+    },
+    "stage2_pass": false
+  },
+  {
+    "gene_name": "ADD2",
+    "ct_transcript_id": "ENST00000355733",
+    "ad_transcript_id": "ENST00000264436",
+    "cell_type": "OPC",
+    "diffuse_delta": 0.7058,
+    "dtu_pvalue": 7.022e-20,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:24:52.206509",
+    "ct_seq": {
+      "seq": "MSEETVPEAASPPPPQGQPYFDRFSEDDPEYMRLRNRAADLRQDFNLMEQKKRVTMILQSPSFREELEGLIQEQMKKGNNSSNIWALRQIADFMASTSHAVFPTSSMNVSMMTPINDLHTADSLNLAKGERLMRCKISSVYRLLDLYGWAQLSDTYVTLRVSKEQDHFLISPKGVSCSEVTASSLIKVNILGEVVEKGSSCFPVDTTGFCLHSAIYAARPDVRCIIHLHTPATAAVSAMKWGLLPVSHNALLVGDMAYYDFNGEMEQEADRINLQKCLGPTCKILVLRNHGVVALGDTVEEAFYKIFHLQAACEIQVSALSSAGGVENLILLEQEKHRPHEVGSVQWAGSTFGPMQKSRLGEHEFEALMRMLDNLGYRTGYTYRHPFVQEKTKHKSEVEIPATVTAFVFEEDGAPVPALRQHAQKQQKEKTRWLNTPNTYLRVNVADEVQRSMGSPRPKTTWMKADEVEKSSSGMPIRIENPNQFVPLYTDPQEVLEMRNKIREQNRQDVKSAGPQSQLLASVIAEKSRSPSTESQLMSKGDEDTKDDSEETVPNPFSQLTDQELEEYKKEVERKKLELDETGQEREPGSGPAVCEFFSVALHIWSNILERKKLPQKSLAHLQSLHLLLQCRAQRRRQRQRAL",
+      "length": 643,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MSEETVPEAASPPPPQGQPYFDRFSEDDPEYMRLRNRAADLRQDFNLMEQKKRVTMILQSPSFREELEGLIQEQMKKGNNSSNIWALRQIADFMASTSHAVFPTSSMNVSMMTPINDLHTADSLNLAKGERLMRCKISSVYRLLDLYGWAQLSDTYVTLRVSKEQDHFLISPKGVSCSEVTASSLIKVNILGEVVEKGSSCFPVDTTGFCLHSAIYAARPDVRCIIHLHTPATAAVSAMKWGLLPVSHNALLVGDMAYYDFNGEMEQEADRINLQKCLGPTCKILVLRNHGVVALGDTVEEAFYKIFHLQAACEIQVSALSSAGGVENLILLEQEKHRPHEVGSVQWAGSTFGPMQKSRLGEHEFEALMRMLDNLGYRTGYTYRHPFVQEKTKHKSEVEIPATVTAFVFEEDGAPVPALRQHAQKQQKEKTRWLNTPNTYLRVNVADEVQRSMGSPRPKTTWMKADEVEKSSSGMPIRIENPNQFVPLYTDPQEVLEMRNKIREQNRQDVKSAGPQSQLLASVIAEKSRSPSTESQLMSKGDEDTKDDSEETVPNPFSQLTDQELEEYKKEVERKKLELDGEKETAPEEPGSPAKSAPASPVQSPAKEAETKSPLVSPSKSLEEGTKKTETSKAATTEPETTQPEGVVVNGREEEQTAEEILSKGLSQMTTSADTDVDTSKDKTESVTSGPMSPEGSPSKSPSKKKKKFRTPSFLKKSKKKEKVES",
+      "length": 726,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "Aldolase_II",
+        "evalue": 8.9e-46,
+        "score": 142.2,
+        "ali_from": 136,
+        "ali_to": 317,
+        "hmm_from": 2,
+        "hmm_to": 183,
+        "pfam_family": "Aldolase_II"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "Aldolase_II",
+        "evalue": 1.1e-45,
+        "score": 141.9,
+        "ali_from": 136,
+        "ali_to": 317,
+        "hmm_from": 2,
+        "hmm_to": 183,
+        "pfam_family": "Aldolase_II"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": false,
+      "domains_lost": [],
+      "domains_gained": [],
+      "domains_shared": [
+        "Aldolase_II"
+      ],
+      "ct_domain_count": 1,
+      "ad_domain_count": 1
+    },
+    "stage2_pass": false
+  },
+  {
+    "gene_name": "ADGRB2",
+    "ct_transcript_id": "ENST00000373655",
+    "ad_transcript_id": "ENST00000398556",
+    "cell_type": "Inhibitory",
+    "diffuse_delta": 0.8005,
+    "dtu_pvalue": 1.923e-12,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:16:26.541584",
+    "ct_seq": {
+      "seq": "MENTGWMGKGHRMTPACPLLLSVILSLRLATAFDPAPSACSALASGVLYGAFSLQDLFPTIASGCSWTLENPDPTKYSLYLRFNRQEQVCAHFAPRLLPLDHYLVNFTCLRPSPEEAVAQAESEVGRPEEEEAEAAAGLELCSGSGPFTFLHFDKNFVQLCLSAEPSEAPRLLAPAALAFRFVEVLLINNNNSSQFTCGVLCRWSEECGRAAGRACGFAQPGCSCPGEAGAGSTTTTSPGPPAAHTLSNALVPGGPAPPAEADLHSGSSNDLFTTEMRYGEEPEEEPKVKTQWPRSADEPGLYMAQTGDPAAEEWSPWSVCSLTCGQGLQVRTRSCVSSPYGTLCSGPLRETRPCNNSATCPVHGVWEEWGSWSLCSRSCGRGSRSRMRTCVPPQHGGKACEGPELQTKLCSMAACPVEGQWLEWGPWGPCSTSCANGTQQRSRKCSVAGPAWATCTGALTDTRECSNLECPATDSKWGPWNAWSLCSKTCDTGWQRRFRMCQATGTQGYPCEGTGEEVKPCSEKRCPAFHEMCRDEYVMLMTWKKAAAGEIIYNKCPPNASGSASRRCLLSAQGVAYWGLPSFARCISHEYRYLYLSLREHLAKGQRMLAGEGMSQVVRSLQELLARRTYYSGDLLFSVDILRNVTDTFKRATYVPSADDVQRFFQVVSFMVDAENKEKWDDAQQVSPGSVHLLRVVEDFIHLVGDALKAFQSSLIVTDNLVISIQREPVSAVSSDITFPMRGRRGMKDWVRHSEDRLFLPKEVLSLSSPGKPATSGAAGSPGRGRGPGTVPPGPGHSHQRLLPADPDESSYFVIGAVLYRTLGLILPPPRPPLAVTSRVMTVTVRPPTQPPAEPLITVELSYIINGTTDPHCASWDYSRADASSGDWDTENCQTLETQAAHTRCQCQHLSTFAVLAQPPKDLTLELAGSPSVPLVIGCAVSCMALLTLLAIYAAFWRFIKSERSIILLNFCLSILASNILILVGQSRVLSKGVCTMTAAFLHFFFLSSFCWVLTEAWQSYLAVIGRMRTRLVRKRFLCLGWGLPALVVAVSVGFTRTKGYGTSSYCWLSLEGGLLYAFVGPAAVIVLVNMLIGIIVFNKLMARDGISDKSKKQRAGSERCPWASLLLPCSACGAVPSPLLSSASARNAMASLWSSCVVLPLLALTWMSAVLAMTDRRSVLFQALFAVFNSAQGFVITAVHCFLRREVQDVVKCQMGVCRADESEDSPDSCKNGQLQILSDFEKDVDLACQTVLFKEVNTCNPSTITGTLSRLSLDEDEEPKSCLVGPEGSLSFSPLPGNILVPMAASPGLGEPPPPQEANPVYMCGEGGLRQLDLTWLRPTEPGSEGDYMVLPRRTLSLQPGGGGGGGEDAPRARPEGTPRRAAKTVAHTEGYPSFLSVDHSGLGLGPAYGSLQNPYGMTFQPPPPTPSARQVPEPGERSRTMPRTVPGSTMKMGSLERKKLRYSDLDFEVMHTRKRHSELYHELNQKFHTFDRYRSQSTAKREKRWSVSSGGAAERSVCTDKPSPGERPSLSQHRRHQSWSTFKSMTLGSLPPKPRERLTLHRAAAWEPTEPPDGDFQTEV",
+      "length": 1584,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MLSLRGPDTHGKGHRMTPACPLLLSVILSLRLATAFDPAPSACSALASGVLYGAFSLQDLFPTIASGCSWTLENPDPTKYSLYLRFNRQEQVCAHFAPRLLPLDHYLVNFTCLRPSPEEAVAQAESEVGRPEEEEAEAAAGLELCSGSGPFTFLHFDKNFVQLCLSAEPSEAPRLLAPAALAFRFVEVLLINNNNSSQFTCGVLCRWSEECGRAAGRACGFAQPGCSCPGEAGAGSTTTTSPGPPAAHTLSNALVPGGPAPPAEADLHSGSSNDLFTTEMRYGEEPEEEPKVKTQWPRSADEPGLYMAQTVHGVWEEWGSWSLCSRSCGRGSRSRMRTCVPPQHGGKACEGPELQTKLCSMAACPVEGQWLEWGPWGPCSTSCANGTQQRSRKCSVAGPAWATCTGALTDTRECSNLECPATDSKWGPWNAWSLCSKTCDTGWQRRFRMCQATGTQGYPCEGTGEEVKPCSEKRCPAFHEMCRDEYVMLMTWKKAAAGEIIYNKCPPNASGSASRRCLLSAQGVAYWGLPSFARCISHEYRYLYLSLREHLAKGQRMLAGEGMSQVVRSLQELLARRTYYSGDLLFSVDILRNVTDTFKRATYVPSADDVQRFFQVVSFMVDAENKEKWDDAQQVSPGSVHLLRVVEDFIHLVGDALKAFQSSLIVTDNLVISIQREPVSAVSSDITFPMRGRRGMKDWVRHSEDRLFLPKEVLSLSSPGKPATSGAAGSPGRGRGPGTVPPGPGHSHQRLLPADPDESSYFVIGAVLYRTLGLILPPPRPPLAVTSRVMTVTVRPPTQPPAEPLITVELSYIINGTTDPHCASWDYSRADASSGDWDTENCQTLETQAAHTRCQCQHLSTFAVLAQPPKDLTLELAGSPSVPLVIGCAVSCMALLTLLAIYAAFWRFIKSERSIILLNFCLSILASNILILVGQSRVLSKGVCTMTAAFLHFFFLSSFCWVLTEAWQSYLAVIGRMRTRLVRKRFLCLGWGLPALVVAVSVGFTRTKGYGTSSYCWLSLEGGLLYAFVGPAAVIVLVNMLIGIIVFNKLMARDGISDKSKKQRAGASLWSSCVVLPLLALTWMSAVLAMTDRRSVLFQALFAVFNSAQGFVITAVHCFLRREVQDVVKCQMGVCRADESEDSPDSCKNGQLQILSDFEKDVDLACQTVLFKEVNTCNPSTITGTLSRLSLDEDEEPKSCLVGPEGSLSFSPLPGNILVPMAASPGLGEPPPPQEANPVYMCGEGGLRQLDLTWLRPTEPGSEGDYMVLPRRTLSLQPGGGGGGGEDAPRARPEGTPRRAAKTVAHTEGYPSFLSVDHSGLGLGPAYGSLQNPYGMTFQPPPPTPSARQVPEPGERSRTMPRTVPGSTMKMGSLERKKLRYSDLDFEKVMHTRKRHSELYHELNQKFHTFDRYRSQSTAKREKRWSVSSGGAAERSVCTDKPSPGERPSLSQHRRHQSWSTFKSMTLGSLPPKPRERLTLHRAAAWEPTEPPDGDFQTEV",
+      "length": 1500,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "AGRB_N",
+        "evalue": 2e-79,
+        "score": 254.9,
+        "ali_from": 38,
+        "ali_to": 229,
+        "hmm_from": 1,
+        "hmm_to": 177,
+        "pfam_family": "AGRB_N"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 1.5e-10,
+        "score": 30.5,
+        "ali_from": 313,
+        "ali_to": 361,
+        "hmm_from": 4,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 1.5e-15,
+        "score": 46.4,
+        "ali_from": 314,
+        "ali_to": 361,
+        "hmm_from": 2,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_CCN",
+        "evalue": 8.1e-06,
+        "score": 15.3,
+        "ali_from": 315,
+        "ali_to": 336,
+        "hmm_from": 5,
+        "hmm_to": 30,
+        "pfam_family": "TSP1_CCN"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 2.2e-06,
+        "score": 17.1,
+        "ali_from": 316,
+        "ali_to": 346,
+        "hmm_from": 4,
+        "hmm_to": 39,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 5.4e-12,
+        "score": 35.1,
+        "ali_from": 368,
+        "ali_to": 416,
+        "hmm_from": 4,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 6.6e-15,
+        "score": 44.3,
+        "ali_from": 369,
+        "ali_to": 416,
+        "hmm_from": 2,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 2.9e-06,
+        "score": 16.7,
+        "ali_from": 370,
+        "ali_to": 417,
+        "hmm_from": 3,
+        "hmm_to": 44,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "TSP1_CCN",
+        "evalue": 5.1e-05,
+        "score": 12.7,
+        "ali_from": 371,
+        "ali_to": 416,
+        "hmm_from": 6,
+        "hmm_to": 44,
+        "pfam_family": "TSP1_CCN"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 1.7e-11,
+        "score": 33.4,
+        "ali_from": 424,
+        "ali_to": 471,
+        "hmm_from": 2,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 2.1e-07,
+        "score": 20.4,
+        "ali_from": 424,
+        "ali_to": 471,
+        "hmm_from": 5,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 2.5e-06,
+        "score": 16.9,
+        "ali_from": 425,
+        "ali_to": 471,
+        "hmm_from": 3,
+        "hmm_to": 55,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 1.3e-11,
+        "score": 33.7,
+        "ali_from": 479,
+        "ali_to": 527,
+        "hmm_from": 1,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 1.7e-08,
+        "score": 23.9,
+        "ali_from": 479,
+        "ali_to": 527,
+        "hmm_from": 4,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP1_CCN",
+        "evalue": 0.00024,
+        "score": 10.6,
+        "ali_from": 482,
+        "ali_to": 501,
+        "hmm_from": 6,
+        "hmm_to": 25,
+        "pfam_family": "TSP1_CCN"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 1e-05,
+        "score": 14.9,
+        "ali_from": 483,
+        "ali_to": 527,
+        "hmm_from": 5,
+        "hmm_to": 55,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "GAIN",
+        "evalue": 3.2e-39,
+        "score": 123.6,
+        "ali_from": 615,
+        "ali_to": 847,
+        "hmm_from": 2,
+        "hmm_to": 208,
+        "pfam_family": "GAIN"
+      },
+      {
+        "domain": "GPS",
+        "evalue": 3.5e-17,
+        "score": 51.9,
+        "ali_from": 872,
+        "ali_to": 917,
+        "hmm_from": 1,
+        "hmm_to": 44,
+        "pfam_family": "GPS"
+      },
+      {
+        "domain": "7tm_2",
+        "evalue": 3.9e-65,
+        "score": 208.6,
+        "ali_from": 933,
+        "ali_to": 1198,
+        "hmm_from": 5,
+        "hmm_to": 250,
+        "pfam_family": "7tm_2"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "AGRB_N",
+        "evalue": 2.1e-79,
+        "score": 255.0,
+        "ali_from": 41,
+        "ali_to": 232,
+        "hmm_from": 1,
+        "hmm_to": 177,
+        "pfam_family": "AGRB_N"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 5.7e-12,
+        "score": 35.1,
+        "ali_from": 316,
+        "ali_to": 364,
+        "hmm_from": 4,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 7e-15,
+        "score": 44.4,
+        "ali_from": 317,
+        "ali_to": 364,
+        "hmm_from": 2,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 3e-06,
+        "score": 16.8,
+        "ali_from": 318,
+        "ali_to": 365,
+        "hmm_from": 3,
+        "hmm_to": 44,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "TSP1_CCN",
+        "evalue": 3e-05,
+        "score": 13.6,
+        "ali_from": 319,
+        "ali_to": 364,
+        "hmm_from": 6,
+        "hmm_to": 44,
+        "pfam_family": "TSP1_CCN"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 1.8e-11,
+        "score": 33.4,
+        "ali_from": 372,
+        "ali_to": 419,
+        "hmm_from": 2,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 2.2e-07,
+        "score": 20.5,
+        "ali_from": 372,
+        "ali_to": 419,
+        "hmm_from": 5,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 2.6e-06,
+        "score": 17.0,
+        "ali_from": 373,
+        "ali_to": 419,
+        "hmm_from": 3,
+        "hmm_to": 55,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "TSP_1",
+        "evalue": 1.4e-11,
+        "score": 33.8,
+        "ali_from": 427,
+        "ali_to": 475,
+        "hmm_from": 1,
+        "hmm_to": 49,
+        "pfam_family": "TSP_1"
+      },
+      {
+        "domain": "TSP1_spondin",
+        "evalue": 1.8e-08,
+        "score": 24.0,
+        "ali_from": 427,
+        "ali_to": 475,
+        "hmm_from": 4,
+        "hmm_to": 52,
+        "pfam_family": "TSP1_spondin"
+      },
+      {
+        "domain": "TSP1_CCN",
+        "evalue": 0.00026,
+        "score": 10.6,
+        "ali_from": 430,
+        "ali_to": 449,
+        "hmm_from": 6,
+        "hmm_to": 25,
+        "pfam_family": "TSP1_CCN"
+      },
+      {
+        "domain": "TSP1_ADAMTS",
+        "evalue": 1.1e-05,
+        "score": 15.0,
+        "ali_from": 431,
+        "ali_to": 475,
+        "hmm_from": 5,
+        "hmm_to": 55,
+        "pfam_family": "TSP1_ADAMTS"
+      },
+      {
+        "domain": "HRM",
+        "evalue": 1e-09,
+        "score": 28.1,
+        "ali_from": 480,
+        "ali_to": 537,
+        "hmm_from": 2,
+        "hmm_to": 65,
+        "pfam_family": "HRM"
+      },
+      {
+        "domain": "GAIN",
+        "evalue": 3.3e-39,
+        "score": 123.7,
+        "ali_from": 563,
+        "ali_to": 795,
+        "hmm_from": 2,
+        "hmm_to": 208,
+        "pfam_family": "GAIN"
+      },
+      {
+        "domain": "GPS",
+        "evalue": 3.7e-17,
+        "score": 52.0,
+        "ali_from": 820,
+        "ali_to": 865,
+        "hmm_from": 1,
+        "hmm_to": 44,
+        "pfam_family": "GPS"
+      },
+      {
+        "domain": "7tm_2",
+        "evalue": 3.2e-66,
+        "score": 212.3,
+        "ali_from": 881,
+        "ali_to": 1113,
+        "hmm_from": 5,
+        "hmm_to": 250,
+        "pfam_family": "7tm_2"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": true,
+      "domains_lost": [],
+      "domains_gained": [
+        "HRM"
+      ],
+      "domains_shared": [
+        "7tm_2",
+        "AGRB_N",
+        "GAIN",
+        "GPS",
+        "TSP1_ADAMTS",
+        "TSP1_CCN",
+        "TSP1_spondin",
+        "TSP_1"
+      ],
+      "ct_domain_count": 8,
+      "ad_domain_count": 9
+    },
+    "stage2_pass": true,
+    "ct_motifs": {
+      "length": 1584,
+      "mts": {
+        "net_charge_30aa": 2,
+        "pos_aa_30": 3,
+        "neg_aa_30": 1,
+        "de_count_40aa": 2,
+        "hydrophobic_moment": 0.218,
+        "hhh_motif": null,
+        "lyr_motif": [
+          820,
+          "LYR"
+        ],
+        "composite_score": 5,
+        "prediction": "HIGH (mitochondrial import likely)",
+        "criteria_passed": {
+          "net_charge_ge_2": true,
+          "de_le_3": true,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": true
+        }
+      },
+      "functional_motifs": {
+        "lyr": [
+          [
+            820,
+            "LYR"
+          ]
+        ],
+        "hydrophobic_core_n30": [
+          [
+            15,
+            "PACPLLL"
+          ],
+          [
+            16,
+            "ACPLLLS"
+          ],
+          [
+            17,
+            "CPLLLSV"
+          ],
+          [
+            18,
+            "PLLLSVI"
+          ],
+          [
+            19,
+            "LLLSVIL"
+          ],
+          [
+            20,
+            "LLSVILS"
+          ],
+          [
+            21,
+            "LSVILSL"
+          ],
+          [
+            23,
+            "VILSLRL"
+          ],
+          [
+            24,
+            "ILSLRLA"
+          ]
+        ]
+      },
+      "composition": {
+        "K": 48,
+        "R": 105,
+        "D": 57,
+        "E": 95,
+        "H": 30,
+        "pct_charged": 19.255050505050505
+      }
+    },
+    "ad_motifs": {
+      "length": 1500,
+      "mts": {
+        "net_charge_30aa": 2,
+        "pos_aa_30": 3,
+        "neg_aa_30": 1,
+        "de_count_40aa": 2,
+        "hydrophobic_moment": 0.218,
+        "hhh_motif": null,
+        "lyr_motif": [
+          768,
+          "LYR"
+        ],
+        "composite_score": 5,
+        "prediction": "HIGH (mitochondrial import likely)",
+        "criteria_passed": {
+          "net_charge_ge_2": true,
+          "de_le_3": true,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": true
+        }
+      },
+      "functional_motifs": {
+        "lyr": [
+          [
+            768,
+            "LYR"
+          ]
+        ],
+        "hydrophobic_core_n30": [
+          [
+            18,
+            "PACPLLL"
+          ],
+          [
+            19,
+            "ACPLLLS"
+          ],
+          [
+            20,
+            "CPLLLSV"
+          ],
+          [
+            21,
+            "PLLLSVI"
+          ],
+          [
+            22,
+            "LLLSVIL"
+          ],
+          [
+            23,
+            "LLSVILS"
+          ],
+          [
+            24,
+            "LSVILSL"
+          ]
+        ]
+      },
+      "composition": {
+        "K": 49,
+        "R": 100,
+        "D": 57,
+        "E": 90,
+        "H": 31,
+        "pct_charged": 19.733333333333334
+      }
+    },
+    "ct_info": {
+      "transcript_id": "ENST00000373655",
+      "chrom": "chr1",
+      "strand": "-",
+      "associated_gene": "ADGRB2",
+      "structural_category": "full-splice_match",
+      "transcript_length": 5400,
+      "exon_count": 33,
+      "exons": [
+        [
+          31727117,
+          31727605
+        ],
+        [
+          31728025,
+          31728081
+        ],
+        [
+          31728182,
+          31728277
+        ],
+        [
+          31728598,
+          31728633
+        ],
+        [
+          31730800,
+          31731419
+        ],
+        [
+          31732115,
+          31732154
+        ],
+        [
+          31732517,
+          31732612
+        ],
+        [
+          31732972,
+          31733143
+        ],
+        [
+          31735183,
+          31735281
+        ],
+        [
+          31735580,
+          31735665
+        ],
+        [
+          31735827,
+          31735893
+        ],
+        [
+          31736321,
+          31736390
+        ],
+        [
+          31736573,
+          31736723
+        ],
+        [
+          31737429,
+          31737531
+        ],
+        [
+          31737652,
+          31737755
+        ],
+        [
+          31738200,
+          31738326
+        ],
+        [
+          31738587,
+          31738630
+        ],
+        [
+          31738832,
+          31738937
+        ],
+        [
+          31739308,
+          31739635
+        ],
+        [
+          31739926,
+          31740034
+        ],
+        [
+          31740110,
+          31740178
+        ],
+        [
+          31740347,
+          31740541
+        ],
+        [
+          31741373,
+          31741479
+        ],
+        [
+          31741624,
+          31741725
+        ],
+        [
+          31741800,
+          31741967
+        ],
+        [
+          31742053,
+          31742217
+        ],
+        [
+          31742838,
+          31743002
+        ],
+        [
+          31744193,
+          31744357
+        ],
+        [
+          31744648,
+          31744731
+        ],
+        [
+          31755999,
+          31756815
+        ],
+        [
+          31757201,
+          31757281
+        ],
+        [
+          31757382,
+          31757511
+        ],
+        [
+          31763884,
+          31764035
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 31727117,
+      "genomic_span_end": 31764035,
+      "genomic_span_kb": 36.918
+    },
+    "ad_info": {
+      "transcript_id": "ENST00000398556",
+      "chrom": "chr1",
+      "strand": "-",
+      "associated_gene": "ADGRB2",
+      "structural_category": "full-splice_match",
+      "transcript_length": 4879,
+      "exon_count": 29,
+      "exons": [
+        [
+          31727117,
+          31727605
+        ],
+        [
+          31728025,
+          31728081
+        ],
+        [
+          31728182,
+          31728280
+        ],
+        [
+          31728598,
+          31728633
+        ],
+        [
+          31730800,
+          31731419
+        ],
+        [
+          31732115,
+          31732154
+        ],
+        [
+          31732517,
+          31732612
+        ],
+        [
+          31732972,
+          31733143
+        ],
+        [
+          31735580,
+          31735665
+        ],
+        [
+          31735827,
+          31735893
+        ],
+        [
+          31736321,
+          31736390
+        ],
+        [
+          31736573,
+          31736723
+        ],
+        [
+          31737429,
+          31737531
+        ],
+        [
+          31737652,
+          31737755
+        ],
+        [
+          31738200,
+          31738326
+        ],
+        [
+          31738587,
+          31738630
+        ],
+        [
+          31738832,
+          31738937
+        ],
+        [
+          31739308,
+          31739635
+        ],
+        [
+          31739926,
+          31740034
+        ],
+        [
+          31740110,
+          31740178
+        ],
+        [
+          31740347,
+          31740541
+        ],
+        [
+          31741373,
+          31741479
+        ],
+        [
+          31741624,
+          31741725
+        ],
+        [
+          31741800,
+          31741967
+        ],
+        [
+          31742053,
+          31742217
+        ],
+        [
+          31742838,
+          31743002
+        ],
+        [
+          31744648,
+          31744731
+        ],
+        [
+          31755999,
+          31756815
+        ],
+        [
+          31759321,
+          31759423
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 31727117,
+      "genomic_span_end": 31759423,
+      "genomic_span_kb": 32.306
+    },
+    "ad_repeats": {
+      "locus_queried": "chr1:31722117-31764423",
+      "total_repeat_hits": 52,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {},
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 16,
+        "SINE": 28,
+        "LTR": 1,
+        "DNA": 7
+      }
+    },
+    "ct_repeats": {
+      "locus_queried": "chr1:31722117-31769035",
+      "total_repeat_hits": 56,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {
+        "E31": [
+          {
+            "name": "Chap1_Mam",
+            "class": "DNA",
+            "family": "hAT-Charlie",
+            "strand": "+",
+            "start": 31757241,
+            "end": 31757488,
+            "pct_divergence": 23.3,
+            "sw_score": 920,
+            "is_young_l1": false,
+            "exon_overlap_bp": 40
+          }
+        ],
+        "E32": [
+          {
+            "name": "Chap1_Mam",
+            "class": "DNA",
+            "family": "hAT-Charlie",
+            "strand": "+",
+            "start": 31757241,
+            "end": 31757488,
+            "pct_divergence": 23.3,
+            "sw_score": 920,
+            "is_young_l1": false,
+            "exon_overlap_bp": 106
+          }
+        ]
+      },
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 18,
+        "SINE": 30,
+        "LTR": 1,
+        "DNA": 7
+      }
+    },
+    "m6_nmd_screen": {
+      "ct": {
+        "transcript_id": "ENST00000373655",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "ad": {
+        "transcript_id": "ENST00000398556",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "summary": "NMD status could not be determined for one or both isoforms.",
+      "nmd_relevant": false
+    },
+    "nmd_gate_active": false,
+    "m7_seq_validation": {
+      "skipped": true,
+      "skip_reason": "no young LINE-1 in CDS"
+    },
+    "m8_regulatory_context": {
+      "mechanism_type": "alternative_promoter",
+      "cell_type_full": "Inhibitory_neuron",
+      "deg_n_genes_loaded": 34903,
+      "significant_regulators": [
+        {
+          "gene": "STAT1",
+          "logFC": -0.9664,
+          "padj": 1.6970061866988995e-214,
+          "direction": "down",
+          "neg_log10_padj": 213.8
+        },
+        {
+          "gene": "SP3",
+          "logFC": 0.2574,
+          "padj": 1.6216295266321209e-23,
+          "direction": "up",
+          "neg_log10_padj": 22.8
+        },
+        {
+          "gene": "SP1",
+          "logFC": 0.3044,
+          "padj": 8.582785601138493e-09,
+          "direction": "up",
+          "neg_log10_padj": 8.1
+        }
+      ],
+      "top_regulators": [
+        {
+          "gene": "STAT1",
+          "logFC": -0.9664,
+          "padj": 1.6970061866988995e-214,
+          "direction": "down",
+          "neg_log10_padj": 213.8
+        },
+        {
+          "gene": "SP3",
+          "logFC": 0.2574,
+          "padj": 1.6216295266321209e-23,
+          "direction": "up",
+          "neg_log10_padj": 22.8
+        },
+        {
+          "gene": "SP1",
+          "logFC": 0.3044,
+          "padj": 8.582785601138493e-09,
+          "direction": "up",
+          "neg_log10_padj": 8.1
+        }
+      ],
+      "motif_analysis": null,
+      "l1_details": null,
+      "evidence_strength": "correlative",
+      "evidence_details": {
+        "level": "correlative",
+        "n_significant_regulators": 3,
+        "interpretation": "3 transcription factors changed in this cell type, consistent with altered promoter activity.",
+        "caveat": "mRNA expression levels may not reflect protein activity. TARDBP in particular: mRNA UP in AD may reflect nuclear depletion compensation (cytoplasmic aggregation), not increased splicing activity. All causal claims require functional validation."
+      },
+      "summary": "The ADGRB2 isoform switch may reflect transcriptional changes. Top regulators: STAT1, SP3, SP1. Evidence strength: correlative.",
+      "mechanism_reclassified_by": "M9",
+      "tss_diff_bp": 4612
+    },
+    "m9_promoter_usage": {
+      "tss_diff_bp": 4612,
+      "tts_diff_bp": 0,
+      "ct_tss": 31764035,
+      "ad_tss": 31759423,
+      "tss_class": "alt_promoter_candidate",
+      "apa_class": "same_apa",
+      "ct_ccre": null,
+      "ad_ccre": null,
+      "ct_screen_hits": [],
+      "ad_screen_hits": [],
+      "promoter_evidence": "correlative",
+      "mechanism_reclassify": true,
+      "apa_motifs": {},
+      "summary": "ADGRB2: CT and AD isoforms likely originate from distinct promoters (TSS_diff=4,612 bp). Evidence strength: correlative. M14 mechanism_type reclassified to 'alternative_promoter'. Caution: promoter identity requires CAGE-seq or scATAC-seq validation."
+    },
+    "m10_apa": {
+      "tts_diff_bp": 0,
+      "ct_tts": 31727117,
+      "ad_tts": 31727117,
+      "apa_class": "same_apa",
+      "ct_polyasite": [],
+      "ad_polyasite": [],
+      "ct_utr_scan": {},
+      "ad_utr_scan": {},
+      "utr_changes": {
+        "comparable": false
+      },
+      "apa_evidence": "none",
+      "summary": "ADGRB2: CT and AD isoforms share essentially the same 3' end (TTS_diff=0 bp). No significant APA detected."
+    },
+    "m11_alphafold": {
+      "ct": {
+        "transcript_id": "ENST00000373655",
+        "uniprot_id": "O60241",
+        "source": "alphafold_db",
+        "plddt_mean": 61.39,
+        "plddt_high_fraction": 0.47,
+        "domain_plddt": {
+          "AGRB_N": {
+            "pfam_id": "AGRB_N",
+            "residues": "38-229",
+            "mean": 62.28,
+            "min": 28.75,
+            "max": 85.12,
+            "confidence": "low"
+          },
+          "TSP1_spondin": {
+            "pfam_id": "TSP1_spondin",
+            "residues": "479-527",
+            "mean": 76.86,
+            "min": 41.53,
+            "max": 93.56,
+            "confidence": "high"
+          },
+          "TSP_1": {
+            "pfam_id": "TSP_1",
+            "residues": "479-527",
+            "mean": 76.86,
+            "min": 41.53,
+            "max": 93.56,
+            "confidence": "high"
+          },
+          "TSP1_CCN": {
+            "pfam_id": "TSP1_CCN",
+            "residues": "482-501",
+            "mean": 84.79,
+            "min": 73.88,
+            "max": 93.56,
+            "confidence": "high"
+          },
+          "TSP1_ADAMTS": {
+            "pfam_id": "TSP1_ADAMTS",
+            "residues": "483-527",
+            "mean": 76.21,
+            "min": 41.53,
+            "max": 93.56,
+            "confidence": "high"
+          },
+          "GAIN": {
+            "pfam_id": "GAIN",
+            "residues": "615-847",
+            "mean": 78.55,
+            "min": 28.78,
+            "max": 96.5,
+            "confidence": "high"
+          },
+          "GPS": {
+            "pfam_id": "GPS",
+            "residues": "872-917",
+            "mean": 81.48,
+            "min": 47.84,
+            "max": 93.31,
+            "confidence": "high"
+          },
+          "7tm_2": {
+            "pfam_id": "7tm_2",
+            "residues": "933-1198",
+            "mean": 73.89,
+            "min": 25.2,
+            "max": 94.06,
+            "confidence": "high"
+          }
+        },
+        "error": null
+      },
+      "ad": {
+        "transcript_id": "ENST00000398556",
+        "uniprot_id": "O60241",
+        "source": "alphafold_db",
+        "plddt_mean": 61.39,
+        "plddt_high_fraction": 0.47,
+        "domain_plddt": {
+          "AGRB_N": {
+            "pfam_id": "AGRB_N",
+            "residues": "41-232",
+            "mean": 62.08,
+            "min": 28.75,
+            "max": 85.12,
+            "confidence": "low"
+          },
+          "TSP1_spondin": {
+            "pfam_id": "TSP1_spondin",
+            "residues": "427-475",
+            "mean": 70.12,
+            "min": 38.34,
+            "max": 91.75,
+            "confidence": "high"
+          },
+          "TSP_1": {
+            "pfam_id": "TSP_1",
+            "residues": "427-475",
+            "mean": 70.12,
+            "min": 38.34,
+            "max": 91.75,
+            "confidence": "high"
+          },
+          "TSP1_ADAMTS": {
+            "pfam_id": "TSP1_ADAMTS",
+            "residues": "431-475",
+            "mean": 68.96,
+            "min": 38.34,
+            "max": 91.75,
+            "confidence": "low"
+          },
+          "TSP1_CCN": {
+            "pfam_id": "TSP1_CCN",
+            "residues": "430-449",
+            "mean": 77.19,
+            "min": 52.72,
+            "max": 91.75,
+            "confidence": "high"
+          },
+          "HRM": {
+            "pfam_id": "HRM",
+            "residues": "480-537",
+            "mean": 78.75,
+            "min": 41.53,
+            "max": 93.56,
+            "confidence": "high"
+          },
+          "GAIN": {
+            "pfam_id": "GAIN",
+            "residues": "563-795",
+            "mean": 82.37,
+            "min": 28.78,
+            "max": 96.5,
+            "confidence": "high"
+          },
+          "GPS": {
+            "pfam_id": "GPS",
+            "residues": "820-865",
+            "mean": 82.18,
+            "min": 56.34,
+            "max": 94.38,
+            "confidence": "high"
+          },
+          "7tm_2": {
+            "pfam_id": "7tm_2",
+            "residues": "881-1113",
+            "mean": 78.07,
+            "min": 30.81,
+            "max": 94.06,
+            "confidence": "high"
+          }
+        },
+        "error": null
+      },
+      "comparison": {
+        "gained_domain_confident": [
+          "HRM (pLDDT=78.75)"
+        ],
+        "lost_domain_confident": [],
+        "degraded_domains": [],
+        "interpretation": "AD gains confident domain(s): HRM (pLDDT=78.75)."
+      }
+    },
+    "m12_ppi": {
+      "gene": "ADGRB2",
+      "hypothesized_partners": [
+        "RANBP2",
+        "MAGI1",
+        "DOCK1",
+        "C1QTNF4",
+        "MEGF10",
+        "ELMO1",
+        "RAC1"
+      ],
+      "string_hits": [
+        {
+          "partner": "RANBP2",
+          "combined_score": 900,
+          "experimental_score": 852,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "RANGAP1",
+          "combined_score": 700,
+          "experimental_score": 581,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "MAGI1",
+          "combined_score": 693,
+          "experimental_score": 0,
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "DOCK1",
+          "combined_score": 686,
+          "experimental_score": 0,
+          "evidence_types": [
+            "textmining"
+          ]
+        },
+        {
+          "partner": "XPOT",
+          "combined_score": 636,
+          "experimental_score": 582,
+          "evidence_types": [
+            "experimental",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "KPNB1",
+          "combined_score": 622,
+          "experimental_score": 522,
+          "evidence_types": [
+            "experimental",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "CSE1L",
+          "combined_score": 609,
+          "experimental_score": 558,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "RANGRF",
+          "combined_score": 578,
+          "experimental_score": 494,
+          "evidence_types": [
+            "experimental",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "EIF5A",
+          "combined_score": 540,
+          "experimental_score": 399,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "EIF5AL1",
+          "combined_score": 540,
+          "experimental_score": 399,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        }
+      ],
+      "hypothesis_support": {
+        "RANBP2": {
+          "combined_score": 900,
+          "experimental_score": 852,
+          "confidence": "high",
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        "MAGI1": {
+          "combined_score": 693,
+          "experimental_score": 0,
+          "confidence": "medium",
+          "evidence_types": [
+            "coexpression",
+            "textmining"
+          ]
+        },
+        "DOCK1": {
+          "combined_score": 686,
+          "experimental_score": 0,
+          "confidence": "medium",
+          "evidence_types": [
+            "textmining"
+          ]
+        },
+        "C1QTNF4": {
+          "combined_score": 0,
+          "experimental_score": 0,
+          "confidence": "none",
+          "evidence_types": []
+        },
+        "MEGF10": {
+          "combined_score": 0,
+          "experimental_score": 0,
+          "confidence": "none",
+          "evidence_types": []
+        },
+        "ELMO1": {
+          "combined_score": 417,
+          "experimental_score": 54,
+          "confidence": "medium",
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        "RAC1": {
+          "combined_score": 0,
+          "experimental_score": 0,
+          "confidence": "none",
+          "evidence_types": []
+        }
+      },
+      "domain_interaction_link": {
+        "domain_links": []
+      },
+      "summary_verdict": "SUPPORTED",
+      "interpretation": "Hypothesis-partner(s) ['RANBP2', 'ELMO1'] show experimental PPI evidence in STRING (scores: [900, 417])."
+    },
+    "m13_conservation": {
+      "track": "phyloP100way",
+      "genome": "hg38",
+      "ad_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr1",
+          "start": 31759321,
+          "end": 31759423,
+          "length_bp": 102,
+          "phyloP_mean": 0.075,
+          "phyloP_positive_fraction": 0.529,
+          "conservation_class": "low",
+          "domain_overlap": "HRM, GAIN, TSP1_spondin, GPS, AGRB_N, TSP1_CCN, TSP_1, TSP1_ADAMTS, 7tm_2",
+          "note": null
+        }
+      ],
+      "ct_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr1",
+          "start": 31735183,
+          "end": 31735281,
+          "length_bp": 98,
+          "phyloP_mean": 3.627,
+          "phyloP_positive_fraction": 1.0,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "GAIN, TSP1_spondin, GPS, AGRB_N, TSP1_CCN, TSP_1, TSP1_ADAMTS, 7tm_2",
+          "note": null
+        },
+        {
+          "rank": 2,
+          "chrom": "chr1",
+          "start": 31744193,
+          "end": 31744357,
+          "length_bp": 164,
+          "phyloP_mean": 4.158,
+          "phyloP_positive_fraction": 0.909,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "GAIN, TSP1_spondin, GPS, AGRB_N, TSP1_CCN, TSP_1, TSP1_ADAMTS, 7tm_2",
+          "note": null
+        },
+        {
+          "rank": 3,
+          "chrom": "chr1",
+          "start": 31757201,
+          "end": 31757281,
+          "length_bp": 80,
+          "phyloP_mean": 0.569,
+          "phyloP_positive_fraction": 0.7,
+          "conservation_class": "conserved",
+          "domain_overlap": "GAIN, TSP1_spondin, GPS, AGRB_N, TSP1_CCN, TSP_1, TSP1_ADAMTS, 7tm_2",
+          "note": null
+        },
+        {
+          "rank": 4,
+          "chrom": "chr1",
+          "start": 31757382,
+          "end": 31757511,
+          "length_bp": 129,
+          "phyloP_mean": 0.323,
+          "phyloP_positive_fraction": 0.628,
+          "conservation_class": "low",
+          "domain_overlap": "GAIN, TSP1_spondin, GPS, AGRB_N, TSP1_CCN, TSP_1, TSP1_ADAMTS, 7tm_2",
+          "note": null
+        },
+        {
+          "rank": 5,
+          "chrom": "chr1",
+          "start": 31763884,
+          "end": 31764035,
+          "length_bp": 151,
+          "phyloP_mean": 0.996,
+          "phyloP_positive_fraction": 0.881,
+          "conservation_class": "conserved",
+          "domain_overlap": "GAIN, TSP1_spondin, GPS, AGRB_N, TSP1_CCN, TSP_1, TSP1_ADAMTS, 7tm_2",
+          "note": null
+        }
+      ],
+      "background": {
+        "intronic_phyloP_mean": -0.165,
+        "intronic_sample_n": 5
+      },
+      "summary": {
+        "ad_specific_mean_phyloP": 0.075,
+        "ct_specific_mean_phyloP": 1.935,
+        "fold_difference": 0.04,
+        "interpretation": "AD-specific exons are poorly conserved (phyloP mean=0.075) vs CT-specific exons (1.935). "
+      }
+    }
+  },
+  {
+    "gene_name": "AMPD2",
+    "ct_transcript_id": "ENST00000528454",
+    "ad_transcript_id": "ENST00000667949",
+    "cell_type": "Inhibitory",
+    "diffuse_delta": 0.8554,
+    "dtu_pvalue": 6.65e-36,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:13:13.092790",
+    "ct_seq": {
+      "seq": "MDGKCKEIAEELFTRSLAESELRSAPYEFPEESPIEQLEERRQRLERQISQDVKLEPDILLRAKQDFLKTDSDSDLQLYKEQGEGQGDRSLRERDVLEREFQRVTISGEEKCGVPFTDLLDAAKSVVRALFIREKYMALSLQSFCPTTRRYLQQLAEKPLETRTYEQGPDTPVSADAPVHPPALEQHPYEHCEPSTMPGDLGLGLRMVRGVVHVYTRREPDEHCSEVELPYPDLQEFVADVNVLMALIINGPIKSFCYRRLQYLSSKFQMHVLLNEMKELAAQKKVPHRDFYNIRKVDTHIHASSCMNQKHLLRFIKRAMKRHLEEIVHVEQGREQTLREVFESMNLTAYDLSVDTLDVHADRNTFHRFDKFNAKYNPIGESVLREIFIKTDNRVSGKYFAHIIKEVMSDLEESKYQNAELRLSIYGRSRDEWDKLARWAVMHRVHSPNVRWLVQVPRLFDVYRTKGQLANFQEMLENIFLPLFEATVHPASHPELHLFLEHVDGFDSVDDESKPENHVFNLESPLPEAWVEEDNPPYAYYLYYTFANMAMLNHLRRQRGFHTFVLRPHCGEAGPIHHLVSAFMLAENISHGLLLRKAPVLQYLYYLAQIGIAMSPLSNNSLFLSYHRNPLPEYLSRGLMVSLSTDDPLQFHFTKEPLMEEYSIATQVWKLSSCDMCELARNSVLMSGFSHKVKSHWLGPNYTKEGPEGNDIRRTNVPDIRVGYRYETLCQELALITQAVQSEMLETIPEEAGITMSPGPQ",
+      "length": 761,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MALSLQSFCPTTRRYLQQLAEKPLETRTYEQGPDTPVSADAPVHPPALEQHPYEHCEPSTMPGDLGLGLRMVRGVVHVYTRREPDEHCSEVELPYPDLQEFVADVNVLMALIINGPIKSFCYRRLQYLSSKFQMHVLLNEMKELAAQKKVPHRDFYNIRKVDTHIHASSCMNQKHLLRFIKRAMKRHLEEIVHVEQGREQTLREVFESMNLTAYDLSVDTLDVHADRNTFHRFDKFNAKYNPIGESVLREIFIKTDNRVSGKYFAHIIKEVMSDLEESKYQNAELRLSIYGRSRDEWDKLARWAVMHRVHSPNVRWLVQVPRLFDVYRTKGQLANFQEMLENIFLPLFEATVHPASHPELHLFLEHVDGFDSVDDESKPENHVFNLESPLPEAWVEEDNPPYAYYLYYTFANMAMLNHLRRQRGFHTFVLRPHCGEAGPIHHLVSAFMLAENISHGLLLRKAPVLQYLYYLAQIGIAMSPLSNNSLFLSYHRNPLPEYLSRGLMVSLSTDDPLQFHFTKEPLMEEYSIATQVWKLSSCDMCELARNSVLMSGFSHKVKSHWLGPNYTKEGPEGNDIRRTNVPDIRVGYRYETLCQELALITQAVQSEMLETIPEEAGITMSPGPQ",
+      "length": 625,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "AMP_deaminase",
+        "evalue": 0.0,
+        "score": 1128.0,
+        "ali_from": 99,
+        "ali_to": 742,
+        "hmm_from": 1,
+        "hmm_to": 630,
+        "pfam_family": "AMP_deaminase"
+      },
+      {
+        "domain": "A_deaminase",
+        "evalue": 5.5e-13,
+        "score": 35.7,
+        "ali_from": 566,
+        "ali_to": 695,
+        "hmm_from": 191,
+        "hmm_to": 321,
+        "pfam_family": "A_deaminase"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "AMP_deaminase",
+        "evalue": 0.0,
+        "score": 1081.1,
+        "ali_from": 3,
+        "ali_to": 606,
+        "hmm_from": 41,
+        "hmm_to": 630,
+        "pfam_family": "AMP_deaminase"
+      },
+      {
+        "domain": "A_deaminase",
+        "evalue": 4e-13,
+        "score": 36.2,
+        "ali_from": 430,
+        "ali_to": 559,
+        "hmm_from": 191,
+        "hmm_to": 321,
+        "pfam_family": "A_deaminase"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": false,
+      "domains_lost": [],
+      "domains_gained": [],
+      "domains_shared": [
+        "AMP_deaminase",
+        "A_deaminase"
+      ],
+      "ct_domain_count": 2,
+      "ad_domain_count": 2
+    },
+    "stage2_pass": false
+  },
+  {
+    "gene_name": "ANKRD44",
+    "ct_transcript_id": "ENST00000409919",
+    "ad_transcript_id": "ENST00000424317",
+    "cell_type": "Oligodendrocyte",
+    "diffuse_delta": 0.7088,
+    "dtu_pvalue": 3.186e-23,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:23:53.875233",
+    "ct_seq": {
+      "seq": "MAVLKLTDQPPLVQAIFSGDPEEIRMLIHKTEDVNTLDSEKRTPLHVAAFLGDAEIIELLILSGARVNAKDNMWLTPLHRAVASRSEEAVQVLIKHSADVNARDKNWQTPLHVAAANKAVKCAEVIIPLLSSVNVSDRGGRTALHHAALNGHVEMVNLLLAKGANINAFDKKDRRALHWAAYMGHLDVVALLINHGAEVTCKDKKGYTPLHAAASNGQINVVKHLLNLGVEIDEINVYGNTALHIACYNGQDAVVNELIDYGANVNQPNNNGFTPLHFAAASTHGALCLELLVNNGADVNIQSKDGKSPLHMTAVHGRFTRSQTLIQNGGEIDCVDKDGNTPLHVAARYGHELLINTLITSGADTAK",
+      "length": 367,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MTAVHGRFTRSQTLIQNGGEIDCVDKDGNTPLHVAARYGHELLINTLITSGADTAKCGIHSMFPLHLAALNAHSDCCRKLLSSGQKYSIVSLFSNEHVLSAGFEIDTPDKFGRTCLHAAAAGGNVECIKLLQSSGADFHKKDKCGRTPLHYAAANCHFHCIETLVTTGANVNETDDWGRTALHYAAASDMDRNKTILGNAHDNSEELERARELKEKEATLCLEFLLQNDANPSIRDKEGYNSIHYAAAYGHRQCLELLLERTNSGFEESDSGATKSPLHLAAYNGHHQALEVLLQSLVDLDIRDEKGRTALDLAAFKGHTECVEALINQGASIFVKDNVTKRTPLHASVINGHTLCLRLLLEIADNPEAVDVKDAKGQTPLMLAVAYGHIDAVSLLLEKEANVDTVDILGCTALHRGIMTGHEECVQMLLEQEVSILCKDSRGRTPLHYAAARGHATWLSELLQMALSEEDCCFKDNQGYTPLHWACYNGNENCIEVLLEQKCFRKFIGNPFTPLHCAIINDHGNCASLLLGAIDSSIVSCRDDKGRTPLHAAAFADHVECLQLLLRHSAPVNAVDNSGKTALMMAAENGQAGAVDILVNSAQADLTVKDKDLNTPLHLACSKGHEKCALLILDKIQDESLINEKNNALQTPLHVAARNGLKVVVEELLAKGACVLAVDENGC",
+      "length": 683,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "Ank_3",
+        "evalue": 0.00049,
+        "score": 9.5,
+        "ali_from": 9,
+        "ali_to": 35,
+        "hmm_from": 3,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2.2e-11,
+        "score": 32.4,
+        "ali_from": 11,
+        "ali_to": 61,
+        "hmm_from": 4,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 3.6e-20,
+        "score": 60.9,
+        "ali_from": 12,
+        "ali_to": 104,
+        "hmm_from": 1,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 2.1e-09,
+        "score": 26.2,
+        "ali_from": 29,
+        "ali_to": 81,
+        "hmm_from": 3,
+        "hmm_to": 56,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 7.1e-07,
+        "score": 18.1,
+        "ali_from": 41,
+        "ali_to": 68,
+        "hmm_from": 2,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 4.9e-11,
+        "score": 31.1,
+        "ali_from": 42,
+        "ali_to": 72,
+        "hmm_from": 3,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 1.1e-06,
+        "score": 17.6,
+        "ali_from": 65,
+        "ali_to": 104,
+        "hmm_from": 7,
+        "hmm_to": 46,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 1.8e-13,
+        "score": 39.4,
+        "ali_from": 70,
+        "ali_to": 135,
+        "hmm_from": 25,
+        "hmm_to": 88,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2e-15,
+        "score": 45.3,
+        "ali_from": 74,
+        "ali_to": 125,
+        "hmm_from": 1,
+        "hmm_to": 52,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 9.5e-10,
+        "score": 27.1,
+        "ali_from": 76,
+        "ali_to": 105,
+        "hmm_from": 4,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 3e-07,
+        "score": 19.3,
+        "ali_from": 76,
+        "ali_to": 102,
+        "hmm_from": 4,
+        "hmm_to": 30,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 2.8e-08,
+        "score": 22.6,
+        "ali_from": 93,
+        "ali_to": 127,
+        "hmm_from": 1,
+        "hmm_to": 36,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 4.9e-18,
+        "score": 54.1,
+        "ali_from": 99,
+        "ali_to": 170,
+        "hmm_from": 21,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 1.7e-05,
+        "score": 13.7,
+        "ali_from": 108,
+        "ali_to": 135,
+        "hmm_from": 3,
+        "hmm_to": 30,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.00084,
+        "score": 8.7,
+        "ali_from": 108,
+        "ali_to": 128,
+        "hmm_from": 3,
+        "hmm_to": 23,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 5.7e-11,
+        "score": 31.1,
+        "ali_from": 122,
+        "ali_to": 160,
+        "hmm_from": 16,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 5.7e-12,
+        "score": 34.4,
+        "ali_from": 132,
+        "ali_to": 171,
+        "hmm_from": 8,
+        "hmm_to": 47,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 1.7e-13,
+        "score": 38.8,
+        "ali_from": 140,
+        "ali_to": 171,
+        "hmm_from": 2,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 5.7e-11,
+        "score": 30.6,
+        "ali_from": 140,
+        "ali_to": 168,
+        "hmm_from": 2,
+        "hmm_to": 30,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 3.6e-18,
+        "score": 54.0,
+        "ali_from": 141,
+        "ali_to": 193,
+        "hmm_from": 2,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 3e-10,
+        "score": 28.9,
+        "ali_from": 159,
+        "ali_to": 209,
+        "hmm_from": 1,
+        "hmm_to": 52,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 8.1e-19,
+        "score": 56.6,
+        "ali_from": 172,
+        "ali_to": 234,
+        "hmm_from": 28,
+        "hmm_to": 88,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 2.6e-07,
+        "score": 19.5,
+        "ali_from": 174,
+        "ali_to": 199,
+        "hmm_from": 3,
+        "hmm_to": 28,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 1.5e-18,
+        "score": 55.3,
+        "ali_from": 175,
+        "ali_to": 225,
+        "hmm_from": 3,
+        "hmm_to": 53,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 4.8e-11,
+        "score": 31.1,
+        "ali_from": 176,
+        "ali_to": 204,
+        "hmm_from": 5,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 4.2e-15,
+        "score": 44.3,
+        "ali_from": 192,
+        "ali_to": 246,
+        "hmm_from": 1,
+        "hmm_to": 56,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 2.4e-10,
+        "score": 28.9,
+        "ali_from": 206,
+        "ali_to": 236,
+        "hmm_from": 2,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 2e-09,
+        "score": 26.0,
+        "ali_from": 206,
+        "ali_to": 233,
+        "hmm_from": 2,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 9.5e-09,
+        "score": 24.1,
+        "ali_from": 222,
+        "ali_to": 251,
+        "hmm_from": 17,
+        "hmm_to": 46,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 1e-18,
+        "score": 56.3,
+        "ali_from": 230,
+        "ali_to": 302,
+        "hmm_from": 20,
+        "hmm_to": 89,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 2.9e-12,
+        "score": 35.0,
+        "ali_from": 238,
+        "ali_to": 270,
+        "hmm_from": 1,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 8.9e-10,
+        "score": 27.0,
+        "ali_from": 238,
+        "ali_to": 266,
+        "hmm_from": 1,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 1.3e-08,
+        "score": 23.7,
+        "ali_from": 238,
+        "ali_to": 272,
+        "hmm_from": 15,
+        "hmm_to": 49,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 6.5e-09,
+        "score": 24.6,
+        "ali_from": 253,
+        "ali_to": 284,
+        "hmm_from": 15,
+        "hmm_to": 46,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 5.3e-13,
+        "score": 37.6,
+        "ali_from": 258,
+        "ali_to": 311,
+        "hmm_from": 1,
+        "hmm_to": 54,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 2.1e-10,
+        "score": 29.1,
+        "ali_from": 271,
+        "ali_to": 303,
+        "hmm_from": 1,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 1.2e-07,
+        "score": 20.5,
+        "ali_from": 271,
+        "ali_to": 301,
+        "hmm_from": 1,
+        "hmm_to": 30,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 5.9e-18,
+        "score": 53.8,
+        "ali_from": 281,
+        "ali_to": 365,
+        "hmm_from": 5,
+        "hmm_to": 86,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2.1e-07,
+        "score": 19.8,
+        "ali_from": 288,
+        "ali_to": 326,
+        "hmm_from": 16,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 0.0003,
+        "score": 9.8,
+        "ali_from": 305,
+        "ali_to": 337,
+        "hmm_from": 1,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2.4e-11,
+        "score": 32.3,
+        "ali_from": 308,
+        "ali_to": 352,
+        "hmm_from": 3,
+        "hmm_to": 47,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 1.3e-07,
+        "score": 20.5,
+        "ali_from": 325,
+        "ali_to": 351,
+        "hmm_from": 1,
+        "hmm_to": 28,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 7.8e-10,
+        "score": 27.3,
+        "ali_from": 338,
+        "ali_to": 364,
+        "hmm_from": 1,
+        "hmm_to": 27,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 8.2e-08,
+        "score": 21.0,
+        "ali_from": 338,
+        "ali_to": 364,
+        "hmm_from": 1,
+        "hmm_to": 27,
+        "pfam_family": "Ank_3"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "Ank_4",
+        "evalue": 3.4e-09,
+        "score": 25.7,
+        "ali_from": 4,
+        "ali_to": 41,
+        "hmm_from": 10,
+        "hmm_to": 47,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 3.1e-15,
+        "score": 45.3,
+        "ali_from": 12,
+        "ali_to": 87,
+        "hmm_from": 14,
+        "hmm_to": 86,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 3.2e-07,
+        "score": 19.5,
+        "ali_from": 14,
+        "ali_to": 40,
+        "hmm_from": 1,
+        "hmm_to": 28,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 1.7e-09,
+        "score": 26.5,
+        "ali_from": 27,
+        "ali_to": 54,
+        "hmm_from": 1,
+        "hmm_to": 28,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 2.2e-07,
+        "score": 19.9,
+        "ali_from": 27,
+        "ali_to": 53,
+        "hmm_from": 1,
+        "hmm_to": 27,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2.4e-06,
+        "score": 16.6,
+        "ali_from": 33,
+        "ali_to": 81,
+        "hmm_from": 6,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 0.0011,
+        "score": 8.3,
+        "ali_from": 60,
+        "ali_to": 81,
+        "hmm_from": 15,
+        "hmm_to": 36,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 1.5e-05,
+        "score": 14.1,
+        "ali_from": 64,
+        "ali_to": 84,
+        "hmm_from": 5,
+        "hmm_to": 25,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.00054,
+        "score": 9.6,
+        "ali_from": 64,
+        "ali_to": 84,
+        "hmm_from": 5,
+        "hmm_to": 25,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 3.9e-19,
+        "score": 57.9,
+        "ali_from": 99,
+        "ali_to": 175,
+        "hmm_from": 17,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 4.2e-10,
+        "score": 28.6,
+        "ali_from": 100,
+        "ali_to": 131,
+        "hmm_from": 22,
+        "hmm_to": 53,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 3.8e-05,
+        "score": 12.9,
+        "ali_from": 102,
+        "ali_to": 131,
+        "hmm_from": 5,
+        "hmm_to": 35,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 1.1e-05,
+        "score": 14.7,
+        "ali_from": 111,
+        "ali_to": 139,
+        "hmm_from": 1,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 6.8e-10,
+        "score": 27.8,
+        "ali_from": 112,
+        "ali_to": 143,
+        "hmm_from": 2,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 6e-21,
+        "score": 63.7,
+        "ali_from": 116,
+        "ali_to": 189,
+        "hmm_from": 1,
+        "hmm_to": 71,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 1.2e-11,
+        "score": 33.5,
+        "ali_from": 130,
+        "ali_to": 165,
+        "hmm_from": 20,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 4.7e-10,
+        "score": 28.5,
+        "ali_from": 139,
+        "ali_to": 185,
+        "hmm_from": 10,
+        "hmm_to": 56,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 4.3e-08,
+        "score": 22.1,
+        "ali_from": 144,
+        "ali_to": 172,
+        "hmm_from": 1,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 8.9e-11,
+        "score": 30.5,
+        "ali_from": 145,
+        "ali_to": 176,
+        "hmm_from": 2,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2.4e-08,
+        "score": 23.0,
+        "ali_from": 160,
+        "ali_to": 187,
+        "hmm_from": 16,
+        "hmm_to": 43,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 0.00043,
+        "score": 9.6,
+        "ali_from": 178,
+        "ali_to": 187,
+        "hmm_from": 2,
+        "hmm_to": 11,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.0036,
+        "score": 7.1,
+        "ali_from": 178,
+        "ali_to": 189,
+        "hmm_from": 2,
+        "hmm_to": 13,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 8.6e-11,
+        "score": 30.8,
+        "ali_from": 217,
+        "ali_to": 259,
+        "hmm_from": 12,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 4.3e-16,
+        "score": 48.1,
+        "ali_from": 221,
+        "ali_to": 304,
+        "hmm_from": 12,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 0.0039,
+        "score": 6.5,
+        "ali_from": 221,
+        "ali_to": 237,
+        "hmm_from": 17,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 4.1e-09,
+        "score": 25.5,
+        "ali_from": 225,
+        "ali_to": 260,
+        "hmm_from": 1,
+        "hmm_to": 37,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 5.6e-06,
+        "score": 15.5,
+        "ali_from": 239,
+        "ali_to": 260,
+        "hmm_from": 2,
+        "hmm_to": 23,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 4.7e-05,
+        "score": 12.8,
+        "ali_from": 239,
+        "ali_to": 261,
+        "hmm_from": 2,
+        "hmm_to": 24,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 1.7e-16,
+        "score": 49.4,
+        "ali_from": 274,
+        "ali_to": 337,
+        "hmm_from": 29,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 3.1e-08,
+        "score": 22.5,
+        "ali_from": 276,
+        "ali_to": 304,
+        "hmm_from": 4,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 1.7e-15,
+        "score": 45.8,
+        "ali_from": 276,
+        "ali_to": 327,
+        "hmm_from": 3,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 6.8e-06,
+        "score": 15.4,
+        "ali_from": 276,
+        "ali_to": 301,
+        "hmm_from": 4,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 6.9e-09,
+        "score": 24.8,
+        "ali_from": 276,
+        "ali_to": 314,
+        "hmm_from": 18,
+        "hmm_to": 56,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 3.9e-07,
+        "score": 19.2,
+        "ali_from": 298,
+        "ali_to": 338,
+        "hmm_from": 7,
+        "hmm_to": 47,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 9.4e-11,
+        "score": 30.5,
+        "ali_from": 307,
+        "ali_to": 338,
+        "hmm_from": 2,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 2.7e-06,
+        "score": 16.6,
+        "ali_from": 307,
+        "ali_to": 333,
+        "hmm_from": 2,
+        "hmm_to": 28,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 1.4e-09,
+        "score": 26.9,
+        "ali_from": 314,
+        "ali_to": 361,
+        "hmm_from": 8,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 2.3e-17,
+        "score": 52.2,
+        "ali_from": 338,
+        "ali_to": 406,
+        "hmm_from": 27,
+        "hmm_to": 89,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.0002,
+        "score": 10.9,
+        "ali_from": 341,
+        "ali_to": 362,
+        "hmm_from": 2,
+        "hmm_to": 23,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 5.3e-07,
+        "score": 18.7,
+        "ali_from": 342,
+        "ali_to": 371,
+        "hmm_from": 3,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 1.1e-06,
+        "score": 17.8,
+        "ali_from": 342,
+        "ali_to": 381,
+        "hmm_from": 17,
+        "hmm_to": 53,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 8.8e-10,
+        "score": 27.6,
+        "ali_from": 365,
+        "ali_to": 415,
+        "hmm_from": 5,
+        "hmm_to": 54,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 8.9e-19,
+        "score": 56.7,
+        "ali_from": 369,
+        "ali_to": 440,
+        "hmm_from": 21,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 1.1e-10,
+        "score": 30.3,
+        "ali_from": 377,
+        "ali_to": 407,
+        "hmm_from": 2,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 2.2e-08,
+        "score": 23.0,
+        "ali_from": 377,
+        "ali_to": 404,
+        "hmm_from": 2,
+        "hmm_to": 29,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 1e-15,
+        "score": 46.5,
+        "ali_from": 379,
+        "ali_to": 430,
+        "hmm_from": 3,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 1.7e-13,
+        "score": 39.8,
+        "ali_from": 402,
+        "ali_to": 463,
+        "hmm_from": 21,
+        "hmm_to": 80,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 1.1e-07,
+        "score": 20.8,
+        "ali_from": 410,
+        "ali_to": 440,
+        "hmm_from": 2,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.00012,
+        "score": 11.6,
+        "ali_from": 410,
+        "ali_to": 436,
+        "hmm_from": 2,
+        "hmm_to": 28,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 2.5e-11,
+        "score": 32.5,
+        "ali_from": 419,
+        "ali_to": 465,
+        "hmm_from": 10,
+        "hmm_to": 52,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 1.9e-07,
+        "score": 20.2,
+        "ali_from": 429,
+        "ali_to": 463,
+        "hmm_from": 1,
+        "hmm_to": 36,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "GATase_7",
+        "evalue": 0.0047,
+        "score": 5.6,
+        "ali_from": 434,
+        "ali_to": 461,
+        "hmm_from": 89,
+        "hmm_to": 116,
+        "pfam_family": "GATase_7"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 3.3e-17,
+        "score": 51.7,
+        "ali_from": 438,
+        "ali_to": 502,
+        "hmm_from": 24,
+        "hmm_to": 83,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 6e-07,
+        "score": 18.5,
+        "ali_from": 443,
+        "ali_to": 464,
+        "hmm_from": 2,
+        "hmm_to": 23,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 9.5e-05,
+        "score": 11.9,
+        "ali_from": 443,
+        "ali_to": 463,
+        "hmm_from": 2,
+        "hmm_to": 22,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 7.5e-13,
+        "score": 37.4,
+        "ali_from": 444,
+        "ali_to": 499,
+        "hmm_from": 2,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 2.5e-16,
+        "score": 48.9,
+        "ali_from": 461,
+        "ali_to": 532,
+        "hmm_from": 11,
+        "hmm_to": 81,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 2.2e-05,
+        "score": 13.6,
+        "ali_from": 476,
+        "ali_to": 499,
+        "hmm_from": 13,
+        "hmm_to": 36,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 2.4e-09,
+        "score": 26.0,
+        "ali_from": 478,
+        "ali_to": 501,
+        "hmm_from": 1,
+        "hmm_to": 24,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 7.5e-08,
+        "score": 21.4,
+        "ali_from": 479,
+        "ali_to": 501,
+        "hmm_from": 2,
+        "hmm_to": 24,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 2.5e-06,
+        "score": 16.6,
+        "ali_from": 512,
+        "ali_to": 533,
+        "hmm_from": 3,
+        "hmm_to": 26,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 0.00013,
+        "score": 11.2,
+        "ali_from": 512,
+        "ali_to": 531,
+        "hmm_from": 35,
+        "hmm_to": 54,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.0017,
+        "score": 8.1,
+        "ali_from": 512,
+        "ali_to": 532,
+        "hmm_from": 3,
+        "hmm_to": 23,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 3.2e-09,
+        "score": 25.8,
+        "ali_from": 540,
+        "ali_to": 584,
+        "hmm_from": 10,
+        "hmm_to": 54,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 7.4e-19,
+        "score": 57.0,
+        "ali_from": 541,
+        "ali_to": 610,
+        "hmm_from": 24,
+        "hmm_to": 90,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 9.8e-13,
+        "score": 36.7,
+        "ali_from": 546,
+        "ali_to": 577,
+        "hmm_from": 2,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 2.1e-07,
+        "score": 20.0,
+        "ali_from": 546,
+        "ali_to": 574,
+        "hmm_from": 2,
+        "hmm_to": 30,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 7.9e-14,
+        "score": 40.5,
+        "ali_from": 547,
+        "ali_to": 598,
+        "hmm_from": 2,
+        "hmm_to": 53,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 9.2e-11,
+        "score": 30.8,
+        "ali_from": 569,
+        "ali_to": 620,
+        "hmm_from": 6,
+        "hmm_to": 56,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 6.5e-07,
+        "score": 18.4,
+        "ali_from": 579,
+        "ali_to": 611,
+        "hmm_from": 2,
+        "hmm_to": 33,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 0.00015,
+        "score": 11.3,
+        "ali_from": 579,
+        "ali_to": 606,
+        "hmm_from": 2,
+        "hmm_to": 28,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 1.4e-06,
+        "score": 17.4,
+        "ali_from": 595,
+        "ali_to": 630,
+        "hmm_from": 17,
+        "hmm_to": 51,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 7e-06,
+        "score": 15.2,
+        "ali_from": 600,
+        "ali_to": 633,
+        "hmm_from": 4,
+        "hmm_to": 36,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank_2",
+        "evalue": 1.3e-13,
+        "score": 40.1,
+        "ali_from": 605,
+        "ali_to": 675,
+        "hmm_from": 21,
+        "hmm_to": 86,
+        "pfam_family": "Ank_2"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 2e-07,
+        "score": 20.0,
+        "ali_from": 613,
+        "ali_to": 634,
+        "hmm_from": 2,
+        "hmm_to": 23,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 1.2e-05,
+        "score": 14.6,
+        "ali_from": 613,
+        "ali_to": 635,
+        "hmm_from": 2,
+        "hmm_to": 24,
+        "pfam_family": "Ank_3"
+      },
+      {
+        "domain": "Ank_4",
+        "evalue": 6.8e-09,
+        "score": 24.8,
+        "ali_from": 614,
+        "ali_to": 660,
+        "hmm_from": 2,
+        "hmm_to": 45,
+        "pfam_family": "Ank_4"
+      },
+      {
+        "domain": "Ank_5",
+        "evalue": 3.6e-05,
+        "score": 13.0,
+        "ali_from": 643,
+        "ali_to": 682,
+        "hmm_from": 10,
+        "hmm_to": 49,
+        "pfam_family": "Ank_5"
+      },
+      {
+        "domain": "Ank",
+        "evalue": 5.5e-09,
+        "score": 24.9,
+        "ali_from": 650,
+        "ali_to": 679,
+        "hmm_from": 3,
+        "hmm_to": 32,
+        "pfam_family": "Ank"
+      },
+      {
+        "domain": "Ank_3",
+        "evalue": 4.8e-06,
+        "score": 15.8,
+        "ali_from": 650,
+        "ali_to": 673,
+        "hmm_from": 3,
+        "hmm_to": 26,
+        "pfam_family": "Ank_3"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": true,
+      "domains_lost": [],
+      "domains_gained": [
+        "GATase_7"
+      ],
+      "domains_shared": [
+        "Ank",
+        "Ank_2",
+        "Ank_3",
+        "Ank_4",
+        "Ank_5"
+      ],
+      "ct_domain_count": 5,
+      "ad_domain_count": 6
+    },
+    "stage2_pass": true,
+    "ct_motifs": {
+      "length": 367,
+      "mts": {
+        "net_charge_30aa": -1,
+        "pos_aa_30": 3,
+        "neg_aa_30": 4,
+        "de_count_40aa": 8,
+        "hydrophobic_moment": 0.2393,
+        "hhh_motif": null,
+        "lyr_motif": null,
+        "composite_score": 2,
+        "prediction": "INTERMEDIATE (uncertain)",
+        "criteria_passed": {
+          "net_charge_ge_2": false,
+          "de_le_3": false,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": false
+        }
+      },
+      "functional_motifs": {
+        "hydrophobic_core_n30": [
+          [
+            1,
+            "MAVLKLT"
+          ],
+          [
+            11,
+            "PLVQAIF"
+          ],
+          [
+            12,
+            "LVQAIFS"
+          ]
+        ]
+      },
+      "composition": {
+        "K": 19,
+        "R": 13,
+        "D": 22,
+        "E": 17,
+        "H": 20,
+        "pct_charged": 19.346049046321525
+      }
+    },
+    "ad_motifs": {
+      "length": 683,
+      "mts": {
+        "net_charge_30aa": -1,
+        "pos_aa_30": 3,
+        "neg_aa_30": 4,
+        "de_count_40aa": 4,
+        "hydrophobic_moment": 0.3082,
+        "hhh_motif": null,
+        "lyr_motif": null,
+        "composite_score": 2,
+        "prediction": "INTERMEDIATE (uncertain)",
+        "criteria_passed": {
+          "net_charge_ge_2": false,
+          "de_le_3": false,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": false
+        }
+      },
+      "functional_motifs": {
+        "coiled_coil_heptad": [
+          [
+            582,
+            "ALMMAAE"
+          ]
+        ]
+      },
+      "composition": {
+        "K": 35,
+        "R": 26,
+        "D": 44,
+        "E": 45,
+        "H": 36,
+        "pct_charged": 21.96193265007321
+      }
+    },
+    "ct_info": {
+      "transcript_id": "ENST00000409919",
+      "chrom": "chr2",
+      "strand": "-",
+      "associated_gene": "ANKRD44",
+      "structural_category": "full-splice_match",
+      "transcript_length": 1622,
+      "exon_count": 10,
+      "exons": [
+        [
+          197099477,
+          197099930
+        ],
+        [
+          197110766,
+          197110844
+        ],
+        [
+          197121332,
+          197121544
+        ],
+        [
+          197122650,
+          197122792
+        ],
+        [
+          197125381,
+          197125468
+        ],
+        [
+          197125837,
+          197126037
+        ],
+        [
+          197136592,
+          197136662
+        ],
+        [
+          197147027,
+          197147105
+        ],
+        [
+          197187023,
+          197187106
+        ],
+        [
+          197310578,
+          197310787
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 197099477,
+      "genomic_span_end": 197310787,
+      "genomic_span_kb": 211.31
+    },
+    "ad_info": {
+      "transcript_id": "ENST00000424317",
+      "chrom": "chr2",
+      "strand": "-",
+      "associated_gene": "ANKRD44",
+      "structural_category": "full-splice_match",
+      "transcript_length": 2798,
+      "exon_count": 22,
+      "exons": [
+        [
+          196967017,
+          196967446
+        ],
+        [
+          196993583,
+          196993674
+        ],
+        [
+          196995379,
+          196995461
+        ],
+        [
+          196998337,
+          196998419
+        ],
+        [
+          196998907,
+          196999052
+        ],
+        [
+          197000419,
+          197000502
+        ],
+        [
+          197001753,
+          197001840
+        ],
+        [
+          197005694,
+          197005910
+        ],
+        [
+          197007806,
+          197007923
+        ],
+        [
+          197008944,
+          197009031
+        ],
+        [
+          197013511,
+          197013712
+        ],
+        [
+          197025196,
+          197025267
+        ],
+        [
+          197078703,
+          197078814
+        ],
+        [
+          197081645,
+          197081725
+        ],
+        [
+          197083369,
+          197083509
+        ],
+        [
+          197086680,
+          197086748
+        ],
+        [
+          197088711,
+          197088828
+        ],
+        [
+          197089950,
+          197090032
+        ],
+        [
+          197099816,
+          197099930
+        ],
+        [
+          197110766,
+          197110844
+        ],
+        [
+          197121332,
+          197121544
+        ],
+        [
+          197122650,
+          197122733
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 196967017,
+      "genomic_span_end": 197122733,
+      "genomic_span_kb": 155.716
+    },
+    "ad_repeats": {
+      "locus_queried": "chr2:196962017-197127733",
+      "total_repeat_hits": 249,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {},
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 98,
+        "SINE": 106,
+        "LTR": 17,
+        "DNA": 28
+      }
+    },
+    "ct_repeats": {
+      "locus_queried": "chr2:197094477-197315787",
+      "total_repeat_hits": 347,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {},
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 112,
+        "SINE": 150,
+        "LTR": 26,
+        "DNA": 59
+      }
+    },
+    "m6_nmd_screen": {
+      "ct": {
+        "transcript_id": "ENST00000409919",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "ad": {
+        "transcript_id": "ENST00000424317",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "summary": "NMD status could not be determined for one or both isoforms.",
+      "nmd_relevant": false
+    },
+    "nmd_gate_active": false,
+    "m7_seq_validation": {
+      "skipped": true,
+      "skip_reason": "no young LINE-1 in CDS"
+    },
+    "m8_regulatory_context": {
+      "mechanism_type": "alternative_promoter",
+      "cell_type_full": "Oligodendrocyte",
+      "deg_n_genes_loaded": 34903,
+      "significant_regulators": [
+        {
+          "gene": "SP3",
+          "logFC": 0.3143,
+          "padj": 1.2848065759674694e-12,
+          "direction": "up",
+          "neg_log10_padj": 11.9
+        },
+        {
+          "gene": "CREB1",
+          "logFC": 0.1908,
+          "padj": 3.490781839086719e-08,
+          "direction": "up",
+          "neg_log10_padj": 7.5
+        },
+        {
+          "gene": "REST",
+          "logFC": 0.2276,
+          "padj": 2.0541229193726357e-05,
+          "direction": "up",
+          "neg_log10_padj": 4.7
+        },
+        {
+          "gene": "SP1",
+          "logFC": 0.193,
+          "padj": 0.00032598783196267716,
+          "direction": "up",
+          "neg_log10_padj": 3.5
+        }
+      ],
+      "top_regulators": [
+        {
+          "gene": "SP3",
+          "logFC": 0.3143,
+          "padj": 1.2848065759674694e-12,
+          "direction": "up",
+          "neg_log10_padj": 11.9
+        },
+        {
+          "gene": "CREB1",
+          "logFC": 0.1908,
+          "padj": 3.490781839086719e-08,
+          "direction": "up",
+          "neg_log10_padj": 7.5
+        },
+        {
+          "gene": "REST",
+          "logFC": 0.2276,
+          "padj": 2.0541229193726357e-05,
+          "direction": "up",
+          "neg_log10_padj": 4.7
+        },
+        {
+          "gene": "SP1",
+          "logFC": 0.193,
+          "padj": 0.00032598783196267716,
+          "direction": "up",
+          "neg_log10_padj": 3.5
+        }
+      ],
+      "motif_analysis": null,
+      "l1_details": null,
+      "evidence_strength": "correlative",
+      "evidence_details": {
+        "level": "correlative",
+        "n_significant_regulators": 4,
+        "interpretation": "4 transcription factors changed in this cell type, consistent with altered promoter activity.",
+        "caveat": "mRNA expression levels may not reflect protein activity. TARDBP in particular: mRNA UP in AD may reflect nuclear depletion compensation (cytoplasmic aggregation), not increased splicing activity. All causal claims require functional validation."
+      },
+      "summary": "The ANKRD44 isoform switch may reflect transcriptional changes. Top regulators: SP3, CREB1, REST. Evidence strength: correlative.",
+      "mechanism_reclassified_by": "M9",
+      "tss_diff_bp": 188054
+    },
+    "m9_promoter_usage": {
+      "tss_diff_bp": 188054,
+      "tts_diff_bp": 132460,
+      "ct_tss": 197310787,
+      "ad_tss": 197122733,
+      "tss_class": "alt_promoter_candidate",
+      "apa_class": "major_apa",
+      "ct_ccre": null,
+      "ad_ccre": null,
+      "ct_screen_hits": [],
+      "ad_screen_hits": [],
+      "promoter_evidence": "correlative",
+      "mechanism_reclassify": true,
+      "apa_motifs": {},
+      "summary": "ANKRD44: CT and AD isoforms likely originate from distinct promoters (TSS_diff=188,054 bp). The 3' end also differs substantially (TTS class=major_apa), suggesting concurrent APA or distinct terminal exon usage. Evidence strength: correlative. M14 mechanism_type reclassified to 'alternative_promoter'. Caution: promoter identity requires CAGE-seq or scATAC-seq validation."
+    },
+    "m10_apa": {
+      "tts_diff_bp": 132460,
+      "ct_tts": 197099477,
+      "ad_tts": 196967017,
+      "apa_class": "major_apa",
+      "ct_polyasite": [],
+      "ad_polyasite": [],
+      "ct_utr_scan": {
+        "available": true,
+        "length": 2000,
+        "pas_count": 13,
+        "pas_hits": {
+          "AATAAA": 1,
+          "ATTAAA": 2,
+          "AGTAAA": 1,
+          "TATAAA": 2,
+          "CATAAA": 3,
+          "AATATA": 2,
+          "AATACA": 2
+        },
+        "are_count": 1,
+        "are_hits": {
+          "class_I_pentamer": 1
+        },
+        "mirna_seeds": {
+          "miR-132": 2,
+          "miR-9": 2
+        },
+        "genomic": true,
+        "coords": "chr2:197097477-197099477",
+        "seq_len": 2000
+      },
+      "ad_utr_scan": {
+        "available": true,
+        "length": 2000,
+        "pas_count": 15,
+        "pas_hits": {
+          "AATAAA": 4,
+          "ATTAAA": 5,
+          "AGTAAA": 1,
+          "TATAAA": 2,
+          "CATAAA": 1,
+          "GATAAA": 1,
+          "AATATA": 1
+        },
+        "are_count": 9,
+        "are_hits": {
+          "class_I_pentamer": 9
+        },
+        "mirna_seeds": {
+          "miR-132": 1,
+          "miR-9": 1
+        },
+        "genomic": true,
+        "coords": "chr2:196965017-196967017",
+        "seq_len": 2000
+      },
+      "utr_changes": {
+        "comparable": true,
+        "gains": {
+          "PAS_sites": 2,
+          "ARE_destabilizing": 8
+        },
+        "losses": {
+          "miR-9_seed": 1,
+          "miR-132_seed": 1
+        },
+        "predicted_stability": "AD_less_stable"
+      },
+      "apa_evidence": "moderate",
+      "summary": "ANKRD44: CT and AD isoforms differ in 3' end by 132,460 bp (major_apa). AD isoform gains: PAS_sites, ARE_destabilizing. AD isoform loses: miR-9_seed, miR-132_seed. Predicted mRNA stability effect: AD_less_stable. APA evidence strength: moderate. Caution: 3'UTR changes require RIP-seq or poly-A-seq validation for functional confirmation."
+    },
+    "m11_alphafold": {
+      "ct": {
+        "transcript_id": "ENST00000409919",
+        "uniprot_id": "Q8N8A2",
+        "source": "alphafold_db",
+        "plddt_mean": 90.58,
+        "plddt_high_fraction": 0.928,
+        "domain_plddt": {
+          "Ank_3": {
+            "pfam_id": "Ank_3",
+            "residues": "338-364",
+            "mean": 96.3,
+            "min": 91.62,
+            "max": 98.12,
+            "confidence": "very_high"
+          },
+          "Ank_4": {
+            "pfam_id": "Ank_4",
+            "residues": "308-352",
+            "mean": 96.73,
+            "min": 91.62,
+            "max": 98.31,
+            "confidence": "very_high"
+          },
+          "Ank_2": {
+            "pfam_id": "Ank_2",
+            "residues": "281-365",
+            "mean": 96.64,
+            "min": 91.62,
+            "max": 98.44,
+            "confidence": "very_high"
+          },
+          "Ank_5": {
+            "pfam_id": "Ank_5",
+            "residues": "325-351",
+            "mean": 96.71,
+            "min": 91.62,
+            "max": 98.12,
+            "confidence": "very_high"
+          },
+          "Ank": {
+            "pfam_id": "Ank",
+            "residues": "338-364",
+            "mean": 96.3,
+            "min": 91.62,
+            "max": 98.12,
+            "confidence": "very_high"
+          }
+        },
+        "error": null
+      },
+      "ad": {
+        "transcript_id": "ENST00000424317",
+        "uniprot_id": "Q8N8A2",
+        "source": "alphafold_db",
+        "plddt_mean": 90.58,
+        "plddt_high_fraction": 0.928,
+        "domain_plddt": {
+          "Ank_4": {
+            "pfam_id": "Ank_4",
+            "residues": "614-660",
+            "mean": 90.55,
+            "min": 63.94,
+            "max": 96.62,
+            "confidence": "very_high"
+          },
+          "Ank_2": {
+            "pfam_id": "Ank_2",
+            "residues": "605-675",
+            "mean": 91.6,
+            "min": 63.94,
+            "max": 96.81,
+            "confidence": "very_high"
+          },
+          "Ank_5": {
+            "pfam_id": "Ank_5",
+            "residues": "643-682",
+            "mean": 90.24,
+            "min": 63.94,
+            "max": 97.31,
+            "confidence": "very_high"
+          },
+          "Ank": {
+            "pfam_id": "Ank",
+            "residues": "650-679",
+            "mean": 88.75,
+            "min": 63.94,
+            "max": 97.31,
+            "confidence": "high"
+          },
+          "Ank_3": {
+            "pfam_id": "Ank_3",
+            "residues": "650-673",
+            "mean": 86.8,
+            "min": 63.94,
+            "max": 96.0,
+            "confidence": "high"
+          },
+          "GATase_7": {
+            "pfam_id": "GATase_7",
+            "residues": "434-461",
+            "mean": 95.47,
+            "min": 90.88,
+            "max": 97.62,
+            "confidence": "very_high"
+          }
+        },
+        "error": null
+      },
+      "comparison": {
+        "gained_domain_confident": [
+          "GATase_7 (pLDDT=95.47)"
+        ],
+        "lost_domain_confident": [],
+        "degraded_domains": [],
+        "interpretation": "AD gains confident domain(s): GATase_7 (pLDDT=95.47)."
+      }
+    },
+    "m12_ppi": {
+      "gene": "ANKRD44",
+      "hypothesized_partners": [],
+      "string_hits": [
+        {
+          "partner": "PPP6R1",
+          "combined_score": 964,
+          "experimental_score": 844,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "PPP6C",
+          "combined_score": 951,
+          "experimental_score": 848,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "PPP6R2",
+          "combined_score": 914,
+          "experimental_score": 712,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "PPP6R3",
+          "combined_score": 903,
+          "experimental_score": 690,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "ANKRD28",
+          "combined_score": 893,
+          "experimental_score": 835,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining",
+            "phylogeny"
+          ]
+        },
+        {
+          "partner": "USP10",
+          "combined_score": 801,
+          "experimental_score": 785,
+          "evidence_types": [
+            "experimental",
+            "coexpression"
+          ]
+        },
+        {
+          "partner": "TRMT2A",
+          "combined_score": 565,
+          "experimental_score": 534,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining",
+            "neighborhood"
+          ]
+        },
+        {
+          "partner": "PLK2",
+          "combined_score": 529,
+          "experimental_score": 472,
+          "evidence_types": [
+            "experimental",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "ZNRF2",
+          "combined_score": 505,
+          "experimental_score": 366,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "NOTCH1",
+          "combined_score": 482,
+          "experimental_score": 455,
+          "evidence_types": [
+            "experimental",
+            "coexpression"
+          ]
+        }
+      ],
+      "hypothesis_support": {},
+      "domain_interaction_link": {
+        "domain_links": []
+      },
+      "summary_verdict": "UNSUPPORTED",
+      "interpretation": "None of the hypothesized partners ([]) found with sufficient STRING evidence. PPI claim requires experimental validation (co-IP / proximity-ligation)."
+    },
+    "m13_conservation": {
+      "track": "phyloP100way",
+      "genome": "hg38",
+      "ad_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr2",
+          "start": 196967017,
+          "end": 196967446,
+          "length_bp": 429,
+          "phyloP_mean": 0.002,
+          "phyloP_positive_fraction": 0.508,
+          "conservation_class": "low",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 2,
+          "chrom": "chr2",
+          "start": 196993583,
+          "end": 196993674,
+          "length_bp": 91,
+          "phyloP_mean": 4.052,
+          "phyloP_positive_fraction": 0.835,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 3,
+          "chrom": "chr2",
+          "start": 196995379,
+          "end": 196995461,
+          "length_bp": 82,
+          "phyloP_mean": 4.699,
+          "phyloP_positive_fraction": 0.976,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 4,
+          "chrom": "chr2",
+          "start": 196998337,
+          "end": 196998419,
+          "length_bp": 82,
+          "phyloP_mean": 3.852,
+          "phyloP_positive_fraction": 0.988,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 5,
+          "chrom": "chr2",
+          "start": 196998907,
+          "end": 196999052,
+          "length_bp": 145,
+          "phyloP_mean": 3.62,
+          "phyloP_positive_fraction": 0.759,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 6,
+          "chrom": "chr2",
+          "start": 197000419,
+          "end": 197000502,
+          "length_bp": 83,
+          "phyloP_mean": 3.263,
+          "phyloP_positive_fraction": 0.867,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 7,
+          "chrom": "chr2",
+          "start": 197001753,
+          "end": 197001840,
+          "length_bp": 87,
+          "phyloP_mean": 4.35,
+          "phyloP_positive_fraction": 0.908,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 8,
+          "chrom": "chr2",
+          "start": 197005694,
+          "end": 197005910,
+          "length_bp": 216,
+          "phyloP_mean": 3.609,
+          "phyloP_positive_fraction": 0.866,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 9,
+          "chrom": "chr2",
+          "start": 197007806,
+          "end": 197007923,
+          "length_bp": 117,
+          "phyloP_mean": 3.86,
+          "phyloP_positive_fraction": 0.855,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 10,
+          "chrom": "chr2",
+          "start": 197008944,
+          "end": 197009031,
+          "length_bp": 87,
+          "phyloP_mean": 3.485,
+          "phyloP_positive_fraction": 0.874,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 11,
+          "chrom": "chr2",
+          "start": 197013511,
+          "end": 197013712,
+          "length_bp": 201,
+          "phyloP_mean": 3.911,
+          "phyloP_positive_fraction": 0.896,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 12,
+          "chrom": "chr2",
+          "start": 197025196,
+          "end": 197025267,
+          "length_bp": 71,
+          "phyloP_mean": 2.453,
+          "phyloP_positive_fraction": 0.901,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 13,
+          "chrom": "chr2",
+          "start": 197078703,
+          "end": 197078814,
+          "length_bp": 111,
+          "phyloP_mean": 4.087,
+          "phyloP_positive_fraction": 0.883,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 14,
+          "chrom": "chr2",
+          "start": 197081645,
+          "end": 197081725,
+          "length_bp": 80,
+          "phyloP_mean": 2.413,
+          "phyloP_positive_fraction": 0.887,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 15,
+          "chrom": "chr2",
+          "start": 197083369,
+          "end": 197083509,
+          "length_bp": 140,
+          "phyloP_mean": 4.509,
+          "phyloP_positive_fraction": 0.893,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 16,
+          "chrom": "chr2",
+          "start": 197086680,
+          "end": 197086748,
+          "length_bp": 68,
+          "phyloP_mean": 4.312,
+          "phyloP_positive_fraction": 0.941,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 17,
+          "chrom": "chr2",
+          "start": 197088711,
+          "end": 197088828,
+          "length_bp": 117,
+          "phyloP_mean": 5.547,
+          "phyloP_positive_fraction": 0.974,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        },
+        {
+          "rank": 18,
+          "chrom": "chr2",
+          "start": 197089950,
+          "end": 197090032,
+          "length_bp": 82,
+          "phyloP_mean": 4.796,
+          "phyloP_positive_fraction": 0.927,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5, GATase_7",
+          "note": null
+        }
+      ],
+      "ct_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr2",
+          "start": 197125381,
+          "end": 197125468,
+          "length_bp": 87,
+          "phyloP_mean": 4.795,
+          "phyloP_positive_fraction": 0.874,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5",
+          "note": null
+        },
+        {
+          "rank": 2,
+          "chrom": "chr2",
+          "start": 197125837,
+          "end": 197126037,
+          "length_bp": 200,
+          "phyloP_mean": 4.692,
+          "phyloP_positive_fraction": 0.795,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5",
+          "note": null
+        },
+        {
+          "rank": 3,
+          "chrom": "chr2",
+          "start": 197136592,
+          "end": 197136662,
+          "length_bp": 70,
+          "phyloP_mean": 4.062,
+          "phyloP_positive_fraction": 0.929,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5",
+          "note": null
+        },
+        {
+          "rank": 4,
+          "chrom": "chr2",
+          "start": 197147027,
+          "end": 197147105,
+          "length_bp": 78,
+          "phyloP_mean": 3.799,
+          "phyloP_positive_fraction": 0.885,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5",
+          "note": null
+        },
+        {
+          "rank": 5,
+          "chrom": "chr2",
+          "start": 197187023,
+          "end": 197187106,
+          "length_bp": 83,
+          "phyloP_mean": 3.898,
+          "phyloP_positive_fraction": 0.855,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5",
+          "note": null
+        },
+        {
+          "rank": 6,
+          "chrom": "chr2",
+          "start": 197310578,
+          "end": 197310787,
+          "length_bp": 209,
+          "phyloP_mean": 0.626,
+          "phyloP_positive_fraction": 0.77,
+          "conservation_class": "conserved",
+          "domain_overlap": "Ank_2, Ank_4, Ank, Ank_3, Ank_5",
+          "note": null
+        }
+      ],
+      "background": {
+        "intronic_phyloP_mean": -0.002,
+        "intronic_sample_n": 5
+      },
+      "summary": {
+        "ad_specific_mean_phyloP": 3.712,
+        "ct_specific_mean_phyloP": 3.645,
+        "fold_difference": 1.02,
+        "interpretation": "AD-specific exons are highly conserved (phyloP mean=3.712) vs CT-specific exons (3.645). Strong purifying selection supports functional importance of gained sequence."
+      }
+    }
+  },
+  {
+    "gene_name": "ARPP19",
+    "ct_transcript_id": "ENST00000561650",
+    "ad_transcript_id": "ENST00000568196",
+    "cell_type": "Microglia",
+    "diffuse_delta": 0.7343,
+    "dtu_pvalue": 1.924e-09,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:22:06.696678",
+    "ct_seq": {
+      "seq": "MEDKVTSPEKAEEAKLKARYPHLGQKPGGSDFLRKRLQKGQKYFDSGDYNMAKAKMKNKQLPTAAPDKTEVTGDHIPTPQDLPQRKPSLVASKLAG",
+      "length": 96,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MEDKVTSPEKAEEAKLKARYPHLGQKPGGSDFLRKRLQKGQKYFDSGDYNMAKAKMKNKQLPTAAPDKTEVTGDHIPTPQDLPQRKPSLVASKLAG",
+      "length": 96,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "Endosulfine",
+        "evalue": 2.2e-14,
+        "score": 39.6,
+        "ali_from": 10,
+        "ali_to": 85,
+        "hmm_from": 6,
+        "hmm_to": 71,
+        "pfam_family": "Endosulfine"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "Endosulfine",
+        "evalue": 2.2e-14,
+        "score": 39.6,
+        "ali_from": 10,
+        "ali_to": 85,
+        "hmm_from": 6,
+        "hmm_to": 71,
+        "pfam_family": "Endosulfine"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": false,
+      "domains_lost": [],
+      "domains_gained": [],
+      "domains_shared": [
+        "Endosulfine"
+      ],
+      "ct_domain_count": 1,
+      "ad_domain_count": 1
+    },
+    "stage2_pass": false
+  },
+  {
+    "gene_name": "ASXL3",
+    "ct_transcript_id": "ENST00000269197",
+    "ad_transcript_id": "ENST00000642541",
+    "cell_type": "Excitatory",
+    "diffuse_delta": 0.7494,
+    "dtu_pvalue": 1.36e-07,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:20:45.858219",
+    "ct_seq": {
+      "seq": "MKDKRKKKDRTWAEAARLALEKHPNSPMTAKQILEVIQKEGLKETSGTSPLACLNAMLHTNTRIGDGTFFKIPGKSGLYALKKEESSCPADGTLDLVCESELDGTDMAEANAHGEENGVCSKQVTDEASSTRDSSLTNTAVQSKLVSSFQQHTKKALKQALRQQQKRRNGVSMMVNKTVPRVVLTPLKVSDEQSDSPSGSESKNGEADSSDKEMKHGQKSPTGKQTSQHLKRLKKSGLGHLKWTKAEDIDIETPGSILVNTNLRALINKHTFASLPQHFQQYLLLLLPEVDRQMGSDGILRLSTSALNNEFFAYAAQGWKQRLAEGEFTPEMQLRIRQEIEKEKKTEPWKEKFFERFYGEKLGMSREESVKLTTGPNNAGAQSSSSCGTSGLPVSAQTALAEQQPKSMKSPASPEPGFCATLCPMVEIPPKDIMAELESEDILIPEESVIQEEIAEEVETSICECQDENHKTIPEFSEEAESLTNSHEEPQIAPPEDNLESCVMMNDVLETLPHIEVKIEGKSESPQEEMTVVIDQLEVCDSLIPSTSSMTHVSDTEHKESETAVETSTPKIKTGSSSLEGQFPNEGIAIDMELQSDPEEQLSENACISETSFSSESPEGACTSLPSPGGETQSTSEESCTPASLETTFCSEVSSTENTDKYNQRNSTDENFHASLMSEISPISTSPEISEASLMSNLPLTSEASPVSNLPLTSETSPMSDLPLTSETSSVSSMLLTSETTFVSSLPLPSETSPISNSSINERMAHQQRKSPSVSEEPLSPQKDESSATAKPLGENLTSQQKNLSNTPEPIIMSSSSIAPEAFPSEDLHNKTLSQQTCKSHVDTEKPYPASIPELASTEMIKVKNHSVLQRTEKKVLPSPLELSVFSEGTDNKGNELPSAKLQDKQYISSVDKAPFSEGSRNKTHKQGSTQSRLETSHTSKSSEPSKSPDGIRNESRDSEISKRKTAEQHSFGICKEKRARIEDDQSTRNISSSSPPEKEQPPREEPRVPPLKIQLSKIGPPFIIKSQPVSKPESRASTSTSVSGGRNTGARTLADIKARAQQARAQREAAAAAAVAAAASIVSGAMGSPGEGGKTRTLAHIKEQTKAKLFAKHQARAHLFQTSKETRLPPPLSSKEGPPNLEVSSTPETKMEGSTGVIIVNPNCRSPSNKSAHLRETTTVLQQSLNPSKLPETATDLSVHSSDENIPVSHLSEKIVSSTSSENSSVPMLFNKNSVPVSVCSTAISGAIKEHPFVSSVDKSSVLMSVDSANTTISACNISMLKTIQGTDTPCIAIIPKCIESTPISATTEGSSISSSMDDKQLLISSSSASNLVSTQYTSVPTPSIGNNLPNLSTSSVLIPPMGINNRFPSEKIAIPGSEEQATVSMGTTVRAALSCSDSVAVTDSLVAHPTVAMFTGNMLTINSYDSPPKLSAESLDKNSGPRNRADNSGKPQQPPGGFAPAAINRSIPCKVIVDHSTTLTSSLSLTVSVESSEASLDLQGRPVRTEASVQPVACPQVSVISRPEPVANEGIDHSSTFIAASAAKQDSKTLPATCTSLRELPLVPDKLNEPTAPSHNFAEQARGPAPFKSEADTTCSNQYNPSNRICWNDDGMRSTGQPLVTHSGSSKQKEYLEQSCPKAIKTEHANYLNVSELHPRNLVTNVALPVKSELHEADKGFRMDTEDFPGPELPPPAAEGASSVQQTQNMKASTSSPMEEAISLATDALKRVPGAGSSGCRLSSVEANNPLVTQLLQGNLPLEKVLPQPRLGAKLEINRLPLPLQTTSVGKTAPERNVEIPPSSPNPDGKGYLAGTLAPLQMRKRENHPKKRVARTVGEHTQVKCEPGKLLVEPDVKGVPCVISSGISQLGHSQPFKQEWLNKHSMQNRIVHSPEVKQQKRLLPSCSFQQNLFHVDKNGGFHTDAGTSHRQQFYQMPVAARGPIPTAALLQASSKTPVGCNAFAFNRHLEQKGLGEVSLSSAPHQLRLANMLSPNMPMKEGDEVGGTAHTMPNKALVHPPPPPPPPPPPPLALPPPPPPPPPLPPPLPNAEVPSDQKQPPVTMETTKRLSWPQSTGICSNIKSEPLSFEEGLSSSCELGMKQVSYDQNEMKEQLKAFALKSADFSSYLLSEPQKPFTQLAAQKMQVQQQQQLCGNYPTIHFGSTSFKRAASAIEKSIGILGSGSNPATGLSGQNAQMPVQNFADSSNADELELKCSCRLKAMIVCKGCGAFCHDDCIGPSKLCVACLVVR",
+      "length": 2248,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MLHTNTRIGDGTFFKIPGKSGLYALKKEESSCPADGTLDLVCESELDGTDMAEANAHGEENGVCSKQVTDEASSTRDSSLTNTAVQSKLVSSFQQHTKKALKQALRQQQKRRNGVSMMVNKTVPRVVLTPLKVSDEQSDSPSGSESKNGEADSSDKEMKHGQKSPTGKQTSQHLKRLKKSGLGHLKWTKAEDIDIETPGSILVNTNLRALINKHTFASLPQHFQQYLLLLLPEVDRQMGSDGILRLSTSALNNEFFAYAAQGWKQRLAEGEFTPEMQLRIRQEIEKEKKTEPWKEKFFERFYGEKLGMSREESVKLTTGPNNAGAQSSSSCGTSGLPVSAQTALAEQQPKSMKSPASPEPGFCATLCPMVEIPPKDIMAELESEDILIPEESVIQEEIAEEVETSICECQDENHKTIPEFSEEAESLTNSHEEPQIAPPEDNLESCVMMNDVLETLPHIEVKIEGKSESPQEEMTVVIDQLEVCDSLIPSTSSMTHVSDTEHKESETAVETSTPKIKTGSSSLEGQFPNEGIAIDMELQSDPEEQLSENACISETSFSSESPEGACTSLPSPGGETQSTSEESCTPASLETTFCSEVSSTENTDKYNQRNSTDENFHASLMSEISPISTSPEISEASLMSNLPLTSEASPVSNLPLTSETSPMSDLPLTSETSSVSSMLLTSETTFVSSLPLPSETSPISNSSINERMAHQQRKSPSVSEEPLSPQKDESSATAKPLGENLTSQQKNLSNTPEPIIMSSSSIAPEAFPSEDLHNKTLSQQTCKSHVDTEKPYPASIPELASTEMIKVKNHSVLQRTEKKVLPSPLELSVFSEGTDNKGNELPSAKLQDKQYISSVDKAPFSEGSRNKTHKQGSTQSRLETSHTSKSSEPSKSPDGIRNESRDSEISKRKTAEQHSFGICKEKRARIEDDQSTRNISSSSPPEKEQPPREEPRVPPLKIQLSKIGPPFIIKSQPVSKPESRASTSTSVSGGRNTGARTLADIKARAQQARAQREAAAAAAVAAAASIVSGAMGSPGEGGKTRTLAHIKEQTKAKLFAKHQARAHLFQTSKETRLPPPLSSKEGPPNLEVSSTPETKMEGSTGVIIVNPNCRSPSNKSAHLRETTTVLQQSLNPSKLPETATDLSVHSSDENIPVSHLSEKIVSSTSSENSSVPMLFNKNSVPVSVCSTAISG",
+      "length": 1191,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "HARE-HTH",
+        "evalue": 5.4e-24,
+        "score": 72.3,
+        "ali_from": 10,
+        "ali_to": 80,
+        "hmm_from": 1,
+        "hmm_to": 70,
+        "pfam_family": "HARE-HTH"
+      },
+      {
+        "domain": "ASXH",
+        "evalue": 5.3e-33,
+        "score": 101.6,
+        "ali_from": 240,
+        "ali_to": 360,
+        "hmm_from": 6,
+        "hmm_to": 130,
+        "pfam_family": "ASXH"
+      },
+      {
+        "domain": "PHD_3",
+        "evalue": 6.3e-23,
+        "score": 68.6,
+        "ali_from": 2204,
+        "ali_to": 2246,
+        "hmm_from": 26,
+        "hmm_to": 68,
+        "pfam_family": "PHD_3"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "ASXH",
+        "evalue": 7.9e-34,
+        "score": 102.7,
+        "ali_from": 184,
+        "ali_to": 304,
+        "hmm_from": 6,
+        "hmm_to": 130,
+        "pfam_family": "ASXH"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": true,
+      "domains_lost": [
+        "HARE-HTH",
+        "PHD_3"
+      ],
+      "domains_gained": [],
+      "domains_shared": [
+        "ASXH"
+      ],
+      "ct_domain_count": 3,
+      "ad_domain_count": 1
+    },
+    "stage2_pass": true,
+    "ct_motifs": {
+      "length": 2248,
+      "mts": {
+        "net_charge_30aa": 5,
+        "pos_aa_30": 9,
+        "neg_aa_30": 4,
+        "de_count_40aa": 6,
+        "hydrophobic_moment": 0.2595,
+        "hhh_motif": null,
+        "lyr_motif": null,
+        "composite_score": 3,
+        "prediction": "INTERMEDIATE (uncertain)",
+        "criteria_passed": {
+          "net_charge_ge_2": true,
+          "de_le_3": false,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": false
+        }
+      },
+      "functional_motifs": {},
+      "composition": {
+        "K": 147,
+        "R": 76,
+        "D": 77,
+        "E": 186,
+        "H": 51,
+        "pct_charged": 21.619217081850532
+      }
+    },
+    "ad_motifs": {
+      "length": 1191,
+      "mts": {
+        "net_charge_30aa": 2,
+        "pos_aa_30": 5,
+        "neg_aa_30": 3,
+        "de_count_40aa": 5,
+        "hydrophobic_moment": 0.1972,
+        "hhh_motif": null,
+        "lyr_motif": null,
+        "composite_score": 3,
+        "prediction": "INTERMEDIATE (uncertain)",
+        "criteria_passed": {
+          "net_charge_ge_2": true,
+          "de_le_3": false,
+          "mu_ge_0.12": true,
+          "no_hhh": true,
+          "has_lyr": false
+        }
+      },
+      "functional_motifs": {},
+      "composition": {
+        "K": 82,
+        "R": 40,
+        "D": 41,
+        "E": 127,
+        "H": 27,
+        "pct_charged": 24.349286314021832
+      }
+    },
+    "ct_info": {
+      "transcript_id": "ENST00000269197",
+      "chrom": "chr18",
+      "strand": "+",
+      "associated_gene": "ASXL3",
+      "structural_category": "full-splice_match",
+      "transcript_length": 11760,
+      "exon_count": 12,
+      "exons": [
+        [
+          33578219,
+          33578685
+        ],
+        [
+          33607594,
+          33607676
+        ],
+        [
+          33644894,
+          33645002
+        ],
+        [
+          33646245,
+          33646353
+        ],
+        [
+          33661616,
+          33661737
+        ],
+        [
+          33670673,
+          33670790
+        ],
+        [
+          33671747,
+          33671866
+        ],
+        [
+          33683405,
+          33683568
+        ],
+        [
+          33731968,
+          33732064
+        ],
+        [
+          33734310,
+          33734415
+        ],
+        [
+          33738487,
+          33740443
+        ],
+        [
+          33742888,
+          33751195
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 33578219,
+      "genomic_span_end": 33751195,
+      "genomic_span_kb": 172.976
+    },
+    "ad_info": {
+      "transcript_id": "ENST00000642541",
+      "chrom": "chr18",
+      "strand": "+",
+      "associated_gene": "ASXL3",
+      "structural_category": "full-splice_match",
+      "transcript_length": 4216,
+      "exon_count": 15,
+      "exons": [
+        [
+          33578913,
+          33579107
+        ],
+        [
+          33605537,
+          33605658
+        ],
+        [
+          33607594,
+          33607676
+        ],
+        [
+          33626862,
+          33627070
+        ],
+        [
+          33641821,
+          33641823
+        ],
+        [
+          33644894,
+          33645002
+        ],
+        [
+          33646245,
+          33646353
+        ],
+        [
+          33661616,
+          33661737
+        ],
+        [
+          33670673,
+          33670790
+        ],
+        [
+          33671747,
+          33671866
+        ],
+        [
+          33683405,
+          33683568
+        ],
+        [
+          33731968,
+          33732064
+        ],
+        [
+          33734310,
+          33734415
+        ],
+        [
+          33738487,
+          33740443
+        ],
+        [
+          33742888,
+          33743589
+        ]
+      ],
+      "cds_start_genomic": null,
+      "cds_end_genomic": null,
+      "protein_length": null,
+      "is_nat": false,
+      "nat_relationship": null,
+      "genomic_span_start": 33578913,
+      "genomic_span_end": 33743589,
+      "genomic_span_kb": 164.676
+    },
+    "ad_repeats": {
+      "locus_queried": "chr18:33573913-33748589",
+      "total_repeat_hits": 191,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {
+        "E14": [
+          {
+            "name": "MamRTE1",
+            "class": "LINE",
+            "family": "RTE-BovB",
+            "strand": "-",
+            "start": 33739379,
+            "end": 33739437,
+            "pct_divergence": 29.3,
+            "sw_score": 185,
+            "is_young_l1": false,
+            "exon_overlap_bp": 58
+          }
+        ]
+      },
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 89,
+        "SINE": 54,
+        "LTR": 20,
+        "DNA": 28
+      }
+    },
+    "ct_repeats": {
+      "locus_queried": "chr18:33573219-33756195",
+      "total_repeat_hits": 194,
+      "cds_overlap_hits": [],
+      "cds_young_l1_hits": [],
+      "exon_hits": {
+        "E11": [
+          {
+            "name": "MamRTE1",
+            "class": "LINE",
+            "family": "RTE-BovB",
+            "strand": "-",
+            "start": 33739379,
+            "end": 33739437,
+            "pct_divergence": 29.3,
+            "sw_score": 185,
+            "is_young_l1": false,
+            "exon_overlap_bp": 58
+          }
+        ]
+      },
+      "has_l1_in_cds": false,
+      "summary": {
+        "LINE": 90,
+        "SINE": 55,
+        "LTR": 21,
+        "DNA": 28
+      }
+    },
+    "m6_nmd_screen": {
+      "ct": {
+        "transcript_id": "ENST00000269197",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "ad": {
+        "transcript_id": "ENST00000642541",
+        "source": "unavailable",
+        "nmd_susceptible": null,
+        "ptc_to_last_junction_nt": null,
+        "structural_category": "",
+        "sqanti_nmd": null,
+        "coord_calc": {
+          "nmd_susceptible": null,
+          "ptc_to_last_junction_nt": null,
+          "details": "insufficient coordinate data"
+        },
+        "conclusion": "UNKNOWN [insufficient coordinate data]"
+      },
+      "summary": "NMD status could not be determined for one or both isoforms.",
+      "nmd_relevant": false
+    },
+    "nmd_gate_active": false,
+    "m7_seq_validation": {
+      "skipped": true,
+      "skip_reason": "no young LINE-1 in CDS"
+    },
+    "m8_regulatory_context": {
+      "mechanism_type": "alternative_promoter",
+      "cell_type_full": "Excitatory_neuron",
+      "deg_n_genes_loaded": 34903,
+      "significant_regulators": [
+        {
+          "gene": "STAT1",
+          "logFC": -1.0135,
+          "padj": 0.0,
+          "direction": "down",
+          "neg_log10_padj": 320.0
+        },
+        {
+          "gene": "SP3",
+          "logFC": 0.2857,
+          "padj": 3.168809119659782e-47,
+          "direction": "up",
+          "neg_log10_padj": 46.5
+        },
+        {
+          "gene": "KLF9",
+          "logFC": 0.2353,
+          "padj": 6.477064357062855e-32,
+          "direction": "up",
+          "neg_log10_padj": 31.2
+        },
+        {
+          "gene": "YBX1",
+          "logFC": 0.2752,
+          "padj": 1.1941569802430765e-27,
+          "direction": "up",
+          "neg_log10_padj": 26.9
+        },
+        {
+          "gene": "SP1",
+          "logFC": 0.2862,
+          "padj": 1.1283981021533601e-11,
+          "direction": "up",
+          "neg_log10_padj": 10.9
+        },
+        {
+          "gene": "E2F3",
+          "logFC": -0.1712,
+          "padj": 1.8961422612779744e-09,
+          "direction": "down",
+          "neg_log10_padj": 8.7
+        }
+      ],
+      "top_regulators": [
+        {
+          "gene": "STAT1",
+          "logFC": -1.0135,
+          "padj": 0.0,
+          "direction": "down",
+          "neg_log10_padj": 320.0
+        },
+        {
+          "gene": "SP3",
+          "logFC": 0.2857,
+          "padj": 3.168809119659782e-47,
+          "direction": "up",
+          "neg_log10_padj": 46.5
+        },
+        {
+          "gene": "KLF9",
+          "logFC": 0.2353,
+          "padj": 6.477064357062855e-32,
+          "direction": "up",
+          "neg_log10_padj": 31.2
+        },
+        {
+          "gene": "YBX1",
+          "logFC": 0.2752,
+          "padj": 1.1941569802430765e-27,
+          "direction": "up",
+          "neg_log10_padj": 26.9
+        },
+        {
+          "gene": "SP1",
+          "logFC": 0.2862,
+          "padj": 1.1283981021533601e-11,
+          "direction": "up",
+          "neg_log10_padj": 10.9
+        }
+      ],
+      "motif_analysis": null,
+      "l1_details": null,
+      "evidence_strength": "correlative",
+      "evidence_details": {
+        "level": "correlative",
+        "n_significant_regulators": 6,
+        "interpretation": "6 transcription factors changed in this cell type, consistent with altered promoter activity.",
+        "caveat": "mRNA expression levels may not reflect protein activity. TARDBP in particular: mRNA UP in AD may reflect nuclear depletion compensation (cytoplasmic aggregation), not increased splicing activity. All causal claims require functional validation."
+      },
+      "summary": "The ASXL3 isoform switch may reflect transcriptional changes. Top regulators: STAT1, SP3, KLF9. Evidence strength: correlative.",
+      "mechanism_reclassified_by": "M9",
+      "tss_diff_bp": 694
+    },
+    "m9_promoter_usage": {
+      "tss_diff_bp": 694,
+      "tts_diff_bp": 7606,
+      "ct_tss": 33578219,
+      "ad_tss": 33578913,
+      "tss_class": "alt_promoter_candidate",
+      "apa_class": "major_apa",
+      "ct_ccre": null,
+      "ad_ccre": null,
+      "ct_screen_hits": [],
+      "ad_screen_hits": [],
+      "promoter_evidence": "correlative",
+      "mechanism_reclassify": true,
+      "apa_motifs": {},
+      "summary": "ASXL3: CT and AD isoforms likely originate from distinct promoters (TSS_diff=694 bp). The 3' end also differs substantially (TTS class=major_apa), suggesting concurrent APA or distinct terminal exon usage. Evidence strength: correlative. M14 mechanism_type reclassified to 'alternative_promoter'. Caution: promoter identity requires CAGE-seq or scATAC-seq validation."
+    },
+    "m10_apa": {
+      "tts_diff_bp": 7606,
+      "ct_tts": 33751195,
+      "ad_tts": 33743589,
+      "apa_class": "major_apa",
+      "ct_polyasite": [],
+      "ad_polyasite": [],
+      "ct_utr_scan": {
+        "available": true,
+        "length": 2000,
+        "pas_count": 15,
+        "pas_hits": {
+          "ATTAAA": 4,
+          "AGTAAA": 2,
+          "TATAAA": 2,
+          "CATAAA": 3,
+          "GATAAA": 1,
+          "AATATA": 1,
+          "AATACA": 2
+        },
+        "are_count": 25,
+        "are_hits": {
+          "class_I_pentamer": 22,
+          "class_II_heptamer": 3
+        },
+        "mirna_seeds": {
+          "miR-132": 1,
+          "miR-21": 1,
+          "miR-9": 1
+        },
+        "genomic": true,
+        "coords": "chr18:33751195-33753195",
+        "seq_len": 2000
+      },
+      "ad_utr_scan": {
+        "available": true,
+        "length": 2000,
+        "pas_count": 9,
+        "pas_hits": {
+          "AATAAA": 1,
+          "ATTAAA": 2,
+          "AGTAAA": 2,
+          "CATAAA": 1,
+          "GATAAA": 2,
+          "AATATA": 1
+        },
+        "are_count": 1,
+        "are_hits": {
+          "class_I_pentamer": 1
+        },
+        "mirna_seeds": {
+          "miR-21": 1,
+          "miR-9": 1,
+          "miR-107": 1
+        },
+        "genomic": true,
+        "coords": "chr18:33743589-33745589",
+        "seq_len": 2000
+      },
+      "utr_changes": {
+        "comparable": true,
+        "gains": {
+          "miR-107_seed": 1
+        },
+        "losses": {
+          "PAS_sites": 6,
+          "ARE_destabilizing": 24,
+          "miR-132_seed": 1
+        },
+        "predicted_stability": "AD_more_stable"
+      },
+      "apa_evidence": "moderate",
+      "summary": "ASXL3: CT and AD isoforms differ in 3' end by 7,606 bp (major_apa). AD isoform gains: miR-107_seed. AD isoform loses: PAS_sites, ARE_destabilizing, miR-132_seed. Predicted mRNA stability effect: AD_more_stable. APA evidence strength: moderate. Caution: 3'UTR changes require RIP-seq or poly-A-seq validation for functional confirmation."
+    },
+    "m11_alphafold": {
+      "ct": {
+        "transcript_id": "ENST00000269197",
+        "uniprot_id": "Q9C0F0",
+        "source": "alphafold_db",
+        "plddt_mean": 39.37,
+        "plddt_high_fraction": 0.107,
+        "domain_plddt": {
+          "HARE-HTH": {
+            "pfam_id": "HARE-HTH",
+            "residues": "10-80",
+            "mean": 90.63,
+            "min": 68.31,
+            "max": 96.81,
+            "confidence": "very_high"
+          },
+          "ASXH": {
+            "pfam_id": "ASXH",
+            "residues": "240-360",
+            "mean": 80.43,
+            "min": 28.62,
+            "max": 93.12,
+            "confidence": "high"
+          },
+          "PHD_3": {
+            "pfam_id": "PHD_3",
+            "residues": "2204-2246",
+            "mean": 56.74,
+            "min": 30.5,
+            "max": 77.38,
+            "confidence": "low"
+          }
+        },
+        "error": null
+      },
+      "ad": {
+        "transcript_id": "ENST00000642541",
+        "uniprot_id": "Q9C0F0",
+        "source": "alphafold_db",
+        "plddt_mean": 39.37,
+        "plddt_high_fraction": 0.107,
+        "domain_plddt": {
+          "ASXH": {
+            "pfam_id": "ASXH",
+            "residues": "184-304",
+            "mean": 59.46,
+            "min": 28.5,
+            "max": 91.12,
+            "confidence": "low"
+          }
+        },
+        "error": null
+      },
+      "comparison": {
+        "gained_domain_confident": [],
+        "lost_domain_confident": [
+          "HARE-HTH (pLDDT=90.63)"
+        ],
+        "degraded_domains": [
+          "ASXH (80.43\u219259.46, \u0394=21.0)"
+        ],
+        "interpretation": "AD loses confident domain(s): HARE-HTH (pLDDT=90.63). Shared domain(s) show reduced confidence in AD: ASXH (80.43\u219259.46, \u0394=21.0)."
+      }
+    },
+    "m12_ppi": {
+      "gene": "ASXL3",
+      "hypothesized_partners": [],
+      "string_hits": [
+        {
+          "partner": "BAP1",
+          "combined_score": 917,
+          "experimental_score": 622,
+          "evidence_types": [
+            "experimental",
+            "database",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "EZH2",
+          "combined_score": 810,
+          "experimental_score": 71,
+          "evidence_types": [
+            "experimental",
+            "database",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "ASXL2",
+          "combined_score": 786,
+          "experimental_score": 0,
+          "evidence_types": [
+            "database",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "BRD4",
+          "combined_score": 773,
+          "experimental_score": 522,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "ASXL1",
+          "combined_score": 770,
+          "experimental_score": 0,
+          "evidence_types": [
+            "database",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "RNF2",
+          "combined_score": 759,
+          "experimental_score": 61,
+          "evidence_types": [
+            "experimental",
+            "database",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "ZNF292",
+          "combined_score": 682,
+          "experimental_score": 95,
+          "evidence_types": [
+            "experimental",
+            "coexpression",
+            "textmining",
+            "phylogeny"
+          ]
+        },
+        {
+          "partner": "SUZ12",
+          "combined_score": 620,
+          "experimental_score": 0,
+          "evidence_types": [
+            "database",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "YY1",
+          "combined_score": 600,
+          "experimental_score": 95,
+          "evidence_types": [
+            "experimental",
+            "database",
+            "textmining"
+          ]
+        },
+        {
+          "partner": "RING1",
+          "combined_score": 592,
+          "experimental_score": 61,
+          "evidence_types": [
+            "experimental",
+            "database",
+            "textmining"
+          ]
+        }
+      ],
+      "hypothesis_support": {},
+      "domain_interaction_link": {
+        "domain_links": [
+          {
+            "domain": "PHD_3",
+            "change": "lost",
+            "interaction_role": "membrane lipid or protein binding",
+            "relevant_partners_found": [
+              "ASXL1",
+              "YY1",
+              "RNF2",
+              "SUZ12",
+              "BRD4",
+              "ASXL2",
+              "RING1",
+              "ZNF292",
+              "BAP1",
+              "EZH2"
+            ]
+          }
+        ]
+      },
+      "summary_verdict": "UNSUPPORTED",
+      "interpretation": "None of the hypothesized partners ([]) found with sufficient STRING evidence. PPI claim requires experimental validation (co-IP / proximity-ligation)."
+    },
+    "m13_conservation": {
+      "track": "phyloP100way",
+      "genome": "hg38",
+      "ad_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr18",
+          "start": 33578913,
+          "end": 33579107,
+          "length_bp": 194,
+          "phyloP_mean": 1.265,
+          "phyloP_positive_fraction": 0.871,
+          "conservation_class": "conserved",
+          "domain_overlap": "ASXH",
+          "note": null
+        },
+        {
+          "rank": 2,
+          "chrom": "chr18",
+          "start": 33605537,
+          "end": 33605658,
+          "length_bp": 121,
+          "phyloP_mean": 3.988,
+          "phyloP_positive_fraction": 0.992,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "ASXH",
+          "note": null
+        },
+        {
+          "rank": 3,
+          "chrom": "chr18",
+          "start": 33626862,
+          "end": 33627070,
+          "length_bp": 208,
+          "phyloP_mean": 2.736,
+          "phyloP_positive_fraction": 1.0,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "ASXH",
+          "note": null
+        },
+        {
+          "rank": 4,
+          "chrom": "chr18",
+          "start": 33641821,
+          "end": 33641823,
+          "length_bp": 2,
+          "phyloP_mean": 3.318,
+          "phyloP_positive_fraction": 1.0,
+          "conservation_class": "highly_conserved",
+          "domain_overlap": "ASXH",
+          "note": null
+        }
+      ],
+      "ct_specific_exons": [
+        {
+          "rank": 1,
+          "chrom": "chr18",
+          "start": 33578219,
+          "end": 33578685,
+          "length_bp": 466,
+          "phyloP_mean": 1.104,
+          "phyloP_positive_fraction": 0.775,
+          "conservation_class": "conserved",
+          "domain_overlap": "PHD_3, ASXH, HARE-HTH",
+          "note": null
+        }
+      ],
+      "background": {
+        "intronic_phyloP_mean": 0.066,
+        "intronic_sample_n": 5
+      },
+      "summary": {
+        "ad_specific_mean_phyloP": 2.827,
+        "ct_specific_mean_phyloP": 1.104,
+        "fold_difference": 2.56,
+        "interpretation": "AD-specific exons are highly conserved (phyloP mean=2.827), 2.56x higher than CT-specific exons (1.104). Strong purifying selection supports functional importance of gained sequence."
+      }
+    }
+  },
+  {
+    "gene_name": "ATP1B1",
+    "ct_transcript_id": "ENST00000685762",
+    "ad_transcript_id": "ENST00000690184",
+    "cell_type": "Inhibitory",
+    "diffuse_delta": 0.7764,
+    "dtu_pvalue": 1.245e-30,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:19:17.917947",
+    "ct_seq": {
+      "seq": "MTASQLFVSVLLAVKILLFYVIFYGCLAGIFIGTIQVMLLTISEFKPTYQDRVAPPGLTQIPQIQKTEISFRPNDPKSYEAYVLNIVRFLEKYKDSAQRDDMIFEDCGDVPSEPKERGDFNHERGERKVCRFKLEWLGNCSGLNDETYGYKEGKPCIIIKLNRVLGFKPKPPKNESLETYPVMKYNPNVLPVQCTGKRDEDKDKVGNVEYFGLGNSPGFPLQYYPYYGKLLQPKYLQPLLAVQFTNLTMDTEIRIECKAYGENIGYSEKDRFQGRFDVKIEVKS",
+      "length": 284,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MARGKAKEEGSWKKFIWNSEKKEFLGRTGGSWFKILLFYVIFYGCLAGIFIGTIQVMLLTISEFKPTYQDRVAPPGLTQIPQIQKTEISFRPNDPKSYEAYVLNIVRFLEKYKDSAQRDDMIFEDCGDVPSEPKERGDFNHERGERKVCRFKLEWLGNCSGLNDETYGYKEGKPCIIIKLNRVLGFKPKPPKNESLETYPVMKYNPNVLPVQCTGKRDEDKDKVGNVEYFGLGNSPGFPLQYYPYYGKLLQPKYLQPLLAVQFTNLTMDTEIRIECKAYGENIGYSEKDRFQGRFDVKIEVKS",
+      "length": 303,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "Na_K-ATPase",
+        "evalue": 4.2e-90,
+        "score": 287.7,
+        "ali_from": 14,
+        "ali_to": 277,
+        "hmm_from": 32,
+        "hmm_to": 283,
+        "pfam_family": "Na_K-ATPase"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "Na_K-ATPase",
+        "evalue": 1.8e-104,
+        "score": 334.9,
+        "ali_from": 6,
+        "ali_to": 296,
+        "hmm_from": 5,
+        "hmm_to": 283,
+        "pfam_family": "Na_K-ATPase"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": false,
+      "domains_lost": [],
+      "domains_gained": [],
+      "domains_shared": [
+        "Na_K-ATPase"
+      ],
+      "ct_domain_count": 1,
+      "ad_domain_count": 1
+    },
+    "stage2_pass": false
+  },
+  {
+    "gene_name": "ATP6V0E2",
+    "ct_transcript_id": "ENST00000479613",
+    "ad_transcript_id": "ENST00000421974",
+    "cell_type": "Astrocyte",
+    "diffuse_delta": 0.7513,
+    "dtu_pvalue": 4.887e-06,
+    "direction": "AD_high",
+    "priority": "2",
+    "pipeline_version": "2.0",
+    "pipeline_ts": "2026-05-31T14:20:44.878125",
+    "ct_seq": {
+      "seq": "MLSALPGWGPAHLQRPLLGPASCLGILRPAMTAHSFALPVIIFTTFWGLVGIAGPWFVPKGPNRGVIITMLVATAVCCYLFWLIAILAQLNPLFGPQLKNETIWCPALGMTVAPLSLTTPSSGPSPTQLCLVTSSLLLAPRDPDPQGLPGSWKSSQSSQPARALGSPGHSSGRGDVLLQYPHCSGVCPLSQGDAAGELVWVGSFPLQTGQMPGLSPS",
+      "length": 217,
+      "source": "brain_faa"
+    },
+    "ad_seq": {
+      "seq": "MRVRGPARLIASGARLLLRMLSALPGWGPAHLQRPLLGPASCLGILRPAMTAHSFALPVIIFTTFWGLVGIAGPWFVPKGPNRGVIITMLVATAVCCYLLCPALGMTVAPLSLTTPSSGPSPTQLCLVTSSLLLAPRDPDPQGLPGSWKSSQSSQPARALGSPGHSSGRGDVLLQYPHCSGVCPLSQGDAAGELVWVGSFPLQTGQMPGLSPS",
+      "length": 213,
+      "source": "brain_faa"
+    },
+    "ct_domains": [
+      {
+        "domain": "ATP_synt_H",
+        "evalue": 1.6e-29,
+        "score": 88.5,
+        "ali_from": 39,
+        "ali_to": 99,
+        "hmm_from": 1,
+        "hmm_to": 61,
+        "pfam_family": "ATP_synt_H"
+      }
+    ],
+    "ad_domains": [
+      {
+        "domain": "ATP_synt_H",
+        "evalue": 2e-17,
+        "score": 49.8,
+        "ali_from": 58,
+        "ali_to": 100,
+        "hmm_from": 1,
+        "hmm_to": 43,
+        "pfam_family": "ATP_synt_H"
+      }
+    ],
+    "domain_change": {
+      "has_domain_change": false,
+      "domains_lost": [],
+      "domains_gained": [],
+      "domains_shared": [
+        "ATP_synt_H"
+      ],
+      "ct_domain_count": 1,
+      "ad_domain_count": 1
+    },
+    "stage2_pass": false
+  }
+]

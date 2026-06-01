@@ -40,6 +40,12 @@ hMuscle/data/
 hMuscle/saved_models/
 *.safetensors
 
+# --- PRISM web app: bundled demo data and annotations (whitelist from *.npy) ---
+!prism_app/data/demo/*.npy
+!prism_app/data/demo/*.json
+!prism_app/data/demo/*.tsv
+!prism_app/data/annotations/
+
 # --- BISECT: local configuration (contains absolute paths) ---
 Final_analysis/pipeline_bioanalysis/config.yaml
 
