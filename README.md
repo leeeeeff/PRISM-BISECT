@@ -1,238 +1,191 @@
-# DIFFUSE + BISECT
+# PRISM-BISECT
 
-**DIFFUSE**: Deep Isoform Function Prediction Using Sequence Embeddings  
-**BISECT**: Biological Isoform-Switch Evidence Characterization Tool
+**PRISM** (Protein-isoform Resolution via Intrinsic Sequence Modeling) and **BISECT** (Biological Isoform-Switch Evidence Characterization Tool) — a two-stage framework for isoform-level function prediction and disease-associated isoform-switch characterization from long-read single-cell RNA sequencing data.
 
-> Lee S et al. "DIFFUSE: Deep Isoform Function Prediction Using Sequence Embeddings, with
-> Multi-Evidence Characterization of Alzheimer's Disease Isoform Switches by BISECT."
-> *Nature Methods* (under review), 2026.
+> Manuscript in preparation. Target: *Nature Methods* / *Nature Machine Intelligence*.
 
 ---
 
 ## Overview
 
-| Component | Input | Output | Key metric |
-|-----------|-------|--------|------------|
-| **DIFFUSE** | ESM-2 protein embeddings (640d) | GO term probability per isoform | Macro AUPRC 0.685 (muscle), 0.600 (brain zero-shot) |
-| **BISECT** | CT/AD isoform pairs + DIFFUSE Δ scores | Multi-evidence tier classification (A/B/C) | 13/26 Stage 2 cases SUPPORTED by STRING PPI |
+Isoform-level function prediction is fundamentally limited by two problems: **data sparsity / mode collapse** under sparse GO annotation, and **gene-level reference dominance** where models rely on gene identity rather than isoform-intrinsic sequence features. PRISM addresses both through ESM-2 protein language model embeddings and focal loss training. BISECT then applies a 15-module evidence pipeline to characterize isoform switches discovered by PRISM in Alzheimer's disease (AD) long-read single-cell data.
 
-DIFFUSE is trained on 36,748 isoforms from human skeletal muscle long-read scRNA-seq and applied
-zero-shot to 63,994 isoforms from human prefrontal cortex (Alzheimer's disease cohort).
-BISECT applies 12 sequential analysis modules (Pfam domain annotation → AlphaFold structural
-confidence → STRING PPI validation → phyloP conservation) to prioritize disease-relevant isoform
-switches discovered by DIFFUSE + DTU integration.
+### Key Performance
+
+| Dataset | Macro AUPRC | Setting |
+|---------|-------------|---------|
+| Human skeletal muscle (18 BP GO terms) | **0.7022** | Supervised |
+| Human brain AD/CT (zero-shot transfer) | **0.5998** | Zero-shot |
+| DIFFUSE baseline (Yao et al., *Nat Methods* 2022) | 0.4981 | Supervised |
+
+### Tier A AD Isoform Switches (BISECT)
+
+| Gene | Cell type | Switch | PRISM Δ | Mechanism |
+|------|-----------|--------|---------|-----------|
+| **KIF21B** | Excitatory | NIC (418aa) → NNIC (710aa) | −0.855 | WD40 β-propeller gain; kinesin motor loss |
+| **NDUFS4** | Excitatory | CT (175aa) → NNIC tr73243 (378aa) | −0.563 | LINE exon poaching via shared promoter (13 bp TSS) |
+| **DLG1** | OPC | NNIC tr319500 (186aa) → canonical (926aa) | +0.857 | Paradoxical synaptic scaffold gain in AD |
+| **PTPRF** | Astrocyte | Alt-promoter switch (60,574 bp TSS shift) | −0.621 | Liprin-α binding loss; C2/PDZ domain reduction |
 
 ---
 
 ## Repository Structure
 
 ```
-DIFFUSE/
+PRISM-BISECT/
 ├── hMuscle/
-│   ├── model/
-│   │   ├── v15d_bp_clean.py          # Production DIFFUSE model (v15d)
-│   │   ├── integrated_full_model.py  # Latest model
-│   │   ├── run_GPU_Full.py           # Main training entry point
-│   │   └── results_isoform/
-│   │       ├── evaluation.py         # AUPRC/AUROC evaluation
-│   │       └── triplet_analysis.py
-│   ├── data/                         # Processed inputs (not included in repo)
-│   └── saved_models/                 # Model checkpoints (not included in repo)
+│   ├── model/                  # PRISM model versions (v3 → v20)
+│   │   ├── v15d_bp_clean.py    # Production model (Macro AUPRC 0.7022)
+│   │   ├── v15d_unified.py     # Unified training script
+│   │   └── v15f_layer_select.py # ESM-2 layer selection experiments
+│   ├── preprocessing/          # ESM-2 embedding computation, data prep
+│   └── results_isoform/        # Evaluation scripts and summary CSVs
 │
 ├── Final_analysis/
-│   └── pipeline_bioanalysis/         # BISECT pipeline
-│       ├── orchestrate.py            # Main BISECT entry point
-│       ├── config.yaml.example       # Configuration template (copy → config.yaml)
-│       ├── cases_input.csv           # Example input (53 AD isoform switch candidates)
-│       ├── modules/                  # M1–M12 analysis modules
-│       │   ├── m1_extract_seq.py
-│       │   ├── m2_hmmscan.py
-│       │   ├── m3_motif_analysis.py
-│       │   ├── m4_genomic_coords.py
-│       │   ├── m5_repeatmasker.py
-│       │   ├── m6_report.py
-│       │   ├── m7_compare.py
-│       │   ├── m8_seq_validation.py
-│       │   ├── m9_nmd_screen.py
-│       │   ├── m10_alphafold.py
-│       │   ├── m11_ppi.py
-│       │   └── m12_conservation.py
-│       ├── figA_pipeline.R           # Figure 1 (pipeline schematic)
-│       ├── figB_cases.R              # Figure 2 (domain maps)
-│       ├── figC_heatmap.R            # Figure 3 (multi-evidence heatmap)
-│       └── figD_network.R            # Figure 4 (pathway network)
+│   ├── pipeline_bioanalysis/   # BISECT pipeline
+│   │   ├── orchestrate.py      # Main pipeline runner (15 modules)
+│   │   ├── modules/            # m1_extract_seq → m15_compare
+│   │   ├── templates/          # Jinja2 case report templates
+│   │   ├── BISECT_case_report.md       # Full 26-case PASS report
+│   │   ├── TierA_mechanism_synthesis.md # Tier A deep-dive (4 cases)
+│   │   └── cases_input_sra.csv         # SRA input case list
+│   ├── 00_data_and_pipeline/ → 08_synthesis/  # Section analysis reports
+│   └── 07_ad_isoform_switching/        # KIF21B, NDUFS4, PTPRF analyses
 │
-└── reports/
-    └── manuscript_merged_v1.md       # Full manuscript draft
+├── reports/
+│   └── manuscript_merged_v1.md         # Full manuscript draft
+│
+└── CLAUDE.md                           # Project research rules
 ```
 
 ---
 
 ## Installation
 
-### 1. DIFFUSE (Python + PyTorch)
-
 ```bash
-conda create -n diffuse_env python=3.9
-conda activate diffuse_env
-pip install -r requirements.txt
+# Clone repository
+git clone https://github.com/leeeeeff/PRISM-BISECT.git
+cd PRISM-BISECT
+
+# Create conda environment
+conda create -n isoform_env python=3.9
+conda activate isoform_env
+
+# Install dependencies
+pip install tensorflow==2.12 fair-esm torch biopython pandas numpy scikit-learn
+pip install jinja2 requests scipy
+
+# For BISECT domain annotation (HMMER required separately)
+# Pfam-A.hmm database: https://www.ebi.ac.uk/interpro/download/pfam/
 ```
-
-**GPU requirement**: NVIDIA GPU with ≥16 GB VRAM recommended (training); inference runs on CPU.
-
-### 2. BISECT (Python + external tools)
-
-```bash
-conda activate diffuse_env
-pip install -r requirements_bisect.txt
-```
-
-BISECT additionally requires the following external tools:
-
-| Tool | Version | Required for | Install |
-|------|---------|--------------|---------|
-| HMMER | ≥ 3.3.2 | M2 (Pfam domain scan) | `conda install -c bioconda hmmer` |
-| Pfam-A.hmm | 36.0 | M2 | [ftp.ebi.ac.uk/pub/databases/Pfam](https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz) |
-| TransDecoder | ≥ 5.7.1 | M1 (ORF prediction) | `conda install -c bioconda transdecoder` |
-| RepeatMasker | ≥ 4.1.5 | M5 (TE annotation) | `conda install -c bioconda repeatmasker` |
-| minimap2 | ≥ 2.24 | M4 (alignment) | `conda install -c bioconda minimap2` |
-
-After installing HMMER, index the Pfam database:
-
-```bash
-hmmpress /path/to/Pfam-A.hmm
-```
-
-Set paths in `config.yaml` (copy from `config.yaml.example` and edit).
 
 ---
 
-## Quick Start
+## Usage
 
-### DIFFUSE: Isoform GO term prediction
+### PRISM — Isoform Function Prediction
 
 ```bash
-conda activate diffuse_env
 cd hMuscle
 
-# Train from scratch (GPU)
-python run_GPU_Full.py
+# Pre-compute ESM-2 embeddings (requires GPU)
+conda activate isoform_env
+python preprocessing/compute_esm2_all_layers.py
 
-# Evaluate on muscle test set
-python results_isoform/evaluation.py \
-    --model saved_models/v15d_bp_clean.pt \
-    --output results_isoform/eval_output/
+# Train production model (v15d)
+python model/v15d_bp_clean.py
+
+# Full training run with logging
+nohup python run_GPU_Full.py > logs_isoform/run_$(date +%Y%m%d_%H%M).log 2>&1 &
+
+# Evaluate
+python results_isoform/evaluation.py
 ```
 
-**Inference on new isoforms** (e.g., brain IsoQuant FASTA):
-
-```python
-from model.v15d_bp_clean import DIFFUSEModel
-import torch, numpy as np
-
-# Load pre-trained model
-model = DIFFUSEModel.load('saved_models/v15d_bp_clean.pt')
-
-# ESM-2 embeddings (640d, mean-pooled) for your isoforms
-embeddings = np.load('your_esm2_embeddings.npy')  # shape: (N, 640)
-
-scores = model.predict(embeddings)   # shape: (N, n_go_terms)
+**Architecture (v15d_bp_clean):**
+```
+ESM-2 (esm2_t30_150M_UR50D, 640-dim, layer 30)
+  → Dense(256, ReLU) → BatchNorm → Dropout(0.3)
+  → Dense(128, ReLU) → Dropout(0.2)
+  → Dense(64, ReLU)
+  → Dense(18, sigmoid)        # 18 BP GO terms
+Loss: BinaryFocalCrossentropy(γ=2.0)
 ```
 
-### BISECT: Multi-evidence isoform switch characterization
+### BISECT — Isoform Switch Characterization
 
 ```bash
 cd Final_analysis/pipeline_bioanalysis
 
-# Copy and edit configuration
+# Edit config.yaml with local paths
 cp config.yaml.example config.yaml
-# Edit config.yaml: set paths.faa, paths.pfam_db, paths.output_dir
 
-# Screen mode (Stage 1+2 only, fast)
-python orchestrate.py --mode screen
+# Run full pipeline on a case list
+python orchestrate.py --cases cases_input_sra.csv --output outputs/
 
-# Full deep analysis (all 12 modules)
-python orchestrate.py --mode deep --workers 4
+# Run on a single case
+python orchestrate.py --gene KIF21B --cell_type Excitatory
 
-# Single case
-python orchestrate.py --case KIF21B --mode deep --force
-
-# Dry run (check inputs without running)
-python orchestrate.py --dry-run
+# Batch run
+bash run_batch_remaining.sh
 ```
 
-Output per case: `outputs/<GENE>_<CELLTYPE>/`
-- `analysis.json` — full evidence summary
-- `domain_map.pdf` — Pfam domain architecture visualization
-- `report.md` — human-readable case report
+**BISECT Pipeline (15 modules):**
 
-Cross-case summary: `outputs/cases_summary_<TIMESTAMP>.tsv`
-
----
-
-## Reproducing Paper Results
-
-### Figure 1 (AUPRC comparison table)
-
-```bash
-cd hMuscle
-python results_isoform/evaluation.py --model saved_models/v15d_bp_clean.pt
-```
-
-Expected: Macro AUPRC = 0.685 (Type-B terms), LR baseline = 0.363.
-
-### Figure 3 (BISECT multi-evidence heatmap)
-
-```bash
-cd Final_analysis/pipeline_bioanalysis
-python orchestrate.py --mode deep --workers 4
-Rscript figC_heatmap.R
-```
-
-### Figure 4 (Pathway convergence network)
-
-```bash
-Rscript figD_network.R
-# Output: outputs/figD_network.pdf, figD_network.png
-```
-
-### Ablation study
-
-```bash
-cd hMuscle
-# no_triplet, no_focal, no_ppi, no_esm, no_cellloc, no_isoform_specific
-python run_GPU_Full.py --ablation no_triplet
-python run_GPU_Full.py --ablation no_focal
-```
+| Module | Function |
+|--------|----------|
+| M1 | Sequence extraction & ORF translation |
+| M2 | HMMER domain annotation (Pfam-A) |
+| M3 | NMD susceptibility screening |
+| M4 | Genomic coordinate mapping |
+| M5 | Isoform-specific motif detection |
+| M6 | NMD gate filtering |
+| M7 | Sequence-level validation |
+| M8 | Regulatory context classification |
+| M9 | Promoter usage (TSS proximity) |
+| M10 | Alternative polyadenylation (APA) |
+| M11 | AlphaFold2 structural confidence |
+| M12 | PPI network analysis (STRING) |
+| M13 | Evolutionary conservation (phyloP100way) |
+| M14 | Case report generation |
+| M15 | Cross-case comparative analysis |
 
 ---
 
 ## Data Availability
 
-| Data | Status | Location |
-|------|--------|----------|
-| Human skeletal muscle scLR-seq | Available on request | Samsung Medical Center |
-| Samsung AD prefrontal cortex scLR-seq | Available on request (IRB SMC 2021-08-031) | Samsung Medical Center |
-| ESM-2 embeddings (muscle, 36,748 isoforms) | Zenodo [LINK] | Upon acceptance |
-| ESM-2 embeddings (brain, 63,994 isoforms) | Zenodo [LINK] | Upon acceptance |
-| Pre-trained DIFFUSE model weights (v15d) | Zenodo [LINK] | Upon acceptance |
-| BISECT output JSON (53 cases) | This repository | `Final_analysis/pipeline_bioanalysis/outputs/` |
+| Data | Source | Access |
+|------|--------|--------|
+| Human skeletal muscle long-read scRNA-seq | In-house (ONT) | Available upon request |
+| Human brain AD/CT long-read scRNA-seq | In-house (IsoQuant GTF, 10,817 novel isoforms) | Available upon request |
+| SRA public validation cohort (42 samples) | NCBI SRA | `cases_input_sra.csv` |
+| ESM-2 embeddings | Meta AI (fair-esm) | `preprocessing/compute_esm2_all_layers.py` |
+| Pfam-A HMM database | EMBL-EBI InterPro | https://www.ebi.ac.uk/interpro/download/pfam/ |
 
-Transcript sequences are derived from GENCODE v43 (known isoforms) and IsoQuant v3.3 novel transcripts.
-No patient-identifiable information is included in this repository.
+> **Note**: Raw sequencing data, processed count matrices, model checkpoints (`hMuscle/saved_models/`), and training data (`hMuscle/data/`) are not included in this repository. Available upon reasonable request.
+
+---
+
+## Reproducibility
+
+All numeric results in the manuscript were verified against per-case `analysis.json` pipeline outputs. Key files:
+
+- `Final_analysis/pipeline_bioanalysis/outputs/run_summary_20260531_1425.md` — BISECT run summary (84 PASS / 121 cases)
+- `Final_analysis/pipeline_bioanalysis/outputs/supplementary_table_S_bisect_121cases.tsv` — Full case table
+- `hMuscle/results_isoform/total_performance_summary.csv` — PRISM evaluation summary
 
 ---
 
 ## Citation
 
 ```bibtex
-@article{lee2026diffuse,
-  title={DIFFUSE: Deep Isoform Function Prediction Using Sequence Embeddings,
-         with Multi-Evidence Characterization of Alzheimer's Disease Isoform Switches by BISECT},
-  author={Lee, Seungwon and others},
-  journal={Nature Methods},
-  year={2026},
-  note={Under review}
+@article{lee2026prism,
+  title   = {PRISM: isoform-level function prediction via protein language model embeddings
+             reveals disease-associated alternative splicing in Alzheimer's disease},
+  author  = {Lee, Seungwon and ...},
+  journal = {Nature Methods},
+  year    = {2026},
+  note    = {Manuscript in preparation}
 }
 ```
 
@@ -240,12 +193,5 @@ No patient-identifiable information is included in this repository.
 
 ## License
 
-Code: MIT License  
-Data: CC BY 4.0 (upon acceptance)  
-Model weights: CC BY-NC 4.0
-
----
-
-## Contact
-
-Seungwon Lee — seungwon.david.lee@gmail.com
+Code: MIT License.
+Data and manuscript text: All rights reserved pending publication.
