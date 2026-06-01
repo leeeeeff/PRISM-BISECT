@@ -99,111 +99,101 @@ with tab_cross:
 
     if not data_a or not data_b:
         st.info("Select or upload both tissue datasets to compare.")
-        st.stop()
+    else:
+        go_a = set(data_a.get('go') or [])
+        go_b = set(data_b.get('go') or [])
+        shared_go = sorted(go_a & go_b)
 
-    # Find shared GO terms
-    go_a = set(data_a.get('go') or [])
-    go_b = set(data_b.get('go') or [])
-    shared_go = sorted(go_a & go_b)
+        if not shared_go:
+            st.warning("No shared GO terms between the two tissues.")
+        else:
+            st.info(f"Shared GO terms: **{len(shared_go)}** | "
+                    f"{data_a['name']}: {len(data_a['sm']):,} isoforms | "
+                    f"{data_b['name']}: {len(data_b['sm']):,} isoforms")
 
-    if not shared_go:
-        st.warning("No shared GO terms between the two tissues.")
-        st.stop()
+            score_thr = st.slider("Score threshold for 'high'", 0.1, 0.9, 0.5, 0.05,
+                                   key='cross_thr')
 
-    st.info(f"Shared GO terms: **{len(shared_go)}** | "
-            f"{data_a['name']}: {len(data_a['sm']):,} isoforms | "
-            f"{data_b['name']}: {len(data_b['sm']):,} isoforms")
+            go_a_idx = [list(data_a['go']).index(g) for g in shared_go if g in data_a['go']]
+            go_b_idx = [list(data_b['go']).index(g) for g in shared_go if g in data_b['go']]
+            sm_a_sh  = data_a['sm'][:, go_a_idx]
+            sm_b_sh  = data_b['sm'][:, go_b_idx]
+            gnames_shared = data_a['gnames']
+            mean_a = sm_a_sh.mean(axis=0)
+            mean_b = sm_b_sh.mean(axis=0)
 
-    score_thr = st.slider("Score threshold for 'high'", 0.1, 0.9, 0.5, 0.05,
-                           key='cross_thr')
+            compare_df = pd.DataFrame({
+                'GO_ID':  shared_go,
+                'GO_term': [gnames_shared.get(g, g)[:40] for g in shared_go],
+                f'Mean_{data_a["name"]}': mean_a,
+                f'Mean_{data_b["name"]}': mean_b,
+                'Delta (A−B)': mean_a - mean_b,
+            }).sort_values('Delta (A−B)', key=abs, ascending=False)
 
-    # ── Mean score comparison bar chart ──────────────────────────────────────
-    go_a_idx = [list(data_a['go']).index(g) for g in shared_go if g in data_a['go']]
-    go_b_idx = [list(data_b['go']).index(g) for g in shared_go if g in data_b['go']]
-    sm_a_sh  = data_a['sm'][:, go_a_idx]
-    sm_b_sh  = data_b['sm'][:, go_b_idx]
+            fig_bar = px.bar(
+                compare_df,
+                x='GO_term', y=['Delta (A−B)', f'Mean_{data_a["name"]}', f'Mean_{data_b["name"]}'],
+                barmode='group',
+                title=f"GO score comparison: {data_a['name']} vs {data_b['name']}",
+                labels={'value': 'Mean PRISM score', 'GO_term': ''},
+                color_discrete_map={
+                    'Delta (A−B)': '#555',
+                    f'Mean_{data_a["name"]}': '#4c72b0',
+                    f'Mean_{data_b["name"]}': '#c44e52',
+                },
+                height=400,
+            )
+            fig_bar.update_layout(xaxis_tickangle=-35, legend_title='')
+            st.plotly_chart(fig_bar, use_container_width=True)
 
-    gnames_shared = data_a['gnames']
+            fig_scatter = px.scatter(
+                compare_df,
+                x=f'Mean_{data_a["name"]}',
+                y=f'Mean_{data_b["name"]}',
+                text='GO_term',
+                color='Delta (A−B)',
+                color_continuous_scale='RdBu_r',
+                color_continuous_midpoint=0,
+                title=f"GO score correlation: {data_a['name']} vs {data_b['name']}",
+                labels={
+                    f'Mean_{data_a["name"]}': f'Mean score ({data_a["name"]})',
+                    f'Mean_{data_b["name"]}': f'Mean score ({data_b["name"]})',
+                },
+                height=420,
+            )
+            mx = float(max(mean_a.max(), mean_b.max())) * 1.05
+            fig_scatter.add_shape(type='line', x0=0, y0=0, x1=mx, y1=mx,
+                                   line=dict(dash='dash', color='grey', width=1))
+            fig_scatter.update_traces(textposition='top center', textfont_size=9)
+            fig_scatter.update_layout(coloraxis_showscale=False)
+            st.plotly_chart(fig_scatter, use_container_width=True)
 
-    mean_a = sm_a_sh.mean(axis=0)
-    mean_b = sm_b_sh.mean(axis=0)
+            st.subheader("Tissue-Specific Functions")
+            delta_thr_ct = st.slider("Min |delta| to call tissue-specific", 0.01, 0.1, 0.03, 0.005)
 
-    compare_df = pd.DataFrame({
-        'GO_ID':  shared_go,
-        'GO_term': [gnames_shared.get(g, g)[:40] for g in shared_go],
-        f'Mean_{data_a["name"]}': mean_a,
-        f'Mean_{data_b["name"]}': mean_b,
-        'Delta (A−B)': mean_a - mean_b,
-    }).sort_values('Delta (A−B)', key=abs, ascending=False)
+            a_specific  = compare_df[compare_df['Delta (A−B)'] >  delta_thr_ct]
+            b_specific  = compare_df[compare_df['Delta (A−B)'] < -delta_thr_ct]
+            shared_both = compare_df[compare_df['Delta (A−B)'].abs() <= delta_thr_ct]
 
-    fig_bar = px.bar(
-        compare_df,
-        x='GO_term', y=['Delta (A−B)', f'Mean_{data_a["name"]}', f'Mean_{data_b["name"]}'],
-        barmode='group',
-        title=f"GO score comparison: {data_a['name']} vs {data_b['name']}",
-        labels={'value': 'Mean PRISM score', 'GO_term': ''},
-        color_discrete_map={
-            'Delta (A−B)': '#555',
-            f'Mean_{data_a["name"]}': '#4c72b0',
-            f'Mean_{data_b["name"]}': '#c44e52',
-        },
-        height=400,
-    )
-    fig_bar.update_layout(xaxis_tickangle=-35, legend_title='')
-    st.plotly_chart(fig_bar, use_container_width=True)
+            col1, col2, col3 = st.columns(3)
+            col1.metric(f"{data_a['name']}-specific GO terms", len(a_specific))
+            col2.metric(f"{data_b['name']}-specific GO terms", len(b_specific))
+            col3.metric("Shared (|delta| < threshold)", len(shared_both))
 
-    # ── Scatter: tissue A mean vs tissue B mean ───────────────────────────────
-    fig_scatter = px.scatter(
-        compare_df,
-        x=f'Mean_{data_a["name"]}',
-        y=f'Mean_{data_b["name"]}',
-        text='GO_term',
-        color='Delta (A−B)',
-        color_continuous_scale='RdBu_r',
-        color_continuous_midpoint=0,
-        title=f"GO score correlation: {data_a['name']} vs {data_b['name']}",
-        labels={
-            f'Mean_{data_a["name"]}': f'Mean score ({data_a["name"]})',
-            f'Mean_{data_b["name"]}': f'Mean score ({data_b["name"]})',
-        },
-        height=420,
-    )
-    # Diagonal reference line
-    mx = float(max(mean_a.max(), mean_b.max())) * 1.05
-    fig_scatter.add_shape(type='line', x0=0, y0=0, x1=mx, y1=mx,
-                           line=dict(dash='dash', color='grey', width=1))
-    fig_scatter.update_traces(textposition='top center', textfont_size=9)
-    fig_scatter.update_layout(coloraxis_showscale=False)
-    st.plotly_chart(fig_scatter, use_container_width=True)
+            with st.expander(f"{data_a['name']}-enriched GO terms"):
+                st.dataframe(a_specific[['GO_term', 'Delta (A−B)',
+                                          f'Mean_{data_a["name"]}',
+                                          f'Mean_{data_b["name"]}']],
+                             use_container_width=True, hide_index=True)
+            with st.expander(f"{data_b['name']}-enriched GO terms"):
+                st.dataframe(b_specific[['GO_term', 'Delta (A−B)',
+                                          f'Mean_{data_a["name"]}',
+                                          f'Mean_{data_b["name"]}']],
+                             use_container_width=True, hide_index=True)
 
-    # ── Tissue-specific GO functions ──────────────────────────────────────────
-    st.subheader("Tissue-Specific Functions")
-    delta_thr = st.slider("Min |delta| to call tissue-specific", 0.01, 0.1, 0.03, 0.005)
-
-    a_specific = compare_df[compare_df['Delta (A−B)'] >  delta_thr]
-    b_specific = compare_df[compare_df['Delta (A−B)'] < -delta_thr]
-    shared_both = compare_df[compare_df['Delta (A−B)'].abs() <= delta_thr]
-
-    col1, col2, col3 = st.columns(3)
-    col1.metric(f"{data_a['name']}-specific GO terms", len(a_specific))
-    col2.metric(f"{data_b['name']}-specific GO terms", len(b_specific))
-    col3.metric("Shared (|delta| < threshold)", len(shared_both))
-
-    with st.expander(f"{data_a['name']}-enriched GO terms"):
-        st.dataframe(a_specific[['GO_term','Delta (A−B)',
-                                  f'Mean_{data_a["name"]}',
-                                  f'Mean_{data_b["name"]}']],
-                     use_container_width=True, hide_index=True)
-    with st.expander(f"{data_b['name']}-enriched GO terms"):
-        st.dataframe(b_specific[['GO_term','Delta (A−B)',
-                                  f'Mean_{data_a["name"]}',
-                                  f'Mean_{data_b["name"]}']],
-                     use_container_width=True, hide_index=True)
-
-    # Download
-    csv = compare_df.to_csv(index=False).encode('utf-8')
-    st.download_button("Download comparison table (CSV)", csv,
-                        "cross_tissue_comparison.csv", "text/csv")
+            csv = compare_df.to_csv(index=False).encode('utf-8')
+            st.download_button("Download comparison table (CSV)", csv,
+                                "cross_tissue_comparison.csv", "text/csv")
 
 
 # ─────────────────────────────────────────────────────────────────────────────

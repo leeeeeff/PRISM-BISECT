@@ -221,6 +221,7 @@ with tab_matrix:
         g1.metric("GAIN events",    n_gain, help="Up-isoform scores higher for this GO term")
         g2.metric("LOSS events",    n_loss, help="Up-isoform scores lower for this GO term")
         g3.metric("NEUTRAL events", n_neut)
+        render_condition_interpretation(n_gain, n_loss, n_neut)
 
         # Per-gene expander
         with st.expander("Show per-gene consequence details"):

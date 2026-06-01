@@ -241,7 +241,7 @@ def render_umap_interpretation(embed_method: str, n_total: int, sampled: int,
                                color_by: str) -> None:
     body = (
         f"UMAP(Uniform Manifold Approximation and Projection)은 각 아이소폼의 "
-        f"GO 스코어 벡터({sampled:,}차원)를 2D 공간으로 투영합니다. "
+        f"GO 스코어 벡터를 2D 공간으로 투영합니다. "
         "<b>기능이 유사한 아이소폼들이 가까이 모입니다.</b><br><br>"
     )
 

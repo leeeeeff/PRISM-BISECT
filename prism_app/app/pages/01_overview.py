@@ -320,8 +320,13 @@ else:
                 hovertemplate='<b>%{y}</b><br>AUPRC: %{x:.4f}<br>Positives: %{customdata[0]}<extra></extra>',
                 customdata=_auprc_plot_df[['n_pos']].values,
             ))
-            fig_auprc.add_vline(x=0.5, line_dash='dash', line_color='#6b7280',
-                                annotation_text='무작위 기준 (0.5)',
+            # Random baseline = mean positive rate across GO terms (not 0.5)
+            _mean_baseline = float(
+                sum(r['n_pos'] for r in val_rep.per_go) /
+                max(1, len(val_rep.per_go) * (_n_iso_total))
+            )
+            fig_auprc.add_vline(x=_mean_baseline, line_dash='dash', line_color='#6b7280',
+                                annotation_text=f'무작위 기준 ({_mean_baseline:.2f})',
                                 annotation_position='top right',
                                 annotation_font_size=10)
             # Reference line for paper value

@@ -12,6 +12,56 @@ except ImportError:
     _HAS_PLOTLY = False
 
 
+def detect_functional_divergence(scores: np.ndarray, iso_ids, go_labels):
+    """Find the isoform pair with the largest score difference per GO term.
+
+    Returns dict with keys:
+      - max_delta: float (largest pairwise difference found)
+      - go_term: str (GO label where max delta occurs)
+      - iso_high: str (isoform ID with higher score)
+      - iso_low: str (isoform ID with lower score)
+      - score_high: float
+      - score_low: float
+      - per_go_max_delta: list of (go_label, max_delta) sorted descending
+
+    If < 2 isoforms, return None.
+    """
+    n_iso, n_go = scores.shape
+    if n_iso < 2:
+        return None
+
+    max_delta = 0.0
+    best_go_idx = 0
+    best_i, best_j = 0, 1
+
+    for g in range(n_go):
+        col = scores[:, g]
+        i_max = int(col.argmax())
+        i_min = int(col.argmin())
+        delta = float(col[i_max] - col[i_min])
+        if delta > max_delta:
+            max_delta = delta
+            best_go_idx = g
+            best_i, best_j = i_max, i_min
+
+    per_go_max_delta = []
+    for g in range(n_go):
+        col = scores[:, g]
+        d = float(col.max() - col.min())
+        per_go_max_delta.append((go_labels[g], round(d, 3)))
+    per_go_max_delta.sort(key=lambda x: x[1], reverse=True)
+
+    return dict(
+        max_delta=round(max_delta, 3),
+        go_term=go_labels[best_go_idx],
+        iso_high=str(iso_ids[best_i]),
+        iso_low=str(iso_ids[best_j]),
+        score_high=round(float(scores[best_i, best_go_idx]), 3),
+        score_low=round(float(scores[best_j, best_go_idx]), 3),
+        per_go_max_delta=per_go_max_delta,
+    )
+
+
 def build_within_gene_chart(
     gene_name: str,
     isoform_ids: np.ndarray,
@@ -21,7 +71,7 @@ def build_within_gene_chart(
     gene_ids: Optional[np.ndarray] = None,
     chart_type: str = 'bar',
     title: Optional[str] = None,
-) -> 'go.Figure':
+) -> 'tuple[go.Figure, Optional[dict]]':
     """Compare all isoforms of a gene across GO terms.
 
     Parameters
@@ -32,6 +82,11 @@ def build_within_gene_chart(
     go_terms    : list of GO IDs
     gene_ids    : (n_isoforms,) — if None, filters by isoform_id prefix
     chart_type  : 'bar' (grouped) | 'heatmap' | 'parallel'
+
+    Returns
+    -------
+    (fig, divergence_info) tuple where divergence_info is from
+    detect_functional_divergence() or None.
     """
     if not _HAS_PLOTLY:
         raise ImportError("plotly is required")
@@ -55,13 +110,15 @@ def build_within_gene_chart(
         fig.add_annotation(text=f'No isoforms found for gene: {gene_name}',
                            x=0.5, y=0.5, showarrow=False,
                            font=dict(size=14))
-        return fig
+        return fig, None
 
     iso_ids = isoform_ids[mask]
     scores  = score_matrix[mask]              # (n_gene_iso, n_go)
     go_labels = [go_names.get(g, g)[:30] for g in go_terms]
 
     title = title or f'{gene_name}: Isoform × GO-score Comparison'
+
+    div_info = detect_functional_divergence(scores, iso_ids, go_labels)
 
     if chart_type == 'heatmap':
         fig = go.Figure(data=go.Heatmap(
@@ -114,12 +171,29 @@ def build_within_gene_chart(
             margin=dict(l=60, r=20, t=60, b=160),
         )
 
+        # Add annotation highlighting the GO term with the largest divergence
+        if div_info is not None:
+            fig.add_annotation(
+                x=div_info['go_term'],
+                y=div_info['score_high'],
+                text=f"⬆ 최대 분기 (Δ={div_info['max_delta']:.2f})",
+                showarrow=True,
+                arrowhead=2,
+                arrowcolor='#eab308',
+                font=dict(color='#92400e', size=11, family='Arial'),
+                bgcolor='#fef9c3',
+                bordercolor='#eab308',
+                borderwidth=1,
+                ax=0,
+                ay=-40,
+            )
+
     fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(family='Arial', size=11),
     )
-    return fig
+    return fig, div_info
 
 
 def build_scenario_bar(classified_df: pd.DataFrame, title: str = 'Isoform Scenario Distribution') -> 'go.Figure':

@@ -155,7 +155,7 @@ with tab_gene:
 
     if st.button("Plot"):
         with st.spinner(f"Building chart for {gene_input}…"):
-            fig_gene = build_within_gene_chart(
+            fig_gene, div_info = build_within_gene_chart(
                 gene_name=gene_input,
                 isoform_ids=ids,
                 score_matrix=sm,
@@ -165,6 +165,25 @@ with tab_gene:
                 chart_type=chart_type,
             )
         st.plotly_chart(fig_gene, use_container_width=True)
+        if div_info and div_info['max_delta'] >= 0.1:
+            st.markdown(
+                f"""<div style='background:#fef9c3;border-left:4px solid #eab308;
+                padding:12px 16px;border-radius:6px;margin:8px 0;font-size:0.88rem'>
+                <b>🔍 자동 감지된 기능 분기</b><br>
+                가장 큰 아이소폼 간 기능 차이: <b>{div_info['go_term']}</b> 에서
+                <b>Δ = {div_info['max_delta']:.3f}</b><br>
+                <b>{div_info['iso_high']}</b> (score {div_info['score_high']:.3f})
+                vs <b>{div_info['iso_low']}</b> (score {div_info['score_low']:.3f})<br>
+                → 이 두 아이소폼이 해당 유전자의 기능 스위치 후보입니다.
+                </div>""",
+                unsafe_allow_html=True,
+            )
+            if len(div_info['per_go_max_delta']) > 1:
+                import pandas as _pd_gene
+                _div_df = _pd_gene.DataFrame(div_info['per_go_max_delta'][:5],
+                                              columns=['GO term', '최대 Δ score'])
+                st.caption("GO term별 최대 아이소폼 간 분기 (상위 5개):")
+                st.dataframe(_div_df, use_container_width=True, hide_index=True)
         # Count isoforms for this gene
         ids_arr = np.asarray(ids, dtype=str)
         if genes is not None:
