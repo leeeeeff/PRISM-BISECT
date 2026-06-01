@@ -71,6 +71,47 @@ def compute_umap_coords(
     return reducer.fit_transform(X).astype(np.float32), 't-SNE'
 
 
+def _kmeans_cluster_labels(
+    coords: np.ndarray,
+    score_matrix: Optional[np.ndarray],
+    go_terms: Optional[List[str]],
+    go_names: Optional[Dict[str, str]],
+    k: int = 6,
+) -> Tuple[np.ndarray, List[dict]]:
+    """KMeans cluster assignment + dominant-GO label per cluster.
+
+    Returns
+    -------
+    labels   : (n,) int cluster assignment
+    centroids: list of dicts with keys x, y, label, count
+    """
+    from sklearn.cluster import KMeans
+    km = KMeans(n_clusters=k, random_state=42, n_init='auto')
+    labels = km.fit_predict(coords)
+
+    centroids = []
+    for c in range(k):
+        mask = labels == c
+        cx, cy = coords[mask, 0].mean(), coords[mask, 1].mean()
+        count = int(mask.sum())
+
+        # Dominant GO term in this cluster
+        label = f"Cluster {c+1}"
+        if score_matrix is not None and go_terms and mask.sum() > 0:
+            mean_scores = score_matrix[mask].mean(axis=0)
+            top_idx = int(mean_scores.argmax())
+            top_go  = go_terms[top_idx]
+            top_name = (go_names or {}).get(top_go, top_go)
+            # Abbreviate long names
+            if len(top_name) > 28:
+                top_name = top_name[:26] + '…'
+            label = f"#{c+1} {top_name}"
+
+        centroids.append(dict(x=cx, y=cy, label=label, count=count))
+
+    return labels, centroids
+
+
 def build_umap_figure(
     coords: np.ndarray,
     isoform_ids: np.ndarray,
@@ -82,6 +123,8 @@ def build_umap_figure(
     title: str = 'PRISM GO-Score Space UMAP',
     point_size: int = 4,
     opacity: float = 0.7,
+    show_cluster_labels: bool = True,
+    n_clusters: int = 6,
 ) -> 'go.Figure':
     """Build an interactive Plotly UMAP scatter figure.
 
@@ -210,6 +253,26 @@ def build_umap_figure(
         font=dict(family='Arial', size=12),
         margin=dict(l=60, r=20, t=50, b=60),
     )
+
+    # ── Cluster label overlay ─────────────────────────────────────────────
+    if show_cluster_labels and len(coords) >= max(10, n_clusters):
+        try:
+            _, centroids = _kmeans_cluster_labels(
+                coords, score_matrix, go_terms, go_names, k=n_clusters
+            )
+            for c in centroids:
+                fig.add_annotation(
+                    x=c['x'], y=c['y'],
+                    text=f"<b>{c['label']}</b><br><span style='font-size:9px'>n={c['count']:,}</span>",
+                    showarrow=False,
+                    font=dict(size=10, color='#1e293b'),
+                    bgcolor='rgba(255,255,255,0.82)',
+                    bordercolor='#94a3b8',
+                    borderwidth=1,
+                    borderpad=4,
+                )
+        except Exception:
+            pass  # cluster annotation is optional; never break the main figure
 
     return fig
 

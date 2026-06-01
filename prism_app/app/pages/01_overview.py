@@ -130,24 +130,81 @@ with st.spinner("Classifying isoforms…"):
 
 summ = scenario_summary(classified)
 
-colors = ['#e63946', '#f4a261', '#2a9d8f', '#adb5bd']
-fig_sc = px.bar(
-    summ, x='scenario_label', y='count',
-    text='pct',
-    title='Isoform Scenario Distribution',
-    color='scenario_label',
-    color_discrete_sequence=colors,
-    labels={'scenario_label': '', 'count': 'N isoforms'},
-)
-fig_sc.update_traces(texttemplate='%{text}%', textposition='outside')
-fig_sc.update_layout(showlegend=False, height=380, xaxis_tickangle=-15)
+# ── 2×2 Scenario Matrix Cards ─────────────────────────────────────────────────
+counts = dict(zip(summ['scenario'], summ['count']))
+pcts   = dict(zip(summ['scenario'], summ['pct']))
+total  = summ['count'].sum()
 
-col_c, col_d = st.columns([2, 1])
-with col_c:
-    st.plotly_chart(fig_sc, use_container_width=True)
-with col_d:
-    st.dataframe(summ[['scenario', 'scenario_label', 'count', 'pct']],
-                 use_container_width=True, hide_index=True)
+_SCENARIO_META = {
+    1: dict(icon="🔴", title="S1 · 기능 스위치",
+            color="#fef2f2", border="#e63946",
+            desc="DTU+ & 신규 GO+<br>조건에 따라 기능이 바뀌는 아이소폼<br>→ <b>최우선 실험 후보</b>",
+            dtu_req=True),
+    2: dict(icon="🟠", title="S2 · 발현 스위치",
+            color="#fff7ed", border="#f4a261",
+            desc="DTU+ & 신규 GO 없음<br>발현량만 변하고 기능 차이 없음<br>→ 구조적 이소폼 변화",
+            dtu_req=True),
+    3: dict(icon="🟢", title="S3 · 신규 기능",
+            color="#f0fdf4", border="#2a9d8f",
+            desc="DTU 없음 & 신규 GO+<br>항상 발현되는 Novel 기능 아이소폼<br>→ <b>논문 뇌 541개 케이스</b>",
+            dtu_req=False),
+    4: dict(icon="⬜", title="S4 · 배경",
+            color="#f8fafc", border="#adb5bd",
+            desc="DTU 없음 & 신규 GO 없음<br>분석 우선순위 낮음<br>→ 배경 아이소폼",
+            dtu_req=False),
+}
+
+has_dtu_flag = dtu is not None
+
+# Top row: S1, S2 | Bottom row: S3, S4
+card_cols_top = st.columns(2)
+card_cols_bot = st.columns(2)
+
+for scenario_id, card_cols in [(1, card_cols_top[0]), (2, card_cols_top[1]),
+                                (3, card_cols_bot[0]),  (4, card_cols_bot[1])]:
+    meta = _SCENARIO_META[scenario_id]
+    cnt  = counts.get(scenario_id, 0)
+    pct  = pcts.get(scenario_id, 0.0)
+    needs_dtu = meta['dtu_req'] and not has_dtu_flag
+    dtu_note = "<br><span style='color:#dc2626;font-size:0.75rem'>⚠️ DTU 파일 필요</span>" if needs_dtu else ""
+
+    card_cols.markdown(
+        f"""<div style='background:{meta['color']};border:2px solid {meta['border']};
+        border-radius:10px;padding:16px 18px;text-align:center;height:170px'>
+        <div style='font-size:1.4rem'>{meta['icon']}</div>
+        <b style='font-size:0.95rem;color:#1e293b'>{meta['title']}</b>
+        <div style='font-size:1.8rem;font-weight:700;color:{meta['border']};margin:4px 0'>
+          {cnt:,} <span style='font-size:0.85rem;color:#64748b'>({pct:.1f}%)</span>
+        </div>
+        <div style='font-size:0.76rem;color:#475569;line-height:1.4'>
+          {meta['desc']}{dtu_note}
+        </div>
+        </div>""",
+        unsafe_allow_html=True,
+    )
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Keep original bar chart in expander for detail
+with st.expander("📊 시나리오 분포 막대 그래프 (상세)", expanded=False):
+    colors = ['#e63946', '#f4a261', '#2a9d8f', '#adb5bd']
+    fig_sc = px.bar(
+        summ, x='scenario_label', y='count',
+        text='pct',
+        title='Isoform Scenario Distribution',
+        color='scenario_label',
+        color_discrete_sequence=colors,
+        labels={'scenario_label': '', 'count': 'N isoforms'},
+    )
+    fig_sc.update_traces(texttemplate='%{text}%', textposition='outside')
+    fig_sc.update_layout(showlegend=False, height=340, xaxis_tickangle=-15,
+                         plot_bgcolor='white', paper_bgcolor='white')
+    col_c, col_d = st.columns([2, 1])
+    with col_c:
+        st.plotly_chart(fig_sc, use_container_width=True)
+    with col_d:
+        st.dataframe(summ[['scenario', 'scenario_label', 'count', 'pct']],
+                     use_container_width=True, hide_index=True)
 
 render_scenario_interpretation(summ, has_dtu=dtu is not None)
 
@@ -235,22 +292,53 @@ else:
         col_val1, col_val2 = st.columns([3, 2])
 
         with col_val1:
-            fig_auprc = px.bar(
-                per_go_df.head(18).sort_values('auprc', ascending=True),
-                x='auprc', y='name',
-                orientation='h',
-                color='auprc',
-                color_continuous_scale='RdYlGn',
-                range_color=[0, 1],
-                title="Per-GO AUPRC (known annotation validation)",
-                labels={'auprc': 'AUPRC', 'name': ''},
-                height=max(300, len(per_go_df) * 22),
-                text='auprc',
+            _auprc_plot_df = per_go_df.head(18).sort_values('auprc', ascending=True).copy()
+            # Color tier: green > 0.6, yellow 0.5-0.6, red < 0.5
+            def _auprc_color(v):
+                if v >= 0.6:   return '#22c55e'
+                if v >= 0.5:   return '#f59e0b'
+                return '#ef4444'
+            _auprc_plot_df['color'] = _auprc_plot_df['auprc'].map(_auprc_color)
+            _auprc_plot_df['tier']  = _auprc_plot_df['auprc'].map(
+                lambda v: '우수 (≥0.6)' if v >= 0.6 else ('기준 이상 (≥0.5)' if v >= 0.5 else '기준선 근접')
             )
-            fig_auprc.update_traces(texttemplate='%{text:.3f}', textposition='outside')
-            fig_auprc.add_vline(x=0.5, line_dash='dash', line_color='grey',
-                                annotation_text='random (0.5)')
-            fig_auprc.update_layout(coloraxis_showscale=False, yaxis_tickfont_size=11)
+            # Improvement over random baseline (each term's positive rate ~= n_pos/total)
+            _n_iso_total = val_rep.n_isoforms_with_annotation or 1
+            _auprc_plot_df['improve_pct'] = _auprc_plot_df.apply(
+                lambda r: f"+{(r['auprc'] - r['n_pos']/_n_iso_total)*100:.0f}%" if r['n_pos'] > 0 else '', axis=1
+            )
+
+            import plotly.graph_objects as _go_plt
+            fig_auprc = _go_plt.Figure()
+            fig_auprc.add_trace(_go_plt.Bar(
+                x=_auprc_plot_df['auprc'],
+                y=_auprc_plot_df['name'],
+                orientation='h',
+                marker_color=_auprc_plot_df['color'],
+                text=_auprc_plot_df['auprc'].map('{:.3f}'.format),
+                textposition='outside',
+                hovertemplate='<b>%{y}</b><br>AUPRC: %{x:.4f}<br>Positives: %{customdata[0]}<extra></extra>',
+                customdata=_auprc_plot_df[['n_pos']].values,
+            ))
+            fig_auprc.add_vline(x=0.5, line_dash='dash', line_color='#6b7280',
+                                annotation_text='무작위 기준 (0.5)',
+                                annotation_position='top right',
+                                annotation_font_size=10)
+            # Reference line for paper value
+            fig_auprc.add_vline(x=val_rep.macro_auprc, line_dash='dot', line_color='#3b82f6',
+                                annotation_text=f'Macro avg ({val_rep.macro_auprc:.3f})',
+                                annotation_position='bottom right',
+                                annotation_font_size=10)
+            fig_auprc.update_layout(
+                title="GO term별 AUPRC — 색상: 🟢 ≥0.6 우수 · 🟡 0.5–0.6 · 🔴 <0.5",
+                xaxis=dict(range=[0, 1.05], title='AUPRC'),
+                yaxis=dict(tickfont=dict(size=10)),
+                height=max(320, len(_auprc_plot_df) * 24),
+                plot_bgcolor='white',
+                paper_bgcolor='white',
+                showlegend=False,
+                margin=dict(l=220, r=80, t=60, b=40),
+            )
             st.plotly_chart(fig_auprc, use_container_width=True)
 
         with col_val2:

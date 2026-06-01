@@ -65,12 +65,14 @@ with tab_umap:
     st.subheader("GO-Score Space UMAP")
     st.caption("GO 스코어 벡터를 2D로 투영합니다. 색상 옵션을 바꿔가며 클러스터 패턴을 분석하세요.")
 
-    col_opt1, col_opt2, col_opt3 = st.columns(3)
+    col_opt1, col_opt2, col_opt3, col_opt4 = st.columns(4)
     color_by = col_opt1.selectbox(
         "Colour by", ['isoform_type', 'scenario', 'max_go', 'max_score'], index=0,
     )
     point_sz = col_opt2.slider("Point size", 2, 10, 4)
     opacity  = col_opt3.slider("Opacity", 0.2, 1.0, 0.7, 0.05)
+    show_clusters = col_opt4.checkbox("GO 클러스터 레이블", value=True,
+                                      help="KMeans로 기능 클러스터를 감지해 각 군집에 대표 GO 기능명을 표시합니다.")
 
     _MAX_UMAP = 15_000   # cap for reasonable render speed
 
@@ -111,6 +113,8 @@ with tab_umap:
         score_matrix=sampled_sm,
         point_size=point_sz,
         opacity=opacity,
+        show_cluster_labels=show_clusters,
+        n_clusters=min(8, max(3, len(go) // 3)),
     )
     st.plotly_chart(fig_umap, use_container_width=True)
     st.caption(
