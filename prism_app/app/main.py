@@ -49,107 +49,77 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ── 데이터가 없을 때: 풀 히어로 섹션 ──────────────────────────────────────────
+# ── 핵심 성능 지표 (항상 표시) ────────────────────────────────────────────────
+st.divider()
+m1, m2, m3, m4 = st.columns(4)
+m1.metric("Macro AUPRC (근육)", "0.7022",   "랜덤 기준(0.5) 대비 +40%")
+m2.metric("Zero-shot 뇌 전이",  "0.5998",   "학습 없이 다른 조직 적용")
+m3.metric("신규 기능 발견 (뇌)", "541개",    "기존 주석 없는 Novel 아이소폼")
+m4.metric("BISECT PASS cases",  "84개",     "15개 모듈 × 증거 등급화")
+
+st.divider()
+
+# ── 분석 모듈 타일 (항상 표시) ────────────────────────────────────────────────
+st.subheader("분석 모듈")
+
+# Row 1
+row1 = st.columns(3)
+_TILES_R1 = [
+    ("#f0f9ff", "#0ea5e9", "📊", "Overview",
+     "기능 커버리지 · 시나리오 분류 · AUPRC 검증",
+     "#e0f2fe", "#0369a1", "Demo 제공"),
+    ("#f0fdf4", "#22c55e", "🗺️", "Functional Map",
+     "GO 기능 공간 UMAP · 타입별 히트맵 · 유전자 내 비교",
+     "#dcfce7", "#15803d", "Demo 제공"),
+    ("#fff7ed", "#f59e0b", "🔄", "Condition Analysis",
+     "DTU 연계 기능 GAIN/LOSS · GO Enrichment · Sankey",
+     "#fef3c7", "#b45309", "⚠️ DTU 파일 필요"),
+]
+for col, (bg, bd, icon, name, desc, bbg, bc, badge) in zip(row1, _TILES_R1):
+    col.markdown(
+        f"<div style='background:{bg};border:2px solid {bd};border-radius:12px;"
+        f"padding:18px 16px;text-align:center;height:190px'>"
+        f"<div style='font-size:2rem'>{icon}</div>"
+        f"<b style='font-size:1.05rem;color:#1e293b'>{name}</b><br>"
+        f"<span style='font-size:0.78rem;color:#475569;line-height:1.5'>{desc}</span><br><br>"
+        f"<span style='background:{bbg};color:{bc};font-size:0.72rem;"
+        f"padding:2px 8px;border-radius:12px'>{badge}</span></div>",
+        unsafe_allow_html=True,
+    )
+
+st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+
+# Row 2
+row2 = st.columns(3)
+_TILES_R2 = [
+    ("#fdf4ff", "#a855f7", "🔬", "Individual Analysis",
+     "시나리오별 후보 탐색 · 유전자 검색 · 케이스 리포트",
+     "#f3e8ff", "#7e22ce", "Demo 제공"),
+    ("#fef2f2", "#ef4444", "🔭", "Advanced",
+     "조직 간 비교 · 발현 필터 · NMD 위험 스크리닝",
+     "#fee2e2", "#b91c1c", "Demo 제공"),
+    ("#f8fafc", "#94a3b8", "🚀", "바로 시작하기",
+     "왼쪽 사이드바에서 Demo 또는 Upload를 선택하면 분석이 즉시 시작됩니다.",
+     "#f1f5f9", "#64748b", "👈 사이드바 선택"),
+]
+for col, (bg, bd, icon, name, desc, bbg, bc, badge) in zip(row2, _TILES_R2):
+    col.markdown(
+        f"<div style='background:{bg};border:2px {'dashed' if name == '바로 시작하기' else 'solid'} {bd};"
+        f"border-radius:12px;padding:18px 16px;text-align:center;height:190px'>"
+        f"<div style='font-size:2rem'>{icon}</div>"
+        f"<b style='font-size:1.05rem;color:#1e293b'>{name}</b><br>"
+        f"<span style='font-size:0.78rem;color:#475569;line-height:1.5'>{desc}</span><br><br>"
+        f"<span style='background:{bbg};color:{bc};font-size:0.72rem;"
+        f"padding:2px 8px;border-radius:12px'>{badge}</span></div>",
+        unsafe_allow_html=True,
+    )
+
+st.divider()
+
+# ── 데이터가 없을 때만: 가이드 + stop ─────────────────────────────────────────
 if cfg.get('score_matrix') is None:
 
-    st.divider()
-
-    # ── 1. 핵심 성능 지표 ──────────────────────────────────────────────────────
-    m1, m2, m3, m4 = st.columns(4)
-    m1.metric("Macro AUPRC (근육)", "0.7022",   "랜덤 기준(0.5) 대비 +40%")
-    m2.metric("Zero-shot 뇌 전이",  "0.5998",   "학습 없이 다른 조직 적용")
-    m3.metric("신규 기능 발견 (뇌)", "541개",    "기존 주석 없는 Novel 아이소폼")
-    m4.metric("BISECT PASS cases",  "84개",     "15개 모듈 × 증거 등급화")
-
-    st.divider()
-
-    # ── 2. 분석 모듈 타일 ─────────────────────────────────────────────────────
-    st.subheader("분석 모듈")
-
-    # Row 1: Overview, Functional Map, Condition Analysis
-    row1 = st.columns([1, 1, 1])
-
-    with row1[0]:
-        st.markdown("""
-<div style='background:#f0f9ff;border:2px solid #0ea5e9;border-radius:12px;
-padding:18px 16px;text-align:center;height:190px'>
-<div style='font-size:2rem'>📊</div>
-<b style='font-size:1.05rem;color:#1e293b'>Overview</b><br>
-<span style='font-size:0.78rem;color:#475569;line-height:1.5'>기능 커버리지 · 시나리오 분류 · AUPRC 검증</span><br><br>
-<span style='background:#e0f2fe;color:#0369a1;font-size:0.72rem;
-padding:2px 8px;border-radius:12px'>Demo 제공</span>
-</div>
-""", unsafe_allow_html=True)
-
-    with row1[1]:
-        st.markdown("""
-<div style='background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;
-padding:18px 16px;text-align:center;height:190px'>
-<div style='font-size:2rem'>🗺️</div>
-<b style='font-size:1.05rem;color:#1e293b'>Functional Map</b><br>
-<span style='font-size:0.78rem;color:#475569;line-height:1.5'>GO 기능 공간 UMAP · 타입별 히트맵 · 유전자 내 비교</span><br><br>
-<span style='background:#dcfce7;color:#15803d;font-size:0.72rem;
-padding:2px 8px;border-radius:12px'>Demo 제공</span>
-</div>
-""", unsafe_allow_html=True)
-
-    with row1[2]:
-        st.markdown("""
-<div style='background:#fff7ed;border:2px solid #f59e0b;border-radius:12px;
-padding:18px 16px;text-align:center;height:190px'>
-<div style='font-size:2rem'>🔄</div>
-<b style='font-size:1.05rem;color:#1e293b'>Condition Analysis</b><br>
-<span style='font-size:0.78rem;color:#475569;line-height:1.5'>DTU 연계 기능 GAIN/LOSS · GO Enrichment · Sankey</span><br><br>
-<span style='background:#fef3c7;color:#b45309;font-size:0.72rem;
-padding:2px 8px;border-radius:12px'>⚠️ DTU 파일 필요</span>
-</div>
-""", unsafe_allow_html=True)
-
-    st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
-
-    # Row 2: Individual, Advanced, CTA
-    row2 = st.columns([1, 1, 1])
-
-    with row2[0]:
-        st.markdown("""
-<div style='background:#fdf4ff;border:2px solid #a855f7;border-radius:12px;
-padding:18px 16px;text-align:center;height:190px'>
-<div style='font-size:2rem'>🔬</div>
-<b style='font-size:1.05rem;color:#1e293b'>Individual Analysis</b><br>
-<span style='font-size:0.78rem;color:#475569;line-height:1.5'>시나리오별 후보 탐색 · 유전자 검색 · 케이스 리포트</span><br><br>
-<span style='background:#f3e8ff;color:#7e22ce;font-size:0.72rem;
-padding:2px 8px;border-radius:12px'>Demo 제공</span>
-</div>
-""", unsafe_allow_html=True)
-
-    with row2[1]:
-        st.markdown("""
-<div style='background:#fef2f2;border:2px solid #ef4444;border-radius:12px;
-padding:18px 16px;text-align:center;height:190px'>
-<div style='font-size:2rem'>🔭</div>
-<b style='font-size:1.05rem;color:#1e293b'>Advanced</b><br>
-<span style='font-size:0.78rem;color:#475569;line-height:1.5'>조직 간 비교 · 발현 필터 · NMD 위험 스크리닝</span><br><br>
-<span style='background:#fee2e2;color:#b91c1c;font-size:0.72rem;
-padding:2px 8px;border-radius:12px'>Demo 제공</span>
-</div>
-""", unsafe_allow_html=True)
-
-    with row2[2]:
-        st.markdown("""
-<div style='background:#f8fafc;border:2px dashed #94a3b8;border-radius:12px;
-padding:18px 16px;text-align:center;height:190px'>
-<div style='font-size:2rem'>🚀</div>
-<b style='font-size:1.05rem;color:#1e293b'>바로 시작하기</b><br>
-<span style='font-size:0.78rem;color:#475569;line-height:1.6'>
-왼쪽 사이드바에서<br>
-Demo 또는 Upload를 선택하면<br>
-분석이 즉시 시작됩니다.</span>
-</div>
-""", unsafe_allow_html=True)
-
-    st.divider()
-
-    # ── 3. 3단계 시작 가이드 ──────────────────────────────────────────────────
+    # ── 3단계 시작 가이드 ──────────────────────────────────────────────────────
     with st.expander("📋 3단계 시작 가이드", expanded=True):
         s1, s2, s3 = st.columns(3)
 
