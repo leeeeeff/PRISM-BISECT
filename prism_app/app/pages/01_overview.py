@@ -361,8 +361,39 @@ else:
 
         render_auprc_interpretation(val_rep)
 
-        csv_val = per_go_df.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            "Download validation metrics (CSV)",
-            csv_val, "auprc_validation.csv", "text/csv",
-        )
+        # ── Option C: GO term별 AUPRC 상세 테이블 + 다운로드 ─────────────────
+        _n_total = val_rep.n_isoforms_with_annotation or 1
+
+        def _grade(v):
+            if v >= 0.6:
+                return "우수 ✅"
+            if v >= 0.5:
+                return "양호 🟡"
+            return "기준선 근접 🔴"
+
+        _detail_rows = []
+        for _row in sorted(val_rep.per_go, key=lambda r: r['auprc'], reverse=True):
+            _baseline = _row['n_pos'] / _n_total
+            _auprc_val = _row['auprc']
+            _lift = (_auprc_val / _baseline) if _baseline > 0 else float('nan')
+            _detail_rows.append({
+                'GO Term ID':      _row['go'],
+                'GO Term Name':    gnames.get(_row['go'], _row['name']),
+                'AUPRC':           round(_auprc_val, 3),
+                'Random Baseline': round(_baseline, 3),
+                'Lift':            f"{_lift:.1f}×" if not pd.isna(_lift) else '—',
+                'Grade':           _grade(_auprc_val),
+            })
+
+        _detail_df = pd.DataFrame(_detail_rows)
+
+        with st.expander("📋 GO term별 AUPRC 상세 테이블", expanded=True):
+            st.dataframe(_detail_df, use_container_width=True, hide_index=True)
+
+            _csv_detail = _detail_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 AUPRC 결과 다운로드 (CSV)",
+                data=_csv_detail,
+                file_name="prism_auprc_results.csv",
+                mime="text/csv",
+            )
