@@ -105,6 +105,7 @@ with tab_umap:
         note_parts.append("⚠️ umap-learn을 사용할 수 없어 t-SNE로 대체됨 (로컬 환경에서 TF/protobuf 충돌). `run_app.sh`로 실행하면 UMAP 사용 가능.")
     st.caption(" · ".join(note_parts))
 
+    n_clusters = min(8, max(3, len(go) // 3))
     fig_umap = build_umap_figure(
         coords, sampled_ids,
         color_by=color_by,
@@ -114,7 +115,7 @@ with tab_umap:
         point_size=point_sz,
         opacity=opacity,
         show_cluster_labels=show_clusters,
-        n_clusters=min(8, max(3, len(go) // 3)),
+        n_clusters=n_clusters,
     )
     st.plotly_chart(fig_umap, use_container_width=True)
     st.caption(
@@ -122,6 +123,54 @@ with tab_umap:
         "Isoforms with similar predicted functions cluster together."
     )
     render_umap_interpretation(embed_method, n_total, len(sample_idx), color_by)
+
+    # ── Linked Views: cluster → Individual page ───────────────────────────────
+    if show_clusters and len(coords) >= max(10, n_clusters):
+        try:
+            from sklearn.cluster import KMeans
+            km_lv = KMeans(n_clusters=n_clusters, random_state=42, n_init='auto')
+            cluster_labels_lv = km_lv.fit_predict(coords)
+
+            # Build cluster name map (dominant GO per cluster)
+            cluster_names = {}
+            for c in range(n_clusters):
+                mask = cluster_labels_lv == c
+                count = int(mask.sum())
+                if sampled_sm is not None and go is not None and mask.sum() > 0:
+                    mean_sc = sampled_sm[mask].mean(axis=0)
+                    top_idx = int(mean_sc.argmax())
+                    top_name = gnames.get(go[top_idx], go[top_idx])
+                    if len(top_name) > 28:
+                        top_name = top_name[:26] + '…'
+                    cluster_names[c] = f"#{c+1} {top_name} (n={count:,})"
+                else:
+                    cluster_names[c] = f"Cluster {c+1} (n={count:,})"
+
+            st.markdown("---")
+            st.markdown("**🔗 Individual Analysis 연동 — 클러스터 포커스**")
+            st.caption("UMAP 클러스터를 선택하면 해당 클러스터의 아이소폼만 Individual Analysis에 필터됩니다.")
+
+            col_lv1, col_lv2 = st.columns([3, 1])
+            with col_lv1:
+                selected_cluster = st.selectbox(
+                    "포커스할 클러스터 선택",
+                    options=list(range(n_clusters)),
+                    format_func=lambda c: cluster_names.get(c, f"Cluster {c+1}"),
+                    key='umap_cluster_select',
+                )
+            with col_lv2:
+                if st.button("🔬 Individual로 전송", key='send_to_individual'):
+                    cluster_mask = cluster_labels_lv == selected_cluster
+                    focused_ids = list(sampled_ids[cluster_mask].astype(str))
+                    st.session_state['umap_cluster_filter'] = {
+                        'cluster_id':   selected_cluster,
+                        'cluster_name': cluster_names.get(selected_cluster, f"Cluster {selected_cluster+1}"),
+                        'isoform_ids':  focused_ids,
+                        'n_isoforms':   len(focused_ids),
+                    }
+                    st.success(f"✅ {len(focused_ids):,}개 아이소폼을 Individual Analysis로 전송했습니다. 🔬 Individual 탭으로 이동하세요.")
+        except Exception:
+            pass  # linked view is optional
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Tab 2: Type × GO Heatmap

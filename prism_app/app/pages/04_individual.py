@@ -45,6 +45,29 @@ if sm is None:
 
 render_data_context_banner(cfg)
 
+# ── Linked View: UMAP cluster filter ─────────────────────────────────────────
+_cluster_filter = st.session_state.get('umap_cluster_filter')
+if _cluster_filter:
+    _cname = _cluster_filter.get('cluster_name', 'Selected cluster')
+    _cids  = set(_cluster_filter.get('isoform_ids', []))
+    _cn    = _cluster_filter.get('n_isoforms', 0)
+    col_lv, col_lv_clear = st.columns([5, 1])
+    with col_lv:
+        st.markdown(
+            f"""<div style='background:#fef9c3;border-left:4px solid #eab308;
+            padding:10px 16px;border-radius:6px;margin:4px 0 12px 0;font-size:0.87rem'>
+            🔗 <b>Functional Map 연동 활성</b> — 클러스터: <b>{_cname}</b>
+            ({_cn:,}개 아이소폼) · 아래 시나리오 탭이 이 클러스터로 필터됩니다.
+            </div>""",
+            unsafe_allow_html=True,
+        )
+    with col_lv_clear:
+        if st.button("✖ 필터 해제", key='clear_cluster_filter'):
+            del st.session_state['umap_cluster_filter']
+            st.rerun()
+else:
+    _cids = None
+
 ids    = cfg['isoform_ids']
 genes  = cfg.get('gene_ids')
 go     = cfg['go_terms']
@@ -81,6 +104,13 @@ def _render_scenario_table(scenario_id: int) -> None:
     st.info(desc, icon=["🔴","🟠","🟢","⬜"][scenario_id - 1])
 
     cands = get_scenario_candidates(classified, scenario_id, min_score=thr)
+
+    # Apply cluster filter if active (linked view from UMAP)
+    _active_cluster_ids = st.session_state.get('umap_cluster_filter', {}).get('isoform_ids')
+    if _active_cluster_ids:
+        _active_set = set(_active_cluster_ids)
+        cands = cands[cands['isoform_id'].isin(_active_set)]
+
     if cands.empty:
         if scenario_id in (1, 2) and cfg.get('dtu_df') is None:
             st.markdown(
@@ -157,6 +187,8 @@ def _build_case_report_md(row, go_df: pd.DataFrame, gnames: dict, thr: float) ->
 # ── Isoform search / case report ─────────────────────────────────────────────
 with tab_search:
     st.subheader("Isoform Case Report")
+    if _cids:
+        st.caption(f"🔗 Functional Map 연동: {len(_cids):,}개 아이소폼 대상 검색 중")
     query = st.text_input("Search by isoform ID or gene name",
                           placeholder="e.g. NDUFS4-201, KIF21B, tr319500")
 
@@ -166,6 +198,9 @@ with tab_search:
         if genes is not None:
             genes_arr = np.asarray(genes, dtype=str)
             mask |= np.array([query.lower() in g.lower() for g in genes_arr])
+        if _cids:
+            cluster_mask = np.array([iso in _cids for iso in ids_arr])
+            mask = mask & cluster_mask
 
         if mask.sum() == 0:
             st.warning(f"No isoforms matching '{query}'")

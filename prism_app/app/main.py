@@ -63,12 +63,155 @@ if cfg.get('score_matrix') is None:
 
     st.divider()
 
-    # ── 2. 이 툴이 무엇인가 ───────────────────────────────────────────────────
-    col_what, col_how = st.columns([1, 1], gap="large")
+    # ── 2. 분석 모듈 타일 ─────────────────────────────────────────────────────
+    st.subheader("분석 모듈")
 
-    with col_what:
-        st.subheader("무엇을 해결하나요?")
+    # Row 1: Overview, Functional Map, Condition Analysis
+    row1 = st.columns([1, 1, 1])
+
+    with row1[0]:
         st.markdown("""
+<div style='background:#f0f9ff;border:2px solid #0ea5e9;border-radius:12px;
+padding:18px 16px;text-align:center;height:190px'>
+<div style='font-size:2rem'>📊</div>
+<b style='font-size:1.05rem;color:#1e293b'>Overview</b><br>
+<span style='font-size:0.78rem;color:#475569;line-height:1.5'>기능 커버리지 · 시나리오 분류 · AUPRC 검증</span><br><br>
+<span style='background:#e0f2fe;color:#0369a1;font-size:0.72rem;
+padding:2px 8px;border-radius:12px'>Demo 제공</span>
+</div>
+""", unsafe_allow_html=True)
+
+    with row1[1]:
+        st.markdown("""
+<div style='background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;
+padding:18px 16px;text-align:center;height:190px'>
+<div style='font-size:2rem'>🗺️</div>
+<b style='font-size:1.05rem;color:#1e293b'>Functional Map</b><br>
+<span style='font-size:0.78rem;color:#475569;line-height:1.5'>GO 기능 공간 UMAP · 타입별 히트맵 · 유전자 내 비교</span><br><br>
+<span style='background:#dcfce7;color:#15803d;font-size:0.72rem;
+padding:2px 8px;border-radius:12px'>Demo 제공</span>
+</div>
+""", unsafe_allow_html=True)
+
+    with row1[2]:
+        st.markdown("""
+<div style='background:#fff7ed;border:2px solid #f59e0b;border-radius:12px;
+padding:18px 16px;text-align:center;height:190px'>
+<div style='font-size:2rem'>🔄</div>
+<b style='font-size:1.05rem;color:#1e293b'>Condition Analysis</b><br>
+<span style='font-size:0.78rem;color:#475569;line-height:1.5'>DTU 연계 기능 GAIN/LOSS · GO Enrichment · Sankey</span><br><br>
+<span style='background:#fef3c7;color:#b45309;font-size:0.72rem;
+padding:2px 8px;border-radius:12px'>⚠️ DTU 파일 필요</span>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+
+    # Row 2: Individual, Advanced, CTA
+    row2 = st.columns([1, 1, 1])
+
+    with row2[0]:
+        st.markdown("""
+<div style='background:#fdf4ff;border:2px solid #a855f7;border-radius:12px;
+padding:18px 16px;text-align:center;height:190px'>
+<div style='font-size:2rem'>🔬</div>
+<b style='font-size:1.05rem;color:#1e293b'>Individual Analysis</b><br>
+<span style='font-size:0.78rem;color:#475569;line-height:1.5'>시나리오별 후보 탐색 · 유전자 검색 · 케이스 리포트</span><br><br>
+<span style='background:#f3e8ff;color:#7e22ce;font-size:0.72rem;
+padding:2px 8px;border-radius:12px'>Demo 제공</span>
+</div>
+""", unsafe_allow_html=True)
+
+    with row2[1]:
+        st.markdown("""
+<div style='background:#fef2f2;border:2px solid #ef4444;border-radius:12px;
+padding:18px 16px;text-align:center;height:190px'>
+<div style='font-size:2rem'>🔭</div>
+<b style='font-size:1.05rem;color:#1e293b'>Advanced</b><br>
+<span style='font-size:0.78rem;color:#475569;line-height:1.5'>조직 간 비교 · 발현 필터 · NMD 위험 스크리닝</span><br><br>
+<span style='background:#fee2e2;color:#b91c1c;font-size:0.72rem;
+padding:2px 8px;border-radius:12px'>Demo 제공</span>
+</div>
+""", unsafe_allow_html=True)
+
+    with row2[2]:
+        st.markdown("""
+<div style='background:#f8fafc;border:2px dashed #94a3b8;border-radius:12px;
+padding:18px 16px;text-align:center;height:190px'>
+<div style='font-size:2rem'>🚀</div>
+<b style='font-size:1.05rem;color:#1e293b'>바로 시작하기</b><br>
+<span style='font-size:0.78rem;color:#475569;line-height:1.6'>
+왼쪽 사이드바에서<br>
+Demo 또는 Upload를 선택하면<br>
+분석이 즉시 시작됩니다.</span>
+</div>
+""", unsafe_allow_html=True)
+
+    st.divider()
+
+    # ── 3. 3단계 시작 가이드 ──────────────────────────────────────────────────
+    with st.expander("📋 3단계 시작 가이드", expanded=True):
+        s1, s2, s3 = st.columns(3)
+
+        with s1:
+            st.markdown("""
+<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
+<h2 style='color:#2a9d8f;margin:0'>①</h2>
+<h4>데이터 선택</h4>
+<p style='font-size:0.9rem'>
+왼쪽 사이드바에서<br>
+<b>Demo</b> (논문 결과 탐색) 또는<br>
+<b>Upload</b> (자체 NPY 파일) 선택
+</p>
+<p style='font-size:0.85rem;color:#666'>
+조직 패널(근육 18 GO · 뇌 18 GO · 뇌 확장 73 GO)과<br>
+Score 임계값(기본 0.5) 조정
+</p>
+</div>
+            """, unsafe_allow_html=True)
+
+        with s2:
+            st.markdown("""
+<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
+<h2 style='color:#2a9d8f;margin:0'>②</h2>
+<h4>Overview 확인</h4>
+<p style='font-size:0.9rem'>
+📊 Overview 페이지에서<br>
+<b>커버리지 · 시나리오 분포 · AUPRC</b>를<br>
+한눈에 파악
+</p>
+<p style='font-size:0.85rem;color:#666'>
+S3(신규 기능)와 S1(기능 스위치) 비율이<br>
+분석의 핵심 지표입니다
+</p>
+</div>
+            """, unsafe_allow_html=True)
+
+        with s3:
+            st.markdown("""
+<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
+<h2 style='color:#2a9d8f;margin:0'>③</h2>
+<h4>후보 아이소폼 탐색</h4>
+<p style='font-size:0.9rem'>
+🔬 Individual 페이지에서<br>
+유전자 이름 검색 →<br>
+<b>케이스 리포트 다운로드</b>
+</p>
+<p style='font-size:0.85rem;color:#666'>
+DTU 파일 추가 시 🔄 Condition에서<br>
+GAIN/LOSS 기능 변화 분석 가능
+</p>
+</div>
+            """, unsafe_allow_html=True)
+
+    # ── 4. 기존 도구 대비 차별점 ──────────────────────────────────────────────
+    with st.expander("🔬 기존 도구 대비 차별점", expanded=False):
+        with st.container():
+            col_what, col_how = st.columns([1, 1], gap="large")
+
+            with col_what:
+                st.subheader("무엇을 해결하나요?")
+                st.markdown("""
 롱리드 싱글셀 시퀀싱은 수만 개의 **아이소폼(전사체 변이)**을 발견하지만,
 대부분에 기능 주석이 없습니다.
 
@@ -78,11 +221,11 @@ if cfg.get('score_matrix') is None:
 - **DTU 분석**은 "어떤 아이소폼이 바뀌었나"만 알려주고, "무슨 기능이 바뀌었나"는 말해주지 않음
 
 **PRISM+BISECT**는 이 세 가지를 동시에 해결합니다.
-        """)
+                """)
 
-    with col_how:
-        st.subheader("어떻게 해결하나요?")
-        st.markdown("""
+            with col_how:
+                st.subheader("어떻게 해결하나요?")
+                st.markdown("""
 **PRISM** — GO 기능 예측 모델
 - ESM-2 단백질 언어 모델로 아이소폼 고유 서열 특징 추출
 - 18~73개 GO BP 기능을 동시에 예측 (0~1 신뢰도 점수)
@@ -92,40 +235,34 @@ if cfg.get('score_matrix') is None:
 - DTU + PRISM 스코어 결합 → **4-시나리오 분류**
 - 15개 독립 증거 모듈로 케이스별 등급 산정
 - S1(기능 스위치) · S2(발현 스위치) · S3(신규 기능) · S4(배경)
-        """)
+                """)
 
-    st.divider()
+        st.markdown("---")
+        feat_cols = st.columns(4)
+        features = [
+            ("Novel 아이소폼 예측", "🆕",
+             "NIC·NNIC 등 **기존 Ensembl 주석이 없는** 아이소폼도 GO 기능 예측 가능. "
+             "InterPro·Pfam 기반 도구는 알려진 도메인이 있어야 작동함."),
+            ("Gene-level bias 극복", "🎯",
+             "ESM-2 기반 **아이소폼 고유 서열 특징** 사용. "
+             "DIFFUSE(Yao et al., 2022) 등 기존 모델은 유전자 평균 특징에 수렴하는 문제가 있음."),
+            ("DTU → 기능 변화 통합", "🔄",
+             "satuRn·DEXSeq 등 DTU 결과를 직접 연결해 **어떤 기능이 획득/손실됐는지** 정량화. "
+             "IsoformSwitchAnalyzeR는 DTU 탐지만 하고 기능 예측은 별도 과정이 필요함."),
+            ("Zero-shot 조직 전이", "🧠",
+             "근육 데이터로 학습한 모델을 추가 학습 없이 **뇌에 바로 적용** (AUPRC 0.5998). "
+             "조직별 재학습 없이 다양한 데이터셋에 활용 가능."),
+        ]
+        for col, (title, icon, desc) in zip(feat_cols, features):
+            col.markdown(
+                f"<div style='background:#f0faf9;border-left:4px solid #2a9d8f;"
+                f"padding:14px;border-radius:6px;height:100%'>"
+                f"<b style='font-size:1rem'>{icon} {title}</b><br><br>"
+                f"<span style='font-size:0.88rem;color:#333'>{desc}</span></div>",
+                unsafe_allow_html=True,
+            )
 
-    # ── 3. 기존 도구 대비 고유 기능 ──────────────────────────────────────────
-    st.subheader("기존 도구와 무엇이 다른가요?")
-
-    feat_cols = st.columns(4)
-    features = [
-        ("Novel 아이소폼 예측", "🆕",
-         "NIC·NNIC 등 **기존 Ensembl 주석이 없는** 아이소폼도 GO 기능 예측 가능. "
-         "InterPro·Pfam 기반 도구는 알려진 도메인이 있어야 작동함."),
-        ("Gene-level bias 극복", "🎯",
-         "ESM-2 기반 **아이소폼 고유 서열 특징** 사용. "
-         "DIFFUSE(Yao et al., 2022) 등 기존 모델은 유전자 평균 특징에 수렴하는 문제가 있음."),
-        ("DTU → 기능 변화 통합", "🔄",
-         "satuRn·DEXSeq 등 DTU 결과를 직접 연결해 **어떤 기능이 획득/손실됐는지** 정량화. "
-         "IsoformSwitchAnalyzeR는 DTU 탐지만 하고 기능 예측은 별도 과정이 필요함."),
-        ("Zero-shot 조직 전이", "🧠",
-         "근육 데이터로 학습한 모델을 추가 학습 없이 **뇌에 바로 적용** (AUPRC 0.5998). "
-         "조직별 재학습 없이 다양한 데이터셋에 활용 가능."),
-    ]
-    for col, (title, icon, desc) in zip(feat_cols, features):
-        col.markdown(
-            f"<div style='background:#f0faf9;border-left:4px solid #2a9d8f;"
-            f"padding:14px;border-radius:6px;height:100%'>"
-            f"<b style='font-size:1rem'>{icon} {title}</b><br><br>"
-            f"<span style='font-size:0.88rem;color:#333'>{desc}</span></div>",
-            unsafe_allow_html=True,
-        )
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # ── 4. 도구 비교표 ─────────────────────────────────────────────────────────
+    # ── 5. 도구 비교표 ─────────────────────────────────────────────────────────
     with st.expander("도구 비교표 (PRISM vs 기존 방법)", expanded=False):
         st.markdown("""
 | 기능 | **PRISM+BISECT** | DIFFUSE (2022) | IsoformSwitchAnalyzeR | InterPro/Pfam |
@@ -141,66 +278,6 @@ if cfg.get('score_matrix') is None:
 
 > ✅ 완전 지원 · △ 부분 지원 · ❌ 미지원 · — 해당 없음
         """)
-
-    st.divider()
-
-    # ── 5. 3단계 시작 가이드 ──────────────────────────────────────────────────
-    st.subheader("3단계로 시작하기")
-
-    s1, s2, s3 = st.columns(3)
-
-    with s1:
-        st.markdown("""
-<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
-<h2 style='color:#2a9d8f;margin:0'>①</h2>
-<h4>데이터 선택</h4>
-<p style='font-size:0.9rem'>
-왼쪽 사이드바에서<br>
-<b>Demo</b> (논문 결과 탐색) 또는<br>
-<b>Upload</b> (자체 NPY 파일) 선택
-</p>
-<p style='font-size:0.85rem;color:#666'>
-조직 패널(근육 18 GO · 뇌 18 GO · 뇌 확장 73 GO)과<br>
-Score 임계값(기본 0.5) 조정
-</p>
-</div>
-        """, unsafe_allow_html=True)
-
-    with s2:
-        st.markdown("""
-<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
-<h2 style='color:#2a9d8f;margin:0'>②</h2>
-<h4>Overview 확인</h4>
-<p style='font-size:0.9rem'>
-📊 Overview 페이지에서<br>
-<b>커버리지 · 시나리오 분포 · AUPRC</b>를<br>
-한눈에 파악
-</p>
-<p style='font-size:0.85rem;color:#666'>
-S3(신규 기능)와 S1(기능 스위치) 비율이<br>
-분석의 핵심 지표입니다
-</p>
-</div>
-        """, unsafe_allow_html=True)
-
-    with s3:
-        st.markdown("""
-<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
-<h2 style='color:#2a9d8f;margin:0'>③</h2>
-<h4>후보 아이소폼 탐색</h4>
-<p style='font-size:0.9rem'>
-🔬 Individual 페이지에서<br>
-유전자 이름 검색 →<br>
-<b>케이스 리포트 다운로드</b>
-</p>
-<p style='font-size:0.85rem;color:#666'>
-DTU 파일 추가 시 🔄 Condition에서<br>
-GAIN/LOSS 기능 변화 분석 가능
-</p>
-</div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
 
     # ── 6. 입력 파일 형식 ──────────────────────────────────────────────────────
     with st.expander("📁 Upload 모드 — 입력 파일 형식", expanded=False):
