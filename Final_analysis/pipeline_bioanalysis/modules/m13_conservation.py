@@ -1,5 +1,5 @@
 """
-M12: Evolutionary Conservation Analysis (BISECT v1.1)
+M13: Evolutionary Conservation Analysis (BISECT v1.1)
 
 Queries UCSC phyloP100way track for AD-specific and CT-specific exons.
 High phyloP (>1.5) indicates functional constraint under purifying selection.

@@ -13,6 +13,9 @@ def extract_sequences(transcript_ids: list[str], config: dict) -> dict[str, dict
     Searches brain FAA first, then muscle FAA.
     """
     faa_sources = [
+        # Searched first: Ensembl transcript-name FAA (GENE-NNN format, e.g. LETMD1-201)
+        # Covers all SRA supplement cases (cardiac/psoas/iPSC/brain contexts)
+        ("ensembl_txname_faa", config["paths"].get("ensembl_txname_faa", "")),
         ("brain_faa", config["paths"]["brain_faa"]),
         ("brain_pep", config["paths"]["brain_pep"]),
         ("muscle_faa", config["paths"]["muscle_faa"]),

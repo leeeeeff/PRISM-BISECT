@@ -1,5 +1,5 @@
 """
-M9: NMD (Nonsense-Mediated mRNA Decay) Susceptibility Screening (BISECT v1.1)
+M6: NMD (Nonsense-Mediated mRNA Decay) Susceptibility Screening (BISECT v1.1)
 
 For each isoform (CT and AD), determines whether the transcript is likely
 subject to NMD using the canonical "50-nucleotide rule":

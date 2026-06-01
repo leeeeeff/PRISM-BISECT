@@ -10,13 +10,21 @@ import re
 def get_transcript_info(transcript_id: str, config: dict) -> dict:
     """
     Extract genomic info from SQANTI3 classification + GTF.
+    Falls back to reference GTF (ref_gtf) for transcript_name lookups (e.g. LETMD1-201).
     Returns full coordinate and structural info.
     """
     clf_path = config["paths"]["brain_classification"]
     gtf_path = config["paths"]["brain_gtf"]
+    ref_gtf  = config["paths"].get("ref_gtf", "")
 
     clf = _parse_classification(transcript_id, clf_path)
     exons = _parse_gtf_exons(transcript_id, gtf_path)
+
+    # Fallback: look up by transcript_name in reference GTF (covers Ensembl GENE-NNN IDs)
+    if not clf and not exons and ref_gtf and os.path.exists(ref_gtf):
+        clf = _parse_ref_gtf_classification(transcript_id, ref_gtf)
+        exons = _parse_ref_gtf_exons(transcript_id, ref_gtf)
+
     cds_info = _parse_cds_from_pep_header(transcript_id, config)
 
     result = {
@@ -151,6 +159,52 @@ def compute_genomic_cds(exons: list, cds_tx_start: int, cds_tx_end: int,
                 g_start = ee - offset
             cumlen += length
         return g_start, g_end
+
+
+def _parse_ref_gtf_classification(transcript_name: str, ref_gtf: str) -> dict:
+    """Look up transcript info by transcript_name in Ensembl reference GTF."""
+    import re as _re
+    if not os.path.exists(ref_gtf):
+        return {}
+    with open(ref_gtf) as f:
+        for line in f:
+            if f'transcript_name "{transcript_name}"' not in line:
+                continue
+            if '\ttranscript\t' not in line:
+                continue
+            cols = line.strip().split('\t')
+            if len(cols) < 9:
+                continue
+            gene_m = _re.search(r'gene_name "([^"]+)"', line)
+            cat_m  = _re.search(r'transcript_type "([^"]+)"', line)
+            return {
+                'chrom':               cols[0],
+                'strand':              cols[6],
+                'associated_gene':     gene_m.group(1) if gene_m else None,
+                'structural_category': cat_m.group(1) if cat_m else 'known',
+                'length':              None,
+                'diff_to_TSS':         '0',
+                'diff_to_TTS':         '0',
+            }
+    return {}
+
+
+def _parse_ref_gtf_exons(transcript_name: str, ref_gtf: str) -> list:
+    """Extract exon coordinates for a transcript_name from Ensembl reference GTF."""
+    if not os.path.exists(ref_gtf):
+        return []
+    exons = []
+    with open(ref_gtf) as f:
+        for line in f:
+            if f'transcript_name "{transcript_name}"' not in line:
+                continue
+            cols = line.strip().split('\t')
+            if len(cols) >= 5 and cols[2] == 'exon':
+                try:
+                    exons.append((int(cols[3]), int(cols[4])))
+                except ValueError:
+                    pass
+    return sorted(exons)
 
 
 def _lookup_gene_strand(gene_name: str, gtf_path: str) -> str:

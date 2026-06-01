@@ -1,0 +1,52 @@
+gene_name,ct_transcript_id,ad_transcript_id,cell_type,diffuse_delta,dtu_pvalue,direction,priority,note
+NDUFS4,NDUFS4-201,transcript73243.chr5.nnic,Excitatory,-0.563,3.62e-6,CT_high,1,NAT+RVT_1 candidate
+DLG1,transcript319500.chr3.nnic,DLG1-201,OPC,0.857,9.03e-10,AD_high,1,L27 scaffolding isoform switch
+SGIP1,ENST00000682293,ENST00000237247,Inhibitory,0.9891,5.785e-26,AD_high,2,go=Neuron projection; gap=0.9891
+EXD2,ENST00000409949,ENST00000409014,Oligodendrocyte,0.9785,2.182e-35,AD_high,2,go=Synapse assembly; gap=0.9785
+HDAC5,ENST00000336057,ENST00000225983,Excitatory,0.9686,1.397e-12,AD_high,2,go=Synapse assembly; gap=0.9686
+ZCCHC17,ENST00000615916,ENST00000616393,Oligodendrocyte,0.9653,7.281e-08,AD_high,2,go=Synaptic transmission; gap=0.9653
+IFT122,ENST00000691964,ENST00000688527,Excitatory,0.9538,9.561e-06,AD_high,2,go=Synaptic transmission; gap=0.9538
+FANCA,ENST00000389301,ENST00000389302,Excitatory,0.9457,2.224e-12,AD_high,2,go=Synaptic transmission; gap=0.9457
+DMD,ENST00000541735,ENST00000682600,Inhibitory,0.9189,3.044e-22,AD_high,2,go=Neuron projection; gap=0.9189
+PLD5,ENST00000442594,ENST00000427495,Oligodendrocyte,0.9145,1.277e-16,AD_high,2,go=Neuron projection; gap=0.9144
+MTMR3,ENST00000323630,ENST00000351488,Excitatory,0.8907,6.859e-07,AD_high,2,go=Synapse assembly; gap=0.8908
+AMPD2,ENST00000528454,ENST00000667949,Inhibitory,0.8554,6.650e-36,AD_high,2,go=Synapse assembly; gap=0.8554
+PML,ENST00000435786,ENST00000395135,Excitatory,0.85,3.611e-25,AD_high,2,go=Synapse assembly; gap=0.8499
+CCAR1,ENST00000536012,ENST00000543719,Inhibitory,0.8494,6.254e-08,AD_high,2,go=Axon guidance; gap=0.8494
+CDH18,ENST00000274170,ENST00000382275,Inhibitory,0.8492,7.352e-34,AD_high,2,go=Synaptic transmission; gap=0.8492
+ITGAV,ENST00000696913,ENST00000696911,Inhibitory,0.8485,1.856e-11,AD_high,2,go=Synapse assembly; gap=0.8485
+SYNE1,ENST00000537033,ENST00000495090,Inhibitory,0.8389,3.086e-29,AD_high,2,go=Neuron projection; gap=0.8389
+HSPA12A,ENST00000674205,ENST00000635765,Excitatory,0.837,3.898e-26,AD_high,2,go=Synaptic transmission; gap=0.8370
+CTNNA2,ENST00000466387,ENST00000496558,Excitatory,0.8346,1.180e-17,AD_high,2,go=Neuron projection; gap=0.8345
+MTHFD1,ENST00000652509,ENST00000557370,OPC,0.8214,5.756e-16,AD_high,2,go=Neuron projection; gap=0.8214
+RGS3,ENST00000695401,ENST00000462143,Astrocyte,0.8065,1.079e-10,AD_high,2,go=MT cytoskeleton org; gap=0.8064
+PPFIA4,ENST00000447715,ENST00000692772,Inhibitory,0.8043,7.631e-10,AD_high,2,go=MT-based movement; gap=0.8044
+ADGRB2,ENST00000373655,ENST00000398556,Inhibitory,0.8005,1.923e-12,AD_high,2,go=Neuron projection; gap=0.8006
+BSG,ENST00000680326,ENST00000576984,Oligodendrocyte,0.7999,2.501e-06,AD_high,2,go=Inflammatory response; gap=0.7999
+ZNF268,ENST00000536899,ENST00000228289,Microglia,0.7954,2.602e-24,AD_high,2,go=Axon guidance; gap=0.7954
+FOXP1,ENST00000648710,ENST00000648794,Excitatory,0.7911,4.272e-26,AD_high,2,go=Axon guidance; gap=0.7911
+PTPRS,ENST00000588012,ENST00000592099,Astrocyte,0.7885,1.355e-29,AD_high,2,go=Inflammatory response; gap=0.7885
+FRMD4A,ENST00000264546,ENST00000640906,Excitatory,0.7875,4.389e-06,AD_high,2,go=Synapse assembly; gap=0.7876
+ZNF623,ENST00000458270,ENST00000501748,Oligodendrocyte,0.7778,1.669e-09,AD_high,2,go=Ca2+ homeostasis; gap=0.7778
+ATP1B1,ENST00000685762,ENST00000690184,Inhibitory,0.7764,1.245e-30,AD_high,2,go=Neuron projection; gap=0.7764
+CEP78,ENST00000643347,ENST00000643499,Excitatory,0.7691,3.067e-18,AD_high,2,go=Neuron projection; gap=0.7691
+STXBP5L,ENST00000471454,ENST00000273666,Excitatory,0.7624,5.901e-14,AD_high,2,go=Synaptic transmission; gap=0.7624
+KTN1,ENST00000395308,ENST00000395311,Excitatory,0.7588,3.800e-16,AD_high,2,go=Neuron projection; gap=0.7588
+LRPPRC,ENST00000447246,ENST00000683213,Oligodendrocyte,0.7583,1.203e-42,AD_high,2,go=Synapse assembly; gap=0.7583
+IFI16,ENST00000368131,ENST00000566111,Oligodendrocyte,0.7566,5.329e-06,AD_high,2,go=Neuron projection; gap=0.7566
+ZNF43,ENST00000595461,ENST00000357491,Inhibitory,0.7564,8.632e-06,AD_high,2,go=MT cytoskeleton org; gap=0.7564
+MAN1B1,ENST00000535144,ENST00000682117,Oligodendrocyte,0.753,7.016e-58,AD_high,2,go=Synaptic transmission; gap=0.7530
+ATP6V0E2,ENST00000479613,ENST00000421974,Astrocyte,0.7513,4.887e-06,AD_high,2,go=Synaptic transmission; gap=0.7513
+ASXL3,ENST00000269197,ENST00000642541,Excitatory,0.7494,1.360e-07,AD_high,2,go=Synaptic transmission; gap=0.7493
+GOLGB1,ENST00000695008,ENST00000695110,Astrocyte,0.7347,1.376e-76,AD_high,2,go=Neuron diff; gap=0.7347
+ARPP19,ENST00000561650,ENST00000568196,Microglia,0.7343,1.924e-09,AD_high,2,go=Ca2+ signaling; gap=0.7343
+RIF1,ENST00000453091,ENST00000428287,Oligodendrocyte,0.7219,8.429e-74,AD_high,2,go=Neuron diff; gap=0.7219
+DOCK11,ENST00000276204,ENST00000632573,Inhibitory,0.7172,4.450e-23,AD_high,2,go=Synaptic transmission; gap=0.7172
+ADAR,ENST00000648231,ENST00000649042,Oligodendrocyte,0.7148,5.820e-13,AD_high,2,go=Neuron projection; gap=0.7148
+ANKRD44,ENST00000409919,ENST00000424317,Oligodendrocyte,0.7088,3.186e-23,AD_high,2,go=Synapse assembly; gap=0.7088
+ADD2,ENST00000355733,ENST00000264436,OPC,0.7058,7.022e-20,AD_high,2,go=Neuron projection; gap=0.7058
+SNTG1,ENST00000644093,ENST00000642720,Inhibitory,0.7019,3.571e-13,AD_high,2,go=Synaptic transmission; gap=0.7019
+ZNF397,ENST00000261333,ENST00000585800,Oligodendrocyte,0.7002,2.821e-08,AD_high,2,go=Neurotrans. transport; gap=0.7002
+SLC8A1,ENST00000417271,ENST00000705605,Excitatory,0.6998,1.386e-46,AD_high,2,go=Neuron dev; gap=0.6998
+TMEM130,ENST00000416379,ENST00000339375,Excitatory,0.6983,6.765e-07,AD_high,2,go=Axon guidance; gap=0.6984
+DNM1,ENST00000372923,ENST00000393594,Excitatory,0.6961,3.299e-66,AD_high,2,go=Proteasome-UPS; gap=0.6961

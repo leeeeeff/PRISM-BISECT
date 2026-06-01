@@ -1,5 +1,5 @@
 """
-M10: AlphaFold Structural Confidence Analysis (BISECT v1.1)
+M11: AlphaFold Structural Confidence Analysis (BISECT v1.1)
 
 For each CT/AD isoform pair, retrieves per-residue pLDDT scores:
   - Canonical isoforms: AlphaFold DB REST API → pLDDT from PDB B-factor
@@ -376,7 +376,7 @@ def _compare_domain_plddt(ct_result: dict, ad_result: dict,
 
 def run(case_result: dict, config: dict) -> dict:
     """
-    M10: AlphaFold structural confidence analysis.
+    M11: AlphaFold structural confidence analysis.
     Requires M1 (sequences) and M2 (domains) in case_result.
     """
     cfg = config.get("alphafold", {})

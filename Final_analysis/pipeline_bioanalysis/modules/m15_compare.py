@@ -1,5 +1,5 @@
 """
-M7: Cross-Case Comparison Table
+M15: Cross-Case Comparison Table
 Reads all analysis.json files from output directories and produces
 cases_summary.tsv suitable for paper Table 1.
 """

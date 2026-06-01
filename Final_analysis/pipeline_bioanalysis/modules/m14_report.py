@@ -252,9 +252,12 @@ def _build_jinja_context(case_result: dict) -> dict:
         },
         "seq_validation": case_result.get("seq_validation", {}),
         "nmd_screen": case_result.get("nmd_screen", {}),
-        "alphafold": case_result.get("m10_alphafold", {}),
-        "ppi": case_result.get("m11_ppi", {}),
-        "conservation": case_result.get("m12_conservation", {}),
+        "alphafold": case_result.get("m11_alphafold", {}),
+        "ppi": case_result.get("m12_ppi", {}),
+        "conservation": case_result.get("m13_conservation", {}),
+        "regulatory": case_result.get("m8_regulatory_context", {}),
+        "promoter": case_result.get("m9_promoter_usage", {}),
+        "apa": case_result.get("m10_apa", {}),
     }
 
 
@@ -421,7 +424,7 @@ def _generate_markdown_inline(case_result: dict, output_dir: str,
         lines.append("")
 
     # ── M10: AlphaFold structural confidence ─────────────────────────────────
-    af = case_result.get("m10_alphafold", {})
+    af = case_result.get("m11_alphafold", {})
     if af and not af.get("error"):
         ct_af = af.get("ct", {})
         ad_af = af.get("ad", {})
@@ -458,7 +461,7 @@ def _generate_markdown_inline(case_result: dict, output_dir: str,
             lines += [f"> {interp}", ""]
 
     # ── M11: PPI network validation ───────────────────────────────────────────
-    ppi = case_result.get("m11_ppi", {})
+    ppi = case_result.get("m12_ppi", {})
     if ppi and not ppi.get("error"):
         verdict = ppi.get("summary_verdict", "—")
         verdict_icon = {"SUPPORTED": "✅", "PARTIAL": "⚠️", "UNSUPPORTED": "❌"}.get(verdict, "")
@@ -503,7 +506,7 @@ def _generate_markdown_inline(case_result: dict, output_dir: str,
             lines.append("")
 
     # ── M12: Evolutionary conservation ────────────────────────────────────────
-    cons = case_result.get("m12_conservation", {})
+    cons = case_result.get("m13_conservation", {})
     if cons and not cons.get("error"):
         summ = cons.get("summary", {})
         bg = cons.get("background", {})
@@ -543,6 +546,75 @@ def _generate_markdown_inline(case_result: dict, output_dir: str,
                     f"| {e.get('phyloP_mean', '—')} | {e.get('conservation_class', '—')} "
                     f"| {e.get('domain_overlap') or '—'} |"
                 )
+            lines.append("")
+
+    # ── M14: Regulatory Context Evidence ─────────────────────────────────────
+    reg = case_result.get("m8_regulatory_context", {})
+    if reg and not reg.get("error"):
+        mechanism = reg.get("mechanism_type", "—")
+        evidence = reg.get("evidence_strength", "—")
+        # evidence_strength is a plain string; evidence_details has interpretation
+        if isinstance(evidence, dict):
+            evidence = evidence.get("level", "—")
+        evidence_icon = {"strong": "🔴", "moderate": "🟠", "correlative": "🟡", "weak": "⚪"}.get(evidence, "")
+        lines += [f"## Regulatory Context Evidence (M14) {evidence_icon}", ""]
+        lines.append(f"**Mechanism type**: {mechanism}")
+        lines.append(f"**Evidence strength**: {evidence}")
+        ev_details = reg.get("evidence_details", {})
+        if ev_details and ev_details.get("interpretation"):
+            lines.append(f"**Interpretation**: {ev_details['interpretation']}")
+        lines.append("")
+
+        # Significant regulators
+        regs = reg.get("significant_regulators", [])
+        if regs:
+            lines += ["**Significant regulators (padj < 0.01):**", "",
+                      "| Gene | logFC | padj | Direction |",
+                      "|------|-------|------|-----------|"]
+            for r in regs[:10]:
+                lines.append(
+                    f"| {r['gene']} | {r['logFC']:+.3f} | {r['padj']:.1e} "
+                    f"| {r['direction']} |"
+                )
+            if len(regs) > 10:
+                lines.append(f"| *...and {len(regs)-10} more* | | | |")
+            lines.append("")
+
+        # Motif analysis (aggregate)
+        motif = reg.get("motif_analysis", {})
+        if motif and not motif.get("skipped"):
+            agg = motif.get("aggregate", {})
+            if agg:
+                lines += ["**RBP binding motif enrichment (CT-specific exon flanking introns):**", "",
+                          "| RBP | Sites | Density/kb | Enrichment vs background |",
+                          "|-----|-------|-----------|--------------------------|"]
+                for rbp, info in agg.items():
+                    if isinstance(info, dict):
+                        fold = info.get("enrichment")
+                        fold_str = f"{fold:.2f}×" if fold is not None else "—"
+                        dens = info.get("density_per_kb", "—")
+                        lines.append(f"| {rbp} | {info['count']} | {dens} | {fold_str} |")
+                lines.append(f"*Total intron sequence searched: "
+                             f"{motif.get('total_intron_nt_searched', 0):,} nt "
+                             f"across {motif.get('ct_unique_exon_count', 0)} CT-specific exons*")
+                lines.append("")
+
+        # L1 details for epigenetic cases
+        l1 = reg.get("l1_details")
+        if l1:
+            lines += ["**Young LINE-1 elements in AD isoform:**", ""]
+            for h in l1:
+                lines.append(
+                    f"- **{h['element']}** ({h['family']}, {h['pct_divergence']}% div, "
+                    f"SW={h['sw_score']}): {h['exon_overlap_bp']} bp exon overlap"
+                )
+            lines.append("")
+
+        # Summary paragraph
+        summary = reg.get("summary", "")
+        if summary:
+            lines += ["**Summary:**", ""]
+            lines.append(f"> {summary}")
             lines.append("")
 
     # Figure reference

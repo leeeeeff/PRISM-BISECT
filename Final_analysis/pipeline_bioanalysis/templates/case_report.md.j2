@@ -262,6 +262,94 @@ L1ORF : {{ elem.best_6frame.t_aligned_preview }}
 {% endif %}
 
 {% endif %}
+{% if regulatory and not regulatory.get('error') %}
+## Regulatory Context Evidence (M14) {% if regulatory.evidence_strength == 'strong' %}🔴{% elif regulatory.evidence_strength == 'moderate' %}🟠{% elif regulatory.evidence_strength == 'correlative' %}🟡{% else %}⚪{% endif %}
+
+**Mechanism type**: {{ regulatory.mechanism_type }}
+**Evidence strength**: {{ regulatory.evidence_strength }}
+{% if regulatory.evidence_details and regulatory.evidence_details.interpretation %}
+**Interpretation**: {{ regulatory.evidence_details.interpretation }}
+{% endif %}
+
+{% if regulatory.significant_regulators %}
+**Significant regulators (padj < 0.01):**
+
+| Gene | logFC | padj | Direction |
+|------|-------|------|-----------|
+{% for r in regulatory.significant_regulators[:10] %}
+| {{ r.gene }} | {{ "%+.3f"|format(r.logFC) }} | {{ "%.1e"|format(r.padj) }} | {{ r.direction }} |
+{% endfor %}
+{% if regulatory.significant_regulators | length > 10 %}
+| *...and {{ regulatory.significant_regulators | length - 10 }} more* | | | |
+{% endif %}
+{% endif %}
+
+{% if regulatory.motif_analysis and not regulatory.motif_analysis.get('skipped') %}
+{% set agg = regulatory.motif_analysis.get('aggregate', {}) %}
+{% if agg %}
+**RBP binding motif enrichment (CT-specific exon flanking introns):**
+
+| RBP | Sites | Density/kb | Enrichment vs background |
+|-----|-------|-----------|--------------------------|
+{% for rbp, info in agg.items() %}
+| {{ rbp }} | {{ info.count }} | {{ info.density_per_kb }} | {{ "%.2f"|format(info.enrichment) ~ "×" if info.enrichment else "—" }} |
+{% endfor %}
+
+*Total intron sequence searched: {{ regulatory.motif_analysis.total_intron_nt_searched }} nt across {{ regulatory.motif_analysis.ct_unique_exon_count }} CT-specific exons*
+{% endif %}
+{% endif %}
+
+{% if regulatory.l1_details %}
+**Young LINE-1 elements in AD isoform:**
+
+{% for h in regulatory.l1_details %}
+- **{{ h.element }}** ({{ h.family }}, {{ h.pct_divergence }}% div, SW={{ h.sw_score }}): {{ h.exon_overlap_bp }} bp exon overlap
+{% endfor %}
+{% endif %}
+
+{% if regulatory.summary %}
+**Summary:**
+
+> {{ regulatory.summary }}
+{% endif %}
+
+{% endif %}
+{% if promoter and not promoter.get('skipped') and promoter.get('tss_class') != 'same_promoter' %}
+## Alternative Promoter Usage (M15)
+
+**TSS class**: {{ promoter.tss_class }}
+**TSS distance**: {{ promoter.tss_diff_bp }} bp
+**Promoter evidence**: {{ promoter.promoter_evidence }}
+{% if promoter.mechanism_reclassify %}
+> ⚠️ M14 mechanism reclassified to **alternative_promoter** (TSS_diff = {{ promoter.tss_diff_bp }} bp)
+{% endif %}
+
+{% if promoter.summary %}
+> {{ promoter.summary }}
+{% endif %}
+
+{% endif %}
+{% if apa and not apa.get('skipped') and apa.get('apa_class') not in ('same_apa', 'minor_apa') %}
+## Alternative Polyadenylation (M16)
+
+**APA class**: {{ apa.apa_class }}
+**TTS distance**: {{ apa.tts_diff_bp }} bp
+**APA evidence**: {{ apa.apa_evidence }}
+
+{% if apa.utr_changes and apa.utr_changes.comparable %}
+**3'UTR regulatory changes:**
+{% if apa.utr_changes.gains %}
+- Gained: {{ apa.utr_changes.gains.keys() | join(', ') }}
+{% endif %}
+{% if apa.utr_changes.losses %}
+- Lost: {{ apa.utr_changes.losses.keys() | join(', ') }}
+{% endif %}
+**Predicted mRNA stability**: {{ apa.utr_changes.predicted_stability }}
+{% endif %}
+
+> {{ apa.summary }}
+
+{% endif %}
 ---
 
 ## Figure

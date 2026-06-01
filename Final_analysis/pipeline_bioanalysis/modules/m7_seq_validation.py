@@ -1,5 +1,5 @@
 """
-M8: Genomic Sequence Validation (BISECT v1.1)
+M7: Genomic Sequence Validation (BISECT v1.1)
 
 For cases with young LINE-1 elements overlapping exons, fetches the hg38
 genomic sequence of each LINE-1 element via UCSC REST API, performs 6-frame

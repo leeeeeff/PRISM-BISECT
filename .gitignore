@@ -61,9 +61,28 @@ nohup.out
 # --- Claude / local config ---
 CLAUDE.local.md
 .claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/projects/
 cloudflared
 tunnel.log
 web/
+
+# --- Generated documents (re-derivable from MD) ---
+*.docx
+*.html
+
+# --- Sample metadata (institutional use only) ---
+processed_sample_metadata.*.csv
+
+# --- Private business content ---
+copy.md
+design-system.md
+
+# --- Deploy scripts (server-env specific) ---
+deploy_claude_md.sh*
+
+# --- IDE local config ---
+.cursorignore
 
 # --- OS ---
 .DS_Store

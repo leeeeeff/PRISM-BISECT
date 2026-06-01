@@ -1,5 +1,5 @@
 """
-M11: Protein-Protein Interaction Network Validation (BISECT v1.1)
+M12: Protein-Protein Interaction Network Validation (BISECT v1.1)
 
 Queries STRING DB for experimental interaction evidence between the gene of interest
 and hypothesized interaction partners. Validates domain-mediated interaction claims
