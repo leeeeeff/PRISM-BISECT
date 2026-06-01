@@ -1,0 +1,54 @@
+{
+  "results": {
+    "GO:0007204": {
+      "go_name": "Ca2+ signaling",
+      "auprc_v12": 0.2908,
+      "auprc_ci": [
+        0.201,
+        0.4001
+      ],
+      "auprc_v10b": 0.7761,
+      "auprc_slim": 0.5092,
+      "delta_auprc": -0.4853,
+      "bias_v12": 0.1744,
+      "bias_v10b": 0.0856,
+      "delta_bias": 0.0888,
+      "bias_interp": "ISOFORM-SPEC",
+      "elapsed_s": 341.2
+    },
+    "GO:0003774": {
+      "go_name": "Motor activity",
+      "auprc_v12": 0.6664,
+      "auprc_ci": [
+        0.5693,
+        0.7776
+      ],
+      "auprc_v10b": 0.8198,
+      "auprc_slim": 0.7389,
+      "delta_auprc": -0.1534,
+      "bias_v12": 0.1928,
+      "bias_v10b": 0.0897,
+      "delta_bias": 0.1031,
+      "bias_interp": "ISOFORM-SPEC",
+      "elapsed_s": 394.7
+    },
+    "GO:0006096": {
+      "go_name": "Glycolysis",
+      "auprc_v12": 0.6999,
+      "auprc_ci": [
+        0.5047,
+        0.8379
+      ],
+      "auprc_v10b": 0.7938,
+      "auprc_slim": 0.8134,
+      "delta_auprc": -0.0939,
+      "bias_v12": 0.1437,
+      "bias_v10b": 0.0965,
+      "delta_bias": 0.0472,
+      "bias_interp": "MIXED",
+      "elapsed_s": 352.9
+    }
+  },
+  "timestamp": "20260518_1820",
+  "strategy": "v12-Sequential: Phase-A canonical pretrain + Phase-B frozen GO"
+}

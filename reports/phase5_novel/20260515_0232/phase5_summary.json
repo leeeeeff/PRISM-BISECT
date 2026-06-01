@@ -1,0 +1,39 @@
+{
+  "timestamp": "20260515_0232",
+  "novel_thresh": 0.5,
+  "switch_thresh": 0.3,
+  "total_novel": 100,
+  "total_switch": 48,
+  "per_go": {
+    "GO:0006096": {
+      "n_novel": 20,
+      "n_switch": 1,
+      "novel_thresh": 0.5,
+      "switch_thresh": 0.3
+    },
+    "GO:0003774": {
+      "n_novel": 20,
+      "n_switch": 7,
+      "novel_thresh": 0.5,
+      "switch_thresh": 0.3
+    },
+    "GO:0007204": {
+      "n_novel": 20,
+      "n_switch": 7,
+      "novel_thresh": 0.5,
+      "switch_thresh": 0.3
+    },
+    "GO:0030017": {
+      "n_novel": 20,
+      "n_switch": 20,
+      "novel_thresh": 0.5,
+      "switch_thresh": 0.3
+    },
+    "GO:0006941": {
+      "n_novel": 20,
+      "n_switch": 13,
+      "novel_thresh": 0.5,
+      "switch_thresh": 0.3
+    }
+  }
+}

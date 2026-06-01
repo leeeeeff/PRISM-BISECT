@@ -1,0 +1,6 @@
+domain,go_term,go_name,auprc,n_pos
+Kinesin,GO:0007018,MT movement,0.6896,1042
+WD40,GO:0000278,mitotic cell cycle,0.4342,2732
+PDZ,GO:0007268,synaptic transmission,0.6602,1449
+Spectrin,GO:0030036,actin cytoskeleton,0.5392,1763
+Clathrin,GO:0006886,intracellular transport,0.502,4078

@@ -1,0 +1,3 @@
+gene	go_name	score_top	score_bot	score_gap	score_ratio	dtu_top	frac_brain_top	brain_tpm_top	dtu_concordant	top_iso	bot_iso
+PTPRT	Neurotrans. transport	0.3765	0.0671	0.3094	5.61	0.0317	0.2315	2.727	False	ENST00000356100	ENST00000373201
+KMT2C	Ca2+ homeostasis	0.4266	0.1219	0.3047	3.5	-0.0059	0.0	0.0	False	ENST00000684398	ENST00000682283

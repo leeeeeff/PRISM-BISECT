@@ -1,0 +1,101 @@
+{
+  "GO:0007204": {
+    "tbs": 0.6666666666666666,
+    "kingdoms_present": [
+      "Fungi",
+      "Invertebrata",
+      "Vertebrata",
+      "Viridiplantae"
+    ],
+    "n_sp_positive": 541,
+    "n_human_positive": 217,
+    "sp_dependency": 0.7137203166226913,
+    "kingdom_counts": {
+      "Vertebrata": 483,
+      "Fungi": 8,
+      "Viridiplantae": 1,
+      "Invertebrata": 19
+    },
+    "n_unknown_species": 30,
+    "fti_64": 0.9002463054187193,
+    "fti_256": 0.6262463814731425
+  },
+  "GO:0030017": {
+    "tbs": 0.3333333333333333,
+    "kingdoms_present": [
+      "Invertebrata",
+      "Vertebrata"
+    ],
+    "n_sp_positive": 454,
+    "n_human_positive": 129,
+    "sp_dependency": 0.7787307032590052,
+    "kingdom_counts": {
+      "Vertebrata": 362,
+      "Invertebrata": 85
+    },
+    "n_unknown_species": 7,
+    "fti_64": 0.8185610010427529,
+    "fti_256": 0.48166431593794073
+  },
+  "GO:0006941": {
+    "tbs": 0.3333333333333333,
+    "kingdoms_present": [
+      "Invertebrata",
+      "Vertebrata"
+    ],
+    "n_sp_positive": 203,
+    "n_human_positive": 81,
+    "sp_dependency": 0.7147887323943662,
+    "kingdom_counts": {
+      "Vertebrata": 200,
+      "Invertebrata": 2
+    },
+    "n_unknown_species": 1,
+    "fti_64": 0.9109907120743034,
+    "fti_256": 1.0175324675324675
+  },
+  "GO:0003774": {
+    "tbs": 0.8333333333333334,
+    "kingdoms_present": [
+      "Bacteria",
+      "Fungi",
+      "Invertebrata",
+      "Vertebrata",
+      "Viridiplantae"
+    ],
+    "n_sp_positive": 399,
+    "n_human_positive": 102,
+    "sp_dependency": 0.7964071856287425,
+    "kingdom_counts": {
+      "Viridiplantae": 107,
+      "Invertebrata": 50,
+      "Vertebrata": 171,
+      "Fungi": 36,
+      "Bacteria": 4
+    },
+    "n_unknown_species": 31,
+    "fti_64": 1.0519888991674375,
+    "fti_256": 1.0260720411663808
+  },
+  "GO:0006096": {
+    "tbs": 0.6666666666666666,
+    "kingdoms_present": [
+      "Fungi",
+      "Invertebrata",
+      "Vertebrata",
+      "Viridiplantae"
+    ],
+    "n_sp_positive": 227,
+    "n_human_positive": 32,
+    "sp_dependency": 0.8764478764478765,
+    "kingdom_counts": {
+      "Vertebrata": 93,
+      "Fungi": 42,
+      "Invertebrata": 15,
+      "Viridiplantae": 50
+    },
+    "n_unknown_species": 27,
+    "fti_64": 1.7122844827586206,
+    "fti_256": 1.874240719910011
+  }
+}

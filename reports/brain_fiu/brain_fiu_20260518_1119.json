@@ -1,0 +1,2563 @@
+{
+  "timestamp": "20260518_1119",
+  "go_terms": {
+    "GO:0007204": {
+      "go_name": "Ca2+ signaling",
+      "ad_stage": "Early",
+      "sep_cosine": 0.026,
+      "go_type": "B",
+      "n_pos_train": 402,
+      "n_go_multi_genes": 69,
+      "fisi_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 32,
+          "mean_delta": -0.03872252083519695,
+          "median_delta": -0.008235518731567942,
+          "pval": 0.16635109656598568,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 13,
+          "mean_delta": 0.022011130297191525,
+          "median_delta": 0.006745186484567456,
+          "pval": 0.18410115726403886,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 14,
+          "mean_delta": -0.10497712574223837,
+          "median_delta": 0.0,
+          "pval": 0.2561304837337862,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 38,
+          "mean_delta": 0.031918304392952686,
+          "median_delta": 0.003957673121156809,
+          "pval": 0.4595270933819232,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 18,
+          "mean_delta": -0.008324824047023054,
+          "median_delta": 0.0,
+          "pval": 0.9132599547277199,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 6,
+          "mean_delta": -0.044802079562828424,
+          "median_delta": 0.01054590570719599,
+          "pval": 1.0,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 32,
+          "mean_delta": -0.014951426664704464,
+          "median_delta": -0.0007405450041784167,
+          "pval": 0.008369684461640778,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 14,
+          "mean_delta": -0.010831880337976116,
+          "median_delta": 0.0,
+          "pval": 0.23065528947270608,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 13,
+          "mean_delta": 0.006995613221744145,
+          "median_delta": 0.0006639714035848732,
+          "pval": 0.23481128931516648,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 6,
+          "mean_delta": 0.032543501675634884,
+          "median_delta": 0.02065688061217466,
+          "pval": 0.29450739368011014,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 38,
+          "mean_delta": 0.0034925970151966994,
+          "median_delta": 5.683309061099706e-05,
+          "pval": 0.8165073646986121,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 18,
+          "mean_delta": -0.005660917067541557,
+          "median_delta": 0.0,
+          "pval": 0.8276024022312981,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 32,
+          "mean_delta": -0.007963905110955238,
+          "median_delta": 0.0,
+          "pval": 0.12975360809825318,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 13,
+          "mean_delta": 0.03550120500417856,
+          "median_delta": 0.0,
+          "pval": 0.3477848066632868,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 18,
+          "mean_delta": -0.04728220140613201,
+          "median_delta": 0.0,
+          "pval": 0.4606781018311994,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 38,
+          "mean_delta": 0.04788583706402661,
+          "median_delta": 0.0,
+          "pval": 0.5463243522526184,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 14,
+          "mean_delta": -0.024447956255504062,
+          "median_delta": 0.0,
+          "pval": 0.6656435727179533,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0055074": {
+      "go_name": "Ca2+ homeostasis",
+      "ad_stage": "Early",
+      "sep_cosine": 0.0184,
+      "go_type": "B",
+      "n_pos_train": 643,
+      "n_go_multi_genes": 118,
+      "fisi_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 75,
+          "mean_delta": 0.03013167378512574,
+          "median_delta": 0.0011027864785481574,
+          "pval": 0.22959609225547117,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 69,
+          "mean_delta": -0.004457026173078322,
+          "median_delta": -0.00184254606365164,
+          "pval": 0.27110043391527483,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 48,
+          "mean_delta": -0.04664424806998765,
+          "median_delta": 0.0,
+          "pval": 0.3529147181053435,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 41,
+          "mean_delta": 0.027572475212331717,
+          "median_delta": 0.0,
+          "pval": 0.48240483665233014,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 13,
+          "mean_delta": -0.03543740549984275,
+          "median_delta": 0.0,
+          "pval": 0.77850713654167,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 42,
+          "mean_delta": -0.03119430560734388,
+          "median_delta": 0.0,
+          "pval": 0.8364601655142532,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 8,
+          "mean_delta": -0.022660897367710466,
+          "median_delta": 0.0,
+          "pval": 0.8872567514079835,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 69,
+          "mean_delta": -0.01000247281440593,
+          "median_delta": -1.1996765259047332e-05,
+          "pval": 0.1470373472521169,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 13,
+          "mean_delta": 0.010260503712377531,
+          "median_delta": 0.0,
+          "pval": 0.6245946450482655,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 48,
+          "mean_delta": -0.004312801020557654,
+          "median_delta": 0.0,
+          "pval": 0.7195118103142009,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 8,
+          "mean_delta": -0.0005739748119857032,
+          "median_delta": 0.0,
+          "pval": 0.8334336202223243,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 41,
+          "mean_delta": -0.007831427139683201,
+          "median_delta": 0.0,
+          "pval": 0.8456177499878407,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 42,
+          "mean_delta": -0.005984153750865099,
+          "median_delta": 0.0,
+          "pval": 0.8610245439187784,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 75,
+          "mean_delta": 0.004224800473028343,
+          "median_delta": 0.0,
+          "pval": 0.8845368802389169,
+          "direction": "AD\u2191"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 69,
+          "mean_delta": -0.02106577287549558,
+          "median_delta": 0.0,
+          "pval": 0.3752227015257561,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 41,
+          "mean_delta": -0.01212766384933053,
+          "median_delta": 0.0,
+          "pval": 0.4696984726991139,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 48,
+          "mean_delta": -0.012707637317816989,
+          "median_delta": 0.0,
+          "pval": 0.5104771999481419,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 75,
+          "mean_delta": 0.02651713321945863,
+          "median_delta": 0.0,
+          "pval": 0.5111351601772951,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 8,
+          "mean_delta": -0.003127478063106537,
+          "median_delta": 0.0,
+          "pval": 0.5464935954065819,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 42,
+          "mean_delta": -0.006153063759917305,
+          "median_delta": 0.0,
+          "pval": 0.601176036717233,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0007005": {
+      "go_name": "Mitochondrion org",
+      "ad_stage": "Early",
+      "sep_cosine": 0.0134,
+      "go_type": "B",
+      "n_pos_train": 672,
+      "n_go_multi_genes": 202,
+      "fisi_stats": [
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 16,
+          "mean_delta": -0.03998594253281905,
+          "median_delta": -0.005681818181818182,
+          "pval": 0.0655003917735904,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 77,
+          "mean_delta": 0.0299595628658932,
+          "median_delta": 0.0,
+          "pval": 0.08591901667271297,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 24,
+          "mean_delta": 0.08534836709619327,
+          "median_delta": 0.0,
+          "pval": 0.2411863379140604,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 114,
+          "mean_delta": -0.01402360404611213,
+          "median_delta": 0.0,
+          "pval": 0.26508695106754043,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 67,
+          "mean_delta": -0.018971539181248137,
+          "median_delta": 0.0,
+          "pval": 0.507297101172946,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 131,
+          "mean_delta": 0.0006590012168226839,
+          "median_delta": 0.0,
+          "pval": 0.7398966553017613,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 123,
+          "mean_delta": -0.0030491273640328577,
+          "median_delta": 0.0,
+          "pval": 0.7987358886173508,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 24,
+          "mean_delta": 0.02470406362822276,
+          "median_delta": 0.0011989933835875877,
+          "pval": 0.05553377176732884,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 77,
+          "mean_delta": 0.013907694548974161,
+          "median_delta": 0.0,
+          "pval": 0.07701822306079731,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 16,
+          "mean_delta": 0.002482232528232462,
+          "median_delta": -0.00028311975389012575,
+          "pval": 0.10834922027633198,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 114,
+          "mean_delta": -0.002705238015111047,
+          "median_delta": 0.0,
+          "pval": 0.15818827082385656,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 67,
+          "mean_delta": 0.004271134375456414,
+          "median_delta": 0.0,
+          "pval": 0.5057079560930626,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 131,
+          "mean_delta": 0.00300411253731032,
+          "median_delta": 0.0,
+          "pval": 0.5320413876781988,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 123,
+          "mean_delta": -0.0027177831758021403,
+          "median_delta": 0.0,
+          "pval": 0.6946571429304417,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 24,
+          "mean_delta": 0.04328253271038799,
+          "median_delta": 0.0,
+          "pval": 0.015155973880974605,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 77,
+          "mean_delta": 0.0384877663417175,
+          "median_delta": 0.0,
+          "pval": 0.16001980412945627,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 114,
+          "mean_delta": -0.002857647426712343,
+          "median_delta": 0.0,
+          "pval": 0.3346874026135429,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 67,
+          "mean_delta": 0.0011638568370227716,
+          "median_delta": 0.0,
+          "pval": 0.5287536340648473,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 131,
+          "mean_delta": -0.0011655782697764972,
+          "median_delta": 0.0,
+          "pval": 0.7639367229513248,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 16,
+          "mean_delta": 0.010769138862087857,
+          "median_delta": 0.0,
+          "pval": 0.9776005287215147,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 123,
+          "mean_delta": -0.01133550771765744,
+          "median_delta": 0.0,
+          "pval": 0.9888703693319559,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0034976": {
+      "go_name": "ER stress response",
+      "ad_stage": "Early",
+      "sep_cosine": 0.0138,
+      "go_type": "B",
+      "n_pos_train": 382,
+      "n_go_multi_genes": 120,
+      "fisi_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 91,
+          "mean_delta": -0.015738335281771095,
+          "median_delta": -0.008287292817679592,
+          "pval": 0.046481940084807,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 83,
+          "mean_delta": -0.030702221481591192,
+          "median_delta": -0.003602242368501707,
+          "pval": 0.06726870734800738,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 72,
+          "mean_delta": -0.03786098549057096,
+          "median_delta": 0.0,
+          "pval": 0.10185859807627203,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 24,
+          "mean_delta": -0.07018002235246333,
+          "median_delta": 0.0,
+          "pval": 0.10807596816523143,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 19,
+          "mean_delta": -0.026821082825189205,
+          "median_delta": 0.0,
+          "pval": 0.2810488310187026,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 96,
+          "mean_delta": 0.005338670861914367,
+          "median_delta": 0.0017434665688673447,
+          "pval": 0.34764808216235676,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 66,
+          "mean_delta": 0.01735983202008648,
+          "median_delta": 0.0,
+          "pval": 0.36584789304585164,
+          "direction": "AD\u2191"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 91,
+          "mean_delta": -0.003415625882389669,
+          "median_delta": -0.00014146661861624832,
+          "pval": 0.046048480137437356,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 83,
+          "mean_delta": 0.0015943040601038596,
+          "median_delta": -2.0503929212822847e-05,
+          "pval": 0.07362416220314373,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 96,
+          "mean_delta": 0.00250510249309868,
+          "median_delta": 0.00027285575914476334,
+          "pval": 0.07603513752240457,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 24,
+          "mean_delta": 0.016833420415456945,
+          "median_delta": -1.5314023865120596e-06,
+          "pval": 0.15653614287540518,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 66,
+          "mean_delta": 0.003316170203980578,
+          "median_delta": 0.0,
+          "pval": 0.29840112150755005,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 72,
+          "mean_delta": -0.0008400280209492543,
+          "median_delta": 0.0,
+          "pval": 0.33541282033290887,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 19,
+          "mean_delta": 0.008400260310071704,
+          "median_delta": 0.0,
+          "pval": 0.394012257441151,
+          "direction": "AD\u2191"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 91,
+          "mean_delta": -0.018319620015253158,
+          "median_delta": 0.0,
+          "pval": 0.12455191759286274,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 19,
+          "mean_delta": -0.0060783750132510535,
+          "median_delta": 0.0,
+          "pval": 0.13470357843796119,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 72,
+          "mean_delta": -0.0028384559684329564,
+          "median_delta": 0.0,
+          "pval": 0.2730364572104347,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 24,
+          "mean_delta": 0.017414875328540802,
+          "median_delta": 0.0,
+          "pval": 0.557261291218383,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 66,
+          "mean_delta": 0.0030696471080635533,
+          "median_delta": 0.0,
+          "pval": 0.6585833239596264,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 83,
+          "mean_delta": -0.0017077499125377241,
+          "median_delta": 0.0,
+          "pval": 0.6787303596412624,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 96,
+          "mean_delta": -0.002508278974952797,
+          "median_delta": 0.0,
+          "pval": 0.8456770436694816,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0000226": {
+      "go_name": "Microtubule cytoskeleton",
+      "ad_stage": "Mid",
+      "sep_cosine": 0.0338,
+      "go_type": "B",
+      "n_pos_train": 777,
+      "n_go_multi_genes": 232,
+      "fisi_stats": [
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 123,
+          "mean_delta": -0.020337451541504292,
+          "median_delta": -0.00019323671497584183,
+          "pval": 0.06130431918364983,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 92,
+          "mean_delta": -0.0101985318270142,
+          "median_delta": 0.0,
+          "pval": 0.27971139583395555,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 27,
+          "mean_delta": -0.006885134258496223,
+          "median_delta": 0.0,
+          "pval": 0.4102742441410647,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 39,
+          "mean_delta": -0.02330702821541285,
+          "median_delta": 0.0,
+          "pval": 0.4460126212583083,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 148,
+          "mean_delta": -0.004583378138710699,
+          "median_delta": 0.0,
+          "pval": 0.6065396768300417,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 169,
+          "mean_delta": -0.004646316508052029,
+          "median_delta": 0.0,
+          "pval": 0.6387911558427315,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 105,
+          "mean_delta": -0.008397698941634661,
+          "median_delta": 0.0,
+          "pval": 0.936261308568782,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 123,
+          "mean_delta": -0.016279106123874534,
+          "median_delta": -7.323605172175618e-05,
+          "pval": 0.0005738048685216579,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 39,
+          "mean_delta": -0.0006189099497704728,
+          "median_delta": 0.0,
+          "pval": 0.43771208354936153,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 105,
+          "mean_delta": -0.0037478742651035615,
+          "median_delta": 0.0,
+          "pval": 0.4390177708053493,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 169,
+          "mean_delta": -0.0024020132622398498,
+          "median_delta": 0.0,
+          "pval": 0.4431635432260751,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 92,
+          "mean_delta": 0.0029053074660964524,
+          "median_delta": 0.0,
+          "pval": 0.6895739217451109,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 27,
+          "mean_delta": 0.0017975930814194826,
+          "median_delta": 0.0,
+          "pval": 0.7726700079462161,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 148,
+          "mean_delta": 0.003873680143034815,
+          "median_delta": 0.0,
+          "pval": 0.8071572592568012,
+          "direction": "AD\u2191"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 39,
+          "mean_delta": -0.0058643053739498826,
+          "median_delta": 0.0,
+          "pval": 0.5596184105098455,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 123,
+          "mean_delta": -0.01569580816762234,
+          "median_delta": 0.0,
+          "pval": 0.6066254428958133,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 27,
+          "mean_delta": 0.0016969736251566145,
+          "median_delta": 0.0,
+          "pval": 0.7126543619898393,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 105,
+          "mean_delta": -0.0009718611392946471,
+          "median_delta": 0.0,
+          "pval": 0.7284833065341444,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 169,
+          "mean_delta": 0.0004481520040853489,
+          "median_delta": 0.0,
+          "pval": 0.7724821970176459,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 92,
+          "mean_delta": 0.009733135285584824,
+          "median_delta": 0.0,
+          "pval": 0.7760967250807034,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 148,
+          "mean_delta": 0.0026647610860448833,
+          "median_delta": 0.0,
+          "pval": 0.9974887047522816,
+          "direction": "AD\u2191"
+        }
+      ]
+    },
+    "GO:0007268": {
+      "go_name": "Synaptic transmission",
+      "ad_stage": "Mid",
+      "sep_cosine": 0.0465,
+      "go_type": "B",
+      "n_pos_train": 717,
+      "n_go_multi_genes": 160,
+      "fisi_stats": [
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 42,
+          "mean_delta": 0.024787114293609067,
+          "median_delta": 0.0,
+          "pval": 0.4332325338831673,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 23,
+          "mean_delta": -0.014279840391943844,
+          "median_delta": 0.0,
+          "pval": 0.4632352110153153,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 113,
+          "mean_delta": 0.009924159487945793,
+          "median_delta": 0.0006995452955579351,
+          "pval": 0.5266409248113129,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 105,
+          "mean_delta": -0.0029371958758775754,
+          "median_delta": 0.0,
+          "pval": 0.5736724747019686,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 55,
+          "mean_delta": -0.005989920971203378,
+          "median_delta": 0.0,
+          "pval": 0.7692766006173344,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 63,
+          "mean_delta": -0.02511115475152214,
+          "median_delta": 0.0,
+          "pval": 0.8640169654919654,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 13,
+          "mean_delta": -0.040927314587276276,
+          "median_delta": 0.0,
+          "pval": 0.9720398855725101,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 55,
+          "mean_delta": -0.012715841041787383,
+          "median_delta": -3.7335899528178826e-05,
+          "pval": 0.04386795255408982,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 42,
+          "mean_delta": -0.004127650040813515,
+          "median_delta": -8.986842553806995e-08,
+          "pval": 0.18452681317710995,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 63,
+          "mean_delta": 0.0014149835841846766,
+          "median_delta": 0.0,
+          "pval": 0.2177242630672136,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 113,
+          "mean_delta": 0.0027499180632973557,
+          "median_delta": 2.302938935405674e-05,
+          "pval": 0.3495942993764294,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 23,
+          "mean_delta": -0.011423934347248439,
+          "median_delta": 0.0,
+          "pval": 0.5013274665331865,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 13,
+          "mean_delta": 0.012491266682670529,
+          "median_delta": 0.0,
+          "pval": 0.7003550088751999,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 105,
+          "mean_delta": -0.0010277758543184032,
+          "median_delta": 0.0,
+          "pval": 0.8982486638237003,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 13,
+          "mean_delta": -0.009416621464949388,
+          "median_delta": 0.0,
+          "pval": 0.3477848066632868,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 105,
+          "mean_delta": -0.004483901611751034,
+          "median_delta": 0.0,
+          "pval": 0.5191786899432717,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 23,
+          "mean_delta": -0.03999266530508581,
+          "median_delta": 0.0,
+          "pval": 0.6948866023724733,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 55,
+          "mean_delta": 0.001709972090545555,
+          "median_delta": 0.0,
+          "pval": 0.8020243208260901,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 113,
+          "mean_delta": -0.00258936311027645,
+          "median_delta": 0.0,
+          "pval": 0.8567692061228722,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 63,
+          "mean_delta": -0.015501697440788756,
+          "median_delta": 0.0,
+          "pval": 0.9333099128622064,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 42,
+          "mean_delta": -0.023087169853083435,
+          "median_delta": 0.0,
+          "pval": 0.9419983843779423,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0006914": {
+      "go_name": "Autophagy",
+      "ad_stage": "Mid",
+      "sep_cosine": 0.009,
+      "go_type": "B",
+      "n_pos_train": 298,
+      "n_go_multi_genes": 103,
+      "fisi_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 77,
+          "mean_delta": -0.013081362334536278,
+          "median_delta": -0.003695491500369519,
+          "pval": 0.08292111486082253,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 60,
+          "mean_delta": 0.00706489637886012,
+          "median_delta": 0.004205377005353194,
+          "pval": 0.21042037862908758,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 15,
+          "mean_delta": 0.03172371824894647,
+          "median_delta": 0.0,
+          "pval": 0.4946495140469157,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 14,
+          "mean_delta": -0.03926860122794278,
+          "median_delta": 0.0,
+          "pval": 0.5281187950532665,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 73,
+          "mean_delta": 0.008162911141768111,
+          "median_delta": 0.0,
+          "pval": 0.7812651997913627,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 67,
+          "mean_delta": -0.013030959569472117,
+          "median_delta": 0.001020357373948566,
+          "pval": 0.8832872513302477,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 46,
+          "mean_delta": -0.016387495439110153,
+          "median_delta": 0.0,
+          "pval": 0.9211918923616734,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 60,
+          "mean_delta": -0.003507740654521788,
+          "median_delta": 4.2926509724761086e-05,
+          "pval": 0.15722037598618485,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 77,
+          "mean_delta": -0.0074403014590330805,
+          "median_delta": -7.706160884857205e-06,
+          "pval": 0.22396161723434804,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 14,
+          "mean_delta": 0.0012418550864075509,
+          "median_delta": 0.0,
+          "pval": 0.5087517338727487,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 15,
+          "mean_delta": 0.02600789431538798,
+          "median_delta": 0.0,
+          "pval": 0.5692812255907798,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 46,
+          "mean_delta": 0.00334021792458042,
+          "median_delta": 0.0,
+          "pval": 0.7214156757657266,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 67,
+          "mean_delta": 0.001510234979920648,
+          "median_delta": 0.0,
+          "pval": 0.7405838314885276,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 73,
+          "mean_delta": -0.0028326950293887385,
+          "median_delta": 0.0,
+          "pval": 0.8603501625738271,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 15,
+          "mean_delta": 0.038269412517547605,
+          "median_delta": 0.0,
+          "pval": 0.40487306185858307,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 73,
+          "mean_delta": 0.0005648458912356259,
+          "median_delta": 0.0,
+          "pval": 0.5053901100571707,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 77,
+          "mean_delta": -0.018256081969707044,
+          "median_delta": 0.0,
+          "pval": 0.5179738600649133,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 46,
+          "mean_delta": 0.02217569248750806,
+          "median_delta": 0.0,
+          "pval": 0.8196246121084161,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 60,
+          "mean_delta": 0.0029837836821873984,
+          "median_delta": 0.0,
+          "pval": 0.8432523846079619,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 67,
+          "mean_delta": 0.007166538109530264,
+          "median_delta": 0.0,
+          "pval": 0.9888330820155143,
+          "direction": "AD\u2191"
+        }
+      ]
+    },
+    "GO:0043161": {
+      "go_name": "Proteasome-UPS",
+      "ad_stage": "Mid-Late",
+      "sep_cosine": 0.0221,
+      "go_type": "B",
+      "n_pos_train": 468,
+      "n_go_multi_genes": 166,
+      "fisi_stats": [
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 79,
+          "mean_delta": -0.0062206933703738525,
+          "median_delta": 0.0,
+          "pval": 0.08600308617219622,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 84,
+          "mean_delta": 0.0043106121134091745,
+          "median_delta": 0.0,
+          "pval": 0.3228930170407228,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 30,
+          "mean_delta": -0.013071344116324832,
+          "median_delta": 0.0,
+          "pval": 0.4701795339187972,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 112,
+          "mean_delta": -0.002452810705335305,
+          "median_delta": -0.0005045235736231835,
+          "pval": 0.5507446960094642,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 125,
+          "mean_delta": 0.00290330047107696,
+          "median_delta": -0.0021562557874963417,
+          "pval": 0.5988533332100193,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 21,
+          "mean_delta": -0.012031848264625064,
+          "median_delta": 0.0,
+          "pval": 0.6874834696602803,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 119,
+          "mean_delta": 0.006481691089255334,
+          "median_delta": 0.0,
+          "pval": 0.9334152114703871,
+          "direction": "AD\u2191"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 119,
+          "mean_delta": -0.004982408835285668,
+          "median_delta": 0.0,
+          "pval": 0.17199712172551762,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 79,
+          "mean_delta": 0.003784331255329737,
+          "median_delta": 0.0,
+          "pval": 0.22205142738291628,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 30,
+          "mean_delta": -0.002774529746462843,
+          "median_delta": -3.280925254023348e-05,
+          "pval": 0.22819038284050852,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 125,
+          "mean_delta": -0.0003746567271426623,
+          "median_delta": -9.273248351693297e-05,
+          "pval": 0.2899370043958164,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 21,
+          "mean_delta": 0.006161755382673371,
+          "median_delta": 0.0,
+          "pval": 0.5078766779147323,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 112,
+          "mean_delta": -0.0008007706569053444,
+          "median_delta": -5.551115123125783e-17,
+          "pval": 0.5173623817120239,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 84,
+          "mean_delta": -0.003247893356889575,
+          "median_delta": 0.0,
+          "pval": 0.5955167083751655,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 125,
+          "mean_delta": -0.009497193396091461,
+          "median_delta": 0.0,
+          "pval": 0.4939458753903587,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 112,
+          "mean_delta": -0.0012918954182948386,
+          "median_delta": 0.0,
+          "pval": 0.5859071292578734,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 84,
+          "mean_delta": -0.007326440763704124,
+          "median_delta": 0.0,
+          "pval": 0.6787485660621396,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 30,
+          "mean_delta": 0.007470241778840621,
+          "median_delta": 0.0,
+          "pval": 0.7904195056950587,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 79,
+          "mean_delta": 0.008803569405233557,
+          "median_delta": 0.0,
+          "pval": 0.8289570341079653,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 119,
+          "mean_delta": -0.005281253334353952,
+          "median_delta": 0.0,
+          "pval": 0.865053945112604,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 21,
+          "mean_delta": -2.9246012369791668e-05,
+          "median_delta": 0.0,
+          "pval": 1.0,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0006979": {
+      "go_name": "Oxidative stress",
+      "ad_stage": "Mid-Late",
+      "sep_cosine": 0.0149,
+      "go_type": "B",
+      "n_pos_train": 535,
+      "n_go_multi_genes": 128,
+      "fisi_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 69,
+          "mean_delta": 0.044140449023980885,
+          "median_delta": 0.01106236887278278,
+          "pval": 0.006451187355671474,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 14,
+          "mean_delta": 0.07880361313687247,
+          "median_delta": 0.033838383838383855,
+          "pval": 0.13180891445857057,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 39,
+          "mean_delta": -0.017106581855525372,
+          "median_delta": 0.0,
+          "pval": 0.14782644404251238,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 78,
+          "mean_delta": 0.011679638306527514,
+          "median_delta": 0.0020905923344947726,
+          "pval": 0.38204884629772995,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 57,
+          "mean_delta": 0.011285328176152166,
+          "median_delta": 0.0,
+          "pval": 0.41073452964438606,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 34,
+          "mean_delta": 0.02613372704504407,
+          "median_delta": 0.0,
+          "pval": 0.5841736843076192,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 18,
+          "mean_delta": -0.008815420285499248,
+          "median_delta": 0.0,
+          "pval": 0.6938840899815351,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 78,
+          "mean_delta": 0.004017837669334134,
+          "median_delta": 0.00016593206203807664,
+          "pval": 0.08172149333128391,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 69,
+          "mean_delta": 0.009128497699672111,
+          "median_delta": 0.00018294220354875268,
+          "pval": 0.09526482172780697,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 57,
+          "mean_delta": 0.010148926055985687,
+          "median_delta": 2.0123542169292463e-05,
+          "pval": 0.13109496597834117,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 14,
+          "mean_delta": 0.05651567616967449,
+          "median_delta": 0.00032406179518325046,
+          "pval": 0.13180891445857057,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 18,
+          "mean_delta": 0.10237823958449141,
+          "median_delta": 0.0,
+          "pval": 0.6470805039307326,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 39,
+          "mean_delta": 0.00468319195068717,
+          "median_delta": 0.0,
+          "pval": 0.7479878989444544,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 34,
+          "mean_delta": 0.007782708433789322,
+          "median_delta": 0.0,
+          "pval": 0.8575088351917082,
+          "direction": "AD\u2191"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 14,
+          "mean_delta": 0.04583933450547712,
+          "median_delta": 0.0,
+          "pval": 0.19483638090827737,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 39,
+          "mean_delta": 0.02178855302433173,
+          "median_delta": 0.0,
+          "pval": 0.4013612025108072,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 69,
+          "mean_delta": 0.009278112941462061,
+          "median_delta": 0.0,
+          "pval": 0.5076729617154586,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 34,
+          "mean_delta": 0.018042651087264803,
+          "median_delta": 0.0,
+          "pval": 0.5495520758759528,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 78,
+          "mean_delta": -0.007972890749955788,
+          "median_delta": 0.0,
+          "pval": 0.5697018535286877,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 18,
+          "mean_delta": 0.12968466808605525,
+          "median_delta": 0.0,
+          "pval": 0.606955403572722,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 57,
+          "mean_delta": 0.0036685360726295855,
+          "median_delta": 0.0,
+          "pval": 0.6656866822127615,
+          "direction": "AD\u2191"
+        }
+      ]
+    },
+    "GO:0006954": {
+      "go_name": "Inflammatory response",
+      "ad_stage": "Late",
+      "sep_cosine": 0.0111,
+      "go_type": "B",
+      "n_pos_train": 490,
+      "n_go_multi_genes": 70,
+      "fisi_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 35,
+          "mean_delta": 0.01782014090270113,
+          "median_delta": 0.004561653599429838,
+          "pval": 0.0838844076801583,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 29,
+          "mean_delta": -0.02319349805074581,
+          "median_delta": -0.0020252025202520257,
+          "pval": 0.30423105299989994,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 14,
+          "mean_delta": 0.09920182789438212,
+          "median_delta": 0.004032258064516129,
+          "pval": 0.4897468926550186,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 26,
+          "mean_delta": 0.02064185838789975,
+          "median_delta": 0.0,
+          "pval": 0.8290112142132731,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 25,
+          "mean_delta": -0.025626686250407742,
+          "median_delta": 0.0,
+          "pval": 0.8823310825720619,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 34,
+          "mean_delta": -0.014074253905911072,
+          "median_delta": 0.0,
+          "pval": 0.9659015407701866,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 8,
+          "mean_delta": 0.009602769896019256,
+          "median_delta": -0.006487232574189095,
+          "pval": 1.0,
+          "direction": "AD\u2191"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 14,
+          "mean_delta": 0.028498255035295652,
+          "median_delta": 5.0315571936743186e-05,
+          "pval": 0.16714896906439225,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 29,
+          "mean_delta": -0.005067736811692637,
+          "median_delta": -2.8732148085186537e-06,
+          "pval": 0.19075238092365399,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 8,
+          "mean_delta": -0.06711650950363088,
+          "median_delta": -0.0007700944968296042,
+          "pval": 0.3828125,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 35,
+          "mean_delta": 0.0013627382599418556,
+          "median_delta": 2.2230693710545424e-05,
+          "pval": 0.4413302467439184,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 34,
+          "mean_delta": -0.011250476143540404,
+          "median_delta": 0.0,
+          "pval": 0.4993989596921421,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 26,
+          "mean_delta": -0.0021291414804677925,
+          "median_delta": -1.0768395521665308e-05,
+          "pval": 0.6658991205901892,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 25,
+          "mean_delta": -0.014029978741774278,
+          "median_delta": 0.0,
+          "pval": 0.8295606887615303,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 14,
+          "mean_delta": 0.033615316663469584,
+          "median_delta": 0.0,
+          "pval": 0.19483638090827737,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 8,
+          "mean_delta": -0.0929957926273346,
+          "median_delta": 0.0,
+          "pval": 0.27203944789573553,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 25,
+          "mean_delta": -0.038916130065917966,
+          "median_delta": 0.0,
+          "pval": 0.46839392234281885,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 29,
+          "mean_delta": -3.641432729260675e-05,
+          "median_delta": 0.0,
+          "pval": 0.5415316050663302,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 34,
+          "mean_delta": 0.000535555197583402,
+          "median_delta": 0.0,
+          "pval": 0.5505685909603129,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 35,
+          "mean_delta": 0.008887880628130266,
+          "median_delta": 0.0,
+          "pval": 0.5668226161891654,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 26,
+          "mean_delta": -0.00022962230902451737,
+          "median_delta": 0.0,
+          "pval": 0.9887736895715207,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0045087": {
+      "go_name": "Innate immune response",
+      "ad_stage": "Late",
+      "sep_cosine": 0.0111,
+      "go_type": "B",
+      "n_pos_train": 640,
+      "n_go_multi_genes": 117,
+      "fisi_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 59,
+          "mean_delta": -0.02998359620098351,
+          "median_delta": -0.004227295633139637,
+          "pval": 0.10702860007663394,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 56,
+          "mean_delta": 0.024784322460637578,
+          "median_delta": 0.0009689559869923447,
+          "pval": 0.21951457159030952,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 14,
+          "mean_delta": -0.06292190275610764,
+          "median_delta": 0.0,
+          "pval": 0.36150066321783125,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 24,
+          "mean_delta": -0.0275586299313396,
+          "median_delta": 0.0,
+          "pval": 0.7309658998085939,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 63,
+          "mean_delta": -0.0020824288236166214,
+          "median_delta": 0.0012617137626171372,
+          "pval": 0.8345990730726317,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 46,
+          "mean_delta": 0.017397573546878292,
+          "median_delta": 0.0,
+          "pval": 0.8610626979690572,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 51,
+          "mean_delta": -0.008215270702067592,
+          "median_delta": 0.0,
+          "pval": 0.9624786938259183,
+          "direction": "AD\u2193"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 59,
+          "mean_delta": -0.004160596005250959,
+          "median_delta": -4.356347462131094e-05,
+          "pval": 0.11551864505727938,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 51,
+          "mean_delta": -0.017133917316013825,
+          "median_delta": 0.0,
+          "pval": 0.32635061451297354,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 63,
+          "mean_delta": -0.0024442084577787557,
+          "median_delta": -8.717785306622261e-05,
+          "pval": 0.34303365553712306,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 14,
+          "mean_delta": -0.018414088786350206,
+          "median_delta": -5.551115123125783e-17,
+          "pval": 0.6154314715052189,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 24,
+          "mean_delta": -0.0034133899632147378,
+          "median_delta": 0.0,
+          "pval": 0.7856877099038239,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 56,
+          "mean_delta": -0.0021151600249400032,
+          "median_delta": 0.0,
+          "pval": 0.870401534647083,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 46,
+          "mean_delta": -0.0009480663057827556,
+          "median_delta": 0.0,
+          "pval": 0.9563967191152829,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 14,
+          "mean_delta": -0.008283168077468872,
+          "median_delta": 0.0,
+          "pval": 0.3605406490504841,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 63,
+          "mean_delta": -0.00010948490336655624,
+          "median_delta": 0.0,
+          "pval": 0.664387239356827,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 56,
+          "mean_delta": -0.005544781019645078,
+          "median_delta": 0.0,
+          "pval": 0.6894929133786333,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 24,
+          "mean_delta": 0.0010257562001546223,
+          "median_delta": 0.0,
+          "pval": 0.7438406614847718,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 46,
+          "mean_delta": -0.003851272089852263,
+          "median_delta": 0.0,
+          "pval": 0.8010172960269464,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 59,
+          "mean_delta": 0.012208084654757532,
+          "median_delta": 0.0,
+          "pval": 0.8309819310276472,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 51,
+          "mean_delta": -0.019470340355445502,
+          "median_delta": 0.0,
+          "pval": 0.9631445027111598,
+          "direction": "AD\u2193"
+        }
+      ]
+    },
+    "GO:0006909": {
+      "go_name": "Phagocytosis",
+      "ad_stage": "Late",
+      "sep_cosine": 0.041,
+      "go_type": "B",
+      "n_pos_train": 267,
+      "n_go_multi_genes": 86,
+      "fisi_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 47,
+          "mean_delta": -0.026301462215743417,
+          "median_delta": 0.0,
+          "pval": 0.394286394676326,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 36,
+          "mean_delta": -0.01836342316475971,
+          "median_delta": 0.0,
+          "pval": 0.40442663988321126,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 38,
+          "mean_delta": -0.02991839741555152,
+          "median_delta": 0.0,
+          "pval": 0.42496628432031014,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 45,
+          "mean_delta": 0.02071217677507674,
+          "median_delta": 0.0,
+          "pval": 0.5233606249814033,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 20,
+          "mean_delta": 0.012120499069469586,
+          "median_delta": 0.0018518518518518823,
+          "pval": 0.6010858928640315,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FISI",
+          "n_genes": 17,
+          "mean_delta": 0.009682025533770688,
+          "median_delta": 0.0,
+          "pval": 0.8490838429762071,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 40,
+          "mean_delta": 0.021925665464929325,
+          "median_delta": 0.0,
+          "pval": 0.8820791179197065,
+          "direction": "AD\u2191"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 38,
+          "mean_delta": -0.00502048162253134,
+          "median_delta": 0.0,
+          "pval": 0.22858747217006936,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Vascular cell",
+          "metric": "WFU",
+          "n_genes": 17,
+          "mean_delta": -0.00044129310353297494,
+          "median_delta": 0.0,
+          "pval": 0.2545737155566584,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 40,
+          "mean_delta": 0.006335408812564518,
+          "median_delta": 0.0,
+          "pval": 0.27241743588294554,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 36,
+          "mean_delta": -0.0002977156337951995,
+          "median_delta": 0.0,
+          "pval": 0.31424890432877206,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 45,
+          "mean_delta": 0.0037195549388772168,
+          "median_delta": 0.0,
+          "pval": 0.6073828934453882,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 47,
+          "mean_delta": -0.00027739935178932256,
+          "median_delta": 2.070606994291485e-06,
+          "pval": 0.8200209707009918,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 20,
+          "mean_delta": -0.0035789104847353814,
+          "median_delta": 0.0,
+          "pval": 0.8518735706940674,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "Vascular cell",
+          "metric": "FDS",
+          "n_genes": 17,
+          "mean_delta": -0.0013803664375753963,
+          "median_delta": 0.0,
+          "pval": 0.22388505593132846,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 38,
+          "mean_delta": -0.002493745206218017,
+          "median_delta": 0.0,
+          "pval": 0.7520318932004133,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 45,
+          "mean_delta": 0.001037164373944203,
+          "median_delta": 0.0,
+          "pval": 0.7720977806578743,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 47,
+          "mean_delta": 0.0017868292498144699,
+          "median_delta": 0.0,
+          "pval": 0.820519765749686,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 20,
+          "mean_delta": -0.004426416754722595,
+          "median_delta": 0.0,
+          "pval": 0.9366156223075022,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 40,
+          "mean_delta": 0.022473362731398085,
+          "median_delta": 0.0,
+          "pval": 0.9881896361223692,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 36,
+          "mean_delta": 0.025430916604818776,
+          "median_delta": 0.0,
+          "pval": 1.0,
+          "direction": "AD\u2191"
+        }
+      ]
+    },
+    "GO:0042552": {
+      "go_name": "Myelination",
+      "ad_stage": "Late",
+      "sep_cosine": 0.0142,
+      "go_type": "B",
+      "n_pos_train": 99,
+      "n_go_multi_genes": 29,
+      "fisi_stats": [
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FISI",
+          "n_genes": 18,
+          "mean_delta": -0.014383057557161833,
+          "median_delta": -0.024411034745711775,
+          "pval": 0.22875213623046875,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FISI",
+          "n_genes": 18,
+          "mean_delta": -0.031097323688933014,
+          "median_delta": -0.020903042714066233,
+          "pval": 0.32472991943359375,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FISI",
+          "n_genes": 9,
+          "mean_delta": 0.058840663413657936,
+          "median_delta": 0.008063280869385625,
+          "pval": 0.3428288397234035,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FISI",
+          "n_genes": 18,
+          "mean_delta": -0.01584083911957805,
+          "median_delta": 0.007337544924428785,
+          "pval": 0.5135916823370115,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "OPC",
+          "metric": "FISI",
+          "n_genes": 18,
+          "mean_delta": -0.03624990314686308,
+          "median_delta": -0.0009242144177449285,
+          "pval": 0.7938595211959749,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FISI",
+          "n_genes": 5,
+          "mean_delta": 0.004760324123600923,
+          "median_delta": -0.046511627906976744,
+          "pval": 1.0,
+          "direction": "AD\u2191"
+        }
+      ],
+      "wfu_stats": [
+        {
+          "cell_type": "OPC",
+          "metric": "WFU",
+          "n_genes": 18,
+          "mean_delta": -0.018496180693646343,
+          "median_delta": -0.0050139343596803665,
+          "pval": 0.0328454473601462,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "WFU",
+          "n_genes": 18,
+          "mean_delta": -0.010747716736153039,
+          "median_delta": -0.0012524515967204594,
+          "pval": 0.49507904052734375,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "WFU",
+          "n_genes": 18,
+          "mean_delta": -0.015929587056029638,
+          "median_delta": 7.55643086898846e-05,
+          "pval": 0.7938595211959749,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "WFU",
+          "n_genes": 5,
+          "mean_delta": 0.03322879860020494,
+          "median_delta": -0.0011227376924853073,
+          "pval": 0.8125,
+          "direction": "AD\u2191"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "WFU",
+          "n_genes": 9,
+          "mean_delta": -0.024145943135900003,
+          "median_delta": 0.0,
+          "pval": 0.8125422341993517,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "WFU",
+          "n_genes": 18,
+          "mean_delta": -0.002802111763425197,
+          "median_delta": -0.0001742638000744052,
+          "pval": 0.8650436401367188,
+          "direction": "AD\u2193"
+        }
+      ],
+      "fds_stats": [
+        {
+          "cell_type": "OPC",
+          "metric": "FDS",
+          "n_genes": 18,
+          "mean_delta": -0.08685490910688208,
+          "median_delta": 0.0,
+          "pval": 0.12811695829343975,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Excitatory neuron",
+          "metric": "FDS",
+          "n_genes": 18,
+          "mean_delta": -0.01821600728564792,
+          "median_delta": 0.0,
+          "pval": 0.4053215675412082,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Inhibitory neuron",
+          "metric": "FDS",
+          "n_genes": 18,
+          "mean_delta": -0.030633394916852314,
+          "median_delta": 0.0,
+          "pval": 0.4331346525490375,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Microglia",
+          "metric": "FDS",
+          "n_genes": 5,
+          "mean_delta": -0.0005608558654785156,
+          "median_delta": 0.0,
+          "pval": 0.4795001221869535,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Oligodendrocyte",
+          "metric": "FDS",
+          "n_genes": 18,
+          "mean_delta": -0.06926724578564365,
+          "median_delta": 0.0,
+          "pval": 0.6568475654169275,
+          "direction": "AD\u2193"
+        },
+        {
+          "cell_type": "Astrocyte",
+          "metric": "FDS",
+          "n_genes": 9,
+          "mean_delta": -0.10669696180977756,
+          "median_delta": 0.0,
+          "pval": 0.9502615864176547,
+          "direction": "AD\u2193"
+        }
+      ]
+    }
+  }
+}

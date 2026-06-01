@@ -1,0 +1,336 @@
+{
+  "results": {
+    "GO:0007204": {
+      "go_name": "Ca2+ signaling",
+      "models": {
+        "LR": {
+          "auprc": 0.4147,
+          "ci_lo": 0.3203,
+          "ci_hi": 0.5287
+        },
+        "RF": {
+          "auprc": 0.6364,
+          "ci_lo": 0.535,
+          "ci_hi": 0.7504
+        },
+        "XGB": {
+          "auprc": 0.8249,
+          "ci_lo": 0.7484,
+          "ci_hi": 0.8983
+        },
+        "v10B": {
+          "auprc": 0.7653,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0030017": {
+      "go_name": "Sarcomere org",
+      "models": {
+        "LR": {
+          "auprc": 0.5635,
+          "ci_lo": 0.4539,
+          "ci_hi": 0.6615
+        },
+        "RF": {
+          "auprc": 0.6427,
+          "ci_lo": 0.5477,
+          "ci_hi": 0.7317
+        },
+        "XGB": {
+          "auprc": 0.7765,
+          "ci_lo": 0.6952,
+          "ci_hi": 0.8491
+        },
+        "v10B": {
+          "auprc": 0.7426,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0006941": {
+      "go_name": "Muscle contraction",
+      "models": {
+        "LR": {
+          "auprc": 0.3102,
+          "ci_lo": 0.1986,
+          "ci_hi": 0.4351
+        },
+        "RF": {
+          "auprc": 0.5692,
+          "ci_lo": 0.3761,
+          "ci_hi": 0.7112
+        },
+        "XGB": {
+          "auprc": 0.6816,
+          "ci_lo": 0.5159,
+          "ci_hi": 0.8023
+        },
+        "v10B": {
+          "auprc": 0.5968,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0006914": {
+      "go_name": "Autophagy",
+      "models": {
+        "LR": {
+          "auprc": 0.2853,
+          "ci_lo": 0.2133,
+          "ci_hi": 0.3782
+        },
+        "RF": {
+          "auprc": 0.5542,
+          "ci_lo": 0.4576,
+          "ci_hi": 0.6478
+        },
+        "XGB": {
+          "auprc": 0.7037,
+          "ci_lo": 0.622,
+          "ci_hi": 0.7834
+        },
+        "v10B": {
+          "auprc": 0.6397,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0043161": {
+      "go_name": "Proteasome-UPS",
+      "models": {
+        "LR": {
+          "auprc": 0.3615,
+          "ci_lo": 0.2983,
+          "ci_hi": 0.4447
+        },
+        "RF": {
+          "auprc": 0.5157,
+          "ci_lo": 0.4449,
+          "ci_hi": 0.5838
+        },
+        "XGB": {
+          "auprc": 0.6943,
+          "ci_lo": 0.6345,
+          "ci_hi": 0.7568
+        },
+        "v10B": {
+          "auprc": 0.7174,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0007519": {
+      "go_name": "Skeletal muscle dev",
+      "models": {
+        "LR": {
+          "auprc": 0.5874,
+          "ci_lo": 0.3956,
+          "ci_hi": 0.7512
+        },
+        "RF": {
+          "auprc": 0.7096,
+          "ci_lo": 0.5391,
+          "ci_hi": 0.8267
+        },
+        "XGB": {
+          "auprc": 0.7341,
+          "ci_lo": 0.566,
+          "ci_hi": 0.8594
+        },
+        "v10B": {
+          "auprc": 0.725,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0042692": {
+      "go_name": "Muscle cell diff",
+      "models": {
+        "LR": {
+          "auprc": 0.2318,
+          "ci_lo": 0.1609,
+          "ci_hi": 0.3204
+        },
+        "RF": {
+          "auprc": 0.5983,
+          "ci_lo": 0.4998,
+          "ci_hi": 0.696
+        },
+        "XGB": {
+          "auprc": 0.6918,
+          "ci_lo": 0.5998,
+          "ci_hi": 0.7788
+        },
+        "v10B": {
+          "auprc": 0.6526,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0055074": {
+      "go_name": "Ca2+ homeostasis",
+      "models": {
+        "LR": {
+          "auprc": 0.2506,
+          "ci_lo": 0.1846,
+          "ci_hi": 0.3185
+        },
+        "RF": {
+          "auprc": 0.558,
+          "ci_lo": 0.4601,
+          "ci_hi": 0.6435
+        },
+        "XGB": {
+          "auprc": 0.7384,
+          "ci_lo": 0.6617,
+          "ci_hi": 0.8075
+        },
+        "v10B": {
+          "auprc": 0.7255,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0007005": {
+      "go_name": "Mitochondrion org",
+      "models": {
+        "LR": {
+          "auprc": 0.2384,
+          "ci_lo": 0.1865,
+          "ci_hi": 0.2985
+        },
+        "RF": {
+          "auprc": 0.5743,
+          "ci_lo": 0.5059,
+          "ci_hi": 0.6416
+        },
+        "XGB": {
+          "auprc": 0.6975,
+          "ci_lo": 0.6374,
+          "ci_hi": 0.7516
+        },
+        "v10B": {
+          "auprc": 0.6624,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0007517": {
+      "go_name": "Muscle organ dev",
+      "models": {
+        "LR": {
+          "auprc": 0.2368,
+          "ci_lo": 0.1729,
+          "ci_hi": 0.3145
+        },
+        "RF": {
+          "auprc": 0.6194,
+          "ci_lo": 0.5248,
+          "ci_hi": 0.6946
+        },
+        "XGB": {
+          "auprc": 0.7428,
+          "ci_lo": 0.664,
+          "ci_hi": 0.8042
+        },
+        "v10B": {
+          "auprc": 0.7017,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0032006": {
+      "go_name": "TOR signaling",
+      "models": {
+        "LR": {
+          "auprc": 0.5103,
+          "ci_lo": 0.3792,
+          "ci_hi": 0.656
+        },
+        "RF": {
+          "auprc": 0.531,
+          "ci_lo": 0.4037,
+          "ci_hi": 0.6514
+        },
+        "XGB": {
+          "auprc": 0.6479,
+          "ci_lo": 0.491,
+          "ci_hi": 0.8056
+        },
+        "v10B": {
+          "auprc": 0.6023,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0003774": {
+      "go_name": "Motor activity",
+      "models": {
+        "LR": {
+          "auprc": 0.8253,
+          "ci_lo": 0.7224,
+          "ci_hi": 0.9068
+        },
+        "RF": {
+          "auprc": 0.7977,
+          "ci_lo": 0.6958,
+          "ci_hi": 0.8869
+        },
+        "XGB": {
+          "auprc": 0.8412,
+          "ci_lo": 0.7435,
+          "ci_hi": 0.9244
+        },
+        "v10B": {
+          "auprc": 0.8128,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    },
+    "GO:0006096": {
+      "go_name": "Glycolysis",
+      "models": {
+        "LR": {
+          "auprc": 0.6949,
+          "ci_lo": 0.4649,
+          "ci_hi": 0.8905
+        },
+        "RF": {
+          "auprc": 0.8288,
+          "ci_lo": 0.6941,
+          "ci_hi": 0.9242
+        },
+        "XGB": {
+          "auprc": 0.8251,
+          "ci_lo": 0.6671,
+          "ci_hi": 0.9337
+        },
+        "v10B": {
+          "auprc": 0.6712,
+          "ci_lo": null,
+          "ci_hi": null
+        }
+      }
+    }
+  },
+  "timestamp": "20260518_1050",
+  "macros": {
+    "LR": 0.4239,
+    "RF": 0.6258,
+    "XGB": 0.7384,
+    "v10B": 0.6935
+  }
+}

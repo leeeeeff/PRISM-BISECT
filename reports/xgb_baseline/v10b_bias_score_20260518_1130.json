@@ -1,0 +1,168 @@
+{
+  "results": {
+    "GO:0007204": {
+      "go_name": "Ca2+ signaling",
+      "bias_v10b": 0.0856,
+      "bias_xgb": 0.0155,
+      "bias_lr": 0.0747,
+      "v10b_auprc": 0.7761,
+      "v10b_ci": [
+        0.6865,
+        0.8665
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0030017": {
+      "go_name": "Sarcomere org",
+      "bias_v10b": 0.0573,
+      "bias_xgb": 0.023,
+      "bias_lr": 0.0618,
+      "v10b_auprc": 0.7802,
+      "v10b_ci": [
+        0.7,
+        0.8524
+      ],
+      "v10b_bias_interpretation": "GENE-LEVEL"
+    },
+    "GO:0006941": {
+      "go_name": "Muscle contraction",
+      "bias_v10b": 0.0868,
+      "bias_xgb": 0.0163,
+      "bias_lr": 0.0665,
+      "v10b_auprc": 0.6407,
+      "v10b_ci": [
+        0.4679,
+        0.78
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0006914": {
+      "go_name": "Autophagy",
+      "bias_v10b": 0.1096,
+      "bias_xgb": 0.0258,
+      "bias_lr": 0.0948,
+      "v10b_auprc": 0.6964,
+      "v10b_ci": [
+        0.6141,
+        0.7733
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0043161": {
+      "go_name": "Proteasome-UPS",
+      "bias_v10b": 0.1042,
+      "bias_xgb": 0.0452,
+      "bias_lr": 0.1098,
+      "v10b_auprc": 0.7405,
+      "v10b_ci": [
+        0.678,
+        0.8022
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0007519": {
+      "go_name": "Skeletal muscle dev",
+      "bias_v10b": 0.1239,
+      "bias_xgb": 0.0125,
+      "bias_lr": 0.0491,
+      "v10b_auprc": 0.7035,
+      "v10b_ci": [
+        0.5077,
+        0.8444
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0042692": {
+      "go_name": "Muscle cell diff",
+      "bias_v10b": 0.1041,
+      "bias_xgb": 0.0211,
+      "bias_lr": 0.1046,
+      "v10b_auprc": 0.6733,
+      "v10b_ci": [
+        0.5742,
+        0.7643
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0055074": {
+      "go_name": "Ca2+ homeostasis",
+      "bias_v10b": 0.0717,
+      "bias_xgb": 0.0308,
+      "bias_lr": 0.1168,
+      "v10b_auprc": 0.7436,
+      "v10b_ci": [
+        0.6661,
+        0.8031
+      ],
+      "v10b_bias_interpretation": "GENE-LEVEL"
+    },
+    "GO:0007005": {
+      "go_name": "Mitochondrion org",
+      "bias_v10b": 0.119,
+      "bias_xgb": 0.0685,
+      "bias_lr": 0.16,
+      "v10b_auprc": 0.6989,
+      "v10b_ci": [
+        0.638,
+        0.7525
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0007517": {
+      "go_name": "Muscle organ dev",
+      "bias_v10b": 0.0797,
+      "bias_xgb": 0.0299,
+      "bias_lr": 0.0966,
+      "v10b_auprc": 0.7299,
+      "v10b_ci": [
+        0.6417,
+        0.7975
+      ],
+      "v10b_bias_interpretation": "GENE-LEVEL"
+    },
+    "GO:0032006": {
+      "go_name": "TOR signaling",
+      "bias_v10b": 0.0912,
+      "bias_xgb": 0.0182,
+      "bias_lr": 0.0542,
+      "v10b_auprc": 0.6115,
+      "v10b_ci": [
+        0.4185,
+        0.8268
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0003774": {
+      "go_name": "Motor activity",
+      "bias_v10b": 0.0897,
+      "bias_xgb": 0.013,
+      "bias_lr": 0.0325,
+      "v10b_auprc": 0.8198,
+      "v10b_ci": [
+        0.7195,
+        0.9113
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    },
+    "GO:0006096": {
+      "go_name": "Glycolysis",
+      "bias_v10b": 0.0965,
+      "bias_xgb": null,
+      "bias_lr": null,
+      "v10b_auprc": 0.7938,
+      "v10b_ci": [
+        0.6155,
+        0.9284
+      ],
+      "v10b_bias_interpretation": "MIXED"
+    }
+  },
+  "timestamp": "20260518_1130",
+  "summary": {
+    "mean_bias_v10b": 0.0938,
+    "mean_bias_xgb": 0.0267,
+    "mean_bias_lr": 0.0851,
+    "v10b_vs_xgb_ratio": 3.52,
+    "v10b_vs_lr_ratio": 1.1
+  }
+}

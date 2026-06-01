@@ -1,0 +1,44 @@
+{
+  "results": [
+    {
+      "go": "GO:0006941",
+      "name": "Muscle contraction",
+      "type": "B",
+      "v10b_pos_bias": 1.902,
+      "gene_mean_pos_bias": 0.0,
+      "random_pos_bias_mean": 0.9151557936471088,
+      "random_pos_bias_std": 0.05366883020351942,
+      "lr_pos_bias": 1.3786965679375318,
+      "lr_auprc": 0.3101748031095968,
+      "shuffled_pos_bias_mean": 0.2452757838784927,
+      "shuffled_pos_bias_std": 0.06323211380900735
+    },
+    {
+      "go": "GO:0007005",
+      "name": "Mitochondrion org",
+      "type": "B",
+      "v10b_pos_bias": 0.879,
+      "gene_mean_pos_bias": 0.0,
+      "random_pos_bias_mean": 0.894186518269523,
+      "random_pos_bias_std": 0.02786651397855545,
+      "lr_pos_bias": 0.48529157855630145,
+      "lr_auprc": 0.23836621601631863,
+      "shuffled_pos_bias_mean": 0.28197789343860896,
+      "shuffled_pos_bias_std": 0.02694195785805004
+    },
+    {
+      "go": "GO:0006914",
+      "name": "Autophagy",
+      "type": "B",
+      "v10b_pos_bias": 0.724,
+      "gene_mean_pos_bias": 0.0,
+      "random_pos_bias_mean": 0.8840740645273447,
+      "random_pos_bias_std": 0.04033667084441863,
+      "lr_pos_bias": 0.46729792298321776,
+      "lr_auprc": 0.2852852161207411,
+      "shuffled_pos_bias_mean": 0.19304039361692604,
+      "shuffled_pos_bias_std": 0.02950146273308369
+    }
+  ],
+  "timestamp": "20260517_1433"
+}

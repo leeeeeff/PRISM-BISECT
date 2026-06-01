@@ -1,0 +1,266 @@
+{
+  "timestamp": "20260520_0402",
+  "n_novel": 7899,
+  "n_known": 56095,
+  "k_vals": [
+    5,
+    10,
+    20
+  ],
+  "distance_analysis": {
+    "nearest_neighbor": {
+      "mean_cosine_dist": 0.2744569182395935,
+      "median_cosine_dist": 0.01399993896484375,
+      "p25_cosine_dist": 0.0055439770221710205,
+      "p75_cosine_dist": 1.0,
+      "p90_cosine_dist": 1.0,
+      "pct_very_close": 0.7273072540827953,
+      "pct_close": 0.7332573743511837,
+      "pct_far": 0.26623623243448535
+    },
+    "top5_mean": {
+      "mean_cosine_dist": 0.2783333957195282,
+      "median_cosine_dist": 0.018452942371368408
+    }
+  },
+  "macro_auprc_diffuse": 0.3216501638890328,
+  "macro_auprc_knn_best": 0.2672314288910987,
+  "macro_delta": -0.05441873499793409,
+  "interpretation": "KNN propagation degrades performance (-0.054). Model already implicitly smooths better than explicit KNN.",
+  "per_go_term": {
+    "GO:0007204": {
+      "go_name": "Ca2+ signaling",
+      "n_pos_novel": 49,
+      "auprc_diffuse": 0.30576024925168516,
+      "auprc_knn": {
+        "5": 0.2914305547549932,
+        "10": 0.22497167387821573,
+        "20": 0.17405471100647876
+      },
+      "best_k": 5,
+      "best_knn": 0.2914305547549932,
+      "delta_knn_minus_diffuse": -0.01432969449669197
+    },
+    "GO:0045214": {
+      "go_name": "Sarcomere org",
+      "n_pos_novel": 10,
+      "auprc_diffuse": 0.4627054283906379,
+      "auprc_knn": {
+        "5": 0.308088529093166,
+        "10": 0.24992993929207624,
+        "20": 0.3051877618059664
+      },
+      "best_k": 5,
+      "best_knn": 0.308088529093166,
+      "delta_knn_minus_diffuse": -0.1546168992974719
+    },
+    "GO:0006941": {
+      "go_name": "Muscle contraction",
+      "n_pos_novel": 68,
+      "auprc_diffuse": 0.34923221293885787,
+      "auprc_knn": {
+        "5": 0.2540621613229116,
+        "10": 0.21628542573107268,
+        "20": 0.2064251442990537
+      },
+      "best_k": 5,
+      "best_knn": 0.2540621613229116,
+      "delta_knn_minus_diffuse": -0.09517005161594627
+    },
+    "GO:0006914": {
+      "go_name": "Autophagy",
+      "n_pos_novel": 91,
+      "auprc_diffuse": 0.23256614667210804,
+      "auprc_knn": {
+        "5": 0.20189408254218366,
+        "10": 0.12331595777537355,
+        "20": 0.07154014039026287
+      },
+      "best_k": 5,
+      "best_knn": 0.20189408254218366,
+      "delta_knn_minus_diffuse": -0.030672064129924376
+    },
+    "GO:0043161": {
+      "go_name": "Proteasome-UPS",
+      "n_pos_novel": 195,
+      "auprc_diffuse": 0.43099563031948174,
+      "auprc_knn": {
+        "5": 0.3751831552705748,
+        "10": 0.3350262807167621,
+        "20": 0.2946710237255147
+      },
+      "best_k": 5,
+      "best_knn": 0.3751831552705748,
+      "delta_knn_minus_diffuse": -0.05581247504890696
+    },
+    "GO:0007519": {
+      "go_name": "Skeletal muscle dev",
+      "n_pos_novel": 13,
+      "auprc_diffuse": 0.12775544048836018,
+      "auprc_knn": {
+        "5": 0.0949083223978449,
+        "10": 0.10334539855174583,
+        "20": 0.038660499587843435
+      },
+      "best_k": 10,
+      "best_knn": 0.10334539855174583,
+      "delta_knn_minus_diffuse": -0.02441004193661435
+    },
+    "GO:0042692": {
+      "go_name": "Muscle cell diff",
+      "n_pos_novel": 36,
+      "auprc_diffuse": 0.252558750149224,
+      "auprc_knn": {
+        "5": 0.19029240919348817,
+        "10": 0.14081730017259972,
+        "20": 0.11105428871700818
+      },
+      "best_k": 5,
+      "best_knn": 0.19029240919348817,
+      "delta_knn_minus_diffuse": -0.062266340955735855
+    },
+    "GO:0055074": {
+      "go_name": "Ca2+ homeostasis",
+      "n_pos_novel": 97,
+      "auprc_diffuse": 0.23935211004635315,
+      "auprc_knn": {
+        "5": 0.20926934361124405,
+        "10": 0.16539041626521453,
+        "20": 0.1172291453394404
+      },
+      "best_k": 5,
+      "best_knn": 0.20926934361124405,
+      "delta_knn_minus_diffuse": -0.0300827664351091
+    },
+    "GO:0007005": {
+      "go_name": "Mitochondrion org",
+      "n_pos_novel": 181,
+      "auprc_diffuse": 0.2883874424517326,
+      "auprc_knn": {
+        "5": 0.22232431802021366,
+        "10": 0.16252725661523215,
+        "20": 0.1406701878819016
+      },
+      "best_k": 5,
+      "best_knn": 0.22232431802021366,
+      "delta_knn_minus_diffuse": -0.06606312443151893
+    },
+    "GO:0007517": {
+      "go_name": "Muscle organ dev",
+      "n_pos_novel": 51,
+      "auprc_diffuse": 0.3039246085415797,
+      "auprc_knn": {
+        "5": 0.231264152181837,
+        "10": 0.22014280501641126,
+        "20": 0.15366694444411289
+      },
+      "best_k": 5,
+      "best_knn": 0.231264152181837,
+      "delta_knn_minus_diffuse": -0.07266045635974272
+    },
+    "GO:0032006": {
+      "go_name": "TOR signaling",
+      "n_pos_novel": 34,
+      "auprc_diffuse": 0.19020639501412354,
+      "auprc_knn": {
+        "5": 0.1213327188894746,
+        "10": 0.06613420354763226,
+        "20": 0.0381682682241545
+      },
+      "best_k": 5,
+      "best_knn": 0.1213327188894746,
+      "delta_knn_minus_diffuse": -0.06887367612464894
+    },
+    "GO:0030048": {
+      "go_name": "Actin-based movement",
+      "n_pos_novel": 36,
+      "auprc_diffuse": 0.32244396114219687,
+      "auprc_knn": {
+        "5": 0.30802518421957725,
+        "10": 0.3025949594008683,
+        "20": 0.2794013152800434
+      },
+      "best_k": 5,
+      "best_knn": 0.30802518421957725,
+      "delta_knn_minus_diffuse": -0.014418776922619614
+    },
+    "GO:0006096": {
+      "go_name": "Glycolysis",
+      "n_pos_novel": 9,
+      "auprc_diffuse": 0.5562010110778297,
+      "auprc_knn": {
+        "5": 0.5384254048171752,
+        "10": 0.432419873018242,
+        "20": 0.23896016261002906
+      },
+      "best_k": 5,
+      "best_knn": 0.5384254048171752,
+      "delta_knn_minus_diffuse": -0.017775606260654553
+    },
+    "GO:0007268": {
+      "go_name": "Synaptic transmission",
+      "n_pos_novel": 136,
+      "auprc_diffuse": 0.35094781340438175,
+      "auprc_knn": {
+        "5": 0.3187791240984236,
+        "10": 0.28901204232607014,
+        "20": 0.2641115833574724
+      },
+      "best_k": 5,
+      "best_knn": 0.3187791240984236,
+      "delta_knn_minus_diffuse": -0.03216868930595812
+    },
+    "GO:0007018": {
+      "go_name": "MT-based movement",
+      "n_pos_novel": 69,
+      "auprc_diffuse": 0.41464977386527985,
+      "auprc_knn": {
+        "5": 0.36380493443579337,
+        "10": 0.2807051895989285,
+        "20": 0.23631544479667277
+      },
+      "best_k": 5,
+      "best_knn": 0.36380493443579337,
+      "delta_knn_minus_diffuse": -0.05084483942948648
+    },
+    "GO:0031175": {
+      "go_name": "Neuron proj dev",
+      "n_pos_novel": 191,
+      "auprc_diffuse": 0.27966785116760234,
+      "auprc_knn": {
+        "5": 0.24799213084529673,
+        "10": 0.17590215481102092,
+        "20": 0.1577677599135835
+      },
+      "best_k": 5,
+      "best_knn": 0.24799213084529673,
+      "delta_knn_minus_diffuse": -0.03167572032230562
+    },
+    "GO:0030182": {
+      "go_name": "Neuron diff",
+      "n_pos_novel": 268,
+      "auprc_diffuse": 0.3128639655543561,
+      "auprc_knn": {
+        "5": 0.2522376014539468,
+        "10": 0.19117712963566735,
+        "20": 0.1608147200798593
+      },
+      "best_k": 5,
+      "best_knn": 0.2522376014539468,
+      "delta_knn_minus_diffuse": -0.06062636410040928
+    },
+    "GO:0000226": {
+      "go_name": "MT cytoskeleton org",
+      "n_pos_novel": 159,
+      "auprc_diffuse": 0.3694841595267989,
+      "auprc_knn": {
+        "5": 0.2724145167377313,
+        "10": 0.21710931174426434,
+        "20": 0.15416965281301992
+      },
+      "best_k": 5,
+      "best_knn": 0.2724145167377313,
+      "delta_knn_minus_diffuse": -0.0970696427890676
+    }
+  }
+}

@@ -1,0 +1,484 @@
+{
+  "results": [
+    {
+      "go": "GO:0007204",
+      "go_name": "Ca2+ signaling",
+      "n_pos_train": 402,
+      "n_pos_test": 310,
+      "auprc_v14": 0.8029,
+      "auprc_ci_lo": 0.6751,
+      "auprc_ci_hi": 0.8577,
+      "auprc_v10b": 0.7653,
+      "auprc_xgb": 0.8249,
+      "delta_v10b": 0.0376,
+      "delta_xgb": -0.022,
+      "bias_v14": 0.0487,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0041,
+      "best_lam": 0.5,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.7698
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.7756
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7869
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.7999
+        }
+      ],
+      "elapsed_s": 331.5
+    },
+    {
+      "go": "GO:0030017",
+      "go_name": "Sarcomere org",
+      "n_pos_train": 328,
+      "n_pos_test": 452,
+      "auprc_v14": 0.7405,
+      "auprc_ci_lo": 0.6794,
+      "auprc_ci_hi": 0.8414,
+      "auprc_v10b": 0.7426,
+      "auprc_xgb": 0.7765,
+      "delta_v10b": -0.0021,
+      "delta_xgb": -0.036,
+      "bias_v14": 0.0357,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0041,
+      "best_lam": 0.05,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.7498
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.6958
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7445
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.7209
+        }
+      ],
+      "elapsed_s": 260.7
+    },
+    {
+      "go": "GO:0006941",
+      "go_name": "Muscle contraction",
+      "n_pos_train": 265,
+      "n_pos_test": 253,
+      "auprc_v14": 0.6536,
+      "auprc_ci_lo": 0.5544,
+      "auprc_ci_hi": 0.8285,
+      "auprc_v10b": 0.5968,
+      "auprc_xgb": 0.6816,
+      "delta_v10b": 0.0568,
+      "delta_xgb": -0.028,
+      "bias_v14": 0.0449,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0043,
+      "best_lam": 0.3,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.6542
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.6274
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.6671
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6626
+        }
+      ],
+      "elapsed_s": 240.4
+    },
+    {
+      "go": "GO:0006914",
+      "go_name": "Autophagy",
+      "n_pos_train": 298,
+      "n_pos_test": 411,
+      "auprc_v14": 0.6201,
+      "auprc_ci_lo": 0.6092,
+      "auprc_ci_hi": 0.771,
+      "auprc_v10b": 0.6397,
+      "auprc_xgb": 0.7037,
+      "delta_v10b": -0.0196,
+      "delta_xgb": -0.0836,
+      "bias_v14": 0.0897,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0041,
+      "best_lam": 0.5,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.6341
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.5906
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.6552
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6825
+        }
+      ],
+      "elapsed_s": 236.2
+    },
+    {
+      "go": "GO:0043161",
+      "go_name": "Proteasome-UPS",
+      "n_pos_train": 468,
+      "n_pos_test": 804,
+      "auprc_v14": 0.7472,
+      "auprc_ci_lo": 0.6937,
+      "auprc_ci_hi": 0.8118,
+      "auprc_v10b": 0.7174,
+      "auprc_xgb": 0.6943,
+      "delta_v10b": 0.0298,
+      "delta_xgb": 0.0529,
+      "bias_v14": 0.0753,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0043,
+      "best_lam": 0.3,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.727
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.7172
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7686
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.7424
+        }
+      ],
+      "elapsed_s": 301.3
+    },
+    {
+      "go": "GO:0007519",
+      "go_name": "Skeletal muscle dev",
+      "n_pos_train": 85,
+      "n_pos_test": 129,
+      "auprc_v14": 0.7386,
+      "auprc_ci_lo": 0.5774,
+      "auprc_ci_hi": 0.877,
+      "auprc_v10b": 0.725,
+      "auprc_xgb": 0.7341,
+      "delta_v10b": 0.0136,
+      "delta_xgb": 0.0045,
+      "bias_v14": 0.0506,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0042,
+      "best_lam": 0.3,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.664
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.7473
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7634
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6899
+        }
+      ],
+      "elapsed_s": 270.3
+    },
+    {
+      "go": "GO:0042692",
+      "go_name": "Muscle cell diff",
+      "n_pos_train": 319,
+      "n_pos_test": 423,
+      "auprc_v14": 0.6869,
+      "auprc_ci_lo": 0.5682,
+      "auprc_ci_hi": 0.7693,
+      "auprc_v10b": 0.6526,
+      "auprc_xgb": 0.6918,
+      "delta_v10b": 0.0343,
+      "delta_xgb": -0.0049,
+      "bias_v14": 0.0639,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.004,
+      "best_lam": 0.5,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.6504
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.662
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.6727
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6892
+        }
+      ],
+      "elapsed_s": 320.5
+    },
+    {
+      "go": "GO:0055074",
+      "go_name": "Ca2+ homeostasis",
+      "n_pos_train": 643,
+      "n_pos_test": 606,
+      "auprc_v14": 0.7189,
+      "auprc_ci_lo": 0.6821,
+      "auprc_ci_hi": 0.8178,
+      "auprc_v10b": 0.7255,
+      "auprc_xgb": 0.7384,
+      "delta_v10b": -0.0066,
+      "delta_xgb": -0.0195,
+      "bias_v14": 0.0388,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0043,
+      "best_lam": 0.3,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.7328
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.7196
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7482
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.7348
+        }
+      ],
+      "elapsed_s": 397.6
+    },
+    {
+      "go": "GO:0007005",
+      "go_name": "Mitochondrion org",
+      "n_pos_train": 672,
+      "n_pos_test": 954,
+      "auprc_v14": 0.6832,
+      "auprc_ci_lo": 0.6306,
+      "auprc_ci_hi": 0.752,
+      "auprc_v10b": 0.6624,
+      "auprc_xgb": 0.6975,
+      "delta_v10b": 0.0208,
+      "delta_xgb": -0.0143,
+      "bias_v14": 0.0676,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0041,
+      "best_lam": 0.1,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.671
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.687
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.6838
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6805
+        }
+      ],
+      "elapsed_s": 298.7
+    },
+    {
+      "go": "GO:0007517",
+      "go_name": "Muscle organ dev",
+      "n_pos_train": 357,
+      "n_pos_test": 471,
+      "auprc_v14": 0.7078,
+      "auprc_ci_lo": 0.609,
+      "auprc_ci_hi": 0.775,
+      "auprc_v10b": 0.7017,
+      "auprc_xgb": 0.7428,
+      "delta_v10b": 0.0061,
+      "delta_xgb": -0.035,
+      "bias_v14": 0.0493,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0043,
+      "best_lam": 0.1,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.6976
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.7097
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7039
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6716
+        }
+      ],
+      "elapsed_s": 277.1
+    },
+    {
+      "go": "GO:0032006",
+      "go_name": "TOR signaling",
+      "n_pos_train": 147,
+      "n_pos_test": 239,
+      "auprc_v14": 0.5868,
+      "auprc_ci_lo": 0.4421,
+      "auprc_ci_hi": 0.7858,
+      "auprc_v10b": 0.6023,
+      "auprc_xgb": 0.6479,
+      "delta_v10b": -0.0155,
+      "delta_xgb": -0.0611,
+      "bias_v14": 0.0379,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0044,
+      "best_lam": 0.5,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.5959
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.5781
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.5978
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.6045
+        }
+      ],
+      "elapsed_s": 268.1
+    },
+    {
+      "go": "GO:0003774",
+      "go_name": "Motor activity",
+      "n_pos_train": 185,
+      "n_pos_test": 164,
+      "auprc_v14": 0.8365,
+      "auprc_ci_lo": 0.7489,
+      "auprc_ci_hi": 0.9252,
+      "auprc_v10b": 0.8128,
+      "auprc_xgb": 0.8412,
+      "delta_v10b": 0.0237,
+      "delta_xgb": -0.0047,
+      "bias_v14": 0.0395,
+      "bias_interp": "GENE-LEVEL",
+      "dom_auprc": 0.0043,
+      "best_lam": 0.5,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.8102
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.8287
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.8107
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.8307
+        }
+      ],
+      "elapsed_s": 215.7
+    },
+    {
+      "go": "GO:0006096",
+      "go_name": "Glycolysis",
+      "n_pos_train": 65,
+      "n_pos_test": 76,
+      "auprc_v14": 0.7538,
+      "auprc_ci_lo": 0.6752,
+      "auprc_ci_hi": 0.937,
+      "auprc_v10b": 0.6712,
+      "auprc_xgb": 0.8251,
+      "delta_v10b": 0.0826,
+      "delta_xgb": -0.0713,
+      "bias_v14": 0.1855,
+      "bias_interp": "ISOFORM-SPEC",
+      "dom_auprc": 0.0049,
+      "best_lam": 0.05,
+      "lam_sweep": [
+        {
+          "lam": 0.05,
+          "go_auprc": 0.8024
+        },
+        {
+          "lam": 0.1,
+          "go_auprc": 0.7989
+        },
+        {
+          "lam": 0.3,
+          "go_auprc": 0.7507
+        },
+        {
+          "lam": 0.5,
+          "go_auprc": 0.7902
+        }
+      ],
+      "elapsed_s": 125.5
+    }
+  ],
+  "summary": {
+    "macro_auprc_v14": 0.7136,
+    "macro_auprc_v10b": 0.6935,
+    "macro_auprc_xgb": 0.7384,
+    "macro_bias": 0.0636,
+    "macro_dom_auprc": 0.0043,
+    "n_terms": 13,
+    "v14_beats_xgb": 2,
+    "v14_beats_v10b": 9
+  },
+  "timestamp": "20260519_0348",
+  "total_elapsed_s": 5580.7
+}

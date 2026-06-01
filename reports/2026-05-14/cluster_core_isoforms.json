@@ -1,0 +1,231 @@
+{
+  "GO:0006096": {
+    "model": "D256",
+    "type": "A",
+    "auprc": 0.8331001704670161,
+    "n_positives": 76,
+    "core": [
+      {
+        "iso": "ENST00000381125.9",
+        "gene": "ENSG00000067057.19",
+        "sym": "PFKP",
+        "score": 0.020789923,
+        "dist": 0.3178848624229431,
+        "lit_name": "Phosphofructokinase (Platelet isoform)",
+        "lit_func": "Rate-limiting glycolytic enzyme; platelet/muscle isoform of PFK",
+        "lit_tissue": "Ubiquitous but muscle-enriched"
+      },
+      {
+        "iso": "ENST00000460521.5",
+        "gene": "ENSG00000141959.17",
+        "sym": "PFKL",
+        "score": 0.021365177,
+        "dist": 0.3271881639957428,
+        "lit_name": "Phosphofructokinase (Liver isoform)",
+        "lit_func": "Alternative PFK isoform; co-expressed with PFKM in muscle",
+        "lit_tissue": "Liver/muscle"
+      },
+      {
+        "iso": "ENST00000319622.10",
+        "gene": "ENSG00000067225.21",
+        "sym": "PKM",
+        "score": 0.019858481,
+        "dist": 0.3563937246799469,
+        "lit_name": "Pyruvate Kinase M (PKM2 isoform)",
+        "lit_func": "PKM2: glycolytic isoform; expressed in proliferating/muscle cells",
+        "lit_tissue": "Ubiquitous (isoform-specific)"
+      },
+      {
+        "iso": "ENST00000549941.7",
+        "gene": "ENSG00000152556.17",
+        "sym": "PFKM",
+        "score": 0.021362435,
+        "dist": 0.36920392513275146
+      }
+    ]
+  },
+  "GO:0003774": {
+    "model": "D256",
+    "type": "A",
+    "auprc": 0.5981744994363608,
+    "n_positives": 164,
+    "core": [
+      {
+        "iso": "ENST00000315264.7",
+        "gene": "ENSG00000066735.16",
+        "sym": "KIF26A",
+        "score": 0.05160877,
+        "dist": 0.3829917907714844,
+        "lit_name": "Kinesin-4 Family Member 26A",
+        "lit_func": "Microtubule-based motor; enteric nervous system / kidney",
+        "lit_tissue": "Neural/renal"
+      },
+      {
+        "iso": "ENST00000361418.10",
+        "gene": "ENSG00000139116.19",
+        "sym": "KIF21A",
+        "score": 0.046465866,
+        "dist": 0.3850460648536682,
+        "lit_name": "Kinesin-4 Family Member 21A",
+        "lit_func": "Anterograde kinesin; axon growth cone function; microtubule regulation",
+        "lit_tissue": "Neural/broad"
+      },
+      {
+        "iso": "ENST00000513610.6",
+        "gene": "ENSG00000145555.15",
+        "sym": "MYO10",
+        "score": 0.04189283,
+        "dist": 0.38507509231567383,
+        "lit_name": "Myosin-X (Unconventional)",
+        "lit_func": "Filopodia motor; links integrins to actin; broad expression",
+        "lit_tissue": "Broad/proliferating"
+      },
+      {
+        "iso": "ENST00000264712.8",
+        "gene": "ENSG00000084731.15",
+        "sym": "KIF3C",
+        "score": 0.044851825,
+        "dist": 0.39357423782348633
+      },
+      {
+        "iso": "ENST00000355349.4",
+        "gene": "ENSG00000092054.14",
+        "sym": "MYH7",
+        "score": 0.041020285,
+        "dist": 0.3939872980117798
+      },
+      {
+        "iso": "ENST00000397183.6",
+        "gene": "ENSG00000125414.19",
+        "sym": "MYH2",
+        "score": 0.04101449,
+        "dist": 0.39856696128845215
+      },
+      {
+        "iso": "ENST00000339514.8",
+        "gene": "ENSG00000128641.19",
+        "sym": "MYO1B",
+        "score": 0.03884974,
+        "dist": 0.4017198085784912
+      },
+      {
+        "iso": "ENST00000318217.10",
+        "gene": "ENSG00000176658.17",
+        "sym": "MYO1D",
+        "score": 0.03825484,
+        "dist": 0.4068802297115326
+      }
+    ]
+  },
+  "GO:0007204": {
+    "model": "P3-512",
+    "type": "B",
+    "auprc": 0.40545291035827513,
+    "n_positives": 310,
+    "core": [
+      {
+        "iso": "ENST00000319211.5",
+        "gene": "ENSG00000181104.7",
+        "sym": "F2R",
+        "score": 0.23025076,
+        "dist": 0.7158358693122864,
+        "lit_name": "PAR1 (Thrombin Receptor)",
+        "lit_func": "GPCR triggering Ca²⁺ in platelets & vascular endothelium; NOT skeletal muscle",
+        "lit_tissue": "Platelet/vascular ⚠"
+      },
+      {
+        "iso": "ENST00000345941.2",
+        "gene": "ENSG00000139679.16",
+        "sym": "LPAR6",
+        "score": 0.19419356,
+        "dist": 0.718054473400116,
+        "lit_name": "LPA Receptor 6 (GPCR)",
+        "lit_func": "Lysophospholipid GPCR; Ca²⁺ via Gαq in skin/kidney; NOT muscle",
+        "lit_tissue": "Skin/kidney ⚠"
+      },
+      {
+        "iso": "ENST00000541347.5",
+        "gene": "ENSG00000168329.14",
+        "sym": "CX3CR1",
+        "score": 0.24130079,
+        "dist": 0.7186379432678223,
+        "lit_name": "Fractalkine Receptor (GPCR)",
+        "lit_func": "Chemokine receptor on microglia/NK; Ca²⁺ in immune cells; NOT muscle",
+        "lit_tissue": "Immune/CNS ⚠"
+      },
+      {
+        "iso": "ENST00000606794.2",
+        "gene": "ENSG00000134817.12",
+        "sym": "APLNR",
+        "score": 0.21889171,
+        "dist": 0.7210249304771423
+      },
+      {
+        "iso": "ENST00000550402.6",
+        "gene": "ENSG00000174600.14",
+        "sym": "CMKLR1",
+        "score": 0.20484397,
+        "dist": 0.7213305234909058
+      },
+      {
+        "iso": "ENST00000698238.1",
+        "gene": "ENSG00000144935.17",
+        "sym": "TRPC1",
+        "score": 0.17597151,
+        "dist": 0.7225702404975891
+      }
+    ]
+  },
+  "GO:0030017": {
+    "model": "P3-512",
+    "type": "B",
+    "auprc": 0.3553177716667641,
+    "n_positives": 452,
+    "core": [
+      {
+        "iso": "ENST00000373827.6",
+        "gene": "ENSG00000151150.22",
+        "sym": "ANK3",
+        "score": 0.027922977,
+        "dist": 0.6885485053062439,
+        "lit_name": "Ankyrin-3 (Giant isoform)",
+        "lit_func": "Sarcolemmal scaffold; anchors voltage-gated Na⁺ channels; giant muscle-specific isoform",
+        "lit_tissue": "Muscle/CNS"
+      },
+      {
+        "iso": "ENST00000684763.1",
+        "gene": "ENSG00000077522.15",
+        "sym": "ACTN2",
+        "score": 0.029601691,
+        "dist": 0.6909726858139038,
+        "lit_name": "α-Actinin-2 (Z-disc)",
+        "lit_func": "Z-disc cross-linker; cardiac/slow-twitch sarcomere; direct FTI=0.48 evidence",
+        "lit_tissue": "Cardiac/slow muscle"
+      },
+      {
+        "iso": "ENST00000634903.1",
+        "gene": "ENSG00000077157.23",
+        "sym": "PPP1R12B",
+        "score": 0.028448617,
+        "dist": 0.6932900547981262,
+        "lit_name": "Myosin Phosphatase Target Subunit 2",
+        "lit_func": "Regulates myosin light chain phosphorylation in smooth/cardiac muscle",
+        "lit_tissue": "Smooth/cardiac muscle"
+      },
+      {
+        "iso": "ENST00000263066.11",
+        "gene": "ENSG00000122367.21",
+        "sym": "LDB3",
+        "score": 0.03196252,
+        "dist": 0.6938314437866211
+      },
+      {
+        "iso": "ENST00000687705.1",
+        "gene": "ENSG00000138347.17",
+        "sym": "MYPN",
+        "score": 0.024888895,
+        "dist": 0.6954483389854431
+      }
+    ]
+  }
+}

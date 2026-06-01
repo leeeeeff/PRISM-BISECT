@@ -1,0 +1,171 @@
+{
+  "n_bambu_expressed": 1225,
+  "n_bambu_dominant": 551,
+  "n_test_pairs": 1948,
+  "n_top_switches": 10,
+  "prospective_auroc": {
+    "esm2": 0.6623408492893037,
+    "ds": 0.5811334834202507,
+    "full": 0.644929394765534
+  },
+  "bootstrap": {
+    "ds": {
+      "mean": 0.5808678403592571,
+      "ci95": [
+        0.5574283467605673,
+        0.6038336506597344
+      ],
+      "p": 0.0
+    },
+    "esm2": {
+      "mean": 0.6616597262736308,
+      "ci95": [
+        0.6407312030565648,
+        0.6863942216362029
+      ],
+      "p": 0.0
+    },
+    "full": {
+      "mean": 0.6442410050372454,
+      "ci95": [
+        0.6223847747979067,
+        0.666526317516365
+      ]
+    }
+  },
+  "top_switches": [
+    {
+      "iso": "BambuTx3042",
+      "gene": "ENSG00000205531",
+      "ratio_N": 0.6900213911948222,
+      "ratio_D": 0.14706421304827075,
+      "switch_score": 0.5429571781465514,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx280",
+      "gene": "ENSG00000055813",
+      "ratio_N": 0.9185760557728047,
+      "ratio_D": 0.43173946457364487,
+      "switch_score": 0.4868365911991598,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx1924",
+      "gene": "ENSG00000269825",
+      "ratio_N": 0.7951332931170295,
+      "ratio_D": 0.37931246760766923,
+      "switch_score": 0.4158208255093603,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx918",
+      "gene": "ENSG00000198074",
+      "ratio_N": 0.6361325253864831,
+      "ratio_D": 0.2378770275503446,
+      "switch_score": 0.39825549783613856,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx1555",
+      "gene": "ENSG00000103710",
+      "ratio_N": 0.813892835176501,
+      "ratio_D": 0.44255279436324035,
+      "switch_score": 0.37134004081326066,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx85",
+      "gene": "ENSG00000184588",
+      "ratio_N": 0.22250120495845555,
+      "ratio_D": 0.5742369862126163,
+      "switch_score": 0.3517357812541608,
+      "direction": "UP"
+    },
+    {
+      "iso": "BambuTx2968",
+      "gene": "ENSG00000233006",
+      "ratio_N": 0.5922129090658154,
+      "ratio_D": 0.2832524065521924,
+      "switch_score": 0.30896050251362295,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx2618",
+      "gene": "ENSG00000095585",
+      "ratio_N": 0.19671270890527065,
+      "ratio_D": 0.4932808009199731,
+      "switch_score": 0.29656809201470247,
+      "direction": "UP"
+    },
+    {
+      "iso": "BambuTx1114",
+      "gene": "ENSG00000148481",
+      "ratio_N": 0.7349598227083775,
+      "ratio_D": 0.4445797515283103,
+      "switch_score": 0.29038007118006715,
+      "direction": "DOWN"
+    },
+    {
+      "iso": "BambuTx2043",
+      "gene": "ENSG00000286070",
+      "ratio_N": 0.7632133026717376,
+      "ratio_D": 0.4782169385601407,
+      "switch_score": 0.2849963641115969,
+      "direction": "DOWN"
+    }
+  ],
+  "bambu_high_expression": [
+    {
+      "iso": "BambuTx1002",
+      "gene": "ENSG00000169427",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1006",
+      "gene": "ENSG00000255182",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1012",
+      "gene": "ENSG00000289552",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1061",
+      "gene": "BambuGene48891",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1062",
+      "gene": "BambuGene48907",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1102",
+      "gene": "ENSG00000185736",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1160",
+      "gene": "ENSG00000235100",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1173",
+      "gene": "BambuGene51495",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1217",
+      "gene": "ENSG00000298639",
+      "ratio": 1.0
+    },
+    {
+      "iso": "BambuTx1257",
+      "gene": "ENSG00000256591",
+      "ratio": 1.0
+    }
+  ],
+  "timestamp": "20260515_1641"
+}

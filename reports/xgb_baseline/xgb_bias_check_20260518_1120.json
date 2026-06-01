@@ -1,0 +1,388 @@
+{
+  "results": {
+    "GO:0007204": {
+      "go_name": "Ca2+ signaling",
+      "bias_xgb": 0.0155,
+      "bias_lr": 0.0747,
+      "xgb_auprc": 0.8249,
+      "xgb_ci": [
+        0.7484,
+        0.8983
+      ],
+      "lr_auprc": 0.4147,
+      "lr_ci": [
+        0.3203,
+        0.5287
+      ],
+      "v10b_auprc": 0.7653,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.06941300630569458,
+        "neg_within_std": 0.0006324427668005228,
+        "n_pos_genes": 78,
+        "n_neg_genes": 8491
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.04451505776938943,
+        "neg_within_std": 0.010260607422445566,
+        "n_pos_genes": 78,
+        "n_neg_genes": 8491
+      }
+    },
+    "GO:0030017": {
+      "go_name": "Sarcomere org",
+      "bias_xgb": 0.023,
+      "bias_lr": 0.0618,
+      "xgb_auprc": 0.7765,
+      "xgb_ci": [
+        0.6952,
+        0.8491
+      ],
+      "lr_auprc": 0.5635,
+      "lr_ci": [
+        0.4539,
+        0.6615
+      ],
+      "v10b_auprc": 0.7426,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.16826027631759644,
+        "neg_within_std": 0.00044809127575717866,
+        "n_pos_genes": 83,
+        "n_neg_genes": 8486
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.13635338239866604,
+        "neg_within_std": 0.0068125541099673965,
+        "n_pos_genes": 83,
+        "n_neg_genes": 8486
+      }
+    },
+    "GO:0006941": {
+      "go_name": "Muscle contraction",
+      "bias_xgb": 0.0163,
+      "bias_lr": 0.0665,
+      "xgb_auprc": 0.6816,
+      "xgb_ci": [
+        0.5159,
+        0.8023
+      ],
+      "lr_auprc": 0.3102,
+      "lr_ci": [
+        0.1986,
+        0.4351
+      ],
+      "v10b_auprc": 0.5968,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.18327830731868744,
+        "neg_within_std": 0.00023058736405801028,
+        "n_pos_genes": 39,
+        "n_neg_genes": 8530
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.1386282772917287,
+        "neg_within_std": 0.006890167441064853,
+        "n_pos_genes": 39,
+        "n_neg_genes": 8530
+      }
+    },
+    "GO:0006914": {
+      "go_name": "Autophagy",
+      "bias_xgb": 0.0258,
+      "bias_lr": 0.0948,
+      "xgb_auprc": 0.7037,
+      "xgb_ci": [
+        0.622,
+        0.7834
+      ],
+      "lr_auprc": 0.2853,
+      "lr_ci": [
+        0.2133,
+        0.3782
+      ],
+      "v10b_auprc": 0.6397,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.10256291925907135,
+        "neg_within_std": 0.00092394306557253,
+        "n_pos_genes": 106,
+        "n_neg_genes": 8463
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.06549105971126176,
+        "neg_within_std": 0.01536531047416583,
+        "n_pos_genes": 106,
+        "n_neg_genes": 8463
+      }
+    },
+    "GO:0043161": {
+      "go_name": "Proteasome-UPS",
+      "bias_xgb": 0.0452,
+      "bias_lr": 0.1098,
+      "xgb_auprc": 0.6943,
+      "xgb_ci": [
+        0.6345,
+        0.7568
+      ],
+      "lr_auprc": 0.3615,
+      "lr_ci": [
+        0.2983,
+        0.4447
+      ],
+      "v10b_auprc": 0.7174,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.13959050178527832,
+        "neg_within_std": 0.002200186951085925,
+        "n_pos_genes": 176,
+        "n_neg_genes": 8393
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.1122962583425172,
+        "neg_within_std": 0.021897950029254085,
+        "n_pos_genes": 176,
+        "n_neg_genes": 8393
+      }
+    },
+    "GO:0007519": {
+      "go_name": "Skeletal muscle dev",
+      "bias_xgb": 0.0125,
+      "bias_lr": 0.0491,
+      "xgb_auprc": 0.7341,
+      "xgb_ci": [
+        0.566,
+        0.8594
+      ],
+      "lr_auprc": 0.5874,
+      "lr_ci": [
+        0.3956,
+        0.7512
+      ],
+      "v10b_auprc": 0.725,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.16362221539020538,
+        "neg_within_std": 0.00013249607582110912,
+        "n_pos_genes": 26,
+        "n_neg_genes": 8543
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.096314747277951,
+        "neg_within_std": 0.0033310915910620418,
+        "n_pos_genes": 26,
+        "n_neg_genes": 8543
+      }
+    },
+    "GO:0042692": {
+      "go_name": "Muscle cell diff",
+      "bias_xgb": 0.0211,
+      "bias_lr": 0.1046,
+      "xgb_auprc": 0.6918,
+      "xgb_ci": [
+        0.5998,
+        0.7788
+      ],
+      "lr_auprc": 0.2318,
+      "lr_ci": [
+        0.1609,
+        0.3204
+      ],
+      "v10b_auprc": 0.6526,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.14619280397891998,
+        "neg_within_std": 0.0005481239059008658,
+        "n_pos_genes": 70,
+        "n_neg_genes": 8499
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.11750676730205536,
+        "neg_within_std": 0.01801371662198662,
+        "n_pos_genes": 70,
+        "n_neg_genes": 8499
+      }
+    },
+    "GO:0055074": {
+      "go_name": "Ca2+ homeostasis",
+      "bias_xgb": 0.0308,
+      "bias_lr": 0.1168,
+      "xgb_auprc": 0.7384,
+      "xgb_ci": [
+        0.6617,
+        0.8075
+      ],
+      "lr_auprc": 0.2506,
+      "lr_ci": [
+        0.1846,
+        0.3185
+      ],
+      "v10b_auprc": 0.7255,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.0996285080909729,
+        "neg_within_std": 0.0017087102169170976,
+        "n_pos_genes": 132,
+        "n_neg_genes": 8437
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.09028085886883466,
+        "neg_within_std": 0.0245876942957472,
+        "n_pos_genes": 132,
+        "n_neg_genes": 8437
+      }
+    },
+    "GO:0007005": {
+      "go_name": "Mitochondrion org",
+      "bias_xgb": 0.0685,
+      "bias_lr": 0.16,
+      "xgb_auprc": 0.6975,
+      "xgb_ci": [
+        0.6374,
+        0.7516
+      ],
+      "lr_auprc": 0.2384,
+      "lr_ci": [
+        0.1865,
+        0.2985
+      ],
+      "v10b_auprc": 0.6624,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.1395144909620285,
+        "neg_within_std": 0.004710393026471138,
+        "n_pos_genes": 222,
+        "n_neg_genes": 8347
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.10554002733473868,
+        "neg_within_std": 0.04045914819971174,
+        "n_pos_genes": 222,
+        "n_neg_genes": 8347
+      }
+    },
+    "GO:0007517": {
+      "go_name": "Muscle organ dev",
+      "bias_xgb": 0.0299,
+      "bias_lr": 0.0966,
+      "xgb_auprc": 0.7428,
+      "xgb_ci": [
+        0.664,
+        0.8042
+      ],
+      "lr_auprc": 0.2368,
+      "lr_ci": [
+        0.1729,
+        0.3145
+      ],
+      "v10b_auprc": 0.7017,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.16009081900119781,
+        "neg_within_std": 0.0009024411556310952,
+        "n_pos_genes": 94,
+        "n_neg_genes": 8475
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.13925139090114244,
+        "neg_within_std": 0.016140360167645498,
+        "n_pos_genes": 94,
+        "n_neg_genes": 8475
+      }
+    },
+    "GO:0032006": {
+      "go_name": "TOR signaling",
+      "bias_xgb": 0.0182,
+      "bias_lr": 0.0542,
+      "xgb_auprc": 0.6479,
+      "xgb_ci": [
+        0.491,
+        0.8056
+      ],
+      "lr_auprc": 0.5103,
+      "lr_ci": [
+        0.3792,
+        0.656
+      ],
+      "v10b_auprc": 0.6023,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.13419117033481598,
+        "neg_within_std": 0.0003162733046337962,
+        "n_pos_genes": 59,
+        "n_neg_genes": 8510
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.08585991184875531,
+        "neg_within_std": 0.00500526066511707,
+        "n_pos_genes": 59,
+        "n_neg_genes": 8510
+      }
+    },
+    "GO:0003774": {
+      "go_name": "Motor activity",
+      "bias_xgb": 0.013,
+      "bias_lr": 0.0325,
+      "xgb_auprc": 0.8412,
+      "xgb_ci": [
+        0.7435,
+        0.9244
+      ],
+      "lr_auprc": 0.8253,
+      "lr_ci": [
+        0.7224,
+        0.9068
+      ],
+      "v10b_auprc": 0.8128,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.15366114675998688,
+        "neg_within_std": 0.00014834824833087623,
+        "n_pos_genes": 35,
+        "n_neg_genes": 8534
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.10577903336053719,
+        "neg_within_std": 0.0020204543551080507,
+        "n_pos_genes": 35,
+        "n_neg_genes": 8534
+      }
+    },
+    "GO:0006096": {
+      "go_name": "Glycolysis",
+      "bias_xgb": 0.0132,
+      "bias_lr": 0.0173,
+      "xgb_auprc": 0.8251,
+      "xgb_ci": [
+        0.6671,
+        0.9337
+      ],
+      "lr_auprc": 0.6949,
+      "lr_ci": [
+        0.4649,
+        0.8905
+      ],
+      "v10b_auprc": 0.6712,
+      "v10b_in_xgb_ci": true,
+      "xgb_within_gene": {
+        "pos_within_std": 0.11941736191511154,
+        "neg_within_std": 0.00033858648384921253,
+        "n_pos_genes": 18,
+        "n_neg_genes": 8551
+      },
+      "lr_within_gene": {
+        "pos_within_std": 0.044959266118955316,
+        "neg_within_std": 0.0008288484972882506,
+        "n_pos_genes": 18,
+        "n_neg_genes": 8551
+      }
+    }
+  },
+  "timestamp": "20260518_1120",
+  "summary": {
+    "mean_bias_xgb": 0.0256,
+    "mean_bias_lr": 0.0799,
+    "v10b_in_xgb_ci_count": 13,
+    "n_go_terms": 13
+  }
+}

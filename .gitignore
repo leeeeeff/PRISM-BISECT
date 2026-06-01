@@ -64,11 +64,10 @@ Rplots.pdf
 logs_isoform/
 nohup.out
 
-# --- Claude / local config ---
+# --- Claude / local config (never commit) ---
+CLAUDE.md
 CLAUDE.local.md
-.claude/settings.local.json
-.claude/scheduled_tasks.lock
-.claude/projects/
+.claude/
 cloudflared
 tunnel.log
 web/

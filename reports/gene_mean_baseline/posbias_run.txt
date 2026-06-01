@@ -1,0 +1,85 @@
+  Using GPU: PhysicalDevice(name='/physical_device:GPU:1', device_type='GPU')
+=================================================================
+  pos_bias Negative Controls
+=================================================================
+Loading data...
+
+── GO:0006941 (Muscle contraction) ──
+  [NC1] gene-mean pos_bias = 0.000  (trivially 0: within-gene std=0)
+  [NC2] random pos_bias    = 0.915 ± 0.054
+  [NC3] LR ... pos_bias=1.379  (AUPRC=0.310)
+  [NC4] Shuffled seed=42 ... pos_bias=0.298
+  [NC4] Shuffled seed=123 ... pos_bias=0.156
+  [NC4] Shuffled seed=456 ... pos_bias=0.281
+
+  SUMMARY GO:0006941:
+    v10-B (known):   1.902
+    gene-mean [NC1]: 0.000  ← trivially 0
+    random    [NC2]: 0.915 ± 0.054  ← null level
+    LR        [NC3]: 1.379
+    shuffled  [NC4]: 0.245 ± 0.063  ← no-signal level
+
+── GO:0007005 (Mitochondrion org) ──
+  [NC1] gene-mean pos_bias = 0.000  (trivially 0: within-gene std=0)
+  [NC2] random pos_bias    = 0.894 ± 0.028
+  [NC3] LR ... pos_bias=0.485  (AUPRC=0.238)
+  [NC4] Shuffled seed=42 ... pos_bias=0.319
+  [NC4] Shuffled seed=123 ... pos_bias=0.270
+  [NC4] Shuffled seed=456 ... pos_bias=0.256
+
+  SUMMARY GO:0007005:
+    v10-B (known):   0.879
+    gene-mean [NC1]: 0.000  ← trivially 0
+    random    [NC2]: 0.894 ± 0.028  ← null level
+    LR        [NC3]: 0.485
+    shuffled  [NC4]: 0.282 ± 0.027  ← no-signal level
+
+── GO:0006914 (Autophagy) ──
+  [NC1] gene-mean pos_bias = 0.000  (trivially 0: within-gene std=0)
+  [NC2] random pos_bias    = 0.884 ± 0.040
+  [NC3] LR ... pos_bias=0.467  (AUPRC=0.285)
+  [NC4] Shuffled seed=42 ... pos_bias=0.235
+  [NC4] Shuffled seed=123 ... pos_bias=0.168
+  [NC4] Shuffled seed=456 ... pos_bias=0.176
+
+  SUMMARY GO:0006914:
+    v10-B (known):   0.724
+    gene-mean [NC1]: 0.000  ← trivially 0
+    random    [NC2]: 0.884 ± 0.040  ← null level
+    LR        [NC3]: 0.467
+    shuffled  [NC4]: 0.193 ± 0.030  ← no-signal level
+
+===========================================================================
+GO              v10-B  gene-mean       LR     random     shuffled
+---------------------------------------------------------------------------
+GO:0006941      1.902      0.000    1.379  0.915±0.05  0.245±0.06
+GO:0007005      0.879      0.000    0.485  0.894±0.03  0.282±0.03
+GO:0006914      0.724      0.000    0.467  0.884±0.04  0.193±0.03
+===========================================================================
+
+Interpretation:
+  GO:0006941 (Muscle contraction): v10B=1.902  shuf=0.245  rand=0.915  LR=1.379
+    → ✅ v10-B > shuffled AND random → genuine learned signal
+  GO:0007005 (Mitochondrion org): v10B=0.879  shuf=0.282  rand=0.894  LR=0.485
+    → ❌ v10-B ≤ null baselines → pos_bias claim fails
+  GO:0006914 (Autophagy): v10B=0.724  shuf=0.193  rand=0.884  LR=0.467
+    → ❌ v10-B ≤ null baselines → pos_bias claim fails
+
+Saved: /home/welcome1/sw1686/DIFFUSE/reports/gene_mean_baseline/posbias_controls_20260517_1433.json
+2026-05-17 14:27:41.690260: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-17 14:27:41.933707: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-05-17 14:27:47.204959: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2026-05-17 14:27:47.205611: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2026-05-17 14:27:47.205637: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2026-05-17 14:28:04.259944: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-17 14:28:04.732678: I tensorflow/core/common_runtime/gpu/gpu_process_state.cc:222] Using CUDA malloc Async allocator for GPU: 1
+2026-05-17 14:28:04.732804: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1613] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21184 MB memory:  -> device: 1, name: NVIDIA GeForce RTX 4090, pci bus id: 0000:ca:00.0, compute capability: 8.9
+2026-05-17 14:28:06.741390: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:630] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+2026-05-17 14:28:06.935267: I tensorflow/compiler/xla/service/service.cc:173] XLA service 0x22d55c30 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2026-05-17 14:28:06.935329: I tensorflow/compiler/xla/service/service.cc:181]   StreamExecutor device (0): NVIDIA GeForce RTX 4090, Compute Capability 8.9
+2026-05-17 14:28:06.949855: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:268] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2026-05-17 14:28:07.034510: W tensorflow/compiler/xla/stream_executor/gpu/asm_compiler.cc:234] Falling back to the CUDA driver for PTX compilation; ptxas does not support CC 8.9
+2026-05-17 14:28:07.034532: W tensorflow/compiler/xla/stream_executor/gpu/asm_compiler.cc:237] Used ptxas at ptxas
+2026-05-17 14:28:07.035110: I tensorflow/compiler/jit/xla_compilation_cache.cc:477] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.

@@ -1,0 +1,402 @@
+{
+  "TPM1": {
+    "ensg": "ENSG00000140416",
+    "n_isos_testset": 13,
+    "n_isos_hpa": 39,
+    "v15_score_ratio": 40.6,
+    "v15_dtu_top": 0.8939,
+    "v15_concordance": true,
+    "biology": "Tropomyosin-1 (alpha-TM). Regulates actin filament dynamics in sarcomere.",
+    "known_switch": "TPM1\u03b1 (striated muscle, exon 2a/9a) vs non-muscle isoforms (exon 2b/9b/9c). Only \u03b1-isoform integrates into sarcomere Z-disc (Pittenger 1994, J Cell Biol).",
+    "tissue_breakdown": [
+      {
+        "tissue": "skeletal muscle",
+        "dom_enst": "ENST00000403994",
+        "dom_tpm": 3895.012,
+        "dom_frac": 0.910707284662953,
+        "top_enst_tpm": 3895.012,
+        "model_concordant": true
+      },
+      {
+        "tissue": "heart muscle",
+        "dom_enst": "ENST00000403994",
+        "dom_tpm": 5342.8125,
+        "dom_frac": 0.9156616857011614,
+        "top_enst_tpm": 5342.8125,
+        "model_concordant": true
+      },
+      {
+        "tissue": "smooth muscle",
+        "dom_enst": "ENST00000267996",
+        "dom_tpm": 2011.8467,
+        "dom_frac": 0.7563376393599994,
+        "top_enst_tpm": 28.6996,
+        "model_concordant": false
+      },
+      {
+        "tissue": "liver",
+        "dom_enst": "ENST00000358278",
+        "dom_tpm": 12.6953,
+        "dom_frac": 0.2776925920437277,
+        "top_enst_tpm": 0.573,
+        "model_concordant": false
+      },
+      {
+        "tissue": "kidney",
+        "dom_enst": "ENST00000358278",
+        "dom_tpm": 60.658,
+        "dom_frac": 0.383062835488582,
+        "top_enst_tpm": 2.627,
+        "model_concordant": false
+      },
+      {
+        "tissue": "cerebral cortex",
+        "dom_enst": "ENST00000334895",
+        "dom_tpm": 14.5492,
+        "dom_frac": 0.13622412769503384,
+        "top_enst_tpm": 3.9903,
+        "model_concordant": false
+      },
+      {
+        "tissue": "lung",
+        "dom_enst": "ENST00000267996",
+        "dom_tpm": 66.9839,
+        "dom_frac": 0.3682151729000604,
+        "top_enst_tpm": 4.7797,
+        "model_concordant": false
+      },
+      {
+        "tissue": "adipose tissue",
+        "dom_enst": "ENST00000267996",
+        "dom_tpm": 178.5251,
+        "dom_frac": 0.5665589351060173,
+        "top_enst_tpm": 4.6582,
+        "model_concordant": false
+      },
+      {
+        "tissue": "colon",
+        "dom_enst": "ENST00000267996",
+        "dom_tpm": 418.1055,
+        "dom_frac": 0.6340034585402158,
+        "top_enst_tpm": 6.4693,
+        "model_concordant": false
+      },
+      {
+        "tissue": "testis",
+        "dom_enst": "ENST00000267996",
+        "dom_tpm": 32.3846,
+        "dom_frac": 0.40626395627817885,
+        "top_enst_tpm": 2.4858,
+        "model_concordant": false
+      },
+      {
+        "tissue": "placenta",
+        "dom_enst": "ENST00000358278",
+        "dom_tpm": 157.6598,
+        "dom_frac": 0.42149955219179097,
+        "top_enst_tpm": 6.7828,
+        "model_concordant": false
+      }
+    ]
+  },
+  "TPM2": {
+    "ensg": "ENSG00000198467",
+    "n_isos_testset": 3,
+    "n_isos_hpa": 10,
+    "v15_score_ratio": 5.2,
+    "v15_dtu_top": 0.9318,
+    "v15_concordance": true,
+    "biology": "Tropomyosin-2 (beta-TM). Co-assembles with TPM1 in slow-twitch skeletal muscle.",
+    "known_switch": "Slow-twitch skeletal & cardiac isoform (exon 6b) vs smooth/non-muscle (exon 6a). beta-TM preferentially expressed in type-I (slow) fibers (Bhatt 2021).",
+    "tissue_breakdown": [
+      {
+        "tissue": "skeletal muscle",
+        "dom_enst": "ENST00000645482",
+        "dom_tpm": 12555.02,
+        "dom_frac": 0.9472348692692006,
+        "top_enst_tpm": 12555.02,
+        "model_concordant": true
+      },
+      {
+        "tissue": "heart muscle",
+        "dom_enst": "ENST00000647435",
+        "dom_tpm": 137.637,
+        "dom_frac": 0.33128286815686725,
+        "top_enst_tpm": 129.7727,
+        "model_concordant": false
+      },
+      {
+        "tissue": "smooth muscle",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 2975.2333,
+        "dom_frac": 0.862530418844727,
+        "top_enst_tpm": 0.0,
+        "model_concordant": false
+      },
+      {
+        "tissue": "liver",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 4.6145,
+        "dom_frac": 0.6952479960382016,
+        "top_enst_tpm": 0.0491,
+        "model_concordant": false
+      },
+      {
+        "tissue": "kidney",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 34.6912,
+        "dom_frac": 0.7024700007552463,
+        "top_enst_tpm": 0.0,
+        "model_concordant": false
+      },
+      {
+        "tissue": "cerebral cortex",
+        "dom_enst": "ENST00000645482",
+        "dom_tpm": 13.2076,
+        "dom_frac": 0.2347525319091328,
+        "top_enst_tpm": 13.2076,
+        "model_concordant": true
+      },
+      {
+        "tissue": "lung",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 114.8776,
+        "dom_frac": 0.7230276660740564,
+        "top_enst_tpm": 0.0,
+        "model_concordant": false
+      },
+      {
+        "tissue": "adipose tissue",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 308.2498,
+        "dom_frac": 0.7761430712705613,
+        "top_enst_tpm": 0.0,
+        "model_concordant": false
+      },
+      {
+        "tissue": "colon",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 409.2439,
+        "dom_frac": 0.8794245329667608,
+        "top_enst_tpm": 0.0,
+        "model_concordant": false
+      },
+      {
+        "tissue": "testis",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 57.6409,
+        "dom_frac": 0.5266144445736296,
+        "top_enst_tpm": 1.2699,
+        "model_concordant": false
+      },
+      {
+        "tissue": "placenta",
+        "dom_enst": "ENST00000378292",
+        "dom_tpm": 165.1604,
+        "dom_frac": 0.7423916947232045,
+        "top_enst_tpm": 0.0,
+        "model_concordant": false
+      }
+    ]
+  },
+  "KIF1B": {
+    "ensg": "ENSG00000054523",
+    "n_isos_testset": 10,
+    "n_isos_hpa": 22,
+    "v15_score_ratio": 9.2,
+    "v15_dtu_top": 0.7203,
+    "v15_concordance": true,
+    "biology": "Kinesin-3 motor. Two major isoforms: KIF1B\u03b1 (mitochondria transport) and KIF1B\u03b2 (synaptic vesicle transport, longer).",
+    "known_switch": "KIF1B\u03b2 contains PH domain for vesicle binding; KIF1B\u03b1 lacks this domain and transports mitochondria. Functionally distinct despite shared N-terminal motor (Zhao 2001, Cell).",
+    "tissue_breakdown": [
+      {
+        "tissue": "skeletal muscle",
+        "dom_enst": "ENST00000377093",
+        "dom_tpm": 57.481,
+        "dom_frac": 0.8483892249823493,
+        "top_enst_tpm": 57.481,
+        "model_concordant": true
+      },
+      {
+        "tissue": "heart muscle",
+        "dom_enst": "ENST00000377093",
+        "dom_tpm": 12.7355,
+        "dom_frac": 0.6002186811919908,
+        "top_enst_tpm": 12.7355,
+        "model_concordant": true
+      },
+      {
+        "tissue": "smooth muscle",
+        "dom_enst": "ENST00000377093",
+        "dom_tpm": 12.3388,
+        "dom_frac": 0.47849101673801464,
+        "top_enst_tpm": 12.3388,
+        "model_concordant": true
+      },
+      {
+        "tissue": "liver",
+        "dom_enst": "ENST00000377093",
+        "dom_tpm": 1.9916,
+        "dom_frac": 0.353898642342402,
+        "top_enst_tpm": 1.9916,
+        "model_concordant": true
+      },
+      {
+        "tissue": "kidney",
+        "dom_enst": "ENST00000377086",
+        "dom_tpm": 8.6331,
+        "dom_frac": 0.5071283813253956,
+        "top_enst_tpm": 1.8842,
+        "model_concordant": false
+      },
+      {
+        "tissue": "cerebral cortex",
+        "dom_enst": "ENST00000377086",
+        "dom_tpm": 74.317,
+        "dom_frac": 0.7090667267052916,
+        "top_enst_tpm": 6.4244,
+        "model_concordant": false
+      },
+      {
+        "tissue": "lung",
+        "dom_enst": "ENST00000377086",
+        "dom_tpm": 6.2192,
+        "dom_frac": 0.35422504725387727,
+        "top_enst_tpm": 5.6821,
+        "model_concordant": false
+      },
+      {
+        "tissue": "adipose tissue",
+        "dom_enst": "ENST00000377093",
+        "dom_tpm": 6.0697,
+        "dom_frac": 0.42688750568436273,
+        "top_enst_tpm": 6.0697,
+        "model_concordant": true
+      },
+      {
+        "tissue": "colon",
+        "dom_enst": "ENST00000377086",
+        "dom_tpm": 5.4215,
+        "dom_frac": 0.48031007747682747,
+        "top_enst_tpm": 2.5517,
+        "model_concordant": false
+      },
+      {
+        "tissue": "testis",
+        "dom_enst": "ENST00000377086",
+        "dom_tpm": 14.2945,
+        "dom_frac": 0.3033309213072582,
+        "top_enst_tpm": 3.9963,
+        "model_concordant": false
+      },
+      {
+        "tissue": "placenta",
+        "dom_enst": "ENST00000377093",
+        "dom_tpm": 7.6258,
+        "dom_frac": 0.44730034897807425,
+        "top_enst_tpm": 7.6258,
+        "model_concordant": true
+      }
+    ]
+  },
+  "SEH1L": {
+    "ensg": "ENSG00000085415",
+    "n_isos_testset": 5,
+    "n_isos_hpa": 10,
+    "v15_score_ratio": 13.1,
+    "v15_dtu_top": 0.6908,
+    "v15_concordance": true,
+    "biology": "SEH1-like nucleoporin. Component of GATOR2 complex (mTORC1 activation).",
+    "known_switch": "SEH1L is part of both the nuclear pore complex AND the GATOR2 complex. Different isoforms may preferentially associate with one complex. GATOR2-bound SEH1L is required for amino acid sensing by mTORC1 (Bar-Peled 2013, Science).",
+    "tissue_breakdown": [
+      {
+        "tissue": "skeletal muscle",
+        "dom_enst": "ENST00000399892",
+        "dom_tpm": 7.5409,
+        "dom_frac": 0.844474058384439,
+        "top_enst_tpm": 7.5409,
+        "model_concordant": true
+      },
+      {
+        "tissue": "heart muscle",
+        "dom_enst": "ENST00000399892",
+        "dom_tpm": 5.2608,
+        "dom_frac": 0.6496739773945769,
+        "top_enst_tpm": 5.2608,
+        "model_concordant": true
+      },
+      {
+        "tissue": "smooth muscle",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 16.743,
+        "dom_frac": 0.8241855610829559,
+        "top_enst_tpm": 1.5675,
+        "model_concordant": false
+      },
+      {
+        "tissue": "liver",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 9.0211,
+        "dom_frac": 0.7978825963579701,
+        "top_enst_tpm": 1.2556,
+        "model_concordant": false
+      },
+      {
+        "tissue": "kidney",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 12.2947,
+        "dom_frac": 0.7810274620415185,
+        "top_enst_tpm": 1.7105,
+        "model_concordant": false
+      },
+      {
+        "tissue": "cerebral cortex",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 22.2039,
+        "dom_frac": 0.6592822211931125,
+        "top_enst_tpm": 7.5352,
+        "model_concordant": false
+      },
+      {
+        "tissue": "lung",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 12.3484,
+        "dom_frac": 0.7373984079244832,
+        "top_enst_tpm": 1.7829,
+        "model_concordant": false
+      },
+      {
+        "tissue": "adipose tissue",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 13.9432,
+        "dom_frac": 0.7086219601703236,
+        "top_enst_tpm": 2.3602,
+        "model_concordant": false
+      },
+      {
+        "tissue": "colon",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 9.8831,
+        "dom_frac": 0.6566582062737261,
+        "top_enst_tpm": 1.9252,
+        "model_concordant": false
+      },
+      {
+        "tissue": "testis",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 16.8054,
+        "dom_frac": 0.5479301091742956,
+        "top_enst_tpm": 2.5556,
+        "model_concordant": false
+      },
+      {
+        "tissue": "placenta",
+        "dom_enst": "ENST00000262124",
+        "dom_tpm": 15.0693,
+        "dom_frac": 0.8034688860853483,
+        "top_enst_tpm": 1.3243,
+        "model_concordant": false
+      }
+    ]
+  }
+}

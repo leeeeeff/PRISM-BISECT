@@ -1,0 +1,24 @@
+MatrixList-class        MatrixList object
+dmDSdata                Create dmDSdata object
+dmDSdata-class          dmDSdata object
+dmDSfit-class           dmDSfit object
+dmDSprecision-class     dmDSprecision object
+dmDStest-class          dmDStest object
+dmFilter                Filtering
+dmFit                   Fit the Dirichlet-multinomial and/or the
+                        beta-binomial full model regression
+dmPrecision             Estimate the precision parameter in the
+                        Dirichlet-multinomial model
+dmSQTLdata              Create dmSQTLdata object
+dmSQTLdata-class        dmSQTLdata object
+dmSQTLfit-class         dmSQTLfit object
+dmSQTLprecision-class   dmSQTLprecision object
+dmSQTLtest-class        dmSQTLtest object
+dmTest                  Likelihood ratio test to detect differential
+                        transcript/exon usage
+dm_plotDataDSInfo       Plot the frequency of present features
+dm_plotProportions      Plot feature proportions
+plotData                Plot data summary
+plotPValues             Plot p-value distribution
+plotPrecision           Precision versus mean expression plot
+plotProportions         Plot feature proportions

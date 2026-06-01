@@ -1,0 +1,162 @@
+{
+  "timestamp": "20260526_2323",
+  "macro": {
+    "domain_lr": 0.01564907666797586,
+    "esm2_lr_l30_partial": 0.18636,
+    "diffuse_v15d": 0.7064055555555555
+  },
+  "per_go": {
+    "GO:0007204": {
+      "name": "Ca2+ signaling",
+      "domain_lr": 0.008031460597984654,
+      "diffuse": 0.643,
+      "delta": 0.6349685394020154,
+      "n_pos_tr": 431,
+      "n_pos_te": 338
+    },
+    "GO:0045214": {
+      "name": "Sarcomere organization",
+      "domain_lr": 0.0035131460407275606,
+      "diffuse": 0.8143,
+      "delta": 0.8107868539592724,
+      "n_pos_tr": 96,
+      "n_pos_te": 130
+    },
+    "GO:0006941": {
+      "name": "Muscle contraction",
+      "domain_lr": 0.009548718765667125,
+      "diffuse": 0.658,
+      "delta": 0.6484512812343329,
+      "n_pos_tr": 321,
+      "n_pos_te": 378
+    },
+    "GO:0006914": {
+      "name": "Autophagy",
+      "domain_lr": 0.012757444877000661,
+      "diffuse": 0.6143,
+      "delta": 0.6015425551229993,
+      "n_pos_tr": 325,
+      "n_pos_te": 467
+    },
+    "GO:0043161": {
+      "name": "Proteasome-UPS",
+      "domain_lr": 0.028338671695380825,
+      "diffuse": 0.689,
+      "delta": 0.6606613283046191,
+      "n_pos_tr": 748,
+      "n_pos_te": 1234
+    },
+    "GO:0007519": {
+      "name": "Skeletal muscle dev",
+      "domain_lr": 0.00467224964886664,
+      "diffuse": 0.7402,
+      "delta": 0.7355277503511334,
+      "n_pos_tr": 135,
+      "n_pos_te": 189
+    },
+    "GO:0042692": {
+      "name": "Muscle cell diff",
+      "domain_lr": 0.011273062648086352,
+      "diffuse": 0.6823,
+      "delta": 0.6710269373519137,
+      "n_pos_tr": 326,
+      "n_pos_te": 432
+    },
+    "GO:0055074": {
+      "name": "Ca2+ homeostasis",
+      "domain_lr": 0.015781202184510484,
+      "diffuse": 0.7118,
+      "delta": 0.6960187978154895,
+      "n_pos_tr": 659,
+      "n_pos_te": 616
+    },
+    "GO:0007005": {
+      "name": "Mitochondrion org",
+      "domain_lr": 0.028111632988525845,
+      "diffuse": 0.6672,
+      "delta": 0.6390883670114742,
+      "n_pos_tr": 727,
+      "n_pos_te": 1012
+    },
+    "GO:0007517": {
+      "name": "Muscle organ dev",
+      "domain_lr": 0.011552262224617443,
+      "diffuse": 0.6466,
+      "delta": 0.6350477377753825,
+      "n_pos_tr": 365,
+      "n_pos_te": 486
+    },
+    "GO:0032006": {
+      "name": "TOR signaling",
+      "domain_lr": 0.006848845677647503,
+      "diffuse": 0.782,
+      "delta": 0.7751511543223525,
+      "n_pos_tr": 152,
+      "n_pos_te": 248
+    },
+    "GO:0030048": {
+      "name": "Actin-based movement",
+      "domain_lr": 0.009278155704406297,
+      "diffuse": 0.8042,
+      "delta": 0.7949218442955938,
+      "n_pos_tr": 306,
+      "n_pos_te": 301
+    },
+    "GO:0006096": {
+      "name": "Glycolysis",
+      "domain_lr": 0.0026957490957813485,
+      "diffuse": 0.8143,
+      "delta": 0.8116042509042187,
+      "n_pos_tr": 77,
+      "n_pos_te": 89
+    },
+    "GO:0007268": {
+      "name": "Synaptic transmission",
+      "domain_lr": 0.013330228207094605,
+      "diffuse": 0.6672,
+      "delta": 0.6538697717929054,
+      "n_pos_tr": 765,
+      "n_pos_te": 482
+    },
+    "GO:0007018": {
+      "name": "MT-based movement",
+      "domain_lr": 0.011848886739499352,
+      "diffuse": 0.7402,
+      "delta": 0.7283511132605006,
+      "n_pos_tr": 457,
+      "n_pos_te": 445
+    },
+    "GO:0031175": {
+      "name": "Neuron proj development",
+      "domain_lr": 0.02837638785380623,
+      "diffuse": 0.6823,
+      "delta": 0.6539236121461938,
+      "n_pos_tr": 1005,
+      "n_pos_te": 1098
+    },
+    "GO:0030182": {
+      "name": "Neuron diff",
+      "domain_lr": 0.044718119560300106,
+      "diffuse": 0.6466,
+      "delta": 0.6018818804396998,
+      "n_pos_tr": 1358,
+      "n_pos_te": 1517
+    },
+    "GO:0000226": {
+      "name": "MT cytoskeleton org",
+      "domain_lr": 0.031007155513662434,
+      "diffuse": 0.7118,
+      "delta": 0.6807928444863376,
+      "n_pos_tr": 804,
+      "n_pos_te": 1001
+    }
+  },
+  "esm2_lr_l30_5terms": {
+    "GO:0006941": 0.1113,
+    "GO:0006096": 0.5076,
+    "GO:0007005": 0.1356,
+    "GO:0006914": 0.0947,
+    "GO:0007519": 0.0826
+  },
+  "note": "Domain-LR uses Pfam presence/absence (512 features, domain_matrix_proper_test.npy). Analogous to IsoformSwitchAnalyzeR functional annotation approach."
+}

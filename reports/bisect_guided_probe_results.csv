@@ -1,0 +1,31 @@
+gene,go_term,go_name,direction,correct_direction,auprc,ct_score,ad_score,delta,n_pos
+ZCCHC17,GO:0006397,mRNA processing,AD_high,True,0.6442,0.0923,0.1214,-0.0291,1760
+ZCCHC17,GO:0008380,RNA splicing,AD_high,True,0.6642,0.1121,0.1188,-0.0067,1578
+IFT122,GO:0060271,cilium assembly,AD_high,False,0.4986,0.0117,0.0033,0.0084,1766
+IFT122,GO:0007018,MT movement,AD_high,False,0.6897,0.0074,0.002,0.0054,1042
+FANCA,GO:0006281,DNA repair,AD_high,False,0.6028,0.2231,0.1505,0.0726,1937
+FANCA,GO:0006974,DNA damage response,AD_high,True,0.4892,0.2354,0.3936,-0.1582,3096
+DMD,GO:0007010,cytoskeleton org,AD_high,True,0.5331,0.0267,0.882,-0.8553,4216
+DMD,GO:0030036,actin cytoskeleton,AD_high,True,0.5391,0.0104,0.7758,-0.7654,1763
+KIF21B,GO:0007018,MT movement,CT_high,True,0.6896,0.9998,0.1474,0.8525,1042
+KIF21B,GO:0006941,muscle contraction,CT_high,False,0.5926,0.0005,0.0008,-0.0002,593
+PML,GO:0006974,DNA damage resp,AD_high,False,0.4892,0.4935,0.1898,0.3037,3096
+PML,GO:0000209,protein polyubiquitination,AD_high,True,0.6619,0.0189,0.1082,-0.0893,1181
+SYNE1,GO:0007010,cytoskeleton org,AD_high,True,0.5331,0.553,0.7594,-0.2064,4216
+SYNE1,GO:0043247,telomere maintenance,AD_high,True,0.7916,0.0002,0.001,-0.0007,54
+RGS3,GO:0007186,GPCR signaling,AD_high,True,0.8124,0.0488,0.9969,-0.9481,1101
+RGS3,GO:0031175,neuron projection dev,AD_high,True,0.3634,0.0213,0.027,-0.0057,2007
+BSG,GO:0007155,cell adhesion,AD_high,False,0.6405,0.4539,0.3803,0.0737,2314
+BSG,GO:0006119,oxidative phosphorylation,AD_high,False,0.6194,0.0009,0.0003,0.0006,50
+PTPRS,GO:0007169,RTK signaling,AD_high,True,0.5143,0.0381,0.0596,-0.0215,1756
+PTPRS,GO:0031175,neuron projection dev,AD_high,False,0.3635,0.4189,0.3522,0.0667,2007
+LRPPRC,GO:0000956,nuc mRNA surveillance,AD_high,False,0.5947,0.0194,0.0,0.0194,964
+LRPPRC,GO:0006120,mito electron transport,AD_high,True,0.7967,0.0043,0.0062,-0.0019,201
+IFI16,GO:0006281,DNA repair,AD_high,True,0.6028,0.0166,0.11,-0.0934,1937
+IFI16,GO:0045087,innate immune response,AD_high,True,0.5491,0.0087,0.012,-0.0033,1187
+GOLGB1,GO:0006888,ER-to-Golgi transport,AD_high,False,0.6355,0.0085,0.0064,0.0021,1050
+GOLGB1,GO:0048193,Golgi vesicle transport,AD_high,False,0.5411,0.0124,0.001,0.0113,1682
+PTPRF,GO:0045087,innate immune,AD_high,False,0.5491,0.0202,0.0149,0.0053,1187
+PTPRF,GO:0007169,RTK signaling,AD_high,True,0.5143,0.1036,0.298,-0.1944,1756
+DOCK11,GO:0045087,innate immune,AD_high,False,0.549,0.0025,0.0011,0.0014,1187
+DOCK11,GO:0032956,regulation of actin cytoskeleton,AD_high,True,0.4246,0.0045,0.0166,-0.012,1040

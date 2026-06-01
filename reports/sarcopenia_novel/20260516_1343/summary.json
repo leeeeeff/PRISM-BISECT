@@ -1,0 +1,37 @@
+{
+  "summary": {
+    "GO:0006914": {
+      "go_name": "Autophagy",
+      "n_switch": 17,
+      "n_switch_sarco": 2,
+      "n_novel": 25,
+      "n_novel_sarco": 0
+    },
+    "GO:0032006": {
+      "go_name": "TOR signaling",
+      "n_switch": 10,
+      "n_switch_sarco": 0,
+      "n_novel": 25,
+      "n_novel_sarco": 1
+    },
+    "GO:0007005": {
+      "go_name": "Mitochondrion org",
+      "n_switch": 51,
+      "n_switch_sarco": 2,
+      "n_novel": 25,
+      "n_novel_sarco": 1
+    }
+  },
+  "timestamp": "20260516_1343",
+  "thresholds": {
+    "switch": 0.3,
+    "novel": 0.6,
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      2024
+    ]
+  }
+}

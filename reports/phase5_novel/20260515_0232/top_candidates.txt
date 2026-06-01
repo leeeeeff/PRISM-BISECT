@@ -1,0 +1,308 @@
+Phase 5 Novel Isoform Discovery — Top Candidates for Literature Search
+======================================================================
+
+[ A. Novel Gene Candidates (score > 0.5) ]
+
+  [GO:0006941] TAFAZZIN (ENST00000601016.6)
+    score=0.9905, biotype=protein_coding, other_GO=0
+    → Search: "TAFAZZIN isoform GO:0006941 function"
+
+  [GO:0003774] DYNC2I1 (ENST00000407559.8)
+    score=0.9760, biotype=protein_coding, other_GO=0
+    → Search: "DYNC2I1 isoform GO:0003774 function"
+
+  [GO:0003774] DYNC2I2 (ENST00000372715.7)
+    score=0.9739, biotype=protein_coding, other_GO=0
+    → Search: "DYNC2I2 isoform GO:0003774 function"
+
+  [GO:0003774] MYO5C (ENST00000261839.12)
+    score=0.9707, biotype=protein_coding, other_GO=0
+    → Search: "MYO5C isoform GO:0003774 function"
+
+  [GO:0030017] PGM1 (ENST00000371084.8)
+    score=0.9666, biotype=protein_coding, other_GO=67
+    → Search: "PGM1 isoform GO:0030017 function"
+
+  [GO:0030017] ENSG00000285043 (ENST00000338110.11)
+    score=0.9623, biotype=protein_coding, other_GO=0
+    → Search: "ENSG00000285043 isoform GO:0030017 function"
+
+  [GO:0007204] TRPV3 (ENST00000616411.4)
+    score=0.9589, biotype=protein_coding, other_GO=17
+    → Search: "TRPV3 isoform GO:0007204 function"
+
+  [GO:0006096] ENSG00000285043 (ENST00000566897.6)
+    score=0.9587, biotype=protein_coding, other_GO=0
+    → Search: "ENSG00000285043 isoform GO:0006096 function"
+
+  [GO:0003774] ZSCAN30 (ENST00000589178.5)
+    score=0.9552, biotype=protein_coding, other_GO=0
+    → Search: "ZSCAN30 isoform GO:0003774 function"
+
+  [GO:0006096] PGM5 (ENST00000396396.6)
+    score=0.9536, biotype=protein_coding, other_GO=41
+    → Search: "PGM5 isoform GO:0006096 function"
+
+  [GO:0006941] ENSG00000285043 (ENST00000566897.6)
+    score=0.9491, biotype=protein_coding, other_GO=0
+    → Search: "ENSG00000285043 isoform GO:0006941 function"
+
+  [GO:0006096] GNPDA1 (ENST00000503794.5)
+    score=0.9488, biotype=protein_coding, other_GO=15
+    → Search: "GNPDA1 isoform GO:0006096 function"
+
+  [GO:0003774] MYL1 (ENST00000341685.8)
+    score=0.9426, biotype=protein_coding, other_GO=15
+    → Search: "MYL1 isoform GO:0003774 function"
+
+  [GO:0006096] PFKFB3 (ENST00000379789.8)
+    score=0.9421, biotype=protein_coding, other_GO=16
+    → Search: "PFKFB3 isoform GO:0006096 function"
+
+  [GO:0030017] ANK1 (ENST00000347528.8)
+    score=0.9417, biotype=protein_coding, other_GO=25
+    → Search: "ANK1 isoform GO:0030017 function"
+
+  [GO:0003774] MYH1 (ENST00000226207.6)
+    score=0.9379, biotype=protein_coding, other_GO=6
+    → Search: "MYH1 isoform GO:0003774 function"
+
+  [GO:0006941] MYH4 (ENST00000255381.2)
+    score=0.9291, biotype=protein_coding, other_GO=25
+    → Search: "MYH4 isoform GO:0006941 function"
+
+  [GO:0006941] MYH1 (ENST00000226207.6)
+    score=0.9266, biotype=protein_coding, other_GO=6
+    → Search: "MYH1 isoform GO:0006941 function"
+
+  [GO:0006941] TPM3 (ENST00000651641.1)
+    score=0.9214, biotype=protein_coding, other_GO=23
+    → Search: "TPM3 isoform GO:0006941 function"
+
+  [GO:0030017] MYH1 (ENST00000226207.6)
+    score=0.9202, biotype=protein_coding, other_GO=6
+    → Search: "MYH1 isoform GO:0030017 function"
+
+  [GO:0007204] ERO1B (ENST00000354619.10)
+    score=0.9179, biotype=protein_coding, other_GO=11
+    → Search: "ERO1B isoform GO:0007204 function"
+
+  [GO:0030017] UTRN (ENST00000367545.8)
+    score=0.9140, biotype=protein_coding, other_GO=27
+    → Search: "UTRN isoform GO:0030017 function"
+
+  [GO:0006941] MYL1 (ENST00000352451.4)
+    score=0.9140, biotype=protein_coding, other_GO=15
+    → Search: "MYL1 isoform GO:0006941 function"
+
+  [GO:0003774] TM2D3 (ENST00000619579.1)
+    score=0.9822, biotype=protein_coding_CDS_not_defined, other_GO=0
+    → Search: "TM2D3 isoform GO:0003774 function"
+
+  [GO:0030017] CAV1 (ENST00000451122.5)
+    score=0.9616, biotype=nonsense_mediated_decay, other_GO=321
+    → Search: "CAV1 isoform GO:0030017 function"
+
+  [GO:0003774] NAMPT (ENST00000680669.1)
+    score=0.9530, biotype=retained_intron, other_GO=33
+    → Search: "NAMPT isoform GO:0003774 function"
+
+  [GO:0007204] P2RX5-TAX1BP3 (ENST00000550383.1)
+    score=0.9461, biotype=nonsense_mediated_decay, other_GO=0
+    → Search: "P2RX5-TAX1BP3 isoform GO:0007204 function"
+
+  [GO:0006941] MACF1 (ENST00000691623.1)
+    score=0.9319, biotype=retained_intron, other_GO=71
+    → Search: "MACF1 isoform GO:0006941 function"
+
+  [GO:0007204] CAPN2 (ENST00000487223.5)
+    score=0.9223, biotype=protein_coding_CDS_not_defined, other_GO=31
+    → Search: "CAPN2 isoform GO:0007204 function"
+
+  [GO:0003774] MYO9A (ENST00000563542.5)
+    score=0.9190, biotype=protein_coding_CDS_not_defined, other_GO=29
+    → Search: "MYO9A isoform GO:0003774 function"
+
+
+[ B. Isoform-Switch Candidates (score range > 0.3) ]
+
+  [GO:0006941] ANK2 (19 isoforms)
+    top: ENST00000671793.1 score=0.9410
+    bot: ENST00000502701.2 score=0.0000
+    range=0.941, ratio=940952.8x
+    → Search: "ANK2 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0006941] DTNA (25 isoforms)
+    top: ENST00000591182.5 score=0.9914
+    bot: ENST00000680767.2 score=0.0000
+    range=0.991, ratio=746689.9x
+    → Search: "DTNA dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0007204] CALM3 (5 isoforms)
+    top: ENST00000391918.6 score=0.9509
+    bot: ENST00000291295.14 score=0.0000
+    range=0.951, ratio=33233.1x
+    → Search: "CALM3 dominant-negative isoform OR tissue-specific isoform GO:0007204"
+
+  [GO:0030017] HRC (2 isoforms)
+    top: ENST00000252825.9 score=0.9609
+    bot: ENST00000598858.5 score=0.0000
+    range=0.961, ratio=21568.6x
+    → Search: "HRC dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0007204] FGF2 (2 isoforms)
+    top: ENST00000644866.2 score=0.9515
+    bot: ENST00000264498.9 score=0.0001
+    range=0.951, ratio=9922.8x
+    → Search: "FGF2 dominant-negative isoform OR tissue-specific isoform GO:0007204"
+
+  [GO:0006941] TNNI3 (2 isoforms)
+    top: ENST00000344887.10 score=0.5750
+    bot: ENST00000585806.5 score=0.0001
+    range=0.575, ratio=4135.3x
+    → Search: "TNNI3 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0030017] ANK2 (19 isoforms)
+    top: ENST00000671793.1 score=0.9842
+    bot: ENST00000682198.1 score=0.0002
+    range=0.984, ratio=4013.9x
+    → Search: "ANK2 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0003774] KIF13A (7 isoforms)
+    top: ENST00000259711.11 score=0.9825
+    bot: ENST00000502704.2 score=0.0003
+    range=0.982, ratio=3563.1x
+    → Search: "KIF13A dominant-negative isoform OR tissue-specific isoform GO:0003774"
+
+  [GO:0030017] SORBS2 (15 isoforms)
+    top: ENST00000698540.1 score=0.6285
+    bot: ENST00000698537.1 score=0.0003
+    range=0.628, ratio=2104.7x
+    → Search: "SORBS2 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0030017] PGM5 (4 isoforms)
+    top: ENST00000396396.6 score=0.9716
+    bot: ENST00000496758.1 score=0.0005
+    range=0.971, ratio=1923.5x
+    → Search: "PGM5 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0006941] MYLK2 (6 isoforms)
+    top: ENST00000375994.6 score=0.9491
+    bot: ENST00000468730.1 score=0.0005
+    range=0.949, ratio=1853.0x
+    → Search: "MYLK2 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0030017] TPM1 (13 isoforms)
+    top: ENST00000559281.6 score=0.9652
+    bot: ENST00000610733.1 score=0.0006
+    range=0.965, ratio=1552.0x
+    → Search: "TPM1 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0006941] DMD (11 isoforms)
+    top: ENST00000378707.7 score=0.9784
+    bot: ENST00000683309.1 score=0.0008
+    range=0.978, ratio=1262.9x
+    → Search: "DMD dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0006941] GPD1L (3 isoforms)
+    top: ENST00000282541.10 score=0.9766
+    bot: ENST00000474846.5 score=0.0010
+    range=0.976, ratio=938.8x
+    → Search: "GPD1L dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0006941] MYH14 (5 isoforms)
+    top: ENST00000642316.2 score=0.9575
+    bot: ENST00000595016.1 score=0.0016
+    range=0.956, ratio=599.8x
+    → Search: "MYH14 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0030017] MYLK2 (6 isoforms)
+    top: ENST00000375994.6 score=0.7383
+    bot: ENST00000468730.1 score=0.0015
+    range=0.737, ratio=486.8x
+    → Search: "MYLK2 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0006941] TPM1 (13 isoforms)
+    top: ENST00000403994.9 score=0.9617
+    bot: ENST00000610733.1 score=0.0021
+    range=0.960, ratio=456.3x
+    → Search: "TPM1 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0030017] OBSCN (9 isoforms)
+    top: ENST00000680850.1 score=0.9620
+    bot: ENST00000665495.1 score=0.0021
+    range=0.960, ratio=454.3x
+    → Search: "OBSCN dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0003774] KIF2A (9 isoforms)
+    top: ENST00000676413.1 score=0.9967
+    bot: ENST00000676271.1 score=0.0024
+    range=0.994, ratio=415.2x
+    → Search: "KIF2A dominant-negative isoform OR tissue-specific isoform GO:0003774"
+
+  [GO:0003774] KIF20B (3 isoforms)
+    top: ENST00000260753.8 score=0.9958
+    bot: ENST00000478929.1 score=0.0036
+    range=0.992, ratio=274.4x
+    → Search: "KIF20B dominant-negative isoform OR tissue-specific isoform GO:0003774"
+
+  [GO:0003774] KIF21A (6 isoforms)
+    top: ENST00000361418.10 score=0.9923
+    bot: ENST00000547733.1 score=0.0046
+    range=0.988, ratio=214.0x
+    → Search: "KIF21A dominant-negative isoform OR tissue-specific isoform GO:0003774"
+
+  [GO:0030017] TNNI3 (2 isoforms)
+    top: ENST00000344887.10 score=0.7347
+    bot: ENST00000585806.5 score=0.0040
+    range=0.731, ratio=181.9x
+    → Search: "TNNI3 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0030017] CALM3 (5 isoforms)
+    top: ENST00000391918.6 score=0.9362
+    bot: ENST00000291295.14 score=0.0064
+    range=0.930, ratio=146.7x
+    → Search: "CALM3 dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0006941] NEDD4L (8 isoforms)
+    top: ENST00000382850.8 score=0.9651
+    bot: ENST00000674921.1 score=0.0073
+    range=0.958, ratio=132.8x
+    → Search: "NEDD4L dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0003774] KIF22 (2 isoforms)
+    top: ENST00000160827.9 score=0.9912
+    bot: ENST00000689415.1 score=0.0103
+    range=0.981, ratio=96.5x
+    → Search: "KIF22 dominant-negative isoform OR tissue-specific isoform GO:0003774"
+
+  [GO:0030017] DMD (11 isoforms)
+    top: ENST00000378707.7 score=0.9591
+    bot: ENST00000683309.1 score=0.0173
+    range=0.942, ratio=55.4x
+    → Search: "DMD dominant-negative isoform OR tissue-specific isoform GO:0030017"
+
+  [GO:0006096] PKM (5 isoforms)
+    top: BambuTx1564 score=0.9975
+    bot: ENST00000564440.5 score=0.0221
+    range=0.975, ratio=45.2x
+    → Search: "PKM dominant-negative isoform OR tissue-specific isoform GO:0006096"
+
+  [GO:0006941] PKP2 (2 isoforms)
+    top: ENST00000340811.9 score=0.9715
+    bot: ENST00000549461.3 score=0.0265
+    range=0.945, ratio=36.7x
+    → Search: "PKP2 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0006941] CSRP3 (5 isoforms)
+    top: ENST00000533783.2 score=0.8489
+    bot: ENST00000649842.1 score=0.0282
+    range=0.821, ratio=30.1x
+    → Search: "CSRP3 dominant-negative isoform OR tissue-specific isoform GO:0006941"
+
+  [GO:0007204] MCOLN1 (2 isoforms)
+    top: ENST00000264079.11 score=0.7957
+    bot: ENST00000394321.9 score=0.0284
+    range=0.767, ratio=28.0x
+    → Search: "MCOLN1 dominant-negative isoform OR tissue-specific isoform GO:0007204"
+

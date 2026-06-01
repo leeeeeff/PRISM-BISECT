@@ -11,6 +11,8 @@ export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
 cd "$(dirname "$0")"
 
-exec streamlit run prism_app/app/main.py \
+STREAMLIT=/home/welcome1/miniconda3/envs/isoform_env/bin/streamlit
+
+exec "$STREAMLIT" run prism_app/app/main.py \
     --server.headless false \
     "$@"
