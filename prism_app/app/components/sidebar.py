@@ -117,7 +117,7 @@ def _render_demo_context(tissue: str) -> None:
     info = {
         'muscle':         ("근골격근", "36,748", "18", False),
         'brain':          ("뇌 (zero-shot)", "63,994", "18", True),
-        'brain_extended': ("뇌 확장", "7,903", "73", True),
+        'brain_extended': ("뇌 전체 확장", "63,994", "73", True),
         'muscle_only':    ("근골격근", "36,748", "18", False),
     }.get(tissue, ("—", "—", "—", False))
     tissue_name, n_iso, n_go, has_dtu = info
@@ -172,10 +172,10 @@ def _render_upload_context(cfg: dict) -> None:
 def _load_demo_data(tissue: str, go_terms: list) -> dict:
     """Load pre-computed demo data; cached per session."""
     files = {
-        'muscle':         ('muscle_scores.npy',     'muscle_ids.npy',     'muscle_types.npy',     'muscle_gene_ids.npy'),
-        'brain':          ('brain_full_scores.npy',  'brain_full_ids.npy', 'brain_full_types.npy', 'brain_full_gene_ids.npy'),
-        'brain_extended': ('brain_novel_scores.npy', 'brain_novel_ids.npy', 'brain_novel_types.npy', None),
-        'muscle_only':    ('muscle_scores.npy',     'muscle_ids.npy',     'muscle_types.npy',     'muscle_gene_ids.npy'),
+        'muscle':         ('muscle_scores.npy',              'muscle_ids.npy',              'muscle_types.npy',              'muscle_gene_ids.npy'),
+        'brain':          ('brain_full_scores.npy',           'brain_full_ids.npy',          'brain_full_types.npy',          'brain_full_gene_ids.npy'),
+        'brain_extended': ('brain_full_extended_scores.npy',  'brain_full_extended_ids.npy', 'brain_full_extended_types.npy', 'brain_full_extended_gene_ids.npy'),
+        'muscle_only':    ('muscle_scores.npy',              'muscle_ids.npy',              'muscle_types.npy',              'muscle_gene_ids.npy'),
     }
     score_f, id_f, type_f, gene_f = files.get(tissue, files['muscle'])
 
