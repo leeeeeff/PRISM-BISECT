@@ -457,8 +457,8 @@ pages within a multi-page Streamlit application (MPA):
    search with GO score bar chart, case report download (Markdown), and BISECT Cases viewer
    displaying all 84 Stage 2 PASS cases with module-level evidence (AlphaFold pLDDT, PPI
    verdict, phyloP conservation, domain gain/loss cards, TSS/APA classification). Scenario 1 ×
-   BISECT cross-link highlights 32 genes confirmed by both analyses, with PRISM GO score charts
-   rendered inline.
+   BISECT cross-link highlights 32 genes confirmed by both analyses (at score threshold 0.4;
+   dynamically updated with the sidebar slider), with PRISM GO score charts rendered inline.
 5. *Advanced* — Cross-tissue comparison, expression-level filtering, and NMD risk screening.
 
 **Demo data.** The following pre-computed datasets are bundled with the application:
