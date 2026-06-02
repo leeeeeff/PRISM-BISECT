@@ -434,7 +434,7 @@ change, NMD gate status, mechanism type, TSS/TTS class, pLDDT (CT/AD), STRING ve
 ### 2.32 PRISM+BISECT Interactive Analysis Tool
 
 To facilitate reproducibility and enable independent exploration of the published results, we
-implemented a browser-based interactive analysis platform using Streamlit (v1.35, Python 3.9).
+implemented a browser-based interactive analysis platform using Streamlit (v1.50.0, Python 3.9).
 The tool operates in two modes: a **Demo mode** that bundles all pre-computed results from this
 study, and an **Upload mode** that accepts user-provided ESM-2 score matrices (NPY format) for
 analysis of new datasets.
@@ -457,7 +457,7 @@ pages within a multi-page Streamlit application (MPA):
    search with GO score bar chart, case report download (Markdown), and BISECT Cases viewer
    displaying all 84 Stage 2 PASS cases with module-level evidence (AlphaFold pLDDT, PPI
    verdict, phyloP conservation, domain gain/loss cards, TSS/APA classification). Scenario 1 ×
-   BISECT cross-link highlights 32 genes confirmed by both analyses (at score threshold 0.4;
+   BISECT cross-link highlights 32 genes confirmed by both analyses (at score threshold 0.5;
    dynamically updated with the sidebar slider), with PRISM GO score charts rendered inline.
 5. *Advanced* — Cross-tissue comparison, expression-level filtering, and NMD risk screening.
 
@@ -465,7 +465,7 @@ pages within a multi-page Streamlit application (MPA):
 skeletal muscle PRISM scores (36,748 × 18, float32 NPY), brain zero-shot scores (63,994 × 18),
 brain extended-panel scores (7,903 × 73), brain DTU results (133,240 records across 8 cell types,
 AD vs Control; AD vs mid-stage Active Control), BISECT Stage 2 PASS cases (84 cases, 36 columns
-of module evidence), and pre-computed UMAP coordinates (20,000-isoform subsample).
+of module evidence), and pre-computed UMAP coordinates (15,000-isoform subsample).
 
 **Input format.** Upload mode accepts: (i) PRISM score matrix (NPY, shape N × |GO|);
 (ii) isoform ID list (NPY or TXT); (iii) gene ID list (optional); (iv) isoform type labels
