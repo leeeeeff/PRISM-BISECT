@@ -232,6 +232,44 @@ with tab_matrix:
             )
             st.plotly_chart(fig_gl, use_container_width=True)
 
+            # ── Bias diverging bar: (GAIN−LOSS)/(GAIN+LOSS) ──────────────────
+            _bias = _gl.copy()
+            _bias['bias'] = (_bias['GAIN'] - _bias['LOSS']) / _bias['total']
+            _bias = _bias.sort_values('bias')   # diverging: loss-biased at top
+            _bias['color'] = _bias['bias'].apply(
+                lambda v: '#2a9d8f' if v >= 0 else '#e63946'
+            )
+            _bias['bias_label'] = _bias['bias'].map(
+                lambda v: f"{'GAIN' if v >= 0 else 'LOSS'}-biased  {abs(v):.0%}"
+            )
+
+            fig_bias = px.bar(
+                _bias,
+                x='bias', y='go_name',
+                orientation='h',
+                color='bias',
+                color_continuous_scale=[[0, '#e63946'], [0.5, '#f1f5f9'], [1, '#2a9d8f']],
+                range_color=[-1, 1],
+                title="Functional direction bias per GO term — (GAIN − LOSS) / (GAIN + LOSS)",
+                labels={'bias': 'Bias (−1 = all LOSS · +1 = all GAIN)', 'go_name': ''},
+                text='bias_label',
+                height=max(300, len(_bias) * 28),
+            )
+            fig_bias.update_traces(textposition='outside', textfont_size=9)
+            fig_bias.update_layout(
+                yaxis_tickfont_size=11,
+                coloraxis_showscale=False,
+                plot_bgcolor='white',
+                xaxis=dict(gridcolor='#f0f0f0', range=[-1.25, 1.25]),
+            )
+            fig_bias.add_vline(x=0, line_color='#64748b', line_width=1.5)
+            st.plotly_chart(fig_bias, use_container_width=True)
+            st.caption(
+                "Bias = (GAIN − LOSS) / (GAIN + LOSS). "
+                "Teal bars = GO functions preferentially **gained** in the up-regulated isoform; "
+                "Red bars = functions preferentially **lost**. Near-zero = balanced switching."
+            )
+
         # ── Gene × GO heatmap (score delta) ──────────────────────────────────
         pivot = build_consequence_pivot(conseq_df)
 

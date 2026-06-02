@@ -431,6 +431,52 @@ change, NMD gate status, mechanism type, TSS/TTS class, pLDDT (CT/AD), STRING ve
 
 ---
 
+### 2.32 PRISM+BISECT Interactive Analysis Tool
+
+To facilitate reproducibility and enable independent exploration of the published results, we
+implemented a browser-based interactive analysis platform using Streamlit (v1.35, Python 3.9).
+The tool operates in two modes: a **Demo mode** that bundles all pre-computed results from this
+study, and an **Upload mode** that accepts user-provided ESM-2 score matrices (NPY format) for
+analysis of new datasets.
+
+**Architecture.** The application consists of five analytical modules accessible as separate
+pages within a multi-page Streamlit application (MPA):
+
+1. *Overview* — Coverage statistics (isoform count by type, GO panel), 4-Scenario classification
+   distribution (Scenario 1–4 by DTU and GO evidence), and per-GO AUPRC validation table with
+   random baseline lift (×) and grade annotation.
+2. *Functional Map* — Interactive UMAP of the PRISM 18-dimensional GO score space (Plotly,
+   k-means cluster labels), isoform-type × GO heatmap, and within-gene isoform divergence
+   detection (|Δ_max| ≥ 0.1 auto-flagged). Linked views allow cluster-to-individual page
+   navigation via session state transfer.
+3. *Condition Analysis* — DTU-linked functional consequence matrix (GAIN/LOSS/NEUTRAL
+   classification per gene × GO pair), GO term hypergeometric enrichment (Benjamini-Hochberg
+   FDR), Sankey scenario-flow diagram across conditions, and gene-level consequence drill-down.
+   Cell-type multiselect filter enables single-cell-type analysis.
+4. *Individual Analysis* — 4-Scenario browser with per-scenario candidate tables, isoform
+   search with GO score bar chart, case report download (Markdown), and BISECT Cases viewer
+   displaying all 84 Stage 2 PASS cases with module-level evidence (AlphaFold pLDDT, PPI
+   verdict, phyloP conservation, domain gain/loss cards, TSS/APA classification). Scenario 1 ×
+   BISECT cross-link highlights 32 genes confirmed by both analyses, with PRISM GO score charts
+   rendered inline.
+5. *Advanced* — Cross-tissue comparison, expression-level filtering, and NMD risk screening.
+
+**Demo data.** The following pre-computed datasets are bundled with the application:
+skeletal muscle PRISM scores (36,748 × 18, float32 NPY), brain zero-shot scores (63,994 × 18),
+brain extended-panel scores (7,903 × 73), brain DTU results (133,240 records across 8 cell types,
+AD vs Control; AD vs mid-stage Active Control), BISECT Stage 2 PASS cases (84 cases, 36 columns
+of module evidence), and pre-computed UMAP coordinates (20,000-isoform subsample).
+
+**Input format.** Upload mode accepts: (i) PRISM score matrix (NPY, shape N × |GO|);
+(ii) isoform ID list (NPY or TXT); (iii) gene ID list (optional); (iv) isoform type labels
+(known/NIC/NNIC, optional); (v) DTU results (TSV/CSV, auto-detected column names compatible
+with satuRn, DEXSeq, IsoformSwitchAnalyzeR, and rMATS output formats).
+
+**Availability.** Source code is available at https://github.com/leeeeeff/PRISM-BISECT
+(branch: master). An interactive demo is hosted at [DEMO_URL].
+
+---
+
 ### Parameter summary
 
 | Parameter | Value | Rule |
