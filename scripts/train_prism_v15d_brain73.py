@@ -330,40 +330,63 @@ for seed in range(N_SEEDS):
 score_matrix = np.mean(seed_preds, axis=0).astype(np.float32)
 print(f"\nScore matrix: {score_matrix.shape}, range [{score_matrix.min():.4f}, {score_matrix.max():.4f}]")
 
-# ── OOF AUPRC (gene-stratified, each isoform in val exactly once for 5 seeds)
-# Average OOF preds across the seed where each isoform was in val fold
-print("\n=== OOF AUPRC (gene-stratified) ===")
-# oof_preds has been accumulated once per seed where row was val
-# divide by number of times each row was val (1 for 1 seed = val_fold==seed%5)
-oof_aurpcs = []
+# ── Brain Test Set AUPRC (zero-shot cross-tissue evaluation) ─────────────────
+print("\n=== Brain Test Set AUPRC (zero-shot, gene-stratified) ===")
+print("Building brain ground truth labels from gene annotations...")
+
+# Load brain gene names
+br_gene_path = BASE / 'hMuscle/data/brain_isoquant_esm2/full/brain_full_gene_names.npy'
+br_gene_names_raw = np.load(br_gene_path, allow_pickle=True)
+br_gene_names = [x.decode() if isinstance(x, bytes) else str(x) for x in br_gene_names_raw]
+n_br = len(br_gene_names)
+
+# Build ground truth for brain isoforms
+Y_br = np.zeros((n_br, N_GO), dtype=np.float32)
+for j, go_id in enumerate(go_ids):
+    for i, gene in enumerate(br_gene_names):
+        if gene in gene_go and go_id in gene_go[gene]:
+            Y_br[i, j] = 1.0
+
+print(f"  Brain isoforms with ≥1 GO annotation: "
+      f"{(Y_br.sum(axis=1)>0).sum()} / {n_br} "
+      f"({100*(Y_br.sum(axis=1)>0).mean():.1f}%)")
+
+# Evaluate brain AUPRC using ensemble score_matrix
+brain_aurpcs = []
 meta = []
 for j, (go_id, go_name) in enumerate(zip(go_ids, go_names)):
-    y_true = Y_tr[:, j]
-    y_pred = oof_preds[:, j]
-    if y_true.sum() > 0 and y_pred.max() > 0:
-        auprc = average_precision_score(y_true, y_pred)
-        oof_aurpcs.append(auprc)
+    y_true = Y_br[:, j]
+    y_pred = score_matrix[:, j]
+    n_pos_brain = int(y_true.sum())
+    n_pos_train = int(Y_tr[:, j].sum())
+    if n_pos_brain >= 5:
+        auprc = float(average_precision_score(y_true, y_pred))
+        brain_aurpcs.append(auprc)
         meta.append({'go': go_id, 'name': go_name,
-                     'n_pos': int(y_true.sum()), 'auprc': round(auprc, 4),
-                     'method': 'prism_v15d_joint73'})
+                     'n_pos_muscle_train': n_pos_train,
+                     'n_pos_brain': n_pos_brain,
+                     'auprc_brain': round(auprc, 4),
+                     'method': 'prism_v15d_joint73_brain_zeroshot'})
     else:
         meta.append({'go': go_id, 'name': go_name,
-                     'n_pos': int(y_true.sum()), 'auprc': None,
-                     'method': 'prism_v15d_joint73'})
+                     'n_pos_muscle_train': n_pos_train,
+                     'n_pos_brain': n_pos_brain,
+                     'auprc_brain': None,
+                     'method': 'prism_v15d_joint73_brain_zeroshot'})
 
-valid_meta = [m for m in meta if m['auprc'] is not None]
-aurpcs_valid = [m['auprc'] for m in valid_meta]
+valid_meta = [m for m in meta if m['auprc_brain'] is not None]
+aurpcs_valid = [m['auprc_brain'] for m in valid_meta]
 print(f"Terms with AUPRC: {len(valid_meta)}/{N_GO}")
-print(f"Macro AUPRC (OOF): {np.mean(aurpcs_valid):.4f}")
-print(f"Median AUPRC:      {np.median(aurpcs_valid):.4f}")
-print(f"AUPRC > 0.5:       {sum(a>0.5 for a in aurpcs_valid)}/{len(aurpcs_valid)}")
-print(f"AUPRC > 0.4:       {sum(a>0.4 for a in aurpcs_valid)}/{len(aurpcs_valid)}")
+print(f"Macro AUPRC (brain, zero-shot): {np.mean(aurpcs_valid):.4f}")
+print(f"Median AUPRC:                   {np.median(aurpcs_valid):.4f}")
+print(f"AUPRC > 0.5:                    {sum(a>0.5 for a in aurpcs_valid)}/{len(aurpcs_valid)}")
+print(f"AUPRC > 0.4:                    {sum(a>0.4 for a in aurpcs_valid)}/{len(aurpcs_valid)}")
 print(f"\nTop 5:")
-for m in sorted(valid_meta, key=lambda x: x['auprc'], reverse=True)[:5]:
-    print(f"  {m['go']} ({m['name'][:40]}): {m['auprc']}")
+for m in sorted(valid_meta, key=lambda x: x['auprc_brain'], reverse=True)[:5]:
+    print(f"  {m['go']} ({m['name'][:40]}): {m['auprc_brain']}")
 print(f"\nBottom 5:")
-for m in sorted(valid_meta, key=lambda x: x['auprc'])[:5]:
-    print(f"  {m['go']} ({m['name'][:40]}): {m['auprc']}")
+for m in sorted(valid_meta, key=lambda x: x['auprc_brain'])[:5]:
+    print(f"  {m['go']} ({m['name'][:40]}): {m['auprc_brain']}")
 
 elapsed = time.time() - t0
 print(f"\nDone in {elapsed:.1f}s ({elapsed/60:.1f}min)")
@@ -375,9 +398,14 @@ print(f"Saved: {out_npy}")
 
 out_meta = OUT_DIR / 'brain_full_extended_v15d_meta.json'
 with open(out_meta, 'w') as f:
-    json.dump({'model': 'prism_v15d_joint73', 'go_terms': go_ids, 'go_names': go_names,
-               'n_isoforms': n_br, 'n_go': N_GO,
-               'macro_auprc_oof': round(float(np.mean(aurpcs_valid)), 4),
+    json.dump({'model': 'prism_v15d_joint73',
+               'evaluation': 'brain_test_zeroshot',
+               'go_terms': go_ids, 'go_names': go_names,
+               'n_isoforms_brain': n_br, 'n_go': N_GO,
+               'macro_auprc_brain': round(float(np.mean(aurpcs_valid)), 4),
+               'median_auprc_brain': round(float(np.median(aurpcs_valid)), 4),
+               'n_auprc_gt05': int(sum(a > 0.5 for a in aurpcs_valid)),
+               'n_auprc_gt04': int(sum(a > 0.4 for a in aurpcs_valid)),
                'per_go': meta}, f, indent=2)
 print(f"Saved meta: {out_meta}")
 
