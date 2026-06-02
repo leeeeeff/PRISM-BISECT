@@ -100,6 +100,20 @@ if dtu_df is None:
 # ── DTU loaded ────────────────────────────────────────────────────────────────
 st.success(f"DTU data loaded: **{len(dtu_df):,}** isoform–condition records.")
 
+# ── Cell type / condition filter ──────────────────────────────────────────────
+_all_conditions = sorted(dtu_df['condition'].dropna().unique().tolist()) if 'condition' in dtu_df.columns else []
+if _all_conditions:
+    _sel_conditions = st.sidebar.multiselect(
+        "Cell type / Condition 필터",
+        options=_all_conditions,
+        default=_all_conditions,
+        help="분석에 포함할 조건(세포 유형)을 선택합니다. 전체 선택 = 합산 분석",
+        key='cond_celltype',
+    )
+    if _sel_conditions and set(_sel_conditions) != set(_all_conditions):
+        dtu_df = dtu_df[dtu_df['condition'].isin(_sel_conditions)].copy()
+        st.caption(f"🔍 필터 적용: {', '.join(_sel_conditions)} ({len(dtu_df):,}개 레코드)")
+
 # Global p-value threshold (shared across tabs)
 pval_thr = st.sidebar.slider(
     "DTU p-value threshold", 0.001, 0.1, 0.05, 0.005,

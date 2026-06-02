@@ -83,12 +83,13 @@ if classified is None:
     st.session_state['classified_df'] = classified
 
 # ── Scenario filter tabs ──────────────────────────────────────────────────────
-tab1, tab2, tab3, tab4, tab_search = st.tabs([
+tab1, tab2, tab3, tab4, tab_search, tab_bisect = st.tabs([
     "🔴 Scenario 1: Functional Switch",
     "🟠 Scenario 2: Expression Switch",
     "🟢 Scenario 3: Constitutive Novel",
     "⬜ Scenario 4: Background",
     "🔍 Search Isoform",
+    "🧫 BISECT Cases",
 ])
 
 SCENARIO_DESCS = {
@@ -258,3 +259,104 @@ with tab_search:
                         f"case_report_{row['isoform_id'].replace('/','_')}.md",
                         "text/markdown",
                     )
+
+# ── BISECT Cases tab ──────────────────────────────────────────────────────────
+with tab_bisect:
+    import json
+    from pathlib import Path
+
+    _BISECT_PATH = Path(__file__).parents[3] / 'prism_app' / 'data' / 'demo' / 'bisect_cases.json'
+
+    st.subheader("BISECT PASS Cases")
+    st.caption("15-모듈 파이프라인을 통과한 기능 스위치 후보 케이스 (stage2_pass = True)")
+
+    if not _BISECT_PATH.exists():
+        st.warning("bisect_cases.json not found in demo data directory.")
+        st.stop()
+
+    with open(_BISECT_PATH) as _f:
+        _bisect_raw = json.load(_f)
+
+    _bdf = pd.DataFrame(_bisect_raw)
+
+    # Rename columns for display
+    _col_map = {
+        'gene': 'Gene', 'cell_type': 'Cell Type',
+        'delta': 'Δ Usage (AD−CT)', 'dtu_p': 'DTU p-value',
+        'domains_gained': 'Domains Gained', 'domains_lost': 'Domains Lost',
+        'nat': 'NAT overlap', 'young_l1_cds': 'Young L1 in CDS',
+    }
+    _bdf_disp = _bdf.rename(columns=_col_map)
+
+    # Summary metrics
+    _mc1, _mc2, _mc3, _mc4 = st.columns(4)
+    _mc1.metric("PASS Cases", len(_bdf))
+    _mc2.metric("Cell Types", _bdf['cell_type'].nunique())
+    _mc3.metric("Domain Gains", int((_bdf['domains_gained'].fillna('') != '').sum()))
+    _mc4.metric("NAT Overlap", int(_bdf['nat'].fillna(False).sum()))
+
+    st.divider()
+
+    # Cell type filter
+    _ct_opts = sorted(_bdf['cell_type'].dropna().unique().tolist())
+    _ct_sel  = st.multiselect("Cell type 필터", _ct_opts, default=_ct_opts, key='bisect_ct')
+    _bdf_filt = _bdf[_bdf['cell_type'].isin(_ct_sel)] if _ct_sel else _bdf
+
+    # Gene search
+    _bq = st.text_input("유전자 검색", placeholder="예: KIF21B, NDUFS4", key='bisect_gene_q')
+    if _bq:
+        _bdf_filt = _bdf_filt[_bdf_filt['gene'].str.contains(_bq, case=False, na=False)]
+
+    # Cross-link with PRISM Scenario 1
+    _s1_genes = set()
+    if classified is not None:
+        _s1_genes = set(classified[classified['scenario'] == 1]['gene_id'].dropna().tolist())
+
+    def _highlight_s1(row):
+        if row.get('Gene', row.get('gene', '')) in _s1_genes:
+            return ['background-color: #fef9c3'] * len(row)
+        return [''] * len(row)
+
+    _show_cols = [c for c in ['Gene', 'Cell Type', 'Δ Usage (AD−CT)', 'DTU p-value',
+                               'Domains Gained', 'Domains Lost', 'NAT overlap', 'Young L1 in CDS']
+                  if c in _bdf_disp.columns]
+    _bdf_show = _bdf_filt.rename(columns=_col_map)[_show_cols].copy()
+
+    if _s1_genes:
+        st.caption("🟡 강조 표시 = 현재 데이터셋의 Scenario 1과 겹치는 유전자")
+        st.dataframe(
+            _bdf_show.style.apply(_highlight_s1, axis=1),
+            use_container_width=True, hide_index=True,
+        )
+    else:
+        st.dataframe(_bdf_show, use_container_width=True, hide_index=True)
+
+    # Per-case expander for domain details
+    if _bq and not _bdf_filt.empty:
+        st.divider()
+        st.markdown("**케이스 상세**")
+        for _, _brow in _bdf_filt.iterrows():
+            with st.expander(f"🧫 {_brow.get('gene','?')} — {_brow.get('cell_type','?')}", expanded=True):
+                _bc1, _bc2, _bc3 = st.columns(3)
+                _bc1.metric("Δ Usage (AD−CT)", f"{_brow.get('delta', float('nan')):.3f}")
+                _bc2.metric("DTU p-value",
+                            f"{float(_brow.get('dtu_p', 1)):.2e}" if _brow.get('dtu_p') else "N/A")
+                _bc3.metric("BISECT Stage2", "✅ PASS")
+
+                _dg = str(_brow.get('domains_gained') or '').strip()
+                _dl = str(_brow.get('domains_lost')  or '').strip()
+                if _dg:
+                    st.markdown(f"**도메인 획득 (AD 아이소폼):** `{_dg}`")
+                if _dl:
+                    st.markdown(f"**도메인 손실 (CT 아이소폼):** `{_dl}`")
+                if _brow.get('nat'):
+                    st.warning("⚠️ NAT (Natural Antisense Transcript) overlap 감지됨")
+                if _brow.get('young_l1_cds'):
+                    st.warning("⚠️ Young L1 retrotransposon이 CDS 내 삽입됨")
+
+    st.divider()
+    st.download_button(
+        "Download BISECT PASS cases (CSV)",
+        _bdf_filt.to_csv(index=False).encode('utf-8'),
+        "bisect_pass_cases.csv", "text/csv",
+    )
