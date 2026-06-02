@@ -697,6 +697,24 @@ with tab_bisect:
         import io
         _d = pd.read_csv(io.BytesIO(dtu_bytes), sep='\t')
         _lk: dict = {}
+        # Normalise gene column name (gene_id / gene / geneID / gene_name)
+        _gene_col = next(
+            (c for c in _d.columns
+             if c.lower() in ('gene_id', 'gene', 'geneid', 'gene_name', 'gene_symbol')),
+            None,
+        )
+        if _gene_col is None:
+            return _lk
+        if _gene_col != 'gene_id':
+            _d = _d.rename(columns={_gene_col: 'gene_id'})
+        # Normalise delta_IF column name
+        _dif_col = next(
+            (c for c in _d.columns
+             if c.lower() in ('delta_if', 'dif', 'deltif', 'delta_usage', 'delta')),
+            None,
+        )
+        if _dif_col and _dif_col != 'delta_IF':
+            _d = _d.rename(columns={_dif_col: 'delta_IF'})
         if 'condition' in _d.columns:
             for (_g, _c), _grp in _d.groupby(['gene_id', 'condition']):
                 _lk[(_g, _c)] = _grp.reset_index(drop=True)
