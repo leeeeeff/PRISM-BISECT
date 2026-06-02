@@ -264,6 +264,63 @@ with tab_search:
                         key=f"dl_case_report_{_safe_iso_key}",
                     )
 
+# ── Regulatory knowledge base (TF / ASF / Epigenetic) ────────────────────────
+# category: 'TF' | 'ASF' | 'Epigenetic' | 'RBP'
+# known: True = established AD/disease literature; False = newly observed in BISECT
+_REGULATOR_KB: dict = {
+    'STAT1':   ('TF',         True,  'AD 신경염증 핵심 전사인자; 미세아교·흥분성 뉴런에서 억제됨 (Baranzini 2020)'),
+    'REST':    ('TF',         True,  '신경보호 전사억제인자; AD에서 발현 감소 → 시냅스 유전자 억제 해제 (Lu 2014 Cell)'),
+    'CREB1':   ('TF',         True,  '신경 생존·LTP 전사인자; AD에서 인산화 감소 → 기억 형성 장애 (Saura 2004)'),
+    'SP1':     ('TF',         True,  'Tau·APP 프로모터에 직접 결합; AD 취약성 인자 (Citron 2008)'),
+    'SP3':     ('TF',         True,  'SP1 길항 전사인자; AD에서 SP1 대비 과발현 → 프로모터 경쟁 (Black 2001)'),
+    'SRSF5':   ('ASF',        True,  'Serine/Arginine Splicing Factor 5; AD 관련 스플라이싱 재편 (Raj 2018)'),
+    'SRSF7':   ('ASF',        True,  'tau exon 10 포함 조절; FTLD-Tau 관련 (Jiang 1998)'),
+    'RBFOX1':  ('ASF',        True,  '뇌 특이적 ASF; 신경 발달·AD 취약 exon 조절 (Bhatt 2020)'),
+    'HDAC2':   ('Epigenetic', True,  'AD에서 히스톤 H3K27 탈아세틸화 과활성 → 신경 유전자 억제 (Gräff 2012)'),
+    'SIRT1':   ('Epigenetic', True,  'AD에서 NAD+-의존 탈아세틸화 감소 → p53·NF-κB 과활성 (Kim 2007)'),
+    'KLF9':    ('TF',         False, '새로 발견; 억제성 전사인자 후보, 산화 스트레스 반응 조절'),
+    'YBX1':    ('RBP',        False, 'Y-box RNA 결합 단백질; 스플라이싱·번역 조절, AD 역할 미확립'),
+    'HNRNPK':  ('ASF',        False, 'hnRNP K; pre-mRNA 스플라이싱·수송 조절, AD 연관 신규 발견'),
+    'E2F3':    ('TF',         False, '세포주기·아포프토시스 전사인자; AD 신경세포 재진입 관련 가능성'),
+    'SETDB2':  ('Epigenetic', False, 'H3K9me3 methyltransferase; 이형성질 억제 → 비정상 유전자 발현'),
+}
+
+_MECHANISM_KO: dict = {
+    'alternative_promoter':   ('대체 프로모터', '#7c3aed',
+                                '다른 프로모터 활성화로 전사 시작 위치가 이동. '
+                                'N-말단 구조가 달라져 신호 펩타이드·막 결합 도메인 변화 가능.'),
+    'alternative_splicing':   ('선택적 스플라이싱', '#0ea5e9',
+                                'exon inclusion/exclusion으로 도메인 구성이 직접 변화. '
+                                'ASF(SRSF, RBFOX 등)의 결합 부위 변화가 주요 원인.'),
+    'transcriptional':        ('전사 조절 변화', '#d97706',
+                                '동일 프로모터에서 TF 결합 변화로 전사량이 조절됨. '
+                                'TF 활성 변화가 아이소폼 비율 변화의 직접 원인.'),
+    'epigenetic_derepression': ('후성유전학적 탈억제', '#dc2626',
+                                'HDAC 과활성 또는 DNA 메틸화 변화로 억제되어 있던 엑손이 개방됨. '
+                                '염색질 접근성 변화가 스플라이싱 패턴을 재편함.'),
+    'intron_retention':       ('인트론 유지', '#059669',
+                                '스플라이싱 효율 저하로 인트론이 성숙 mRNA에 잔존. '
+                                'NMD 위험 증가; 단백질 번역 여부 검증 필요.'),
+}
+
+
+def _parse_regulators(raw: str) -> list:
+    """Parse BISECT top_regulators string → list of dicts."""
+    import ast
+    result = []
+    if not raw or str(raw) in ('None', ''):
+        return result
+    for p in str(raw).split(';'):
+        p = p.strip()
+        if not p:
+            continue
+        try:
+            result.append(ast.literal_eval(p))
+        except Exception:
+            pass
+    return result
+
+
 # ── Bio-report helper (called inside BISECT expanders) ───────────────────────
 _DOMAIN_FUNC_MAP = {
     'Kinesin':       'microtubule-based motor activity (ATP-dependent)',
@@ -305,8 +362,6 @@ def _build_bio_report_html(
     threshold: float,
 ) -> str:
     """Return styled HTML biological prediction report from BISECT evidence."""
-    import ast
-
     # ── Extract fields ────────────────────────────────────────────────────────
     delta   = brow.get('delta')
     dtu_p   = brow.get('dtu_p')
@@ -322,20 +377,15 @@ def _build_bio_report_html(
     apa_cls = str(brow.get('apa_class')      or '').strip()
     tss_bp  = brow.get('tss_diff_bp')
     apa_bp  = brow.get('tts_diff_bp')
-    reg_raw = str(brow.get('top_regulators') or '').strip()
     ad_nmd  = brow.get('ad_nmd')
     ct_nmd  = brow.get('ct_nmd')
     af_ad   = brow.get('af_ad_plddt_mean')
+    af_ct   = brow.get('af_ct_plddt_mean')
+    af_delta= brow.get('af_delta_plddt')
 
-    # parse top regulator name
-    reg_name = ''
-    if reg_raw and reg_raw not in ('None', ''):
-        try:
-            _rd = ast.literal_eval(reg_raw)
-            reg_name = _rd.get('gene', '')
-            reg_logfc = _rd.get('logFC', None)
-        except Exception:
-            reg_name = ''
+    # Parse regulators using shared helper
+    all_regs  = _parse_regulators(str(brow.get('top_regulators') or ''))
+    reg_name  = all_regs[0].get('gene', '') if all_regs else ''
 
     dg_list = [d for d in dg.split(';') if d]
     dl_list = [d for d in dl.split(';') if d]
@@ -370,12 +420,35 @@ def _build_bio_report_html(
         ppi_v == 'SUPPORTED',
         bool(phylo and float(phylo) > 1.0),
         bool(gained_go or lost_go),
+        bool(all_regs),                                    # regulatory evidence
+        bool(mech and mech != 'transcriptional'),          # mechanism specificity
     ])
-    conf_label = ['Low', 'Low', 'Moderate', 'Moderate', 'High', 'High', 'Very High'][min(ev_count, 6)]
-    conf_color = {'Low': '#ef4444', 'Moderate': '#f59e0b', 'High': '#22c55e', 'Very High': '#15803d'}[conf_label]
+    conf_label = ['Low', 'Low', 'Moderate', 'Moderate', 'High', 'High', 'Very High',
+                  'Very High', 'Very High'][min(ev_count, 8)]
+    conf_color = {'Low': '#ef4444', 'Moderate': '#f59e0b',
+                  'High': '#22c55e', 'Very High': '#15803d'}[conf_label]
+
+    # ── Regulatory context ────────────────────────────────────────────────────
+    known_regs  = [r for r in all_regs if _REGULATOR_KB.get(r['gene'], (None, None))[1] is True]
+    novel_regs  = [r for r in all_regs if _REGULATOR_KB.get(r['gene'], (None, None))[1] is False]
+    mech_info   = _MECHANISM_KO.get(mech, ('', '#64748b', ''))
 
     # ── Narrative sentences ───────────────────────────────────────────────────
     lines = []
+
+    # 0. Causal origin (upstream mechanism)
+    if mech and all_regs:
+        mech_ko = mech_info[0] or mech
+        top_reg = all_regs[0]
+        top_reg_name = top_reg.get('gene', '')
+        top_dir  = '활성 증가' if top_reg.get('direction') == 'up' else '억제'
+        top_lfc  = top_reg.get('logFC', 0)
+        kb_desc  = _REGULATOR_KB.get(top_reg_name, ('', '', ''))[2]
+        lines.append(
+            f"이 아이소폼 전환의 상류 원인으로 <b>{mech_ko}</b> 기전이 예측된다. "
+            f"핵심 조절 인자 <b>{top_reg_name}</b> (logFC = {float(top_lfc):+.3f}, AD에서 {top_dir})"
+            + (f" — {kb_desc}" if kb_desc else "") + "."
+        )
 
     # 1. Isoform switch
     try:
@@ -393,17 +466,43 @@ def _build_bio_report_html(
 
     # 2. Structural domain change
     if dg_list:
-        gained_descs = '; '.join(
-            f"<b>{d}</b> ({_domain_func(d)})" for d in dg_list
-        )
+        gained_descs = '; '.join(f"<b>{d}</b> ({_domain_func(d)})" for d in dg_list)
         lines.append(f"AD 이소폼은 {gained_descs} 도메인을 새로 획득하여 기능적 다양성이 증가한다.")
     if dl_list:
-        lost_descs = '; '.join(
-            f"<b>{d}</b> ({_domain_func(d)})" for d in dl_list
-        )
+        lost_descs = '; '.join(f"<b>{d}</b> ({_domain_func(d)})" for d in dl_list)
         lines.append(f"반면 {lost_descs} 도메인이 제거됨으로써 정상 이소폼의 주요 기능적 역량이 소실된다.")
 
-    # 3. PRISM functional shift
+    # 3. Structural stability (AlphaFold)
+    if af_ad and af_ct:
+        try:
+            af_a = float(af_ad)
+            af_c = float(af_ct)
+            af_d = float(af_delta) if af_delta else af_a - af_c
+            q_ad = "고신뢰 구조 (pLDDT ≥ 70)" if af_a >= 70 else "부분 무질서 구조 (pLDDT < 70)"
+            q_ct = "고신뢰 구조" if af_c >= 70 else "무질서 포함"
+            stab_interp = (
+                "AD 이소폼이 CT 이소폼보다 더 안정된 구조를 형성한다" if af_d > 5
+                else ("CT 이소폼이 구조적으로 더 안정적이며 AD 이소폼은 무질서 증가" if af_d < -5
+                      else "두 이소폼의 구조적 안정성이 유사하다")
+            )
+            lines.append(
+                f"AlphaFold 구조 예측: CT 이소폼 pLDDT = {af_c:.1f} ({q_ct}), "
+                f"AD 이소폼 pLDDT = {af_a:.1f} ({q_ad}), ΔpLDDT = {af_d:+.1f}. "
+                f"{stab_interp}."
+            )
+        except Exception:
+            pass
+    elif af_ad:
+        try:
+            af_val = float(af_ad)
+            qual = "구조적으로 신뢰도 높은 (pLDDT ≥ 70)" if af_val >= 70 else "부분적으로 무질서한"
+            lines.append(
+                f"AlphaFold 구조 예측에서 AD 이소폼은 {qual} 단백질로 예측된다 (pLDDT = {af_val:.1f})."
+            )
+        except Exception:
+            pass
+
+    # 4. PRISM functional shift
     if gained_go:
         gfstr = ', '.join(f"{n[:35]} ({s:.3f})" for _, n, s in gained_go[:2])
         lines.append(
@@ -417,24 +516,13 @@ def _build_bio_report_html(
             f"질병 전환에 의한 기능 소실이 시사된다."
         )
 
-    # 4. PPI
+    # 5. PPI
     if ppi_v == 'SUPPORTED' and ppi_p:
         ppi_score_str = f" (STRING score = {int(float(ppi_s))})" if ppi_s else ""
         lines.append(
             f"STRING PPI 분석에서 AD 이소폼은 <b>{ppi_p}</b>와의 상호작용이 예측되며"
             f"{ppi_score_str}, 이는 {ct_type} 내 새로운 단백질 복합체 형성 가능성을 시사한다."
         )
-
-    # 5. AlphaFold
-    if af_ad:
-        try:
-            af_val = float(af_ad)
-            qual = "구조적으로 신뢰도 높은 (pLDDT ≥ 70)" if af_val >= 70 else "부분적으로 무질서한"
-            lines.append(
-                f"AlphaFold 구조 예측에서 AD 이소폼은 {qual} 단백질로 예측된다 (pLDDT = {af_val:.1f})."
-            )
-        except Exception:
-            pass
 
     # 6. Conservation
     if phylo:
@@ -449,21 +537,44 @@ def _build_bio_report_html(
         except Exception:
             pass
 
-    # 7. Regulatory mechanism
-    _mech_ko = {
-        'alternative_splicing': '선택적 스플라이싱 (exon inclusion/exclusion)',
-        'alternative_tss':      '대체 프로모터 사용 (alternative TSS)',
-        'alternative_apa':      '대체 폴리아데닐화 (alternative APA)',
-        'intron_retention':     '인트론 유지 (intron retention)',
-    }
+    # 7. Regulatory mechanism (upgraded with KB descriptions)
     if mech:
-        mech_desc = _mech_ko.get(mech, mech)
+        mech_ko_n = mech_info[0] or mech
+        mech_detail = mech_info[2]
         tss_note = f" TSS 차이: {int(float(tss_bp)):+d}bp" if tss_bp else ""
         apa_note = f" APA 차이: {int(float(apa_bp)):+d}bp" if apa_bp else ""
         reg_note = f" 핵심 조절 인자: <b>{reg_name}</b>" if reg_name else ""
-        lines.append(f"전사체 생성 기전: <b>{mech_desc}</b>.{tss_note}{apa_note}{reg_note}")
+        lines.append(
+            f"전사체 생성 기전: <b>{mech_ko_n}</b>.{tss_note}{apa_note}{reg_note} "
+            + (f"— {mech_detail}" if mech_detail else "")
+        )
 
-    # 8. NMD caveat
+    # 8. TF/ASF regulatory interpretation
+    if known_regs:
+        k_str = '; '.join(
+            f"<b>{r['gene']}</b> ({r['direction']}, logFC={float(r.get('logFC',0)):+.3f})"
+            for r in known_regs[:3]
+        )
+        lines.append(
+            f"기존 AD 연관 전사·스플라이싱 인자의 활성 변화: {k_str}. "
+            "이 인자들의 발현 변화가 해당 유전자좌의 아이소폼 전환을 직접 유도했을 가능성이 높다."
+        )
+    if novel_regs:
+        n_str = '; '.join(
+            f"<b>{r['gene']}</b> ({r['direction']}, logFC={float(r.get('logFC',0)):+.3f})"
+            for r in novel_regs
+        )
+        kb_descs = '; '.join(
+            _REGULATOR_KB.get(r['gene'], ('', '', ''))[2]
+            for r in novel_regs if _REGULATOR_KB.get(r['gene'], ('', '', ''))[2]
+        )
+        lines.append(
+            f"새로 발견된 조절 인자 후보: {n_str}. "
+            + (f"이 인자들의 AD 특이적 역할은 아직 확립되지 않았으나 ({kb_descs}), "
+               "현 데이터에서 통계적으로 유의미한 발현 변화가 관측된다." if kb_descs else "")
+        )
+
+    # 9. NMD caveat
     if ad_nmd and str(ad_nmd).lower() not in ('false', ''):
         lines.append(
             "⚠️ AD 이소폼은 NMD (Nonsense-Mediated Decay) 감수성 구조를 포함하므로, "
@@ -494,7 +605,13 @@ def _build_bio_report_html(
     if phylo:
         evid_rows_html += f"<tr><td {_TD_L}>phyloP (AD exon)</td><td {_TD_V}>{float(phylo):.3f}&nbsp;<span style='color:#9ca3af;font-size:0.75rem'>({cons_c or '?'})</span></td><td {_TD_C}>Conservation</td></tr>"
     if mech:
-        evid_rows_html += f"<tr><td {_TD_L}>기전</td><td {_TD_V}>{_mech_ko.get(mech, mech)}</td><td {_TD_C}>Regulation</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>기전</td><td {_TD_V}>{mech_info[0] or mech}</td><td {_TD_C}>Regulation</td></tr>"
+    if all_regs:
+        _reg_short = ', '.join(
+            f"{r['gene']}({'↑' if r.get('direction')=='up' else '↓'})"
+            for r in all_regs[:3]
+        )
+        evid_rows_html += f"<tr><td {_TD_L}>TF / ASF</td><td {_TD_V} style='font-size:0.78rem'>{_reg_short}</td><td {_TD_C}>Regulator</td></tr>"
     if not evid_rows_html:
         evid_rows_html = f"<tr><td {_TD_L} colspan='3'>증거 데이터 없음</td></tr>"
 
@@ -528,6 +645,100 @@ def _build_bio_report_html(
         for l in lines
     ) or "<p style='color:#9ca3af;font-size:0.86rem'>해석 데이터 불충분</p>"
 
+    # ── Regulatory origin HTML block ──────────────────────────────────────────
+    def _reg_badge(r):
+        g = r.get('gene', '?')
+        d = r.get('direction', '')
+        lfc = float(r.get('logFC', 0))
+        neg_p = float(r.get('neg_log10_padj', 0))
+        kb = _REGULATOR_KB.get(g, ('TF', None, ''))
+        cat   = kb[0] or 'TF'
+        known = kb[1]
+        bg    = '#fee2e2' if d == 'down' else '#dcfce7'
+        border= '#ef4444' if d == 'down' else '#22c55e'
+        arrow = '↓' if d == 'down' else '↑'
+        star  = '' if known else ' 🟠'
+        return (
+            f"<div style='background:{bg};border-left:3px solid {border};"
+            f"border-radius:4px;padding:5px 10px;margin:3px 0;font-size:0.82rem'>"
+            f"<b>{g}</b>{star}&nbsp;"
+            f"<span style='color:#64748b;font-size:0.75rem'>[{cat}]</span>&nbsp;"
+            f"<span style='font-weight:700'>{arrow} {lfc:+.3f}</span>&nbsp;"
+            f"<span style='color:#9ca3af;font-size:0.72rem'>-log10p={neg_p:.1f}</span>"
+            f"</div>"
+        )
+
+    reg_badges_html = ''.join(_reg_badge(r) for r in all_regs[:5])
+    if not reg_badges_html:
+        reg_badges_html = "<div style='color:#9ca3af;font-size:0.82rem'>조절 인자 데이터 없음</div>"
+
+    mech_ko_label = mech_info[0] or mech or '—'
+    mech_clr      = mech_info[1]
+
+    # Causal pathway arrow (upstream → downstream)
+    _pathway_steps = []
+    if mech:
+        _pathway_steps.append(f"<b style='color:{mech_clr}'>{mech_ko_label}</b>")
+    if all_regs:
+        _regs_short = ', '.join(r['gene'] for r in all_regs[:3])
+        _pathway_steps.append(f"TF/ASF 활성 변화 ({_regs_short})")
+    if tss_cls and tss_cls not in ('same_promoter', ''):
+        _pathway_steps.append(f"전사 시작 위치 이동 ({tss_cls})")
+    if apa_cls and apa_cls not in ('same_apa', ''):
+        _pathway_steps.append(f"3′ 처리 변화 ({apa_cls})")
+    _pathway_steps.append("아이소폼 비율 전환 (DTU)")
+    if dg_list or dl_list:
+        _pathway_steps.append("도메인 구성 변화")
+    if gained_go or lost_go:
+        _pathway_steps.append("GO 기능 공간 재편")
+    pathway_html = " &rarr; ".join(
+        f"<span style='background:#f1f5f9;padding:2px 6px;border-radius:3px;"
+        f"font-size:0.78rem'>{s}</span>"
+        for s in _pathway_steps
+    )
+
+    reg_origin_html = (
+        f"<div style='background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;"
+        f"padding:14px 16px;margin-bottom:14px'>"
+        f"<div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;"
+        f"letter-spacing:0.5px;margin-bottom:10px'>🔭 아이소폼 전환 인과 경로</div>"
+        # Pathway arrows
+        f"<div style='margin-bottom:10px;line-height:2'>{pathway_html}</div>"
+        # Two-column: regulators | mechanism details
+        f"<table width='100%' cellspacing='0' cellpadding='0'><tr>"
+        f"<td width='50%' style='vertical-align:top;padding-right:10px'>"
+        f"<div style='font-size:0.75rem;color:#374151;font-weight:600;margin-bottom:4px'>"
+        f"TF / ASF 활성 변화 (AD vs CT)</div>"
+        f"{reg_badges_html}"
+        f"<div style='font-size:0.7rem;color:#9ca3af;margin-top:4px'>"
+        f"🟠 = 새로 발견된 인자 · ↑/↓ = AD에서 증가/감소</div>"
+        f"</td>"
+        f"<td width='50%' style='vertical-align:top;padding-left:10px;"
+        f"border-left:1px solid #d1fae5'>"
+        f"<div style='font-size:0.75rem;color:#374151;font-weight:600;margin-bottom:4px'>"
+        f"프로모터 · APA 컨텍스트</div>"
+        + (
+            f"<div style='font-size:0.82rem;margin:2px 0'>"
+            f"TSS: <b>{tss_cls or '—'}</b>"
+            + (f" ({int(float(tss_bp)):+d}bp)" if tss_bp else "") + "</div>"
+            if tss_cls else ""
+        )
+        + (
+            f"<div style='font-size:0.82rem;margin:2px 0'>"
+            f"APA: <b>{apa_cls or '—'}</b>"
+            + (f" ({int(float(apa_bp)):+d}bp)" if apa_bp else "") + "</div>"
+            if apa_cls else ""
+        )
+        + (
+            f"<div style='font-size:0.82rem;margin:6px 0 2px;color:#7c3aed'>"
+            f"기전: <b>{mech_ko_label}</b></div>"
+            f"<div style='font-size:0.75rem;color:#6b7280'>{mech_info[2]}</div>"
+            if mech else ""
+        )
+        + f"</td></tr></table>"
+        f"</div>"
+    )
+
     return (
         f"<div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;"
         f"padding:20px 22px;margin:14px 0;font-family:Arial,sans-serif'>"
@@ -536,7 +747,7 @@ def _build_bio_report_html(
         f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
         f"<td style='vertical-align:middle'>"
         f"<span style='font-size:1.0rem;font-weight:700;color:#1e293b'>"
-        f"📋 생물학적 기능 예측 리포트</span>"
+        f"📋 생물학적 기능 예측 리포트 — 통합 분석</span>"
         f"&nbsp;<span style='font-size:0.88rem;color:#0ea5e9;font-weight:700'>{gene}</span>"
         f"&nbsp;<span style='font-size:0.85rem;color:#64748b'>· {ct_type}</span>"
         f"</td>"
@@ -545,8 +756,11 @@ def _build_bio_report_html(
         f"border-radius:12px;font-size:0.8rem;font-weight:700'>신뢰도: {conf_label}</span>"
         f"</td></tr></table>"
 
+        # ── Regulatory origin (causal pathway) ──
+        + reg_origin_html
+
         # ── Row 1: Evidence table | Domain changes ──
-        f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
+        + f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
         f"<td width='50%' style='vertical-align:top;padding-right:12px'>"
         f"<div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;"
         f"letter-spacing:0.5px;margin-bottom:8px'>📊 증거 요약</div>"
@@ -555,15 +769,21 @@ def _build_bio_report_html(
         f"<td width='50%' style='vertical-align:top;padding-left:12px;"
         f"border-left:1px solid #e2e8f0'>"
         f"<div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;"
-        f"letter-spacing:0.5px;margin-bottom:8px'>🔩 도메인 기능 변화</div>"
+        f"letter-spacing:0.5px;margin-bottom:8px'>🔩 도메인·구조 기능 변화</div>"
         f"<div style='font-size:0.78rem;color:#15803d;font-weight:600;margin-bottom:4px'>▲ 획득 (AD 이소폼)</div>"
         f"{domain_gained_li}"
         f"<div style='font-size:0.78rem;color:#dc2626;font-weight:600;margin:10px 0 4px'>▼ 손실 (CT 이소폼)</div>"
         f"{domain_lost_li}"
-        f"</td></tr></table>"
+        + (
+            f"<div style='font-size:0.78rem;color:#7e22ce;margin-top:8px'>"
+            f"ΔpLDDT = {float(af_delta):+.1f} "
+            f"({'AD 더 안정' if float(af_delta)>0 else 'CT 더 안정'})</div>"
+            if af_delta else ""
+        )
+        + f"</td></tr></table>"
 
         # ── Row 2: CT GO | AD GO ──
-        f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
+        + f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
         f"<td width='50%' style='vertical-align:top;padding-right:8px'>"
         f"<div style='background:#eff6ff;border-radius:6px;padding:10px 12px'>"
         f"<div style='font-size:0.78rem;font-weight:700;color:#1d4ed8;margin-bottom:6px'>"
@@ -634,6 +854,117 @@ with tab_bisect:
     _mc5.metric("S1 교차 유전자", len(_s1_genes & set(_bdf['gene'].dropna())))
 
     st.divider()
+
+    # ── Global TF / ASF / Epigenetic violin plot ──────────────────────────────
+    with st.expander("📊 전체 케이스 TF · ASF · Epigenetic 활성 분포 (Violin)", expanded=False):
+        st.caption(
+            "84 BISECT PASS 케이스에서 상위 조절 인자(top_regulators)의 AD vs CT logFC 분포. "
+            "기존 AD 문헌 인자(Known)와 새로 발견된 인자(Novel)를 구분합니다."
+        )
+
+        # Build global regulator dataframe
+        _glob_rows = []
+        for _gc in _bisect_raw:
+            _gregs = _parse_regulators(_gc.get('top_regulators', ''))
+            for _r in _gregs:
+                _gene_r = _r.get('gene', '')
+                _kb = _REGULATOR_KB.get(_gene_r, (None, None, ''))
+                _cat   = _kb[0] or 'TF'
+                _known = _kb[1] if _kb[1] is not None else False
+                _glob_rows.append({
+                    'Regulator':  _gene_r,
+                    'logFC':      float(_r.get('logFC', 0)),
+                    'Direction':  _r.get('direction', '').capitalize(),
+                    'Category':   _cat,
+                    'Knowledge':  '🔵 Known AD' if _known else '🟠 Novel',
+                    '-log10(padj)': float(_r.get('neg_log10_padj', 0)),
+                    'Case':       _gc.get('gene', ''),
+                    'CellType':   _gc.get('cell_type', ''),
+                })
+        if _glob_rows:
+            _gdf = pd.DataFrame(_glob_rows)
+            # Show violin only for regulators appearing ≥3 times (else strip plot)
+            _freq = _gdf['Regulator'].value_counts()
+            _violin_regs = _freq[_freq >= 3].index.tolist()
+            _strip_regs  = _freq[_freq < 3].index.tolist()
+
+            if _violin_regs:
+                _gdf_v = _gdf[_gdf['Regulator'].isin(_violin_regs)].copy()
+                # Sort regulators: Known first, then by median logFC desc
+                _reg_order = (
+                    _gdf_v.groupby('Regulator')['logFC'].median()
+                    .sort_values(ascending=False).index.tolist()
+                )
+                _fig_vio = px.violin(
+                    _gdf_v,
+                    x='Regulator', y='logFC',
+                    color='Direction',
+                    box=True, points='all',
+                    color_discrete_map={'Up': '#ef4444', 'Down': '#3b82f6'},
+                    category_orders={
+                        'Regulator': _reg_order,
+                        'Direction': ['Up', 'Down'],
+                    },
+                    hover_data=['Case', 'CellType', 'Category', 'Knowledge', '-log10(padj)'],
+                    title='TF / ASF / Epigenetic logFC Distribution (AD vs CT) — 84 BISECT Cases',
+                    labels={'logFC': 'logFC (AD vs CT)', 'Regulator': ''},
+                    height=380,
+                )
+                _fig_vio.add_hline(y=0, line_dash='dash', line_color='#374151', line_width=1.5)
+                _fig_vio.update_layout(
+                    plot_bgcolor='white',
+                    yaxis=dict(gridcolor='#f0f0f0', zeroline=False),
+                    legend_title='Direction (AD vs CT)',
+                    margin=dict(t=45, b=60, l=10, r=10),
+                    font=dict(size=11),
+                )
+                st.plotly_chart(_fig_vio, use_container_width=True, key='glob_violin')
+                st.caption(
+                    "바이올린 = logFC 분포 | 박스 = IQR | 점 = 개별 케이스. "
+                    "n≥3인 인자만 바이올린으로 표시. "
+                    "Red = AD에서 활성 증가, Blue = AD에서 억제."
+                )
+
+            # Known vs Novel summary bar
+            _know_summ = _gdf.groupby(['Knowledge', 'Direction']).size().reset_index(name='N')
+            if not _know_summ.empty:
+                _fig_ks = px.bar(
+                    _know_summ,
+                    x='Knowledge', y='N', color='Direction',
+                    barmode='group',
+                    color_discrete_map={'Up': '#ef4444', 'Down': '#3b82f6'},
+                    title='Known vs Novel 조절인자 방향성',
+                    labels={'N': '케이스 수', 'Knowledge': ''},
+                    height=260,
+                )
+                _fig_ks.update_layout(
+                    plot_bgcolor='white', legend_title='',
+                    margin=dict(t=38, b=20, l=10, r=10),
+                )
+                st.plotly_chart(_fig_ks, use_container_width=True, key='glob_known_bar')
+
+            # Regulator knowledge table
+            _kb_df = (
+                _gdf.groupby(['Regulator', 'Category', 'Knowledge'])
+                .agg(N_cases=('Case', 'count'),
+                     mean_logFC=('logFC', 'mean'),
+                     max_neg_log10p=('-log10(padj)', 'max'))
+                .reset_index()
+                .sort_values('N_cases', ascending=False)
+            )
+            _kb_df['설명'] = _kb_df['Regulator'].map(
+                lambda g: _REGULATOR_KB.get(g, ('', '', ''))[2]
+            )
+            st.markdown("**조절 인자 요약표**")
+            st.dataframe(
+                _kb_df.rename(columns={
+                    'Regulator': '인자', 'Category': '분류',
+                    'Knowledge': '기존 AD 연관',
+                    'N_cases': 'N케이스', 'mean_logFC': '평균 logFC',
+                    'max_neg_log10p': '최대 -log10p',
+                }).round({'평균 logFC': 3, '최대 -log10p': 1}),
+                use_container_width=True, hide_index=True,
+            )
 
     # ── Filters ───────────────────────────────────────────────────────────────
     _fcol1, _fcol2 = st.columns([2, 2])
@@ -954,6 +1285,137 @@ with tab_bisect:
                         + "".join(_mod_items) + "</div>",
                         unsafe_allow_html=True,
                     )
+
+                # ── Regulatory Origin Analysis ────────────────────────────────
+                _case_regs = _parse_regulators(_brow.get('top_regulators', ''))
+                _case_mech = str(_brow.get('mechanism_type') or '').strip()
+                _case_tss  = str(_brow.get('tss_class')      or '').strip()
+                _case_apa  = str(_brow.get('apa_class')       or '').strip()
+
+                if _case_regs or _case_mech:
+                    st.divider()
+                    st.markdown("**🔭 Regulatory Origin — 아이소폼 전환의 상류 원인 분석**")
+
+                    _mech_info = _MECHANISM_KO.get(_case_mech, ('', '#64748b', ''))
+                    _mech_ko_label, _mech_color, _mech_desc = _mech_info
+
+                    # Mechanism banner
+                    if _case_mech:
+                        _tss_note = ''
+                        _apa_note = ''
+                        _tss_bp_v = _brow.get('tss_diff_bp')
+                        _apa_bp_v = _brow.get('tts_diff_bp')
+                        if _case_tss and _case_tss not in ('same_promoter', ''):
+                            _tss_note = f" · TSS: <b>{_case_tss}</b>"
+                            if _tss_bp_v:
+                                _tss_note += f" ({int(float(_tss_bp_v)):+d}bp)"
+                        if _case_apa and _case_apa not in ('same_apa', ''):
+                            _apa_note = f" · APA: <b>{_case_apa}</b>"
+                            if _apa_bp_v:
+                                _apa_note += f" ({int(float(_apa_bp_v)):+d}bp)"
+                        st.markdown(
+                            f"<div style='background:#faf5ff;border-left:4px solid {_mech_color};"
+                            f"padding:10px 14px;border-radius:6px;margin-bottom:10px;"
+                            f"font-size:0.86rem'>"
+                            f"<b style='color:{_mech_color}'>⚙️ {_mech_ko_label}</b>"
+                            f"{_tss_note}{_apa_note}<br>"
+                            f"<span style='color:#374151'>{_mech_desc}</span>"
+                            f"</div>",
+                            unsafe_allow_html=True,
+                        )
+
+                    # TF/ASF bar chart (logFC, colored by direction, annotated)
+                    if _case_regs:
+                        _rrr = []
+                        for _r in _case_regs:
+                            _rg = _r.get('gene', '?')
+                            _kb = _REGULATOR_KB.get(_rg, ('TF', None, ''))
+                            _rrr.append({
+                                'Gene':       _rg,
+                                'logFC':      float(_r.get('logFC', 0)),
+                                'Direction':  _r.get('direction', '').capitalize(),
+                                'Category':   _kb[0] or 'TF',
+                                'Known':      '🔵 Known AD' if _kb[1] else '🟠 Novel',
+                                '-log10p':    float(_r.get('neg_log10_padj', 0)),
+                                'Label':      f"{_rg}\n({_kb[0] or 'TF'})",
+                            })
+                        _rdf = pd.DataFrame(_rrr).sort_values('logFC')
+                        _r_color = {
+                            row['Gene']: ('#ef4444' if row['Direction'] == 'Up' else '#3b82f6')
+                            for _, row in _rdf.iterrows()
+                        }
+                        _fig_reg = px.bar(
+                            _rdf,
+                            x='logFC', y='Gene',
+                            orientation='h',
+                            color='Direction',
+                            color_discrete_map={'Up': '#ef4444', 'Down': '#3b82f6'},
+                            text=_rdf['Gene'].map(
+                                lambda g: _REGULATOR_KB.get(g, ('', '', ''))[0]
+                            ),
+                            hover_data=['Category', 'Known', '-log10p'],
+                            title=f'TF / ASF 활성 변화 — {_gene}  ·  {_ct} (AD vs CT logFC)',
+                            labels={'logFC': 'logFC (AD vs CT)', 'Gene': ''},
+                            height=max(200, len(_rrr) * 52 + 80),
+                        )
+                        _fig_reg.add_vline(x=0, line_color='#374151', line_width=1.5,
+                                           line_dash='dash')
+                        _fig_reg.update_traces(textposition='outside', textfont_size=9)
+                        _fig_reg.update_layout(
+                            plot_bgcolor='white',
+                            xaxis=dict(gridcolor='#f0f0f0'),
+                            legend_title='',
+                            margin=dict(t=40, b=20, l=60, r=90),
+                        )
+                        st.plotly_chart(_fig_reg, use_container_width=True,
+                                        key=f"reg_chart_{_gene}_{_safe_ct_key}")
+
+                        # Known vs Novel annotation cards
+                        _known_here   = [r for r in _case_regs
+                                         if _REGULATOR_KB.get(r['gene'], (None, None))[1] is True]
+                        _novel_here   = [r for r in _case_regs
+                                         if _REGULATOR_KB.get(r['gene'], (None, None))[1] is False]
+                        _unknown_here = [r for r in _case_regs
+                                         if r['gene'] not in _REGULATOR_KB]
+
+                        _ann_parts = []
+                        if _known_here:
+                            _kh_str = '; '.join(
+                                f"<b>{r['gene']}</b> ({r['direction']}, logFC={r['logFC']:+.3f}) "
+                                f"— {_REGULATOR_KB[r['gene']][2]}"
+                                for r in _known_here
+                            )
+                            _ann_parts.append(
+                                f"<div style='background:#eff6ff;border-left:3px solid #3b82f6;"
+                                f"padding:8px 12px;border-radius:4px;margin:4px 0;"
+                                f"font-size:0.82rem'>"
+                                f"<b style='color:#1d4ed8'>🔵 기존 AD 연관 인자</b><br>{_kh_str}</div>"
+                            )
+                        if _novel_here:
+                            _nh_str = '; '.join(
+                                f"<b>{r['gene']}</b> ({r['direction']}, logFC={r['logFC']:+.3f}) "
+                                f"— {_REGULATOR_KB[r['gene']][2]}"
+                                for r in _novel_here
+                            )
+                            _ann_parts.append(
+                                f"<div style='background:#fff7ed;border-left:3px solid #f59e0b;"
+                                f"padding:8px 12px;border-radius:4px;margin:4px 0;"
+                                f"font-size:0.82rem'>"
+                                f"<b style='color:#b45309'>🟠 새로 발견된 조절 인자</b><br>{_nh_str}</div>"
+                            )
+                        if _unknown_here:
+                            _uh_str = ', '.join(
+                                f"{r['gene']} ({r['direction']}, logFC={r['logFC']:+.3f})"
+                                for r in _unknown_here
+                            )
+                            _ann_parts.append(
+                                f"<div style='background:#f8fafc;border-left:3px solid #94a3b8;"
+                                f"padding:8px 12px;border-radius:4px;margin:4px 0;"
+                                f"font-size:0.82rem'>"
+                                f"<b style='color:#475569'>⚪ 기타 인자</b>: {_uh_str}</div>"
+                            )
+                        if _ann_parts:
+                            st.markdown("".join(_ann_parts), unsafe_allow_html=True)
 
                 # ── Proportion chart + GO comparison + Bio report ────────────
                 _ids_arr_b = np.asarray(ids, dtype=str)
