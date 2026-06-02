@@ -50,8 +50,14 @@ tab_cross, tab_expr, tab_nmd = st.tabs([
 # Tab 1: Cross-Tissue Comparison (E1)
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_cross:
-    st.subheader("Cross-Tissue GO Score Comparison")
-    st.caption("두 조직의 GO 기능 예측 스코어를 비교합니다. 조직 특이적 기능과 공통 기능을 파악할 수 있습니다.")
+    st.subheader("조직 간 GO 기능 비교 (Cross-Tissue Comparison)")
+    st.caption(
+        "두 조직의 PRISM 평균 스코어를 GO 기능별로 비교해 **조직 특이적 기능**과 **공통 기능**을 구분합니다. "
+        "**Delta (A−B)**: 조직 A의 평균 스코어 − 조직 B의 평균 스코어 · 양수 = A에 더 높게 예측됨 · "
+        "**산점도의 대각선(y=x)**: 두 조직에서 동일한 스코어 → 공통 기능 · "
+        "대각선 위쪽 = B 특이적, 아래쪽 = A 특이적 · "
+        "PRISM의 Zero-shot 전이 성능을 시각적으로 확인하려면 근육(train)과 뇌(zero-shot)를 비교하세요."
+    )
 
     col_a, col_b = st.columns(2)
 
@@ -145,6 +151,12 @@ with tab_cross:
             )
             fig_bar.update_layout(xaxis_tickangle=-35, legend_title='')
             st.plotly_chart(fig_bar, use_container_width=True)
+            st.caption(
+                f"막대 색: 파랑 = {data_a['name']} 평균 스코어 · 빨강 = {data_b['name']} 평균 스코어 · "
+                f"회색(Delta A−B) = 두 조직 간 차이 · 위쪽(양수)이면 {data_a['name']}에서 더 높게 예측됨 · "
+                "Delta가 크고 두 조직의 절대 스코어가 모두 높으면 공통으로 중요한 기능 · "
+                "Delta가 크고 한쪽만 높으면 해당 조직 특이적 기능"
+            )
 
             fig_scatter = px.scatter(
                 compare_df,
@@ -167,8 +179,15 @@ with tab_cross:
             fig_scatter.update_traces(textposition='top center', textfont_size=9)
             fig_scatter.update_layout(coloraxis_showscale=False)
             st.plotly_chart(fig_scatter, use_container_width=True)
+            st.caption(
+                f"X축: {data_a['name']} GO 평균 스코어 · Y축: {data_b['name']} GO 평균 스코어 · "
+                "**점선(y=x 대각선)**: 두 조직에서 동일한 스코어인 기능 (공통 기능) · "
+                "대각선 위쪽 점: B에서 더 높게 예측됨(B 특이적) · 아래쪽: A 특이적 · "
+                "대각선에서 멀리 떨어질수록 조직 특이성이 강함 · "
+                "오른쪽 위 모서리 근처: 두 조직 모두에서 높게 예측된 공통 핵심 기능"
+            )
 
-            st.subheader("Tissue-Specific Functions")
+            st.subheader("조직 특이적 GO 기능")
             delta_thr_ct = st.slider("Min |delta| to call tissue-specific", 0.01, 0.1, 0.03, 0.005)
 
             a_specific  = compare_df[compare_df['Delta (A−B)'] >  delta_thr_ct]
@@ -200,10 +219,13 @@ with tab_cross:
 # Tab 2: Expression × Score Joint Filter (E4)
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_expr:
-    st.subheader("Expression × Score Joint Filter")
+    st.subheader("발현량 × PRISM 스코어 통합 필터 (Expression × Score Joint Filter)")
     st.caption(
-        "Isoforms with high PRISM score but very low expression may be false positives. "
-        "Upload a count matrix to filter candidates by expression level."
+        "**왜 이 필터가 필요한가**: PRISM 스코어가 높아도 실제 발현량이 매우 낮으면 "
+        "해당 아이소폼이 세포에서 실제로 작동하지 않을 수 있습니다(위양성 위험). "
+        "CPM(Counts Per Million) ≥ 임계값 AND PRISM 스코어 ≥ 임계값 조건을 동시에 만족하는 "
+        "아이소폼만 최종 후보로 선별합니다. "
+        "**CPM 임계값 가이드**: CPM 1 = 평균 발현 수준, CPM 5 = 고발현, CPM 0.1 = 저발현 허용."
     )
 
     cfg = st.session_state.get('cfg', {})
@@ -276,11 +298,13 @@ with tab_expr:
 # Tab 3: NMD Risk Screening (E3)
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_nmd:
-    st.subheader("NMD Risk Screening")
+    st.subheader("NMD 위험 아이소폼 스크리닝 (NMD Risk Screening)")
     st.caption(
-        "Novel isoforms with premature termination codons (PTCs) are susceptible to "
-        "nonsense-mediated mRNA decay (NMD). High PRISM score + high NMD risk = "
-        "interpret with caution."
+        "**NMD(Nonsense-Mediated mRNA Decay)**: 조기 종결 코돈(PTC)이 있는 mRNA는 세포 내 분해 메커니즘에 의해 "
+        "단백질을 만들기 전에 제거됩니다. NMD 위험이 있는 아이소폼은 PRISM 스코어가 높아도 "
+        "실제로는 단백질이 만들어지지 않으므로 기능 예측 해석에 주의가 필요합니다. "
+        "**'High-score + NMD risk'** 아이소폼은 실험 검증 전에 NMD 억제제(e.g. cycloheximide) 처리 후 "
+        "단백질 발현 여부를 확인하는 것이 권장됩니다."
     )
 
     from prism_app.core.nmd_filter import load_nmd_screening, add_nmd_flags

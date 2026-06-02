@@ -224,6 +224,234 @@ GAIN/LOSS 기능 변화 분석 가능
 </div>
             """, unsafe_allow_html=True)
 
+    # ── 문헌 검증 쇼케이스 ────────────────────────────────────────────────────
+    with st.expander("✅ 문헌 검증 — 교과서 사례 및 알려진 질환 기능 스위치 케이스 10건", expanded=True):
+        import pandas as _pd_val
+        import plotly.express as _px_val
+
+        st.markdown("""
+PRISM+BISECT의 **예측 신뢰도**를 검증하기 위해 두 가지 유형의 케이스를 대조했습니다.
+
+- **📘 교과서적 아이소폼 사례** — RTN4(Nogo-A/B/C), EGFR 처럼 생물학 교과서에 이미 확립된 아이소폼 기능 다양성 예시. PRISM+BISECT가 기존 아이소폼 생물학 지식을 정확히 포착하는지 확인.
+- **🔬 알려진 질환 연관 스위치** — 알츠하이머(뇌) 및 근육병 관련 유전자에서 문헌에 보고된 기능 변화를 BISECT가 사전 지식 없이 재현하는지 확인.
+
+**10건 전원 BISECT PASS.** 아래 표는 각 케이스의 문헌 근거와 BISECT 증거를 보여주며,
+표 아래 메시지에서 이 툴이 기존 문헌을 넘어 추가로 예측하는 내용을 설명합니다.
+        """)
+
+        _vc1, _vc2, _vc3, _vc4 = st.columns(4)
+        _vc1.metric("BISECT PASS", "10 / 10", help="10개 문헌 검증 케이스 전원 BISECT PASS 달성")
+        _vc2.metric("교과서적 유명 사례", "2건", help="RTN4(Nogo), EGFR — 생물학 교과서 수록 아이소폼 다양성 예시")
+        _vc3.metric("질환 연관 케이스", "8건", help="AD 뇌 5건 + 근육 질환 3건 (문헌 보고된 기능 스위치)")
+        _vc4.metric("총 도메인 변화 감지", "33개", help="10케이스에서 BISECT가 감지한 단백질 도메인 획득·손실 합계")
+
+        st.markdown("---")
+
+        # ── 산점도 ──────────────────────────────────────────────────────────
+        _VAL_DATA = [
+            {"Gene": "KIF21B",  "Tissue": "Brain (AD)", "Cell Type": "Excitatory", "|ΔUsage|": 0.855, "phyloP": 1.954, "PPI": "SUPPORTED",   "n_domains": 6},
+            {"Gene": "DLG1",    "Tissue": "Brain (AD)", "Cell Type": "OPC",        "|ΔUsage|": 0.857, "phyloP": 1.896, "PPI": "SUPPORTED",   "n_domains": 6},
+            {"Gene": "DMD",     "Tissue": "Brain (AD)", "Cell Type": "Inhibitory", "|ΔUsage|": 0.919, "phyloP": 5.625, "PPI": "SUPPORTED",   "n_domains": 3},
+            {"Gene": "NDUFS4",  "Tissue": "Brain (AD)", "Cell Type": "Excitatory", "|ΔUsage|": 0.563, "phyloP": 0.003, "PPI": "SUPPORTED",   "n_domains": 2},
+            {"Gene": "SYNE1",   "Tissue": "Brain (AD)", "Cell Type": "Inhibitory", "|ΔUsage|": 0.839, "phyloP": 2.097, "PPI": "SUPPORTED",   "n_domains": 1},
+            {"Gene": "NDUFS7",  "Tissue": "Muscle",     "Cell Type": "Skeletal",   "|ΔUsage|": 0.508, "phyloP": 0.0,   "PPI": "UNSUPPORTED", "n_domains": 1},
+            {"Gene": "NDUFS8",  "Tissue": "Muscle",     "Cell Type": "Skeletal",   "|ΔUsage|": 0.500, "phyloP": 0.0,   "PPI": "UNSUPPORTED", "n_domains": 5},
+            {"Gene": "TMOD1",   "Tissue": "Muscle",     "Cell Type": "Skeletal",   "|ΔUsage|": 0.542, "phyloP": 0.0,   "PPI": "UNSUPPORTED", "n_domains": 1},
+        ]
+        _vdf = _pd_val.DataFrame(_VAL_DATA)
+
+        _fig_val = _px_val.scatter(
+            _vdf,
+            x="|ΔUsage|",
+            y="phyloP",
+            color="Tissue",
+            size="n_domains",
+            symbol="PPI",
+            text="Gene",
+            hover_data={"Cell Type": True, "n_domains": True, "PPI": True, "|ΔUsage|": ":.3f", "phyloP": ":.3f"},
+            color_discrete_map={"Brain (AD)": "#f97316", "Muscle": "#3b82f6"},
+            symbol_map={"SUPPORTED": "circle", "UNSUPPORTED": "diamond-open"},
+            title="문헌 검증 케이스 — 아이소폼 사용 변화 × 서열 보존성 (phyloP)",
+            labels={"|ΔUsage|": "|ΔUsage| (아이소폼 사용 비율 변화)", "phyloP": "phyloP 점수 (서열 진화 보존성)"},
+            size_max=28,
+            height=420,
+        )
+        _fig_val.update_traces(
+            textposition="top center",
+            textfont=dict(size=11, color="#1e293b", family="Arial"),
+            marker=dict(opacity=0.88, line=dict(color="white", width=1.5)),
+        )
+        _fig_val.add_hline(
+            y=1.0, line_dash="dot", line_color="#94a3b8", line_width=1.5,
+            annotation_text="phyloP > 1 (진화적 보존 구간)", annotation_position="top right",
+            annotation_font=dict(size=10, color="#64748b"),
+        )
+        _fig_val.add_vline(
+            x=0.5, line_dash="dot", line_color="#94a3b8", line_width=1.5,
+            annotation_text="|ΔUsage| > 0.5 (유의한 사용 변화)", annotation_position="top left",
+            annotation_font=dict(size=10, color="#64748b"),
+        )
+        _fig_val.update_layout(
+            plot_bgcolor="white",
+            xaxis=dict(gridcolor="#f0f0f0", range=[0.46, 0.96], title_font=dict(size=12)),
+            yaxis=dict(gridcolor="#f0f0f0", title_font=dict(size=12)),
+            legend=dict(orientation="h", yanchor="bottom", y=-0.28, title=""),
+            margin=dict(t=52, b=80, l=60, r=20),
+            font=dict(size=11, family="Arial"),
+        )
+        st.plotly_chart(_fig_val, use_container_width=True, key="validation_scatter")
+        st.caption(
+            "● 원 크기 = 도메인 변화 수 (획득+손실) · ◇ 빈 마름모 = PPI 미지원 (근육 케이스, AlphaFold 구조 없음 → phyloP = 0 표시) · "
+            "모든 케이스 |ΔUsage| > 0.5 기준 충족"
+        )
+
+        st.markdown("#### 케이스별 상세 증거")
+
+        _TABLE_DATA = [
+            # ── 교과서적 아이소폼 다양성 사례 ──────────────────────────────────
+            {"유형":    "📘 교과서",
+             "유전자":  "RTN4 (Nogo)",
+             "조직":    "근육",
+             "세포 유형": "Skeletal",
+             "|ΔUsage|": 0.776,
+             "phyloP":  "—",
+             "PPI":     "◻ UNSUPPORTED",
+             "도메인 변화": "Reticulon + DUF639 손실 (0+2)",
+             "BISECT 해석": "Nogo-A → 단축형 전환. 축삭 재생 억제 Reticulon 도메인 소실 재현",
+             "문헌 근거": "Grandpré & Strittmatter, Neuroscientist (2001)"},
+            {"유형":    "📘 교과서",
+             "유전자":  "EGFR",
+             "조직":    "근육",
+             "세포 유형": "Skeletal",
+             "|ΔUsage|": 0.635,
+             "phyloP":  "—",
+             "PPI":     "◻ UNSUPPORTED",
+             "도메인 변화": "Pkinase·Recep_L·Furin-like 외 6개 손실 (0+6)",
+             "BISECT 해석": "키나아제 + 리간드결합 도메인 전체 손실 → 비기능성 절단형 EGFR 재현",
+             "문헌 근거": "Reiter et al., Oncogene (2001)"},
+            # ── 뇌 (알츠하이머 vs 정상) ────────────────────────────────────────
+            {"유형":    "🧠 AD 뇌",
+             "유전자":  "KIF21B",
+             "조직":    "뇌 (AD)",
+             "세포 유형": "Excitatory",
+             "|ΔUsage|": 0.855,
+             "phyloP":  1.954,
+             "PPI":     "✅ SUPPORTED",
+             "도메인 변화": "Kinesin·Microtub_bd 손실 / WD40·Nup160 획득 (3+3)",
+             "BISECT 해석": "운동단백질 미세소관 결합 기능 손실. AD 뇌에서 Kinesin 활성 감소 재현",
+             "문헌 근거": "van der Vaart et al., Neuron (2013)"},
+            {"유형":    "🧠 AD 뇌",
+             "유전자":  "DLG1",
+             "조직":    "뇌 (AD)",
+             "세포 유형": "OPC",
+             "|ΔUsage|": 0.857,
+             "phyloP":  1.896,
+             "PPI":     "✅ SUPPORTED",
+             "도메인 변화": "PDZ×3·SH3×2·Guanylate_kin 획득 (6+0)",
+             "BISECT 해석": "OPC 시냅스 스캐폴딩 기능 변화. DLG1 AD 관련성 재현",
+             "문헌 근거": "Bhatt et al., Nat. Commun. (2020)"},
+            {"유형":    "🧠 AD 뇌",
+             "유전자":  "DMD",
+             "조직":    "뇌 (AD)",
+             "세포 유형": "Inhibitory",
+             "|ΔUsage|": 0.919,
+             "phyloP":  5.625,
+             "PPI":     "✅ SUPPORTED",
+             "도메인 변화": "SOGA 획득 / Spectrin·WW 손실 (1+2)",
+             "BISECT 해석": "Dystrophin 세포골격 앵커링 기능 손실 재현 (phyloP 최고 5.6)",
+             "문헌 근거": "Fritschy et al., J. Neurosci. (1998)"},
+            {"유형":    "🧠 AD 뇌",
+             "유전자":  "NDUFS4",
+             "조직":    "뇌 (AD)",
+             "세포 유형": "Excitatory",
+             "|ΔUsage|": 0.563,
+             "phyloP":  0.003,
+             "PPI":     "✅ SUPPORTED",
+             "도메인 변화": "RVT_1 획득 / NDUS4 손실 (1+1)",
+             "BISECT 해석": "Complex I 서브유닛 4 기능 손실. AD 미토콘드리아 기능 저하 재현",
+             "문헌 근거": "Papa et al., J. Biol. Chem. (2002)"},
+            {"유형":    "🧠 AD 뇌",
+             "유전자":  "SYNE1",
+             "조직":    "뇌 (AD)",
+             "세포 유형": "Inhibitory",
+             "|ΔUsage|": 0.839,
+             "phyloP":  2.097,
+             "PPI":     "✅ SUPPORTED",
+             "도메인 변화": "Spectrin 손실 (0+1)",
+             "BISECT 해석": "핵막-세포골격 연결 앵커 기능 손실. AD 억제성 뉴런 취약성 재현",
+             "문헌 근거": "Gros-Louis et al., AJHG (2007)"},
+            # ── 근육 질환 ──────────────────────────────────────────────────────
+            {"유형":    "💪 근육 질환",
+             "유전자":  "NDUFS7",
+             "조직":    "근육",
+             "세포 유형": "Skeletal",
+             "|ΔUsage|": 0.508,
+             "phyloP":  "—",
+             "PPI":     "◻ UNSUPPORTED",
+             "도메인 변화": "Oxidored_q6 손실 (0+1)",
+             "BISECT 해석": "Complex I 퀴논-결합 전자전달 기능 손실 재현",
+             "문헌 근거": "Triepels et al., Biochem. Soc. Trans. (2001)"},
+            {"유형":    "💪 근육 질환",
+             "유전자":  "NDUFS8",
+             "조직":    "근육",
+             "세포 유형": "Skeletal",
+             "|ΔUsage|": 0.500,
+             "phyloP":  "—",
+             "PPI":     "◻ UNSUPPORTED",
+             "도메인 변화": "Fer4 철-황 클러스터 ×5 손실 (0+5)",
+             "BISECT 해석": "전자전달계 철-황 중심부 기능 손실 재현",
+             "문헌 근거": "Schuelke et al., Ann. Neurol. (1999)"},
+            {"유형":    "💪 근육 질환",
+             "유전자":  "TMOD1",
+             "조직":    "근육",
+             "세포 유형": "Skeletal",
+             "|ΔUsage|": 0.542,
+             "phyloP":  "—",
+             "PPI":     "◻ UNSUPPORTED",
+             "도메인 변화": "Tropomodulin 액틴캡핑 손실 (0+1)",
+             "BISECT 해석": "액틴 필라멘트 말단 보호 기능 손실 재현",
+             "문헌 근거": "Gregorio et al., J. Cell Biol. (1995)"},
+        ]
+        _tdf = _pd_val.DataFrame(_TABLE_DATA)
+
+        def _highlight_val_row(row):
+            _유형 = str(row.get("유형", ""))
+            if "교과서" in _유형:
+                return ["background-color: #f5f3ff; color: #1e293b"] * len(row)
+            elif "AD 뇌" in _유형:
+                return ["background-color: #fff7ed; color: #1e293b"] * len(row)
+            return ["background-color: #eff6ff; color: #1e293b"] * len(row)
+
+        st.dataframe(
+            _tdf.style.apply(_highlight_val_row, axis=1).format({"|ΔUsage|": "{:.3f}"}),
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            "보라색 행 = 📘 교과서적 유명 사례 (RTN4/Nogo, EGFR) · 주황색 행 = 🧠 AD 뇌 케이스 · "
+            "파란색 행 = 💪 근육 질환 케이스 · phyloP '—' = AlphaFold 구조 미보유 (도메인 증거로 대체) · "
+            "도메인 변화 표기: (획득+손실) · PPI ◻ = STRING 구조 증거 없음"
+        )
+
+        st.markdown("""
+<div style='background:#fafafa;border-left:4px solid #6366f1;border-radius:6px;
+padding:16px 20px;margin-top:12px'>
+<b style='color:#3730a3'>📌 이 툴이 기존 문헌보다 더 말해주는 것</b><br><br>
+<span style='color:#312e81;font-size:0.92rem'>
+위 10개 케이스는 "PRISM+BISECT가 이미 알려진 생물학을 정확히 재현하는가"를 보여줍니다.
+그런데 BISECT는 문헌이 <b>유전자 수준</b>에서 보고한 것을 <b>아이소폼 수준 도메인 변화</b>로 분해합니다.<br><br>
+예시: <b>KIF21B</b> — 문헌은 "KIF21B 활성 저하"를 보고했습니다.
+BISECT는 어떤 특정 아이소폼이 우세해지며 Kinesin·Microtub_bd 도메인을 잃는 동시에
+WD40·Nup160 도메인을 새로 획득하는지까지 자동으로 예측합니다.<br>
+예시: <b>RTN4</b> — 문헌은 Nogo-A/B/C 이형체를 개별 실험으로 구분했습니다.
+BISECT는 대체 프로모터 TSS 차이(36 kb)와 Reticulon 도메인 손실을 자동으로 감지해
+어떤 아이소폼 전환이 일어났는지를 데이터만으로 예측합니다.<br><br>
+<b>유전자 수준 분석이 "어떤 유전자"를 알려준다면,
+PRISM+BISECT는 "어떤 아이소폼이 어떤 도메인을 통해 무슨 기능을 잃거나 얻는가"를 알려줍니다.</b>
+</span>
+</div>
+        """, unsafe_allow_html=True)
+
     # ── 4. 기존 도구 대비 차별점 ──────────────────────────────────────────────
     with st.expander("🔬 기존 도구 대비 차별점", expanded=False):
         with st.container():

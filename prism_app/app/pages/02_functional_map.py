@@ -62,8 +62,16 @@ tab_umap, tab_heat, tab_gene, tab_net = st.tabs([
 # Tab 1: UMAP
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_umap:
-    st.subheader("GO-Score Space UMAP")
-    st.caption("GO 스코어 벡터를 2D로 투영합니다. 색상 옵션을 바꿔가며 클러스터 패턴을 분석하세요.")
+    st.subheader("GO-Score Space UMAP — GO 기능 공간의 아이소폼 분포")
+    st.caption(
+        "각 아이소폼을 **GO 스코어 벡터**(18~73차원)로 표현하고, 이를 2D 공간(UMAP/t-SNE)에 투영합니다. "
+        "**비슷한 GO 기능을 예측받은 아이소폼들이 공간에서 가까이 모입니다(클러스터).** "
+        "색상 옵션 해석: "
+        "**isoform_type** — Known/NIC/NNIC이 섞이면 Novel 아이소폼이 Known과 비슷한 기능 공간에 있음; "
+        "**scenario** — S1·S3이 특정 클러스터에 집중되면 기능 스위치 후보 영역; "
+        "**max_go** — 같은 GO 기능을 1위로 예측받은 아이소폼들의 분포; "
+        "**max_score** — 예측 자신감이 높은 아이소폼의 위치 (Viridis 색상, 노란색이 높음)"
+    )
 
     col_opt1, col_opt2, col_opt3, col_opt4 = st.columns(4)
     color_by = col_opt1.selectbox(
@@ -131,8 +139,11 @@ with tab_umap:
     )
     st.plotly_chart(fig_umap, use_container_width=True)
     st.caption(
-        "Each point = one isoform projected into 2D using its GO-score vector (UMAP, cosine distance). "
-        "Isoforms with similar predicted functions cluster together."
+        "각 점 = 아이소폼 1개 (GO 스코어 벡터를 코사인 거리 기반 UMAP으로 2D 투영) · "
+        "점 간 거리 = GO 기능 프로파일 유사도 (가까울수록 GO 기능이 비슷함) · "
+        "클러스터 레이블 = KMeans로 감지한 기능 군집의 대표 GO 기능 · "
+        "**무엇을 보면 좋은가**: Novel 아이소폼(NIC/NNIC)이 Known 클러스터 안에 있으면 기능 예측 신뢰도 높음; "
+        "S1 아이소폼이 특정 GO 클러스터에 집중되면 그 기능이 질병에 관련된 스위치 경로일 가능성"
     )
     render_umap_interpretation(embed_method, n_total, len(sample_idx), color_by)
 
@@ -188,25 +199,40 @@ with tab_umap:
 # Tab 2: Type × GO Heatmap
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_heat:
-    st.subheader("Mean PRISM Score by Isoform Type and GO Term")
-    st.caption("Known·NIC·NNIC 각 타입에서 GO 기능별 평균 예측 점수를 비교합니다. 아이소폼 타입 파일이 있어야 표시됩니다.")
+    st.subheader("아이소폼 타입 × GO 기능 평균 스코어 히트맵")
+    st.caption(
+        "**X축**: GO 기능 항목 · **Y축**: 아이소폼 구조 타입 (Known / NIC / NNIC) · "
+        "**셀 색**: 해당 타입의 아이소폼들이 이 GO 기능에서 받은 PRISM 평균 스코어 (0~1) · "
+        "**무엇을 보면 좋은가**: NIC·NNIC 행의 어떤 GO 기능이 Known 행보다 높거나 낮은지를 확인하세요. "
+        "NIC/NNIC가 Known보다 특정 GO에서 높으면 → Novel 아이소폼이 기존에 없던 기능을 발굴했을 가능성. "
+        "반대로 Known보다 낮으면 → 해당 기능을 담당하는 도메인이 Novel 아이소폼에서 제거됐을 가능성."
+    )
 
     if types is None:
-        st.info("Isoform type labels not available. Upload isoform_types file.")
+        st.info("아이소폼 타입 파일이 없습니다. 사이드바에서 isoform_types 파일을 업로드하세요.")
     else:
         fig_heat = build_type_go_heatmap(sm, types, go, gnames)
         st.plotly_chart(fig_heat, use_container_width=True)
         st.caption(
-            "Each cell shows the mean PRISM score for isoforms of that structural type "
-            "in the given GO term. Known = Ensembl-annotated; NIC = Novel In Catalog; NNIC = Novel Not In Catalog."
+            "Known = Ensembl 주석 있는 아이소폼 · NIC = Novel In Catalog (새로운 엑손 조합) · "
+            "NNIC = Novel Not In Catalog (완전히 새로운 전사체) · "
+            "타입 간 색 차이가 클수록 구조 타입에 따라 GO 기능 예측 패턴이 다름을 의미합니다."
         )
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Tab 3: Within-Gene Comparison
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_gene:
-    st.subheader("Within-Gene Isoform × GO Score Comparison")
-    st.caption("유전자 이름(예: NDUFS4, KIF21B, DLG1)을 입력하고 Plot 버튼을 클릭하면 해당 유전자의 모든 아이소폼 간 GO 스코어를 비교합니다.")
+    st.subheader("유전자 내 아이소폼 간 GO 기능 비교 (Within-Gene Comparison)")
+    st.caption(
+        "같은 유전자에 속한 아이소폼들은 서로 다른 GO 기능을 가질 수 있습니다. "
+        "이 차트는 **한 유전자 내 아이소폼 간 GO 스코어 차이(Δ)**를 시각화해 기능 스위치 후보 쌍을 탐지합니다. "
+        "**chart type 설명**: bar = 아이소폼별 GO 스코어 막대 (비교 직관적) · "
+        "heatmap = 아이소폼 × GO 매트릭스 (전체 패턴 파악) · "
+        "parallel = 평행 좌표계 (여러 GO 동시 비교) · "
+        "**무엇을 찾아야 하나**: Δ ≥ 0.1인 아이소폼 쌍이 기능 스위치 후보입니다. "
+        "아래 자동 감지 박스(노란색)가 가장 유력한 쌍을 강조합니다."
+    )
 
     gene_input = st.text_input(
         "Gene symbol", value="DLG1",
@@ -259,15 +285,23 @@ with tab_gene:
 # Tab 4: GO Co-occurrence Network
 # ─────────────────────────────────────────────────────────────────────────────
 with tab_net:
-    st.subheader("GO Term Co-prediction Network")
-    min_corr = st.slider("Minimum Pearson r for edge", 0.1, 0.9, 0.3, 0.05)
+    st.subheader("GO 기능 공동예측 네트워크 (GO Co-prediction Network)")
+    st.caption(
+        "두 GO 기능이 같은 아이소폼에서 동시에 높게 예측되는 경향이 있으면 엣지로 연결됩니다. "
+        "**노드**: GO 기능 항목 · **엣지**: 두 GO 기능 스코어 간 Pearson r ≥ 임계값 · "
+        "**클러스터된 노드**: 항상 함께 예측되는 기능 모듈 (예: 근육 수축 + 근절 조직화) · "
+        "**임계값 해석**: r = 0.3(느슨, 기능 군집 탐색) / r = 0.6(엄격, 강한 동반 예측만). "
+        "고립된 노드는 다른 GO 기능과 독립적으로 예측되는 단독 기능을 의미합니다."
+    )
+    min_corr = st.slider("최소 Pearson r (엣지 임계값)", 0.1, 0.9, 0.3, 0.05)
 
-    if st.button("Build network"):
+    if st.button("네트워크 빌드"):
         from prism_app.visualization.heatmap import build_go_cooccurrence_network
-        with st.spinner("Computing GO co-occurrence…"):
+        with st.spinner("GO 공동예측 계산 중…"):
             fig_net = build_go_cooccurrence_network(sm, go, gnames, min_corr=min_corr)
         st.plotly_chart(fig_net, use_container_width=True)
         st.caption(
-            "Nodes = GO terms; edges drawn when Pearson r ≥ threshold across all isoform scores. "
-            "Clustered nodes are co-predicted functions (e.g. muscle contraction + sarcomere organization)."
+            f"현재 임계값 r ≥ {min_corr:.1f} 으로 엣지 필터링 · "
+            "군집된 GO term들은 같은 기능 경로를 공유하는 아이소폼에서 동반 예측됨 · "
+            "임계값을 높이면 더 강한 공동예측 쌍만 남습니다."
         )

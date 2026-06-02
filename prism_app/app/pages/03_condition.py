@@ -98,7 +98,45 @@ if dtu_df is None:
     st.stop()
 
 # ── DTU loaded ────────────────────────────────────────────────────────────────
-st.success(f"DTU data loaded: **{len(dtu_df):,}** isoform–condition records.")
+st.success(f"DTU 데이터 로드 완료: **{len(dtu_df):,}** 아이소폼-조건 레코드.")
+
+with st.expander("📐 분석 원리 — GAIN/LOSS/NEUTRAL은 무엇을 의미하는가", expanded=True):
+    st.markdown("""
+### 핵심 개념: 아이소폼 쌍 비교를 통한 GO 기능 방향성 판단
+
+**분석 단위는 "유전자별 아이소폼 쌍"입니다.**
+DTU는 조건 간(예: 질병 vs 정상) 아이소폼 사용 비율(Isoform Fraction, IF)의 변화를 측정합니다.
+각 유전자에서 BISECT는 두 아이소폼을 짝지어 비교합니다:
+
+| 역할 | 정의 | delta_IF 부호 |
+|------|------|:---:|
+| **↑ 질병 우세 아이소폼** | 질병 조건에서 IF가 **증가**한 아이소폼 | + |
+| **↓ 대체된 아이소폼** | 질병 조건에서 IF가 **감소**한 아이소폼 | − |
+
+각 (유전자, GO term) 쌍에 대해 **PRISM 스코어 차이**를 계산합니다:
+
+```
+score_delta = PRISM_score(↑질병 우세 아이소폼, GO term)
+            − PRISM_score(↓대체된 아이소폼,    GO term)
+```
+
+| 판정 | 조건 | 생물학적 의미 |
+|------|------|-------------|
+| **GAIN** (초록) | score_delta > +임계값 | 질병에서 우세해진 아이소폼이 이 GO 기능을 **더 높게** 예측받음 → 세포가 이 기능을 새롭게 획득 |
+| **LOSS** (빨강) | score_delta < −임계값 | 대체된 아이소폼이 이 GO 기능을 **더 높게** 예측받았었음 → 세포가 이 기능을 상실 |
+| **NEUTRAL** (회색) | \|score_delta\| ≤ 임계값 | 두 아이소폼 간 해당 GO 기능 차이 없음 |
+
+> **예시**: 유전자 NDUFS4에서 정상 조건 아이소폼(NDUFS4-201)의 미토콘드리아 호흡 GO 스코어가 0.8이고,
+> 질병 조건 우세 아이소폼(NDUFS4-204)의 스코어가 0.3이라면
+> → score_delta = 0.3 − 0.8 = **−0.5** → **LOSS** (이 유전자는 질병에서 미토콘드리아 호흡 기능을 손실)
+
+### 중요 구분
+
+- **주체는 "유전자"**: GAIN/LOSS는 개별 아이소폼 자체가 아니라 **유전자 수준 기능 변화**를 표현합니다
+- **기전은 "아이소폼 쌍"**: 실제로는 두 아이소폼의 PRISM 스코어 차이가 판정 근거입니다
+- **방향 기준**: `delta_IF > 0`인 아이소폼이 "질병 우세"로 정의됩니다 (사이드바 슬라이더로 |delta_IF| 최솟값 조정 가능)
+- **유전자 수준 집계**: 한 유전자에 여러 DTU 이벤트가 있으면, 가장 유의미한 이벤트(|delta_IF| 최대) 기준으로 판정합니다
+    """)
 
 # ── Cell type / condition filter ──────────────────────────────────────────────
 _all_conditions = sorted(dtu_df['condition'].dropna().unique().tolist()) if 'condition' in dtu_df.columns else []
@@ -180,45 +218,53 @@ conseq_df = _compute_consequences(
 
 # ── Tab 1: Functional Consequence Matrix ──────────────────────────────────────
 with tab_matrix:
-    st.subheader("Gene × GO Functional Consequence Matrix")
+    st.subheader("유전자 × GO 기능 변화 매트릭스 (Functional Consequence Matrix)")
     st.caption(
-        "**GAIN** (green): up-regulated isoform scores higher than down-regulated isoform.  "
-        "**LOSS** (red): opposite.  "
-        "**NEUTRAL** (grey): score delta < threshold."
+        "각 유전자에서 DTU로 감지된 아이소폼 쌍의 PRISM 스코어 차이로 GO 기능 방향성(GAIN/LOSS/NEUTRAL)을 판정합니다. "
+        "**GAIN** (초록): 질병 우세 아이소폼이 이 GO 기능을 더 높이 예측받음 — 세포가 이 기능을 새롭게 획득.  "
+        "**LOSS** (빨강): 대체된 아이소폼이 이 GO 기능을 더 높이 예측받았었음 — 세포가 이 기능을 상실.  "
+        "**NEUTRAL** (회색): 두 아이소폼 간 스코어 차이가 임계값 미만."
     )
 
     if conseq_df.empty:
-        st.warning("No significant DTU events found. Try relaxing the p-value threshold.")
+        st.warning("유의미한 DTU 이벤트가 없습니다. p-value 임계값을 완화하거나 |delta_IF| 최솟값을 낮춰 보세요.")
     else:
         summ = consequence_summary(conseq_df)
 
-        # ── Summary bar: GAIN/LOSS/NEUTRAL counts per GO term ────────────────
+        # ── Chart ①: GO term별 GAIN/LOSS/NEUTRAL 분포 ────────────────────────
+        st.markdown("**① GO term별 기능 변화 분포** — 어떤 GO 기능에서 스위치가 집중되는가")
         fig_summ = px.bar(
             summ.head(18),
             x='go_name', y=['GAIN', 'LOSS', 'NEUTRAL'],
             barmode='stack',
-            title="Functional consequence distribution per GO term",
-            labels={'value': 'N genes', 'go_name': '', 'variable': 'Consequence'},
+            title="GO term별 GAIN / LOSS / NEUTRAL 유전자 수",
+            labels={'value': '유전자 수', 'go_name': 'GO 기능', 'variable': '판정'},
             color_discrete_map={'GAIN': '#2a9d8f', 'LOSS': '#e63946', 'NEUTRAL': '#adb5bd'},
             height=380,
         )
         fig_summ.update_layout(xaxis_tickangle=-35, legend_title='')
         st.plotly_chart(fig_summ, use_container_width=True)
+        st.caption(
+            "X축: 각 GO 기능 항목 · Y축: 해당 GO 기능에서 GAIN/LOSS/NEUTRAL 판정을 받은 **유전자 수** · "
+            "막대가 클수록 이 조건에서 그 GO 기능을 가진 아이소폼 스위치가 많이 일어남을 의미 · "
+            "NEUTRAL이 압도적이면 DTU는 일어났지만 GO 기능 차이는 적다는 뜻 (발현 스위치 우세)"
+        )
 
-        # ── GAIN / LOSS binary chart (NEUTRAL 제외) ───────────────────────────
+        # ── Chart ②: GAIN/LOSS only ───────────────────────────────────────────
         _gl = summ[['go_name', 'GAIN', 'LOSS']].copy()
         _gl['total'] = _gl['GAIN'] + _gl['LOSS']
         _gl = _gl[_gl['total'] > 0].sort_values('total', ascending=True)
 
         if not _gl.empty:
+            st.markdown("**② 기능 스위치 집중 GO term** (NEUTRAL 제외)")
             fig_gl = px.bar(
                 _gl,
                 x=['GAIN', 'LOSS'],
                 y='go_name',
                 orientation='h',
                 barmode='group',
-                title="GAIN / LOSS only — functional switch 집중 GO term (NEUTRAL 제외)",
-                labels={'value': 'N genes', 'go_name': '', 'variable': ''},
+                title="실제 기능 변화가 있는 GO term — GAIN vs LOSS 유전자 수",
+                labels={'value': '유전자 수', 'go_name': '', 'variable': ''},
                 color_discrete_map={'GAIN': '#2a9d8f', 'LOSS': '#e63946'},
                 height=max(300, len(_gl) * 28),
                 text_auto=True,
@@ -231,16 +277,20 @@ with tab_matrix:
                 xaxis=dict(gridcolor='#f0f0f0'),
             )
             st.plotly_chart(fig_gl, use_container_width=True)
+            st.caption(
+                "NEUTRAL을 제외하고 실제 GO 기능이 변한 유전자만 집계 · "
+                "GAIN 막대가 크면: 이 조건에서 해당 GO 기능을 새로 획득한 유전자가 많음 · "
+                "LOSS 막대가 크면: 이 조건에서 해당 GO 기능을 잃은 유전자가 많음 · "
+                "양쪽이 비슷하면: 기능 스위치가 방향 편향 없이 일어나는 중"
+            )
 
-            # ── Bias diverging bar: (GAIN−LOSS)/(GAIN+LOSS) ──────────────────
+            # ── Chart ③: Bias diverging bar ──────────────────────────────────
+            st.markdown("**③ GO term별 기능 변화 방향 편향도** — GAIN 우세인가, LOSS 우세인가")
             _bias = _gl.copy()
             _bias['bias'] = (_bias['GAIN'] - _bias['LOSS']) / _bias['total']
-            _bias = _bias.sort_values('bias')   # diverging: loss-biased at top
-            _bias['color'] = _bias['bias'].apply(
-                lambda v: '#2a9d8f' if v >= 0 else '#e63946'
-            )
+            _bias = _bias.sort_values('bias')
             _bias['bias_label'] = _bias['bias'].map(
-                lambda v: f"{'GAIN' if v >= 0 else 'LOSS'}-biased  {abs(v):.0%}"
+                lambda v: f"{'GAIN' if v >= 0 else 'LOSS'} 편향  {abs(v):.0%}"
             )
 
             fig_bias = px.bar(
@@ -250,8 +300,8 @@ with tab_matrix:
                 color='bias',
                 color_continuous_scale=[[0, '#e63946'], [0.5, '#f1f5f9'], [1, '#2a9d8f']],
                 range_color=[-1, 1],
-                title="Functional direction bias per GO term — (GAIN − LOSS) / (GAIN + LOSS)",
-                labels={'bias': 'Bias (−1 = all LOSS · +1 = all GAIN)', 'go_name': ''},
+                title="기능 방향 편향도 — (GAIN − LOSS) / (GAIN + LOSS)",
+                labels={'bias': '편향도 (−1 = 전부 LOSS · 0 = 균형 · +1 = 전부 GAIN)', 'go_name': ''},
                 text='bias_label',
                 height=max(300, len(_bias) * 28),
             )
@@ -265,45 +315,74 @@ with tab_matrix:
             fig_bias.add_vline(x=0, line_color='#64748b', line_width=1.5)
             st.plotly_chart(fig_bias, use_container_width=True)
             st.caption(
-                "Bias = (GAIN − LOSS) / (GAIN + LOSS). "
-                "Teal bars = GO functions preferentially **gained** in the up-regulated isoform; "
-                "Red bars = functions preferentially **lost**. Near-zero = balanced switching."
+                "편향도 = (GAIN 유전자 수 − LOSS 유전자 수) / (GAIN + LOSS 유전자 수) · "
+                "초록(+1 방향): 이 GO 기능은 질병에서 **획득 경향** — 새로운 기능을 가진 아이소폼이 우세해짐 · "
+                "빨강(−1 방향): 이 GO 기능은 질병에서 **손실 경향** — 기존 기능을 가진 아이소폼이 대체됨 · "
+                "0 근처: 획득과 손실이 비슷한 규모로 일어나는 기능 (유전자마다 방향이 다름)"
             )
 
-        # ── Gene × GO heatmap (score delta) ──────────────────────────────────
+        # ── Chart ④: Gene × GO score delta heatmap ──────────────────────────
         pivot = build_consequence_pivot(conseq_df)
 
         if not pivot.empty:
-            # Limit to top genes by max |delta|
-            top_n = st.slider("Max genes to show", 10, 80, 30, 5, key='mat_top_n')
+            st.markdown("**④ 개별 유전자 × GO 기능 스코어 차이 히트맵**")
+            top_n = st.slider("표시할 최대 유전자 수", 10, 80, 30, 5, key='mat_top_n')
             top_genes = pivot.abs().max(axis=1).nlargest(top_n).index
             pivot_view = pivot.loc[top_genes]
 
             fig_heat = px.imshow(
                 pivot_view,
-                color_continuous_scale='RdBu_r',
+                color_continuous_scale=[[0, '#e63946'], [0.5, '#f8fafc'], [1, '#2a9d8f']],
                 color_continuous_midpoint=0,
                 zmin=-0.6, zmax=0.6,
                 aspect='auto',
-                title=f"Top {top_n} genes by |score delta| across GO terms",
-                labels={'color': 'Score delta (up − down)'},
+                title=f"|스코어 차이| 상위 {top_n} 유전자 × GO 기능 히트맵",
+                labels={'color': 'score_delta\n(+: GAIN · −: LOSS)'},
                 height=max(350, len(pivot_view) * 20),
             )
             fig_heat.update_traces(xgap=1, ygap=1)
             st.plotly_chart(fig_heat, use_container_width=True)
+            st.caption(
+                "각 셀 색상 = score_delta (질병 우세 아이소폼 PRISM 스코어 − 대체된 아이소폼 PRISM 스코어) · "
+                "**초록(양수)**: 질병에서 우세해진 아이소폼이 이 GO 기능을 더 높이 예측받음 → GAIN · "
+                "**빨강(음수)**: 대체된 아이소폼이 이 GO 기능을 더 높이 예측받았었음 → LOSS · "
+                "흰색(0 근처): 두 아이소폼 간 GO 기능 차이 없음 (NEUTRAL) · "
+                "Y축: |score_delta| 최댓값 기준 상위 유전자 정렬 (변화가 가장 큰 유전자가 위에)"
+            )
 
-        # Summary stats
+        # ── Summary metrics ────────────────────────────────────────────────────
+        st.markdown("---")
         n_gain = int((conseq_df['consequence'] == 'GAIN').sum())
         n_loss = int((conseq_df['consequence'] == 'LOSS').sum())
         n_neut = int((conseq_df['consequence'] == 'NEUTRAL').sum())
+        n_total = n_gain + n_loss + n_neut
         g1, g2, g3 = st.columns(3)
-        g1.metric("GAIN events",    n_gain, help="Up-isoform scores higher for this GO term")
-        g2.metric("LOSS events",    n_loss, help="Up-isoform scores lower for this GO term")
-        g3.metric("NEUTRAL events", n_neut)
+        g1.metric(
+            "GAIN 이벤트",  n_gain,
+            help=f"질병 우세 아이소폼 PRISM 스코어 > 대체 아이소폼 PRISM 스코어 · 전체의 {n_gain/max(n_total,1):.0%}",
+        )
+        g2.metric(
+            "LOSS 이벤트",  n_loss,
+            help=f"질병 우세 아이소폼 PRISM 스코어 < 대체 아이소폼 PRISM 스코어 · 전체의 {n_loss/max(n_total,1):.0%}",
+        )
+        g3.metric(
+            "NEUTRAL 이벤트", n_neut,
+            help=f"두 아이소폼 간 스코어 차이 < 임계값 · 전체의 {n_neut/max(n_total,1):.0%}",
+        )
+        st.caption(
+            f"이벤트 단위 = (유전자, GO term) 쌍 · 총 {n_total:,}개 · "
+            f"GAIN이 압도적이면 이 조건이 새로운 기능을 활성화하는 방향, LOSS가 압도적이면 기존 기능 상실이 주요 변화"
+        )
         render_condition_interpretation(n_gain, n_loss, n_neut)
 
         # Per-gene expander
-        with st.expander("Show per-gene consequence details"):
+        with st.expander("유전자별 상세 결과 보기 (GAIN/LOSS만)"):
+            st.caption(
+                "up_isoform = 질병 우세 아이소폼 (delta_IF > 0) · "
+                "down_isoform = 대체된 아이소폼 (delta_IF < 0) · "
+                "score_delta = up_score − down_score · "
+                "양수 = 질병 우세 아이소폼이 이 GO 기능을 더 높이 가짐(GAIN), 음수 = 그 반대(LOSS)"
+            )
             disp = conseq_df[conseq_df['consequence'].isin(['GAIN', 'LOSS'])][
                 ['gene_id', 'condition', 'go_name', 'up_isoform', 'down_isoform',
                  'up_score', 'down_score', 'score_delta', 'consequence']
@@ -311,19 +390,24 @@ with tab_matrix:
             st.dataframe(disp, use_container_width=True, hide_index=True)
 
         csv_c = conseq_df.to_csv(index=False).encode('utf-8')
-        st.download_button("Download consequence matrix (CSV)", csv_c,
+        st.download_button("결과 다운로드 (CSV)", csv_c,
                             "functional_consequences.csv", "text/csv")
 
 # ── Tab 2: GO Enrichment ──────────────────────────────────────────────────────
 with tab_enrich:
-    st.subheader("GO Term Enrichment Among DTU-Switched Isoforms")
+    st.subheader("DTU 스위치 아이소폼의 GO 기능 농집 분석 (GO Enrichment)")
     st.caption(
-        "Hypergeometric test: are any GO terms over-represented among "
-        "isoforms with significant DTU? FDR corrected (Benjamini-Hochberg)."
+        "**질문**: DTU로 발현이 바뀐 아이소폼들이 특정 GO 기능에 집중되어 있는가? "
+        "초기하 분포 검정(Hypergeometric test)으로 배경 대비 과대표현된 GO term을 탐지합니다. "
+        "FDR 보정(Benjamini-Hochberg). "
+        "**fold_enrichment**: 관측 비율 / 기대 비율 — 1보다 크면 우연보다 많이 관찰됨."
     )
 
-    direction = st.radio("Isoforms to test", ['both', 'up', 'down'], horizontal=True,
-                          help="'up' = increased usage; 'down' = decreased usage in condition")
+    direction = st.radio(
+        "분석할 아이소폼 방향",
+        ['both', 'up', 'down'], horizontal=True,
+        help="up = 질병에서 사용 증가(delta_IF > 0) · down = 사용 감소(delta_IF < 0) · both = 둘 다",
+    )
     fdr_cut   = st.slider("FDR threshold for significance", 0.01, 0.5, 0.1, 0.01)
 
     enrich_df = _compute_enrichment(
@@ -355,6 +439,11 @@ with tab_enrich:
         fig_e.update_traces(texttemplate='n=%{text}', textposition='outside')
         fig_e.update_layout(yaxis_tickfont_size=11, coloraxis_colorbar_title='FDR')
         st.plotly_chart(fig_e, use_container_width=True)
+        st.caption(
+            "X축: fold_enrichment (관측 아이소폼 수 / 기대 아이소폼 수) — 1.0 이상이면 이 GO 기능이 DTU 아이소폼에 우연보다 많이 집중됨 · "
+            "색: FDR (진한 파랑 = 낮은 FDR = 더 유의미) · 막대 끝 숫자(n=): 실제 관측된 아이소폼 수 · "
+            "fold_enrichment가 크더라도 n이 매우 작으면 통계적 신뢰도 제한됨"
+        )
 
         # Full table
         st.dataframe(
@@ -369,10 +458,12 @@ with tab_enrich:
 
 # ── Tab 3: Sankey — scenario flow ─────────────────────────────────────────────
 with tab_sankey:
-    st.subheader("Scenario Flow Across Conditions")
+    st.subheader("조건 간 시나리오 전환 흐름도 (Sankey)")
     st.caption(
-        "Shows how isoforms are distributed across scenarios in each condition. "
-        "Wider bands = more isoforms moving between scenario states."
+        "두 조건(예: 정상 vs 질병) 간에 아이소폼들이 4-시나리오 분류에서 어떻게 이동하는지 보여줍니다. "
+        "**밴드 두께**: 해당 경로를 따라 이동한 아이소폼 수 · "
+        "S1(기능 스위치) → S1 유지이면 양쪽 조건 모두 DTU+GO 변화 · "
+        "S4(배경) → S1 이동이면 조건 변화로 기능 스위치가 새로 활성화됨을 의미합니다."
     )
 
     from prism_app.pipeline.dtu_connector import parse_dtu_result
@@ -472,8 +563,13 @@ with tab_sankey:
 
 # ── Tab 4: Gene-Level Detail ──────────────────────────────────────────────────
 with tab_genes:
-    st.subheader("Gene-Level Consequence Detail")
-    st.caption("Drill into a specific gene's isoform switching and functional impact.")
+    st.subheader("유전자별 상세 분석 — 아이소폼 스위치와 GO 기능 변화")
+    st.caption(
+        "특정 유전자를 검색하면 해당 유전자 내 아이소폼 스위치의 방향과 영향을 확인합니다. "
+        "**막대 방향**: 오른쪽(양수) = 질병 우세 아이소폼이 이 GO 기능을 더 높이 가짐(GAIN), "
+        "왼쪽(음수) = 대체된 아이소폼이 더 높게 가졌었음(LOSS). "
+        "**막대 길이**: 두 아이소폼 간 PRISM 스코어 차이의 크기 (0~1 범위)."
+    )
 
     gene_query = st.text_input("Gene symbol or ID", placeholder="e.g. NDUFS4, KIF21B, DLG1")
 
@@ -516,12 +612,18 @@ with tab_genes:
                 color='consequence',
                 color_discrete_map={'GAIN': '#2a9d8f', 'LOSS': '#e63946', 'NEUTRAL': '#adb5bd',
                                     'UNKNOWN': '#cccccc'},
-                title=f"Functional consequence: {gene_query}",
-                labels={'score_delta': 'Score delta (up − down)', 'go_name': ''},
+                title=f"{gene_query} — GO 기능별 변화 방향 (score_delta = 질병 우세 아이소폼 − 대체 아이소폼)",
+                labels={'score_delta': 'score_delta  (오른쪽: GAIN · 왼쪽: LOSS)', 'go_name': 'GO 기능'},
                 height=max(300, len(gene_hits) * 26),
             )
-            fig_gene.add_vline(x=0, line_color='black', line_width=1)
+            fig_gene.add_vline(x=0, line_color='#374151', line_width=1.5)
             st.plotly_chart(fig_gene, use_container_width=True)
+            st.caption(
+                f"유전자 {gene_query}의 DTU 이벤트에서: "
+                "초록 막대(GAIN) = 질병 아이소폼이 이 GO 기능을 더 높이 예측받음 → 기능 획득 · "
+                "빨강 막대(LOSS) = 정상 아이소폼이 이 GO 기능을 더 높이 예측받았었음 → 기능 상실 · "
+                "막대 길이 = score_delta 절댓값 (클수록 두 아이소폼 간 기능 차이가 뚜렷함)"
+            )
     elif gene_query:
         st.info("No consequence data available. Check that DTU data is loaded.")
 

@@ -64,8 +64,13 @@ thr   = cfg['score_threshold']
 dtu   = cfg.get('dtu_df')
 
 # ── Coverage Report ──────────────────────────────────────────────────────────
-st.subheader("A1 · Coverage Summary")
-st.caption("아이소폼 타입별 분포와 고신뢰 GO 예측(Score > 임계값) 커버리지를 확인합니다.")
+st.subheader("A1 · Coverage Summary — 얼마나 많은 아이소폼에 GO 기능이 예측됐는가")
+st.caption(
+    "PRISM이 각 아이소폼에 대해 18~73개 GO 기능 중 **어느 기능을 예측했고, 얼마나 자신 있게 예측했는지** 개요를 보여줍니다. "
+    f"Score > {'{thr}'}(사이드바 임계값) 인 GO term이 하나라도 있는 아이소폼을 '예측 성공'으로 집계합니다. "
+    "Known(Ensembl 주석 있음) vs NIC/NNIC(Novel) 간 커버리지 비율 차이가 클수록 "
+    "PRISM이 주석 없는 아이소폼에서도 기능을 예측하고 있음을 의미합니다."
+)
 
 with st.spinner("Computing coverage report…"):
     rep = generate_coverage_report(sm, ids, types, go, gnames, score_threshold=thr)
@@ -107,16 +112,32 @@ fig_go.update_layout(xaxis_tickangle=-40, height=380)
 col_a, col_b = st.columns([1, 2])
 with col_a:
     st.plotly_chart(fig_pie, use_container_width=True)
+    st.caption(
+        f"Score>{thr} 아이소폼의 구조 타입별 구성 · "
+        "NIC/NNIC(Novel) 비율이 높을수록 PRISM이 기존 주석 없는 아이소폼도 활발히 예측했음을 의미합니다."
+    )
 with col_b:
     st.plotly_chart(fig_go, use_container_width=True)
+    st.caption(
+        f"X축: GO 기능 이름 · Y축: 해당 GO 기능에서 Score>{thr}인 아이소폼 수 · "
+        "색: 평균 스코어(높을수록 진한 초록) · "
+        "상위에 위치한 GO 기능이 이 데이터셋에서 PRISM이 가장 자신 있게 예측하는 기능입니다 · "
+        "막대 높이는 '커버리지 폭', 색은 '예측 자신감'을 각각 반영합니다."
+    )
 
 render_coverage_interpretation(rep, thr, types is not None)
 
 st.divider()
 
 # ── Scenario Summary ─────────────────────────────────────────────────────────
-st.subheader("D1 · 4-Scenario Classification")
-st.caption("각 아이소폼을 DTU 유무 × 신규 GO 예측 유무로 4가지 시나리오에 분류합니다. Scenario 1·3이 실험 후보의 우선순위입니다.")
+st.subheader("D1 · 4-Scenario Classification — DTU × GO 기능 예측으로 아이소폼 분류")
+st.caption(
+    "각 아이소폼을 두 축으로 분류합니다: "
+    "① **DTU(Differential Transcript Usage)** — 조건 간 사용 비율이 유의미하게 변했는가 (DTU 파일 필요) · "
+    f"② **신규 GO 예측** — PRISM 스코어 > {'{thr}'}인 GO term이 있는가 · "
+    "S1(DTU+ & GO+)이 질병 메커니즘과 가장 직접 관련된 최우선 후보이며, "
+    "S3(DTU- & GO+)는 조건 무관하게 새로운 기능을 하는 구성적(constitutive) 신규 기능 아이소폼입니다."
+)
 
 with st.spinner("Classifying isoforms…"):
     annot = cfg.get('existing_annotations')
@@ -211,8 +232,14 @@ render_scenario_interpretation(summ, has_dtu=dtu is not None)
 st.divider()
 
 # ── Novel Isoform Summary ────────────────────────────────────────────────────
-st.subheader("A3 · Novel Isoform Function Predictions")
-st.caption("NIC/NNIC 아이소폼 중 기존 Ensembl 주석에 없는 GO 기능이 예측된 아이소폼을 GO 기능별로 집계합니다.")
+st.subheader("A3 · Novel Isoform Function Predictions — 주석 없는 아이소폼의 GO 기능 예측")
+st.caption(
+    "NIC(Novel In Catalog)·NNIC(Novel Not In Catalog) 아이소폼은 Ensembl에 GO 주석이 없습니다. "
+    "PRISM은 서열 기반으로 이들의 GO 기능을 예측하며, 이 섹션은 GO 기능별로 몇 개의 Novel 아이소폼이 "
+    f"Score > {'{thr}'} 예측을 받았는지 집계합니다. "
+    "**여기 나온 GO 기능은 기존 주석이 전혀 없는 상태에서 PRISM이 발굴한 신규 기능 후보입니다.** "
+    "N_novel이 많고 Mean_score가 높은 GO 기능이 가장 유력한 실험 검증 대상입니다."
+)
 
 if types is not None and np.isin(np.asarray(types, dtype=str), ['nic', 'nnic', 'novel']).any():
     with st.spinner("Summarising novel isoform functions…"):
@@ -232,8 +259,15 @@ else:
 st.divider()
 
 # ── Known Annotation Validation (A2) ─────────────────────────────────────────
-st.subheader("A2 · Known Annotation Validation (AUPRC)")
-st.caption("UniProt/UniProtKB 주석을 정답으로 사용해 PRISM 예측의 정확도를 GO 기능별 AUPRC로 평가합니다. 유전자 ID 파일이 있어야 활성화됩니다.")
+st.subheader("A2 · Known Annotation Validation (AUPRC) — PRISM 예측 정확도 검증")
+st.caption(
+    "**AUPRC(Area Under Precision-Recall Curve)**는 GO 기능 예측 정확도를 나타내는 핵심 지표입니다. "
+    "UniProt/UniProtKB에 등록된 GO 주석을 '정답'으로 사용해, PRISM 스코어가 실제 기능을 가진 아이소폼을 "
+    "얼마나 높은 순위에 올리는지 측정합니다. "
+    "**무작위 분류기의 AUPRC = 양성 비율(GO term별 약 0.01~0.1 수준)이며, 0.5가 아닙니다.** "
+    "그래프의 점선(무작위 기준)보다 막대가 길수록 PRISM이 랜덤보다 유의미하게 정확하게 예측함을 의미합니다. "
+    "Lift = AUPRC ÷ 무작위 기준값. Lift > 2이면 무작위 대비 2배 이상 정확한 예측입니다."
+)
 
 @st.cache_data(show_spinner="Computing AUPRC validation…")
 def _run_validation(sm_bytes, sm_shape, ids_list, genes_list, go_list, gnames_json,
