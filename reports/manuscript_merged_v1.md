@@ -1182,6 +1182,32 @@ we hypothesize a shift from myelinating-lineage toward undifferentiated transcri
 line with broad OPC transcriptional alterations reported in AD single-nucleus profiling
 (Mathys et al., *Nature* 2019; PMID: 31042697).
 
+The mechanistic interpretation of this switch requires distinguishing two competing framings. Under
+a **dedifferentiation model**, normal myelinating OPCs suppress the canonical PDZ-containing DLG1
+isoform in favour of tr319500, a non-PDZ variant with MAGUK_N_PEST module only — isoform selection
+appropriate to OPC identity because OPCs do not form classical glutamatergic synapses and therefore
+do not require post-synaptic density scaffold capacity. In AD, transcriptional deregulation of OPCs
+(marked by loss of *MBP*, *MOG*, and *MAG* expression; Mathys et al. 2019; Zhou et al. *Nature
+Medicine* 2020 PMID: 31932799) causes reversion to a less differentiated state in which the
+developmental default — canonical DLG1 with full PDZ complement — re-emerges. Under this model,
+the PRISM-scored synaptic transmission recovery reflects loss of OPC identity, not restoration of
+synapse function. Under a complementary **compensatory synaptogenesis model**, AD OPCs form
+ectopic axon-soma contacts (OPC-to-axon synapses; Bergles et al. 2000) as part of a reparative
+response to white matter damage, and canonical DLG1 is upregulated to scaffold these contacts.
+These framings are not mutually exclusive: OPC dedifferentiation and ectopic synaptogenesis may
+co-occur, both requiring canonical PDZ-domain DLG1.
+
+PRISM and BISECT provide converging quantitative constraints on this switch. PRISM assigns a 27-fold
+score differential (0.033 vs 0.888) derived entirely from ESM-2 sequence embeddings, without any
+annotation of PDZ domain identity — the differential emerges from the learned functional
+representation space, not from explicit domain matching. BISECT independently confirms the locus at
+p = 9.0×10⁻¹⁰ (χ² DTU test), with Δ usage = 0.857, domain annotation confirming six Pfam domains
+(Guanylate_kin, PDZ, PDZ_2, PDZ_6, SH3_1, SH3_2) gained in the AD-enriched isoform, and PPI
+evidence (STRING SUPPORTED) consistent with DLG1's known interactions at the post-synaptic density.
+The convergence of sequence-level PRISM prediction and multi-evidence BISECT characterisation from
+entirely independent methodological paths strengthens the case that the DLG1 OPC switch is a
+bona fide isoform-resolution event rather than a technical artefact of isoform quantification.
+
 ### 4.8 BISECT: structured evidence integration for hypothesis generation and revision
 
 BISECT's key methodological contribution is structured evidence integration that prevents

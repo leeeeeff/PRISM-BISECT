@@ -80,8 +80,9 @@ def render_sidebar() -> dict:
     # ── Score threshold ───────────────────────────────────────────────────
     score_threshold = st.sidebar.slider(
         "Confidence threshold",
-        min_value=0.1, max_value=0.9, value=0.5, step=0.05,
-        help="Isoforms with score > threshold are counted as high-confidence predictions.",
+        min_value=0.1, max_value=0.9, value=0.4, step=0.05,
+        help="Isoforms with score > threshold are counted as high-confidence predictions. "
+             "Default 0.4 reproduces the paper's S1×BISECT cross-link count (32 genes).",
     )
 
     cfg = dict(
