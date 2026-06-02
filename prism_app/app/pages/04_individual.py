@@ -1113,23 +1113,29 @@ with tab_bisect:
     _show_cols = [c for c in _show_cols_raw if c in _bdf_filt.columns]
     _bdf_show  = _bdf_filt[_show_cols].rename(columns=_col_map).copy()
 
-    def _highlight_s1_row(row):
-        if row.get('Gene', '') in _s1_genes:
+    def _highlight_bisect_row(row):
+        # Highlight if: has domain change (BISECT-intrinsic) OR Scenario 1 cross-link
+        _dg = str(row.get('Domains Gained', '') or '').strip()
+        _dl = str(row.get('Domains Lost',   '') or '').strip()
+        _has_domain = bool(_dg or _dl)
+        _is_s1 = row.get('Gene', '') in _s1_genes
+        if _has_domain or _is_s1:
             return ['background-color: #fef9c3'] * len(row)
         return [''] * len(row)
 
+    _caption_parts = ["🟡 강조 = 도메인 구조 변화 확인 케이스"]
     if _s1_genes:
-        st.caption("🟡 강조 = 현재 데이터셋 Scenario 1 교차 유전자 | pLDDT ≥ 70 = AlphaFold 신뢰 구조")
-        st.dataframe(
-            _bdf_show.style.apply(_highlight_s1_row, axis=1).format(
-                {'Δ Usage': '{:.3f}', 'pLDDT': '{:.1f}', 'phyloP': '{:.3f}',
-                 'DTU p-val': '{:.2e}'},
-                na_rep='—',
-            ),
-            use_container_width=True, hide_index=True,
-        )
-    else:
-        st.dataframe(_bdf_show, use_container_width=True, hide_index=True)
+        _caption_parts.append("또는 Scenario 1 교차 유전자")
+    _caption_parts.append("pLDDT ≥ 70 = AlphaFold 신뢰 구조")
+    st.caption(" | ".join(_caption_parts))
+    st.dataframe(
+        _bdf_show.style.apply(_highlight_bisect_row, axis=1).format(
+            {'Δ Usage': '{:.3f}', 'pLDDT': '{:.1f}', 'phyloP': '{:.3f}',
+             'DTU p-val': '{:.2e}'},
+            na_rep='—',
+        ),
+        use_container_width=True, hide_index=True,
+    )
 
     # ── Per-case expanders — only rendered when a gene search is active ──────
     # Rendering all 84 expanders at once is expensive (domain maps, DTU charts,
