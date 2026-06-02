@@ -348,14 +348,41 @@ with tab_bisect:
     else:
         st.dataframe(_bdf_show, use_container_width=True, hide_index=True)
 
-    # ── Per-case expanders (always shown for filtered results) ────────────────
+    # ── Per-case expanders — only rendered when a gene search is active ──────
+    # Rendering all 84 expanders at once is expensive (domain maps, DTU charts,
+    # IGV iframes). Gate on search query so the table always stays fast.
     if not _bdf_filt.empty:
         st.divider()
-        _exp_label = "**케이스 상세** (클릭해서 펼치기)"
-        if _bq:
-            _exp_label = f"**케이스 상세** — '{_bq}' 검색 결과 {len(_bdf_filt)}건"
-        st.markdown(_exp_label)
+        if not _bq:
+            st.info(
+                f"위 표에서 **{len(_bdf_filt)}건**의 PASS 케이스를 확인하세요. "
+                "유전자 이름을 **위 검색창에 입력**하면 도메인 구조·DTU·IGV 등 "
+                "상세 분석이 펼쳐집니다.  예) `KIF21B`, `DLG1`, `NDUFS4`",
+                icon="🔍",
+            )
+        else:
+            st.markdown(f"**케이스 상세** — '{_bq}' 검색 결과 {len(_bdf_filt)}건")
 
+    # ── DTU lookup dict (cached) — built once, O(1) per gene lookup ──────────
+    @st.cache_data(show_spinner=False)
+    def _build_dtu_lookup(dtu_bytes: bytes) -> dict:
+        import io
+        _d = pd.read_csv(io.BytesIO(dtu_bytes), sep='\t')
+        _lk: dict = {}
+        if 'condition' in _d.columns:
+            for (_g, _c), _grp in _d.groupby(['gene_id', 'condition']):
+                _lk[(_g, _c)] = _grp.reset_index(drop=True)
+        else:
+            for _g, _grp in _d.groupby('gene_id'):
+                _lk[(_g, '')] = _grp.reset_index(drop=True)
+        return _lk
+
+    _dtu_src = cfg.get('dtu_df')
+    _dtu_lookup: dict = {}
+    if _dtu_src is not None:
+        _dtu_lookup = _build_dtu_lookup(_dtu_src.to_csv(index=False).encode())
+
+    if _bq and not _bdf_filt.empty:
         for _, _brow in _bdf_filt.iterrows():
             _gene = _brow.get('gene', '?')
             _ct   = _brow.get('cell_type', '?')
@@ -378,51 +405,45 @@ with tab_bisect:
                         unsafe_allow_html=True,
                     )
 
-                # ── DTU Δ Usage bar chart ─────────────────────────────────────
-                _dtu_src = cfg.get('dtu_df')
+                # ── DTU Δ Usage bar chart (O(1) lookup via cached dict) ───────
                 _CT_COND_MAP = {'Excitatory': 'Excitatory neuron',
                                 'Inhibitory': 'Inhibitory neuron'}
                 _dtu_cond = _CT_COND_MAP.get(_ct, _ct)
-                if _dtu_src is not None:
-                    _g_dtu = (
-                        _dtu_src[(_dtu_src['gene_id'] == _gene) &
-                                  (_dtu_src['condition'] == _dtu_cond)]
-                        if 'condition' in _dtu_src.columns
-                        else _dtu_src[_dtu_src['gene_id'] == _gene]
-                    ).copy()
-                    if not _g_dtu.empty:
-                        _g_dtu = _g_dtu.sort_values('delta_IF').reset_index(drop=True)
-                        _g_dtu['role'] = _g_dtu['isoform_id'].map(
-                            lambda iso: ('CT (Control)' if iso == _ct_tx
-                                         else ('AD (Disease)' if iso == _ad_tx
-                                               else 'Other isoform'))
-                        )
-                        _g_dtu['label'] = _g_dtu['delta_IF'].map(lambda v: f'{v:+.3f}')
-                        _fig_dtu = px.bar(
-                            _g_dtu,
-                            x='isoform_id', y='delta_IF',
-                            color='role',
-                            color_discrete_map={
-                                'CT (Control)':   '#3b82f6',
-                                'AD (Disease)':   '#ef4444',
-                                'Other isoform':  '#94a3b8',
-                            },
-                            title=f"Δ Usage (AD − CT) — {_gene}  ·  {_ct}",
-                            labels={'delta_IF': 'Δ Usage (AD − CT)', 'isoform_id': ''},
-                            text='label',
-                            height=max(240, len(_g_dtu) * 30 + 80),
-                        )
-                        _fig_dtu.add_hline(y=0, line_color='#1e293b', line_width=1.2)
-                        _fig_dtu.update_traces(textposition='outside', textfont_size=9)
-                        _fig_dtu.update_layout(
-                            xaxis_tickangle=-35,
-                            legend_title='',
-                            plot_bgcolor='white',
-                            yaxis=dict(gridcolor='#f0f0f0'),
-                            margin=dict(t=40, b=80, l=10, r=10),
-                        )
-                        st.plotly_chart(_fig_dtu, use_container_width=True,
-                                        key=f"dtu_usage_{_gene}_{_safe_ct_key}")
+                _g_dtu = _dtu_lookup.get((_gene, _dtu_cond),
+                         _dtu_lookup.get((_gene, ''), pd.DataFrame()))
+                if not _g_dtu.empty:
+                    _g_dtu = _g_dtu.sort_values('delta_IF').reset_index(drop=True)
+                    _g_dtu['role'] = _g_dtu['isoform_id'].map(
+                        lambda iso: ('CT (Control)' if iso == _ct_tx
+                                     else ('AD (Disease)' if iso == _ad_tx
+                                           else 'Other isoform'))
+                    )
+                    _g_dtu['label'] = _g_dtu['delta_IF'].map(lambda v: f'{v:+.3f}')
+                    _fig_dtu = px.bar(
+                        _g_dtu,
+                        x='isoform_id', y='delta_IF',
+                        color='role',
+                        color_discrete_map={
+                            'CT (Control)':   '#3b82f6',
+                            'AD (Disease)':   '#ef4444',
+                            'Other isoform':  '#94a3b8',
+                        },
+                        title=f"Δ Usage (AD − CT) — {_gene}  ·  {_ct}",
+                        labels={'delta_IF': 'Δ Usage (AD − CT)', 'isoform_id': ''},
+                        text='label',
+                        height=max(240, len(_g_dtu) * 30 + 80),
+                    )
+                    _fig_dtu.add_hline(y=0, line_color='#1e293b', line_width=1.2)
+                    _fig_dtu.update_traces(textposition='outside', textfont_size=9)
+                    _fig_dtu.update_layout(
+                        xaxis_tickangle=-35,
+                        legend_title='',
+                        plot_bgcolor='white',
+                        yaxis=dict(gridcolor='#f0f0f0'),
+                        margin=dict(t=40, b=80, l=10, r=10),
+                    )
+                    st.plotly_chart(_fig_dtu, use_container_width=True,
+                                    key=f"dtu_usage_{_gene}_{_safe_ct_key}")
 
                 # ── Row 1: core metrics (6-col) ───────────────────────────────
                 _r1c1, _r1c2, _r1c3, _r1c4, _r1c5, _r1c6 = st.columns(6)
@@ -602,60 +623,28 @@ with tab_bisect:
                     )
                     st.image(str(_dmap), use_column_width=True)
 
-                # ── IGV.js genomic view ───────────────────────────────────────
+                # ── IGV / UCSC quick links ────────────────────────────────────
                 st.divider()
                 st.markdown(
                     "<div style='font-size:0.88rem;font-weight:600;"
-                    "color:#1e293b;margin-bottom:4px'>"
-                    "🧬 유전체 뷰 (hg38 RefSeq 주석)</div>",
+                    "color:#1e293b;margin-bottom:6px'>"
+                    "🧬 유전체 뷰 (외부 링크)</div>",
                     unsafe_allow_html=True,
                 )
+                _ql1, _ql2, _ql3 = st.columns(3)
+                _igv_url  = f"https://igv.org/app/?genome=hg38&locus={_gene}"
+                _ucsc_url = (f"https://genome.ucsc.edu/cgi-bin/hgTracks"
+                             f"?db=hg38&position={_gene}&knownGene=pack"
+                             f"&wgEncodeGencodeCompV45=pack")
+                _ens_url  = (f"https://www.ensembl.org/Homo_sapiens/Gene/Summary"
+                             f"?q={_gene};db=core")
+                _ql1.link_button("🔬 IGV Web (hg38)", _igv_url)
+                _ql2.link_button("🌐 UCSC Genome Browser", _ucsc_url)
+                _ql3.link_button("🧫 Ensembl Gene View", _ens_url)
                 st.caption(
-                    f"유전자 좌위: **{_gene}** | "
-                    f"핵심 전사체: 🔵 CT `{_ct_tx or '—'}` / 🔴 AD `{_ad_tx or '—'}`. "
-                    "아래 트랙에서 엑손 구조와 스플라이싱 차이를 확인하세요."
+                    f"핵심 전사체: 🔵 CT `{_ct_tx or '—'}` / "
+                    f"🔴 AD `{_ad_tx or '—'}` — 각 브라우저에서 해당 전사체 ID로 검색하세요."
                 )
-                _igv_div_id = f"igv_{_gene}_{_safe_ct_key}"
-                _igv_html = f"""
-<div id="{_igv_div_id}" style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden"></div>
-<script>
-(function() {{
-    // Load igv.js only once per page via a flag
-    function _initIGV() {{
-        var el = document.getElementById('{_igv_div_id}');
-        if (!el || el.dataset.igvLoaded) return;
-        el.dataset.igvLoaded = '1';
-        igv.createBrowser(el, {{
-            genome: 'hg38',
-            locus: '{_gene}',
-            showNavigation: true,
-            showRuler: true,
-            tracks: [{{
-                name: 'RefSeq Genes',
-                type: 'annotation',
-                format: 'refgene',
-                url: 'https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/ncbiRefSeq.txt.gz',
-                displayMode: 'EXPANDED',
-                color: 'rgb(0,80,180)',
-                visibilityWindow: 500000,
-            }}]
-        }}).catch(function(e) {{
-            el.innerHTML = '<p style="color:#64748b;font-size:0.8rem;padding:12px">'
-                + 'IGV 로드 실패 (네트워크 필요): ' + e.message + '</p>';
-        }});
-    }}
-    if (typeof igv !== 'undefined') {{
-        _initIGV();
-    }} else {{
-        var s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/igv@2.15.5/dist/igv.min.js';
-        s.onload = _initIGV;
-        document.head.appendChild(s);
-    }}
-}})();
-</script>"""
-                import streamlit.components.v1 as _components
-                _components.html(_igv_html, height=380, scrolling=False)
 
                 # ── Warnings ──────────────────────────────────────────────────
                 if _brow.get('nat'):
