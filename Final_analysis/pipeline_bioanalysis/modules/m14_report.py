@@ -106,14 +106,18 @@ def plot_domain_map(case_result: dict, output_dir: str, config: dict) -> str:
                 fig_cfg.get("max_width", 20))
     n_rows = 2  # CT row + AD row
     has_repeats = bool(ct_repeats or ad_repeats)
-    fig_h = 4 + (1.5 if has_repeats else 0)
+    fig_h = 5.5 + (1.5 if has_repeats else 0)   # taller to accommodate stacked labels
 
     fig, axes = plt.subplots(n_rows, 1, figsize=(fig_w, fig_h),
-                              gridspec_kw={"hspace": 0.6})
+                              gridspec_kw={"hspace": 1.0})
+
+    # Three y-levels for narrow-domain labels; greedy assignment avoids horizontal overlap
+    _LABEL_LEVELS = [2.1, 2.55, 3.0]
+    _MIN_LABEL_SEP = max_len * 0.09   # min x-distance between labels on the same level
 
     def draw_isoform_row(ax, label, length, domains, repeats, is_ct):
         ax.set_xlim(0, max_len)
-        ax.set_ylim(-0.5, 2.5)
+        ax.set_ylim(-0.5, 3.4)
         ax.set_yticks([])
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
@@ -125,27 +129,62 @@ def plot_domain_map(case_result: dict, output_dir: str, config: dict) -> str:
         ax.text(-max_len * 0.01, 1.0, label, ha="right", va="center", fontsize=9, fontweight="bold")
         ax.text(length + max_len * 0.01, 1.0, f"{length} aa", ha="left", va="center", fontsize=7, color="#555")
 
-        # Domain rectangles
+        # ── Domain rectangles + two-pass label placement ────────────────────
+        # Pass 1: draw all boxes, collect wide vs narrow domains
+        wide_labels  = []   # (cx, col, name) — wide enough for inside label
+        narrow_queue = []   # (cx, col, name) — need leader-line label
+
         used_colors = {}
         for dom in domains:
             d_name = dom.get("pfam_family", dom.get("domain", "?"))
-            d_name_short = d_name.split("_")[0]  # e.g., L27_1 → L27
+            d_name_short = d_name.split("_")[0]
             dfrom = dom.get("ali_from", 0)
-            dto = dom.get("ali_to", 0)
-            dlen = dto - dfrom
-            col = domain_colors.get(d_name, domain_colors.get(d_name_short, domain_colors.get("default", "#BDC3C7")))
-            rect = mpatches.FancyBboxPatch(
+            dto   = dom.get("ali_to", 0)
+            dlen  = dto - dfrom
+            col   = domain_colors.get(d_name, domain_colors.get(
+                        d_name_short, domain_colors.get("default", "#BDC3C7")))
+            rect  = mpatches.FancyBboxPatch(
                 (dfrom, 0.75), dlen, 0.5,
-                boxstyle="round,pad=0.01", facecolor=col, edgecolor="white", linewidth=0.8, zorder=3
+                boxstyle="round,pad=0.01", facecolor=col,
+                edgecolor="white", linewidth=0.8, zorder=3,
             )
             ax.add_patch(rect)
-            if dlen > max_len * 0.03:
-                ax.text(dfrom + dlen / 2, 1.0, d_name_short, ha="center", va="center",
-                        fontsize=6, color="white", fontweight="bold", zorder=4)
+            cx = dfrom + dlen / 2
+            if dlen > max_len * 0.04:
+                wide_labels.append((cx, col, d_name_short))
             else:
-                ax.text(dfrom + dlen / 2, 1.9, d_name_short, ha="center", va="bottom",
-                        fontsize=5.5, color=col, rotation=45, zorder=4)
+                narrow_queue.append((cx, col, d_name_short))
             used_colors[d_name_short] = col
+
+        # Pass 2a: wide domain labels (inside box, white)
+        for cx, col, name in wide_labels:
+            ax.text(cx, 1.0, name, ha="center", va="center",
+                    fontsize=6, color="white", fontweight="bold", zorder=4)
+
+        # Pass 2b: narrow domain labels — greedy 3-level stacking + dashed leader line
+        narrow_queue.sort(key=lambda x: x[0])   # sort by x position
+        level_last_x = {lvl: -_MIN_LABEL_SEP * 2 for lvl in _LABEL_LEVELS}
+
+        for cx, col, name in narrow_queue:
+            # Choose the lowest level where there is enough horizontal clearance
+            chosen = _LABEL_LEVELS[0]
+            for lvl in _LABEL_LEVELS:
+                if cx - level_last_x[lvl] >= _MIN_LABEL_SEP:
+                    chosen = lvl
+                    break
+            level_last_x[chosen] = cx
+
+            # Dashed leader line from domain-top centre to just below the label
+            ax.plot([cx, cx], [1.16, chosen - 0.08],
+                    color=col, linestyle="--", linewidth=0.75,
+                    dash_capstyle="round", zorder=4)
+            # Small dot at domain end
+            ax.plot(cx, 1.16, "o", color=col, markersize=2.5, zorder=5)
+            # Label text
+            ax.text(cx, chosen, name, ha="center", va="bottom",
+                    fontsize=6, color=col, fontweight="bold", zorder=6,
+                    bbox=dict(boxstyle="round,pad=0.15", facecolor="white",
+                              edgecolor=col, linewidth=0.5, alpha=0.92))
 
         # Repeat element overlays (below protein bar)
         for rep in repeats:
