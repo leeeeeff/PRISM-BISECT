@@ -375,6 +375,14 @@ _NAV_TILES = [
      "#ef4444", "#fef2f2", "#fee2e2", "#b91c1c", None),
 ]
 
+_PAGE_PATHS = {
+    "Overview":           "pages/01_overview.py",
+    "Functional Map":     "pages/02_functional_map.py",
+    "Condition Analysis": "pages/03_condition.py",
+    "Individual Analysis":"pages/04_individual.py",
+    "Advanced":           "pages/05_advanced.py",
+}
+
 _nav_cols = st.columns(5)
 for col, (icon, name, desc, border, bg, bbg, bc, warn) in zip(_nav_cols, _NAV_TILES):
     _warn_html = (
@@ -382,16 +390,18 @@ for col, (icon, name, desc, border, bg, bbg, bc, warn) in zip(_nav_cols, _NAV_TI
         f"border-radius:6px;padding:2px 6px;margin-top:6px;display:inline-block'>"
         f"{warn}</div>"
     ) if warn else ""
-    col.markdown(
-        f"<div style='background:{bg};border:2px solid {border};"
-        f"border-radius:10px;padding:14px 10px;text-align:center;height:148px;"
-        f"cursor:pointer;transition:box-shadow 0.2s'>"
-        f"<div style='font-size:1.7rem;line-height:1.2'>{icon}</div>"
-        f"<div style='font-size:0.85rem;font-weight:700;color:#1e293b;"
-        f"margin:4px 0 2px'>{name}</div>"
-        f"<div style='font-size:0.72rem;color:#64748b;line-height:1.4'>{desc}</div>"
-        f"{_warn_html}</div>",
-        unsafe_allow_html=True,
-    )
+    with col:
+        st.markdown(
+            f"<div style='background:{bg};border:2px solid {border};"
+            f"border-radius:10px;padding:14px 10px;text-align:center;height:120px;'>"
+            f"<div style='font-size:1.7rem;line-height:1.2'>{icon}</div>"
+            f"<div style='font-size:0.85rem;font-weight:700;color:#1e293b;"
+            f"margin:4px 0 2px'>{name}</div>"
+            f"<div style='font-size:0.72rem;color:#64748b;line-height:1.4'>{desc}</div>"
+            f"{_warn_html}</div>",
+            unsafe_allow_html=True,
+        )
+        if st.button("▶ 이동", key=f"nav_{name.replace(' ', '_')}", use_container_width=True):
+            st.switch_page(_PAGE_PATHS[name])
 
 st.caption("💡 사이드바의 Score 임계값 슬라이더를 조정하면 모든 페이지의 분류 기준이 동시에 바뀝니다.")
