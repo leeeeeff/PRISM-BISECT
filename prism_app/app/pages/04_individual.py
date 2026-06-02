@@ -15,26 +15,69 @@ from prism_app.app.components.interpretation import render_data_context_banner
 
 st.set_page_config(page_title="Individual Analysis — PRISM", layout="wide")
 st.title("🔬 Individual Isoform Analysis")
-st.caption("4-Scenario classification, isoform search, and case report.")
+st.caption(
+    "아이소폼별 GO 기능 예측 결과를 4가지 시나리오로 분류하고, "
+    "BISECT 파이프라인이 검증한 질병 특이적 기능 스위치 케이스를 심층 탐색합니다."
+)
 
-with st.expander("📖 이 페이지 사용법", expanded=False):
+with st.expander("📖 이 페이지 완전 가이드 — 처음이라면 먼저 읽어보세요", expanded=False):
     st.markdown("""
-**Individual Analysis** 페이지는 아이소폼을 시나리오별로 탐색하고, 특정 유전자/아이소폼의 상세 리포트를 생성합니다.
+### 이 페이지에서 무엇을 할 수 있나요?
 
-**시나리오 탭 활용법:**
-- **S1 (빨강)** DTU + 신규 GO 예측 → 조건 의존적 기능 변화. DTU 파일이 있을 때만 등장합니다.
-- **S2 (주황)** DTU + GO 변화 없음 → 발현량만 바뀐 스위치.
-- **S3 (초록)** DTU 없음 + 신규 GO 예측 → 항상 발현되는 신규 기능 아이소폼. 논문의 541개 뇌 아이소폼이 여기에 해당합니다.
-- **S4 (회색)** 특이사항 없음 → 배경 아이소폼.
+PRISM이 예측한 아이소폼별 GO(Gene Ontology) 기능 점수를 바탕으로,
+어떤 아이소폼이 **질병 특이적으로 기능이 바뀌었는지** 탐색합니다.
+크게 세 가지 분석 경로를 제공합니다:
 
-각 탭에서 **CSV 다운로드** 버튼으로 해당 시나리오 후보 목록을 저장할 수 있습니다.
+---
 
-**검색 탭 활용법:**
-1. 아이소폼 ID (예: `NDUFS4-201`) 또는 유전자 이름 (예: `NDUFS4`, `KIF21B`)을 입력합니다.
-2. 매칭된 아이소폼의 GO 스코어 막대 차트와 시나리오 카드를 확인합니다.
-3. **"Download case report (Markdown)"** 버튼으로 개별 케이스 리포트를 `.md` 파일로 저장합니다.
+#### 🟦 경로 1 — 시나리오별 탐색 (탭 S1~S4)
 
-> Score 임계값(사이드바 슬라이더)에 따라 시나리오 분류가 달라집니다. 0.5가 기본값입니다.
+PRISM은 모든 아이소폼을 아래 4가지 시나리오로 분류합니다.
+
+| 시나리오 | 조건 | 의미 | 우선순위 |
+|----------|------|------|----------|
+| 🔴 **S1: 기능 스위치** | DTU 있음 + 신규 GO 예측 | 질병에서 기능 자체가 바뀐 아이소폼 | 최우선 실험 대상 |
+| 🟠 **S2: 발현 스위치** | DTU 있음 + GO 변화 없음 | 발현 비율만 바뀐 구조적 전환 | 중간 |
+| 🟢 **S3: 항상 신규 기능** | DTU 없음 + 신규 GO 예측 | 조건 무관하게 새 기능을 가진 아이소폼 | 논문 주 발견 (뇌 541개) |
+| ⬜ **S4: 배경** | DTU 없음 + GO 변화 없음 | 특이사항 없는 배경 아이소폼 | 낮음 |
+
+> **S1·S2는 DTU 파일이 있어야 활성화됩니다.** 데모 모드에서는 S3·S4만 이용 가능합니다.
+
+---
+
+#### 🔍 경로 2 — 아이소폼 검색 (Search Isoform 탭)
+
+특정 유전자나 아이소폼 ID를 검색하면 GO 점수 막대 차트와 케이스 리포트(Markdown)를 확인할 수 있습니다.
+예: `NDUFS4`, `KIF21B`, `DLG1`
+
+---
+
+#### 🧫 경로 3 — BISECT Cases 심층 탐색
+
+BISECT 파이프라인은 15개 모듈(구조·PPI·계통보존·규제 인자 등)로 각 유전자를 검증하여,
+생물학적으로 의미 있는 **84개의 PASS 케이스**를 선정합니다.
+각 케이스에서 확인할 수 있는 내용:
+
+- **Volcano Plot** — 어떤 TF·ASF 인자가 AD에서 발현이 바뀌었는지 통계적으로 시각화
+- **TF/ASF 활성 변화 막대 차트** — 핵심 전사·스플라이싱 인자의 logFC 방향
+- **도메인 구조 변화** — 어떤 단백질 도메인이 획득/손실되었는지
+- **GO 기능 비교** — CT 이소폼 vs AD 이소폼의 기능 공간 차이
+- **종합 해석 리포트** — 인과 경로부터 PPI·보존성까지 통합 분석
+
+---
+
+#### 💡 핵심 용어 정리
+
+| 용어 | 의미 |
+|------|------|
+| **GO score (0~1)** | PRISM이 예측한 GO term 해당 확률. 0.5 이상이면 유의미한 기능 예측 |
+| **DTU (Δ Usage)** | 두 조건 간 아이소폼 사용 비율 차이. ±0.1 이상이면 의미있는 전환 |
+| **pLDDT** | AlphaFold 구조 예측 신뢰도. 70 이상이면 구조적으로 신뢰 가능 |
+| **logFC** | 조절 인자의 발현 배수 변화 (log₂). 양수=AD에서 증가, 음수=감소 |
+| **phyloP** | 척추동물 100종 보존도. 1.5 이상이면 강한 purifying selection |
+| **-log₁₀(p-adj)** | 보정된 p-값의 -log₁₀ 변환. 2 이상이면 p < 0.01에 해당 |
+
+> Score 임계값은 사이드바 슬라이더에서 조절 가능합니다 (기본값 0.5).
     """)
 
 # ── Data ─────────────────────────────────────────────────────────────────────
@@ -93,16 +136,29 @@ tab1, tab2, tab3, tab4, tab_search, tab_bisect = st.tabs([
 ])
 
 SCENARIO_DESCS = {
-    1: "DTU detected + novel GO function predicted → highest priority for experimental follow-up.",
-    2: "DTU detected but no novel GO function → structural isoform change without detected function gain.",
-    3: "No DTU but novel GO function predicted → constitutively expressed novel function (Use Case B).",
-    4: "No DTU, no novel GO prediction → low-priority background isoforms.",
+    1: ("🔴 **Scenario 1 — 기능 스위치 (Functional Switch)**\n\n"
+        "DTU(Differential Transcript Usage) 분석에서 통계적으로 유의미한 아이소폼 비율 변화가 확인되고, "
+        "PRISM 예측에서 기존 주석에 없는 **신규 GO 기능**이 검출된 케이스입니다. "
+        "두 조건이 동시에 충족되므로 질병 특이적 기능 변화 후보 중 **최우선 실험 검증 대상**입니다."),
+    2: ("🟠 **Scenario 2 — 발현 스위치 (Expression Switch)**\n\n"
+        "DTU에서 아이소폼 비율이 유의미하게 달라졌지만, GO 기능 점수는 조건 간 차이가 작습니다. "
+        "단백질 서열·도메인 구성이 달라졌을 가능성이 있으나, "
+        "현재 GO term 범위 내에서 기능 변화는 감지되지 않았습니다. "
+        "도메인 수준 분석(BISECT) 또는 확장된 GO term 세트로 추가 검증을 권장합니다."),
+    3: ("🟢 **Scenario 3 — 항상 신규 기능 (Constitutive Novel Function)**\n\n"
+        "두 조건 간 아이소폼 비율 차이(DTU)는 없지만, PRISM이 기존 주석에 없는 **신규 GO 기능**을 높은 점수로 예측합니다. "
+        "조건과 무관하게 항상 발현되는 기능적으로 독특한 아이소폼입니다. "
+        "본 연구의 뇌 데이터에서 **541개의 novel isoform**이 이 카테고리에 해당하며, "
+        "여러 세포 유형에서 반복 확인된 케이스일수록 신뢰도가 높습니다."),
+    4: ("⬜ **Scenario 4 — 배경 (Background)**\n\n"
+        "DTU와 신규 GO 예측 모두 임계값 미달입니다. "
+        "현재 설정(score > threshold, DTU p < 0.05)으로는 특이사항이 없는 배경 아이소폼입니다. "
+        "임계값을 낮추거나, 더 넓은 GO term 세트를 사용하면 일부가 S1~S3으로 전환될 수 있습니다."),
 }
 
 
 def _render_scenario_table(scenario_id: int) -> None:
-    desc = SCENARIO_DESCS[scenario_id]
-    st.info(desc, icon=["🔴","🟠","🟢","⬜"][scenario_id - 1])
+    st.markdown(SCENARIO_DESCS[scenario_id])
 
     cands = get_scenario_candidates(classified, scenario_id, min_score=thr)
 
@@ -125,25 +181,59 @@ def _render_scenario_table(scenario_id: int) -> None:
                 1. satuRn / DEXSeq / IsoformSwitchAnalyzeR 등으로 DTU 분석 실행<br>
                 2. 사이드바 → <b>Upload 모드</b> → DTU 결과 파일(.tsv) 업로드<br>
                 3. 필요 컬럼: <code>isoform_id</code>, <code>delta_IF</code> (또는 <code>dIF</code>), <code>pvalue</code><br><br>
-                Demo 데이터는 단일 조건이므로 DTU를 계산할 수 없습니다.
-                <b>Scenario 3 (신규 기능)</b>은 DTU 없이도 분석 가능합니다.
+                데모 데이터는 단일 조건이므로 DTU를 계산할 수 없습니다.
+                <b>Scenario 3 (신규 기능)</b>은 DTU 없이도 바로 분석 가능합니다.
                 </div>""",
                 unsafe_allow_html=True,
             )
         else:
-            st.write(f"현재 설정(Score > {thr})에서 이 시나리오에 해당하는 아이소폼이 없습니다. 임계값을 낮춰보세요.")
+            st.info(
+                f"현재 설정(GO score 임계값 > {thr})에서 이 시나리오에 해당하는 아이소폼이 없습니다. "
+                "사이드바에서 임계값을 낮추면 더 많은 후보가 나타납니다.",
+                icon="ℹ️",
+            )
         return
 
-    st.metric("Isoforms in scenario", len(cands))
+    _c1, _c2, _c3 = st.columns(3)
+    _c1.metric(
+        "후보 아이소폼 수",
+        f"{len(cands):,}",
+        help="현재 GO score 임계값 기준으로 이 시나리오에 해당하는 아이소폼 총수",
+    )
+    _c2.metric(
+        "관련 유전자 수",
+        f"{cands['gene_id'].nunique():,}" if 'gene_id' in cands.columns else "—",
+        help="이 시나리오에 아이소폼이 하나 이상 속한 고유 유전자 수",
+    )
+    _c3.metric(
+        "최고 GO 점수",
+        f"{cands['max_score'].max():.3f}" if not cands.empty else "—",
+        help="이 시나리오 후보 중 가장 높은 PRISM GO 예측 점수",
+    )
+
     disp = cands[['isoform_id', 'gene_id', 'max_score', 'max_go', 'n_high_go',
                   'novel_go_terms', 'dtu_pvalue']].copy()
     disp['max_go'] = disp['max_go'].map(lambda g: f"{g}: {gnames.get(g,'')[:35]}")
+    disp = disp.rename(columns={
+        'isoform_id':    '아이소폼 ID',
+        'gene_id':       '유전자',
+        'max_score':     '최고 GO 점수',
+        'max_go':        '최고 기능 (GO)',
+        'n_high_go':     f'GO ≥{thr} 개수',
+        'novel_go_terms':'신규 GO (주석 외)',
+        'dtu_pvalue':    'DTU p-value',
+    })
     st.dataframe(disp, use_container_width=True, hide_index=True)
+    st.caption(
+        f"**최고 GO 점수**: PRISM이 예측한 GO term 중 가장 높은 확률값 (1.0에 가까울수록 확신도 높음) | "
+        f"**GO ≥{thr} 개수**: 임계값을 넘는 GO term 수 | "
+        "**신규 GO**: 기존 유전자 주석에 없는 새로운 기능 예측 GO term"
+    )
 
     # Download button
     csv = cands.to_csv(index=False).encode('utf-8')
     st.download_button(
-        f"Download Scenario {scenario_id} candidates (CSV)",
+        f"📥 Scenario {scenario_id} 후보 목록 다운로드 (CSV)",
         csv,
         f"scenario_{scenario_id}_candidates.csv",
         "text/csv",
@@ -876,8 +966,18 @@ with tab_bisect:
 
     _BISECT_PATH = Path(__file__).parents[3] / 'prism_app' / 'data' / 'demo' / 'bisect_cases.json'
 
-    st.subheader("BISECT PASS Cases")
-    st.caption("15-모듈 파이프라인을 통과한 기능 스위치 후보 케이스 (stage2_pass = True)")
+    st.subheader("🧫 BISECT PASS Cases — 84개 기능 스위치 검증 케이스")
+    st.markdown(
+        """
+        **BISECT** (Biological Isoform-Switch Evidence Characterization Tool)는 15개의 독립 분석 모듈을 통해
+        각 유전자의 아이소폼 전환이 실제로 **생물학적 의미**를 가지는지 다층적으로 검증합니다.
+
+        아래 표는 두 단계 검증(stage1: 통계 + stage2: 생물학 증거)을 모두 통과한 **84개 케이스**입니다.
+        🟡 **노란색 행** = 도메인 구조 변화(단백질 기능 변화 직접 증거)가 확인된 고신뢰 케이스입니다.
+
+        > 유전자 이름을 검색창에 입력하면 도메인 구조 그림, 규제 인자 분석, 생물학 리포트가 펼쳐집니다.
+        """
+    )
 
     if not _BISECT_PATH.exists():
         st.warning("bisect_cases.json not found in demo data directory.")
@@ -899,20 +999,47 @@ with tab_bisect:
 
     # ── Summary metrics ───────────────────────────────────────────────────────
     _mc1, _mc2, _mc3, _mc4, _mc5 = st.columns(5)
-    _mc1.metric("PASS Cases",    len(_bdf))
-    _mc2.metric("Cell Types",    _bdf['cell_type'].nunique())
-    _mc3.metric("Domain Gains",  int((_bdf['domains_gained'].fillna('') != '').sum()))
-    _mc4.metric("NAT Overlap",   int(_bdf['nat'].fillna(False).sum()))
-    _mc5.metric("S1 교차 유전자", len(_s1_genes & set(_bdf['gene'].dropna())))
+    _mc1.metric(
+        "BISECT PASS 케이스",
+        len(_bdf),
+        help="15-모듈 파이프라인을 통과한 기능 스위치 후보 총수",
+    )
+    _mc2.metric(
+        "세포 유형 수",
+        _bdf['cell_type'].nunique(),
+        help="분석된 고유 세포 유형 수 (Excitatory/Inhibitory 뉴런 등)",
+    )
+    _mc3.metric(
+        "도메인 변화 케이스",
+        int((_bdf['domains_gained'].fillna('') != '').sum()),
+        help="Pfam + AlphaFold로 단백질 도메인 획득이 확인된 케이스 수 — 가장 직접적인 기능 변화 증거",
+    )
+    _mc4.metric(
+        "NAT 중복 케이스",
+        int(_bdf['nat'].fillna(False).sum()),
+        help="Natural Antisense Transcript(NAT)와 게놈 위치가 겹치는 케이스 — 발현 조절 복잡성 추가 증거",
+    )
+    _mc5.metric(
+        "S1 교차 유전자",
+        len(_s1_genes & set(_bdf['gene'].dropna())),
+        help="현재 업로드 데이터의 Scenario 1 목록과 BISECT PASS 케이스가 겹치는 유전자 수 (DTU 데이터 있을 때만 표시)",
+    )
 
     st.divider()
 
     # ── Global TF / ASF / Epigenetic violin plot ──────────────────────────────
-    with st.expander("📊 전체 케이스 TF · ASF · Epigenetic 활성 분포 (Violin)", expanded=False):
-        st.caption(
-            "84 BISECT PASS 케이스에서 상위 조절 인자(top_regulators)의 AD vs CT logFC 분포. "
-            "기존 AD 문헌 인자(Known)와 새로 발견된 인자(Novel)를 구분합니다."
-        )
+    with st.expander("📊 전체 케이스 — 조절 인자 활성 변화 분석 (Volcano + Violin)", expanded=False):
+        st.markdown("""
+**이 섹션은 BISECT 파이프라인이 84개 케이스에서 감지한 TF·ASF·후성유전 조절 인자들이
+AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니다.**
+
+- **Volcano Plot** (위): X축 = 발현 변화 크기(logFC), Y축 = 통계적 유의성(-log₁₀ p-adj).
+  오른쪽 위 = AD에서 유의미하게 증가한 인자 | 왼쪽 위 = 유의미하게 감소한 인자.
+  점선 내부(|logFC| < 0.1 또는 p > 0.01) = 유의미하지 않은 변화.
+- **Violin Plot** (아래): 같은 인자가 여러 케이스에서 어떤 logFC 분포를 보이는지 시각화.
+  3개 이상의 케이스에서 반복 감지된 인자만 표시합니다.
+- **● 원 = 기존 AD 문헌에 알려진 인자** | **◆ 다이아몬드 = 이 연구에서 새로 발견된 인자**
+        """)
 
         # Build global regulator dataframe
         _glob_rows = []
@@ -1123,10 +1250,9 @@ with tab_bisect:
             return ['background-color: #fef9c3'] * len(row)
         return [''] * len(row)
 
-    _caption_parts = ["🟡 강조 = 도메인 구조 변화 확인 케이스"]
+    _caption_parts = ["🟡 강조 = 도메인 구조 변화 확인 케이스 (단백질 기능 변화 직접 증거)"]
     if _s1_genes:
         _caption_parts.append("또는 Scenario 1 교차 유전자")
-    _caption_parts.append("pLDDT ≥ 70 = AlphaFold 신뢰 구조")
     st.caption(" | ".join(_caption_parts))
     st.dataframe(
         _bdf_show.style.apply(_highlight_bisect_row, axis=1).format(
@@ -1137,6 +1263,21 @@ with tab_bisect:
         use_container_width=True, hide_index=True,
     )
 
+    with st.expander("📋 표 컬럼 설명 — 약어가 낯설다면 펼쳐보세요", expanded=False):
+        st.markdown("""
+| 컬럼 | 의미 | 해석 기준 |
+|------|------|-----------|
+| **Δ Usage** | AD − CT 조건 간 아이소폼 사용 비율 차이 | ±0.1 이상이면 의미 있는 전환 |
+| **DTU p-val** | 아이소폼 비율 차이 통계 검정 p-value | < 0.05 (또는 < 1e-5) 이면 유의미 |
+| **Domains Gained** | AD 아이소폼에서 새로 생긴 Pfam 도메인 | 도메인 획득 = 기능 추가 직접 증거 |
+| **Domains Lost** | CT 아이소폼에서 제거된 Pfam 도메인 | 도메인 손실 = 정상 기능 소실 |
+| **PPI** | STRING PPI 데이터베이스 기반 상호작용 지원 여부 | SUPPORTED = 새로운 단백질 파트너 예측 |
+| **pLDDT** | AlphaFold 구조 예측 신뢰도 점수 (0~100) | ≥70 = 신뢰 가능한 구조, <50 = 무질서 영역 |
+| **phyloP** | 100종 척추동물 서열 보존도 (phyloP100way) | >1.5 = 강한 진화적 선택압 (기능적으로 중요) |
+| **NAT** | Natural Antisense Transcript 게놈 중복 여부 | True = 반대 가닥 전사체와 겹침 (조절 복잡성) |
+| **L1-CDS** | 젊은 L1 레트로트랜스포존 CDS 삽입 여부 | True = 이동성 유전 요소 삽입 (이형성 검토 필요) |
+        """)
+
     # ── Per-case expanders — only rendered when a gene search is active ──────
     # Rendering all 84 expanders at once is expensive (domain maps, DTU charts,
     # IGV iframes). Gate on search query so the table always stays fast.
@@ -1144,13 +1285,21 @@ with tab_bisect:
         st.divider()
         if not _bq:
             st.info(
-                f"위 표에서 **{len(_bdf_filt)}건**의 PASS 케이스를 확인하세요. "
-                "유전자 이름을 **위 검색창에 입력**하면 도메인 구조·DTU·IGV 등 "
-                "상세 분석이 펼쳐집니다.  예) `KIF21B`, `DLG1`, `NDUFS4`",
+                f"위 표에서 **{len(_bdf_filt)}건**의 PASS 케이스를 확인할 수 있습니다. "
+                "**유전자 이름을 위 검색창에 입력**하면 아래 섹션들이 펼쳐집니다:\n\n"
+                "▸ Volcano Plot (어떤 TF·ASF가 얼마나 바뀌었는지)  "
+                "▸ 도메인 구조 변화 그림  "
+                "▸ DTU Δ Usage 막대 차트  "
+                "▸ GO 기능 비교 (CT vs AD 이소폼)  "
+                "▸ 종합 생물학 해석 리포트\n\n"
+                "추천 검색어: `KIF21B` `DLG1` `NDUFS4` `DMD`",
                 icon="🔍",
             )
         else:
-            st.markdown(f"**케이스 상세** — '{_bq}' 검색 결과 {len(_bdf_filt)}건")
+            st.markdown(
+                f"**케이스 상세 분석** — '{_bq}' 검색 결과 **{len(_bdf_filt)}건** "
+                "| 아래 각 케이스를 클릭해 상세 분석을 확인하세요."
+            )
 
     # ── DTU lookup dict (cached) — built once, O(1) per gene lookup ──────────
     @st.cache_data(show_spinner=False)
@@ -1199,16 +1348,33 @@ with tab_bisect:
                 _title += "  ·  🔴 Scenario 1 PASS"
 
             with st.expander(_title, expanded=bool(_bq)):
-                # ── Isoform pair ──────────────────────────────────────────────
+                # ── Isoform pair + reading guide ──────────────────────────────
                 _ct_tx = str(_brow.get('ct_transcript_id') or '').strip()
                 _ad_tx = str(_brow.get('ad_transcript_id') or '').strip()
                 _safe_ct_key = _ct.replace(' ', '_').replace('-', '_')
+
+                # Case reading guide banner
+                st.markdown(
+                    "<div style='background:#f0f9ff;border-left:4px solid #0ea5e9;"
+                    "padding:10px 14px;border-radius:6px;font-size:0.83rem;"
+                    "color:#0c4a6e;margin-bottom:10px'>"
+                    "<b>📖 이 케이스 읽는 법</b> &nbsp;—&nbsp; "
+                    "①&nbsp;<b>Volcano/Bar</b>: 어떤 TF·ASF가 얼마나 변했는지 "
+                    "②&nbsp;<b>Δ Usage 차트</b>: 아이소폼 비율이 얼마나 바뀌었는지 "
+                    "③&nbsp;<b>도메인 구조</b>: 어떤 단백질 기능이 추가/제거됐는지 "
+                    "④&nbsp;<b>GO 비교</b>: CT vs AD 이소폼의 기능 공간 차이 "
+                    "⑤&nbsp;<b>종합 리포트</b>: 인과 경로 전체 서사"
+                    "</div>",
+                    unsafe_allow_html=True,
+                )
                 if _ct_tx or _ad_tx:
                     st.markdown(
                         f"<div style='background:#f8fafc;border-radius:6px;"
                         f"padding:6px 12px;font-size:0.82rem;color:#475569;margin-bottom:8px'>"
-                        f"🔵 CT: <code>{_ct_tx or '—'}</code> &nbsp;→&nbsp; "
-                        f"🔴 AD: <code>{_ad_tx or '—'}</code></div>",
+                        f"분석 대상 이소폼 쌍 &nbsp;|&nbsp; "
+                        f"🔵 <b>Control (CT)</b>: <code>{_ct_tx or '—'}</code> "
+                        f"&nbsp;→&nbsp; "
+                        f"🔴 <b>AD (Disease)</b>: <code>{_ad_tx or '—'}</code></div>",
                         unsafe_allow_html=True,
                     )
 
@@ -1235,50 +1401,84 @@ with tab_bisect:
                             'AD (Disease)':   '#ef4444',
                             'Other isoform':  '#94a3b8',
                         },
-                        title=f"Δ Usage (AD − CT) — {_gene}  ·  {_ct}",
-                        labels={'delta_IF': 'Δ Usage (AD − CT)', 'isoform_id': ''},
+                        title=f"② 아이소폼 사용 비율 변화 (Δ Usage = AD − CT) — {_gene} · {_ct}",
+                        labels={
+                            'delta_IF':   'Δ Usage (AD − CT)  ·  양수 = AD에서 증가, 음수 = CT에서 우세',
+                            'isoform_id': '아이소폼 ID',
+                        },
                         text='label',
-                        height=max(240, len(_g_dtu) * 30 + 80),
+                        height=max(260, len(_g_dtu) * 32 + 90),
                     )
                     _fig_dtu.add_hline(y=0, line_color='#1e293b', line_width=1.2)
                     _fig_dtu.update_traces(textposition='outside', textfont_size=9)
                     _fig_dtu.update_layout(
                         xaxis_tickangle=-35,
-                        legend_title='',
+                        legend_title='이소폼 역할',
                         plot_bgcolor='white',
                         yaxis=dict(gridcolor='#f0f0f0'),
-                        margin=dict(t=40, b=80, l=10, r=10),
+                        margin=dict(t=45, b=80, l=10, r=10),
                     )
                     st.plotly_chart(_fig_dtu, use_container_width=True,
                                     key=f"dtu_usage_{_gene}_{_safe_ct_key}")
+                    st.caption(
+                        "🔵 CT (Control) 이소폼은 정상 조건에서 우세 (Δ Usage < 0). "
+                        "🔴 AD (Disease) 이소폼은 알츠하이머 조건에서 비율 증가 (Δ Usage > 0). "
+                        "|Δ Usage| ≥ 0.1이면 통계적으로 의미 있는 전환으로 판단합니다."
+                    )
 
                 # ── Row 1: core metrics (6-col) ───────────────────────────────
+                st.markdown(
+                    "<div style='font-size:0.78rem;color:#6b7280;margin:12px 0 4px'>"
+                    "📊 <b>핵심 정량 지표</b> — 각 지표 위에 마우스를 올리면 설명이 나옵니다</div>",
+                    unsafe_allow_html=True,
+                )
                 _r1c1, _r1c2, _r1c3, _r1c4, _r1c5, _r1c6 = st.columns(6)
                 _delta = _brow.get('delta')
-                _r1c1.metric("Δ Usage (AD−CT)",
-                             f"{float(_delta):.3f}" if _delta is not None else "N/A")
+                _r1c1.metric(
+                    "Δ Usage (AD−CT)",
+                    f"{float(_delta):.3f}" if _delta is not None else "N/A",
+                    help="AD 조건에서 이 아이소폼 사용 비율 − CT 조건 비율. ±0.1 이상이면 유의미한 전환.",
+                )
                 _dtu_p = _brow.get('dtu_p')
-                _r1c2.metric("DTU p-value",
-                             f"{float(_dtu_p):.2e}" if _dtu_p else "N/A")
+                _r1c2.metric(
+                    "DTU p-value",
+                    f"{float(_dtu_p):.2e}" if _dtu_p else "N/A",
+                    help="아이소폼 비율 차이 통계 검정 p-value. 1e-5 미만이면 매우 유의미.",
+                )
                 _ct_plddt = _brow.get('af_ct_plddt_mean')
-                _r1c3.metric("CT pLDDT",
-                             f"{float(_ct_plddt):.1f}" if _ct_plddt else "N/A",
-                             help="AlphaFold pLDDT for Control transcript")
+                _r1c3.metric(
+                    "CT pLDDT",
+                    f"{float(_ct_plddt):.1f}" if _ct_plddt else "N/A",
+                    help="AlphaFold2로 예측한 Control 이소폼 구조 신뢰도. 70↑ = 신뢰, 50↓ = 무질서",
+                )
                 _ad_plddt = _brow.get('af_ad_plddt_mean')
-                _r1c4.metric("AD pLDDT",
-                             f"{float(_ad_plddt):.1f}" if _ad_plddt else "N/A",
-                             delta="신뢰" if _ad_plddt and float(_ad_plddt) >= 70 else None,
-                             help="AlphaFold pLDDT for AD transcript")
+                _r1c4.metric(
+                    "AD pLDDT",
+                    f"{float(_ad_plddt):.1f}" if _ad_plddt else "N/A",
+                    delta="구조 신뢰" if _ad_plddt and float(_ad_plddt) >= 70 else None,
+                    help="AlphaFold2로 예측한 AD 이소폼 구조 신뢰도. 70 이상이면 실험 가능한 구조 가짐",
+                )
                 _dplddt = _brow.get('af_delta_plddt')
-                _r1c5.metric("ΔpLDDT (AD−CT)",
-                             f"{float(_dplddt):+.1f}" if _dplddt else "N/A",
-                             help="Positive = AD isoform more structured")
+                _r1c5.metric(
+                    "ΔpLDDT (AD−CT)",
+                    f"{float(_dplddt):+.1f}" if _dplddt else "N/A",
+                    help="양수 = AD 이소폼이 CT보다 더 안정된 구조 | 음수 = AD 이소폼이 더 무질서함",
+                )
                 _phylo = _brow.get('cons_ad_phylop')
-                _r1c6.metric("phyloP (AD exon)",
-                             f"{float(_phylo):.3f}" if _phylo else "N/A",
-                             help="Mean phyloP100way for AD-specific exon")
+                _r1c6.metric(
+                    "phyloP (AD exon)",
+                    f"{float(_phylo):.3f}" if _phylo else "N/A",
+                    help="AD 특이적 엑손의 100종 척추동물 보존도. 1.5↑ = 강한 기능적 선택압 하에 있음",
+                )
 
                 # ── Row 2: domain changes with AlphaFold confidence ───────────
+                st.markdown(
+                    "<div style='font-size:0.82rem;font-weight:600;color:#1e293b;"
+                    "margin:14px 0 4px'>③ 단백질 도메인 구조 변화 "
+                    "<span style='font-weight:400;color:#6b7280;font-size:0.75rem'>"
+                    "— Pfam 도메인 데이터베이스 + AlphaFold2 구조 확인</span></div>",
+                    unsafe_allow_html=True,
+                )
                 _dg     = str(_brow.get('domains_gained')       or '').strip()
                 _dl     = str(_brow.get('domains_lost')         or '').strip()
                 _af_gd  = str(_brow.get('af_gained_confident')  or '').strip()
@@ -1419,7 +1619,14 @@ with tab_bisect:
 
                 if _case_regs or _case_mech:
                     st.divider()
-                    st.markdown("**🔭 Regulatory Origin — 아이소폼 전환의 상류 원인 분석**")
+                    st.markdown(
+                        "**① 조절 인자 분석 — 아이소폼 전환의 상류 원인 (Regulatory Origin)**"
+                    )
+                    st.caption(
+                        "아이소폼 비율이 달라진 직접적 원인(TF 활성, 스플라이싱 인자, 후성유전 변화)을 역추적합니다. "
+                        "Volcano에서 왼쪽 위 = AD에서 억제된 인자, 오른쪽 위 = AD에서 활성화된 인자. "
+                        "🔵 원 = 기존 AD 문헌에 알려진 인자, 🟠 다이아몬드 = 이 연구에서 새로 발견된 인자."
+                    )
 
                     _mech_info = _MECHANISM_KO.get(_case_mech, ('', '#64748b', ''))
                     _mech_ko_label, _mech_color, _mech_desc = _mech_info
@@ -1626,7 +1833,7 @@ with tab_bisect:
                 st.divider()
 
                 # 1. Proportion chart — estimated isoform usage ratio CT vs AD
-                st.markdown("**📊 Control vs Disease Transcript Usage**")
+                st.markdown("**② 아이소폼 사용 비율 추정 — Control(CT) vs Disease(AD)**")
                 if not _g_dtu.empty and (_ct_tx or _ad_tx):
                     _n_iso = len(_g_dtu)
                     _prop = _g_dtu[['isoform_id', 'delta_IF']].copy()
@@ -1686,8 +1893,10 @@ with tab_bisect:
                     )
                     _fig_prop.update_yaxes(tickformat='.0%')
                     st.caption(
-                        "CT 조건 균등 baseline(1/n) + DTU delta_IF로 비율 추정. "
-                        "핵심 이소폼 쌍만 강조 표시됩니다."
+                        "CT 조건에서 모든 이소폼이 균등하게 발현된다고 가정(1/n)한 뒤, "
+                        "DTU Δ Usage를 더해 AD 조건의 비율을 추정합니다. "
+                        "🔵 CT 이소폼이 정상에서 주로 쓰이다가, 🔴 AD 이소폼으로 전환되는 비율 변화를 시각화합니다. "
+                        "핵심 이소폼 쌍만 강조하며 나머지는 '◻ Other'로 묶습니다."
                     )
                     st.plotly_chart(_fig_prop, use_container_width=True,
                                     key=f"prop_{_gene}_{_safe_ct_key}")
@@ -1783,15 +1992,25 @@ with tab_bisect:
                             legend_title='',
                             margin=dict(t=38, b=80, l=10, r=10),
                         )
-                        st.markdown("**🧬 GO Function Score: CT vs AD Isoform 비교**")
+                        st.markdown(
+                            "**④ GO 기능 예측 점수 비교 — CT 이소폼 vs AD 이소폼**"
+                        )
                         st.caption(
-                            "두 이소폼의 PRISM GO 점수 상위 항목을 합집합하여 기능 차이를 비교합니다. "
-                            "점수 차이가 큰 GO term이 이소폼 스위치로 인한 기능 변화 후보입니다."
+                            "PRISM이 예측한 GO term 기능 점수(0~1)를 두 이소폼 간 나란히 비교합니다. "
+                            "🔵 CT 이소폼과 🔴 AD 이소폼에서 높이 차이가 큰 GO term이 "
+                            "이소폼 전환으로 인한 **기능 변화 후보**입니다. "
+                            f"점선(threshold = {thr})을 넘는 항목만 신뢰도 높은 예측으로 간주합니다."
                         )
                         st.plotly_chart(_fig_cmp, use_container_width=True,
                                         key=f"go_cmp_{_gene}_{_safe_ct_key}")
 
-                # 3. Biological prediction report
+                # 3. Biological prediction report (⑤)
+                st.markdown(
+                    "**⑤ 종합 생물학 해석 리포트**&nbsp;"
+                    "<span style='font-size:0.8rem;color:#6b7280;font-weight:400'>"
+                    "— PRISM+BISECT 15개 모듈 분석을 인과 경로 형태로 통합 서술</span>",
+                    unsafe_allow_html=True,
+                )
                 _bio_html = _build_bio_report_html(
                     brow=_brow, gene=_gene, ct_type=_ct,
                     ct_tx=_ct_tx, ad_tx=_ad_tx,
@@ -1809,13 +2028,15 @@ with tab_bisect:
                     st.markdown(
                         "<div style='font-size:0.88rem;font-weight:600;"
                         "color:#1e293b;margin-bottom:4px'>"
-                        "🗺️ 도메인 구조 변화 (CT → AD)</div>",
+                        "③ 단백질 도메인 구조 변화 지도 (CT → AD)</div>",
                         unsafe_allow_html=True,
                     )
                     st.caption(
-                        f"Primary pair: 🔵 `{_ct_tx or '—'}` (Control) → "
-                        f"🔴 `{_ad_tx or '—'}` (AD). "
-                        "BISECT m11 AlphaFold + Pfam 기반 도메인 GAIN/LOSS 주석."
+                        f"🔵 Control 이소폼: `{_ct_tx or '—'}` &nbsp;→&nbsp; "
+                        f"🔴 AD 이소폼: `{_ad_tx or '—'}`. "
+                        "각 막대가 하나의 이소폼을 나타내며, 색상 블록이 Pfam 도메인 위치입니다. "
+                        "초록 = AD에서 새로 생긴 도메인(GAIN) | 빨강 = CT에서 사라진 도메인(LOSS). "
+                        "AlphaFold pLDDT ≥ 70인 도메인만 구조적으로 신뢰 가능합니다."
                     )
                     st.image(str(_dmap), use_column_width=True)
 
@@ -1823,9 +2044,13 @@ with tab_bisect:
                 st.divider()
                 st.markdown(
                     "<div style='font-size:0.88rem;font-weight:600;"
-                    "color:#1e293b;margin-bottom:6px'>"
-                    "🧬 유전체 뷰 (외부 링크)</div>",
+                    "color:#1e293b;margin-bottom:2px'>"
+                    "🧬 유전체 브라우저 — 엑손 구조 직접 확인 (외부 링크)</div>",
                     unsafe_allow_html=True,
+                )
+                st.caption(
+                    "아래 버튼으로 외부 유전체 브라우저를 열어 실제 엑손 배치와 전사체 구조를 확인하세요. "
+                    "IGV / UCSC에서 아이소폼 ID로 검색하면 CT·AD 전사체의 엑손 차이를 시각적으로 비교할 수 있습니다."
                 )
                 _ql1, _ql2, _ql3 = st.columns(3)
                 _igv_url  = f"https://igv.org/app/?genome=hg38&locus={_gene}"
