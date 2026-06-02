@@ -321,6 +321,58 @@ def _parse_regulators(raw: str) -> list:
     return result
 
 
+@st.cache_data(show_spinner=False)
+def _load_case_sig_regs(gene: str, cell_type: str) -> list:
+    """Load significant_regulators from case analysis.json (up to 14 per case)."""
+    import json as _json
+    _base = Path(__file__).parents[3] / 'Final_analysis' / 'pipeline_bioanalysis' / 'outputs'
+    _aj = _base / f"{gene}_{cell_type}" / 'analysis.json'
+    if not _aj.exists():
+        return []
+    try:
+        with open(_aj) as _f:
+            _d = _json.load(_f)
+        _m8 = _d.get('m8_regulatory_context', {}) or {}
+        return _m8.get('significant_regulators', []) or []
+    except Exception:
+        return []
+
+
+@st.cache_data(show_spinner=False)
+def _load_all_sig_regulators(bisect_path: str) -> list:
+    """Load all significant_regulators from every BISECT case analysis.json."""
+    import json as _json
+    _base = Path(__file__).parents[3] / 'Final_analysis' / 'pipeline_bioanalysis' / 'outputs'
+    try:
+        with open(bisect_path) as _f:
+            _cases = _json.load(_f)
+    except Exception:
+        return []
+    _rows = []
+    for _c in _cases:
+        _g  = _c.get('gene', '')
+        _ct = _c.get('cell_type', '')
+        _aj = _base / f"{_g}_{_ct}" / 'analysis.json'
+        if not _aj.exists():
+            continue
+        try:
+            with open(_aj) as _f:
+                _d = _json.load(_f)
+            _m8 = _d.get('m8_regulatory_context', {}) or {}
+            for _r in (_m8.get('significant_regulators', []) or []):
+                _rows.append({
+                    'Gene':         _r.get('gene', ''),
+                    'logFC':        float(_r.get('logFC', 0)),
+                    '-log10(padj)': float(_r.get('neg_log10_padj', 0)),
+                    'Direction':    _r.get('direction', '').capitalize(),
+                    'Case':         _g,
+                    'CellType':     _ct,
+                })
+        except Exception:
+            pass
+    return _rows
+
+
 # ── Bio-report helper (called inside BISECT expanders) ───────────────────────
 _DOMAIN_FUNC_MAP = {
     'Kinesin':       'microtubule-based motor activity (ATP-dependent)',
@@ -883,6 +935,73 @@ with tab_bisect:
                 })
         if _glob_rows:
             _gdf = pd.DataFrame(_glob_rows)
+
+            # ── Global Volcano (full sig_regulators from analysis.json) ──────────
+            _all_sig_rows = _load_all_sig_regulators(str(_BISECT_PATH))
+            if _all_sig_rows:
+                _gvdf = pd.DataFrame(_all_sig_rows)
+                _gvdf['Category'] = _gvdf['Gene'].map(
+                    lambda _g: _REGULATOR_KB.get(_g, ('TF', None, ''))[0] or 'TF'
+                )
+                _gvdf['Knowledge'] = _gvdf['Gene'].map(
+                    lambda _g: (
+                        '🔵 Known AD' if _REGULATOR_KB.get(_g, (None, None))[1] is True
+                        else ('🟠 Novel' if _REGULATOR_KB.get(_g, (None, None))[1] is False
+                              else '⚪ Unknown')
+                    )
+                )
+                # Label known regulators with high significance
+                _gvdf['Label'] = _gvdf.apply(
+                    lambda _row: (
+                        _row['Gene']
+                        if (_REGULATOR_KB.get(_row['Gene'], (None, None))[1] is True
+                            and float(_row['-log10(padj)']) > 10)
+                        else ''
+                    ), axis=1
+                )
+                _fig_gvol = px.scatter(
+                    _gvdf,
+                    x='logFC', y='-log10(padj)',
+                    color='Direction',
+                    symbol='Knowledge',
+                    color_discrete_map={'Up': '#ef4444', 'Down': '#3b82f6'},
+                    symbol_map={
+                        '🔵 Known AD': 'circle',
+                        '🟠 Novel':    'diamond',
+                        '⚪ Unknown':  'square',
+                    },
+                    text='Label',
+                    hover_data=['Gene', 'Category', 'Knowledge', 'Case', 'CellType'],
+                    title='Volcano Plot — TF/ASF Activity (AD vs CT) · 26 Cases · 전체 Significant Regulators',
+                    labels={'logFC': 'logFC (AD vs CT)', '-log10(padj)': '-log₁₀(p-adj)'},
+                    height=430,
+                )
+                _fig_gvol.update_traces(
+                    textposition='top center',
+                    textfont=dict(size=9, color='#1e293b'),
+                    marker=dict(size=8, opacity=0.75),
+                )
+                _fig_gvol.add_vline(x=0.1,  line_dash='dash', line_color='#94a3b8', line_width=1)
+                _fig_gvol.add_vline(x=-0.1, line_dash='dash', line_color='#94a3b8', line_width=1)
+                _fig_gvol.add_hline(y=2.0,  line_dash='dash', line_color='#94a3b8', line_width=1)
+                _fig_gvol.add_vline(x=0,    line_color='#374151', line_width=1.2)
+                _fig_gvol.update_layout(
+                    plot_bgcolor='white',
+                    xaxis=dict(gridcolor='#f0f0f0'),
+                    yaxis=dict(gridcolor='#f0f0f0'),
+                    legend_title='',
+                    margin=dict(t=50, b=20, l=10, r=10),
+                    font=dict(size=11),
+                )
+                st.plotly_chart(_fig_gvol, use_container_width=True, key='glob_volcano')
+                st.caption(
+                    f"Volcano: 26개 케이스 analysis.json의 모든 significant_regulators "
+                    f"({len(_all_sig_rows)}개 관측). X=logFC, Y=-log₁₀(p-adj). "
+                    "점선: |logFC|=0.1, -log₁₀p=2. ● = 기존 AD 연관, ◆ = 새로 발견. "
+                    "레이블 = -log₁₀p > 10인 Known 인자."
+                )
+                st.divider()
+
             # Show violin only for regulators appearing ≥3 times (else strip plot)
             _freq = _gdf['Regulator'].value_counts()
             _violin_regs = _freq[_freq >= 3].index.tolist()
@@ -1340,6 +1459,80 @@ with tab_bisect:
                                 'Label':      f"{_rg}\n({_kb[0] or 'TF'})",
                             })
                         _rdf = pd.DataFrame(_rrr).sort_values('logFC')
+
+                        # ── Per-case Volcano (full sig_regs from analysis.json) ──
+                        _sig_regs_full = _load_case_sig_regs(_gene, _ct)
+                        _vol_src = _sig_regs_full if _sig_regs_full else _case_regs
+                        _vrows = []
+                        for _vr in _vol_src:
+                            _vg   = _vr.get('gene', '?')
+                            _vlfc = float(_vr.get('logFC', 0))
+                            _vnlp = float(_vr.get('neg_log10_padj', 0))
+                            _vdir = _vr.get('direction', '').capitalize()
+                            _kb2  = _REGULATOR_KB.get(_vg, ('TF', None, ''))
+                            _vknown = (
+                                '🔵 Known AD' if _kb2[1] is True
+                                else ('🟠 Novel' if _kb2[1] is False else '⚪ Unknown')
+                            )
+                            _vrows.append({
+                                'Gene':         _vg,
+                                'logFC':        _vlfc,
+                                '-log10(padj)': _vnlp,
+                                'Direction':    _vdir,
+                                'Category':     _kb2[0] or 'TF',
+                                'Knowledge':    _vknown,
+                                'Label': _vg if (_kb2[1] is True or _vnlp > 20) else '',
+                            })
+                        if _vrows:
+                            _vdf = pd.DataFrame(_vrows)
+                            _fig_vol = px.scatter(
+                                _vdf,
+                                x='logFC', y='-log10(padj)',
+                                color='Direction',
+                                symbol='Knowledge',
+                                color_discrete_map={'Up': '#ef4444', 'Down': '#3b82f6'},
+                                symbol_map={
+                                    '🔵 Known AD': 'circle',
+                                    '🟠 Novel':    'diamond',
+                                    '⚪ Unknown':  'square',
+                                },
+                                text='Label',
+                                hover_data=['Gene', 'Category', 'Knowledge'],
+                                title=f'Volcano — TF/ASF Activity · {_gene} · {_ct}',
+                                labels={
+                                    'logFC':        'logFC (AD vs CT)',
+                                    '-log10(padj)': '-log₁₀(p-adj)',
+                                },
+                                height=360,
+                            )
+                            _fig_vol.update_traces(
+                                textposition='top center',
+                                textfont=dict(size=9, color='#1e293b'),
+                                marker=dict(size=10, opacity=0.85),
+                            )
+                            _fig_vol.add_vline(x=0.1,  line_dash='dash', line_color='#94a3b8', line_width=1)
+                            _fig_vol.add_vline(x=-0.1, line_dash='dash', line_color='#94a3b8', line_width=1)
+                            _fig_vol.add_hline(y=2.0,  line_dash='dash', line_color='#94a3b8', line_width=1)
+                            _fig_vol.add_vline(x=0,    line_color='#374151', line_width=1.2)
+                            _fig_vol.update_layout(
+                                plot_bgcolor='white',
+                                xaxis=dict(gridcolor='#f0f0f0'),
+                                yaxis=dict(gridcolor='#f0f0f0'),
+                                legend_title='',
+                                margin=dict(t=42, b=20, l=10, r=10),
+                                font=dict(size=11),
+                            )
+                            st.plotly_chart(
+                                _fig_vol, use_container_width=True,
+                                key=f"vol_{_gene}_{_safe_ct_key}",
+                            )
+                            st.caption(
+                                f"Volcano: X=logFC (AD vs CT), Y=-log₁₀(p-adj). "
+                                f"점선: |logFC|=0.1, -log₁₀p=2. 총 {len(_vrows)}개 인자"
+                                + (" (analysis.json 전체)" if _sig_regs_full else " (top regulators)")
+                                + ". ● = 기존 AD, ◆ = 신규 발견."
+                            )
+
                         _r_color = {
                             row['Gene']: ('#ef4444' if row['Direction'] == 'Up' else '#3b82f6')
                             for _, row in _rdf.iterrows()
