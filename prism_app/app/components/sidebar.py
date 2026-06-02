@@ -114,21 +114,28 @@ def render_sidebar() -> dict:
 def _render_demo_context(tissue: str) -> None:
     """Show demo data info in sidebar."""
     info = {
-        'muscle':         ("근골격근", "36,748", "18"),
-        'brain':          ("뇌 (zero-shot)", "63,994", "18"),
-        'brain_extended': ("뇌 확장", "7,903", "73"),
-        'muscle_only':    ("근골격근", "36,748", "18"),
-    }.get(tissue, ("—", "—", "—"))
+        'muscle':         ("근골격근", "36,748", "18", False),
+        'brain':          ("뇌 (zero-shot)", "63,994", "18", True),
+        'brain_extended': ("뇌 확장", "7,903", "73", True),
+        'muscle_only':    ("근골격근", "36,748", "18", False),
+    }.get(tissue, ("—", "—", "—", False))
+    tissue_name, n_iso, n_go, has_dtu = info
+
+    dtu_html = (
+        "<span style='color:#15803d'>포함 (AD vs CT, 8 cell types)</span> → S1·S2 활성"
+        if has_dtu else
+        "<span style='color:#dc2626'>미포함</span> → S1·S2 비활성"
+    )
 
     st.sidebar.divider()
     st.sidebar.markdown(
         f"""<div style='background:#f0f7ff;border-radius:6px;padding:8px 10px;
         font-size:0.8rem;color:#1e40af'>
         📂 <b>Demo 데이터</b><br>
-        조직: {info[0]}<br>
-        아이소폼: {info[1]}개<br>
-        GO 패널: {info[2]}개 term<br>
-        DTU: <span style='color:#dc2626'>미포함</span> → S1·S2 비활성<br>
+        조직: {tissue_name}<br>
+        아이소폼: {n_iso}개<br>
+        GO 패널: {n_go}개 term<br>
+        DTU: {dtu_html}<br>
         PRISM 스코어: 논문 사전 계산값
         </div>""",
         unsafe_allow_html=True,
@@ -194,12 +201,32 @@ def _load_demo_data(tissue: str, go_terms: list) -> dict:
     if col_idx and score_matrix.shape[1] > len(col_idx):
         score_matrix = score_matrix[:, col_idx]
 
+    # Load DTU if available for this tissue
+    dtu_df = _load_demo_dtu(tissue)
+
     return dict(
         score_matrix=score_matrix,
         isoform_ids=isoform_ids,
         isoform_types=isoform_types,
         gene_ids=gene_ids,
+        dtu_df=dtu_df,
     )
+
+
+@st.cache_data(show_spinner=False)
+def _load_demo_dtu(tissue: str) -> Optional[pd.DataFrame]:
+    """Load bundled DTU results for demo tissues that have one."""
+    _DTU_FILES = {
+        'brain':          'brain_dtu.tsv',
+        'brain_extended': 'brain_dtu.tsv',
+    }
+    fname = _DTU_FILES.get(tissue)
+    if fname is None:
+        return None
+    p = DEMO_DIR / fname
+    if not p.exists():
+        return None
+    return pd.read_csv(p, sep='\t')
 
 
 # ── Upload section ────────────────────────────────────────────────────────────
