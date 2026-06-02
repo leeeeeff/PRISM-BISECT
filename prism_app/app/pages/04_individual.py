@@ -279,80 +279,247 @@ with tab_bisect:
 
     _bdf = pd.DataFrame(_bisect_raw)
 
-    # Rename columns for display
-    _col_map = {
-        'gene': 'Gene', 'cell_type': 'Cell Type',
-        'delta': 'Δ Usage (AD−CT)', 'dtu_p': 'DTU p-value',
-        'domains_gained': 'Domains Gained', 'domains_lost': 'Domains Lost',
-        'nat': 'NAT overlap', 'young_l1_cds': 'Young L1 in CDS',
-    }
-    _bdf_disp = _bdf.rename(columns=_col_map)
+    # ── Cross-link: build S1 gene → isoform map ───────────────────────────────
+    _s1_genes = set()
+    _gene_to_rows = {}   # gene_id → list of classified rows (for PRISM chart)
+    if classified is not None:
+        _s1 = classified[classified['scenario'] == 1]
+        _s1_genes = set(_s1['gene_id'].dropna().tolist())
+        for _g, _grp in _s1.groupby('gene_id'):
+            _gene_to_rows[_g] = _grp
 
-    # Summary metrics
-    _mc1, _mc2, _mc3, _mc4 = st.columns(4)
-    _mc1.metric("PASS Cases", len(_bdf))
-    _mc2.metric("Cell Types", _bdf['cell_type'].nunique())
-    _mc3.metric("Domain Gains", int((_bdf['domains_gained'].fillna('') != '').sum()))
-    _mc4.metric("NAT Overlap", int(_bdf['nat'].fillna(False).sum()))
+    # ── Summary metrics ───────────────────────────────────────────────────────
+    _mc1, _mc2, _mc3, _mc4, _mc5 = st.columns(5)
+    _mc1.metric("PASS Cases",    len(_bdf))
+    _mc2.metric("Cell Types",    _bdf['cell_type'].nunique())
+    _mc3.metric("Domain Gains",  int((_bdf['domains_gained'].fillna('') != '').sum()))
+    _mc4.metric("NAT Overlap",   int(_bdf['nat'].fillna(False).sum()))
+    _mc5.metric("S1 교차 유전자", len(_s1_genes & set(_bdf['gene'].dropna())))
 
     st.divider()
 
-    # Cell type filter
-    _ct_opts = sorted(_bdf['cell_type'].dropna().unique().tolist())
-    _ct_sel  = st.multiselect("Cell type 필터", _ct_opts, default=_ct_opts, key='bisect_ct')
-    _bdf_filt = _bdf[_bdf['cell_type'].isin(_ct_sel)] if _ct_sel else _bdf
+    # ── Filters ───────────────────────────────────────────────────────────────
+    _fcol1, _fcol2 = st.columns([2, 2])
+    with _fcol1:
+        _ct_opts = sorted(_bdf['cell_type'].dropna().unique().tolist())
+        _ct_sel  = st.multiselect("Cell type 필터", _ct_opts, default=_ct_opts, key='bisect_ct')
+    with _fcol2:
+        _bq = st.text_input("유전자 검색", placeholder="예: KIF21B, DLG1, DMD", key='bisect_gene_q')
 
-    # Gene search
-    _bq = st.text_input("유전자 검색", placeholder="예: KIF21B, NDUFS4", key='bisect_gene_q')
+    _bdf_filt = _bdf[_bdf['cell_type'].isin(_ct_sel)] if _ct_sel else _bdf
     if _bq:
         _bdf_filt = _bdf_filt[_bdf_filt['gene'].str.contains(_bq, case=False, na=False)]
 
-    # Cross-link with PRISM Scenario 1
-    _s1_genes = set()
-    if classified is not None:
-        _s1_genes = set(classified[classified['scenario'] == 1]['gene_id'].dropna().tolist())
+    # ── Summary table ─────────────────────────────────────────────────────────
+    _col_map = {
+        'gene': 'Gene', 'cell_type': 'Cell Type',
+        'delta': 'Δ Usage', 'dtu_p': 'DTU p-val',
+        'domains_gained': 'Domains Gained', 'domains_lost': 'Domains Lost',
+        'nat': 'NAT', 'young_l1_cds': 'L1-CDS',
+        'ppi_verdict': 'PPI', 'af_ad_plddt_mean': 'pLDDT',
+        'cons_ad_phylop': 'phyloP',
+    }
+    _show_cols_raw = ['gene', 'cell_type', 'delta', 'dtu_p',
+                      'domains_gained', 'domains_lost',
+                      'ppi_verdict', 'af_ad_plddt_mean', 'cons_ad_phylop',
+                      'nat', 'young_l1_cds']
+    _show_cols = [c for c in _show_cols_raw if c in _bdf_filt.columns]
+    _bdf_show  = _bdf_filt[_show_cols].rename(columns=_col_map).copy()
 
-    def _highlight_s1(row):
-        if row.get('Gene', row.get('gene', '')) in _s1_genes:
+    def _highlight_s1_row(row):
+        if row.get('Gene', '') in _s1_genes:
             return ['background-color: #fef9c3'] * len(row)
         return [''] * len(row)
 
-    _show_cols = [c for c in ['Gene', 'Cell Type', 'Δ Usage (AD−CT)', 'DTU p-value',
-                               'Domains Gained', 'Domains Lost', 'NAT overlap', 'Young L1 in CDS']
-                  if c in _bdf_disp.columns]
-    _bdf_show = _bdf_filt.rename(columns=_col_map)[_show_cols].copy()
-
     if _s1_genes:
-        st.caption("🟡 강조 표시 = 현재 데이터셋의 Scenario 1과 겹치는 유전자")
+        st.caption("🟡 강조 = 현재 데이터셋 Scenario 1 교차 유전자 | pLDDT ≥ 70 = AlphaFold 신뢰 구조")
         st.dataframe(
-            _bdf_show.style.apply(_highlight_s1, axis=1),
+            _bdf_show.style.apply(_highlight_s1_row, axis=1).format(
+                {'Δ Usage': '{:.3f}', 'pLDDT': '{:.1f}', 'phyloP': '{:.3f}',
+                 'DTU p-val': '{:.2e}'},
+                na_rep='—',
+            ),
             use_container_width=True, hide_index=True,
         )
     else:
         st.dataframe(_bdf_show, use_container_width=True, hide_index=True)
 
-    # Per-case expander for domain details
-    if _bq and not _bdf_filt.empty:
+    # ── Per-case expanders (always shown for filtered results) ────────────────
+    if not _bdf_filt.empty:
         st.divider()
-        st.markdown("**케이스 상세**")
-        for _, _brow in _bdf_filt.iterrows():
-            with st.expander(f"🧫 {_brow.get('gene','?')} — {_brow.get('cell_type','?')}", expanded=True):
-                _bc1, _bc2, _bc3 = st.columns(3)
-                _bc1.metric("Δ Usage (AD−CT)", f"{_brow.get('delta', float('nan')):.3f}")
-                _bc2.metric("DTU p-value",
-                            f"{float(_brow.get('dtu_p', 1)):.2e}" if _brow.get('dtu_p') else "N/A")
-                _bc3.metric("BISECT Stage2", "✅ PASS")
+        _exp_label = "**케이스 상세** (클릭해서 펼치기)"
+        if _bq:
+            _exp_label = f"**케이스 상세** — '{_bq}' 검색 결과 {len(_bdf_filt)}건"
+        st.markdown(_exp_label)
 
+        for _, _brow in _bdf_filt.iterrows():
+            _gene = _brow.get('gene', '?')
+            _ct   = _brow.get('cell_type', '?')
+            _is_s1 = _gene in _s1_genes
+            _title = f"{'🟡 ' if _is_s1 else '🧫 '}{_gene} — {_ct}"
+            if _is_s1:
+                _title += "  ·  🔴 Scenario 1 PASS"
+
+            with st.expander(_title, expanded=bool(_bq)):
+                # ── Row 1: core metrics ───────────────────────────────────────
+                _r1c1, _r1c2, _r1c3, _r1c4 = st.columns(4)
+                _delta = _brow.get('delta')
+                _r1c1.metric("Δ Usage (AD−CT)",
+                             f"{float(_delta):.3f}" if _delta is not None else "N/A")
+                _dtu_p = _brow.get('dtu_p')
+                _r1c2.metric("DTU p-value",
+                             f"{float(_dtu_p):.2e}" if _dtu_p else "N/A")
+                _plddt = _brow.get('af_ad_plddt_mean')
+                _r1c3.metric("AlphaFold pLDDT",
+                             f"{float(_plddt):.1f}" if _plddt else "N/A",
+                             delta="신뢰" if _plddt and float(_plddt) >= 70 else None)
+                _phylo = _brow.get('cons_ad_phylop')
+                _r1c4.metric("phyloP 보존도",
+                             f"{float(_phylo):.3f}" if _phylo else "N/A")
+
+                # ── Row 2: domain changes ─────────────────────────────────────
                 _dg = str(_brow.get('domains_gained') or '').strip()
                 _dl = str(_brow.get('domains_lost')  or '').strip()
-                if _dg:
-                    st.markdown(f"**도메인 획득 (AD 아이소폼):** `{_dg}`")
-                if _dl:
-                    st.markdown(f"**도메인 손실 (CT 아이소폼):** `{_dl}`")
+                if _dg or _dl:
+                    _dc1, _dc2 = st.columns(2)
+                    with _dc1:
+                        if _dg:
+                            st.markdown(
+                                f"<div style='background:#f0fdf4;border-left:3px solid #22c55e;"
+                                f"padding:8px 12px;border-radius:4px;font-size:0.85rem'>"
+                                f"<b>도메인 획득 (AD)</b><br>"
+                                f"{'<br>'.join(f'<code>{d}</code>' for d in _dg.split(';') if d)}"
+                                f"</div>",
+                                unsafe_allow_html=True,
+                            )
+                        else:
+                            st.markdown(
+                                "<div style='background:#f8fafc;border-left:3px solid #cbd5e1;"
+                                "padding:8px 12px;border-radius:4px;font-size:0.85rem;color:#94a3b8'>"
+                                "도메인 획득 없음</div>",
+                                unsafe_allow_html=True,
+                            )
+                    with _dc2:
+                        if _dl:
+                            st.markdown(
+                                f"<div style='background:#fef2f2;border-left:3px solid #ef4444;"
+                                f"padding:8px 12px;border-radius:4px;font-size:0.85rem'>"
+                                f"<b>도메인 손실 (CT)</b><br>"
+                                f"{'<br>'.join(f'<code>{d}</code>' for d in _dl.split(';') if d)}"
+                                f"</div>",
+                                unsafe_allow_html=True,
+                            )
+                        else:
+                            st.markdown(
+                                "<div style='background:#f8fafc;border-left:3px solid #cbd5e1;"
+                                "padding:8px 12px;border-radius:4px;font-size:0.85rem;color:#94a3b8'>"
+                                "도메인 손실 없음</div>",
+                                unsafe_allow_html=True,
+                            )
+
+                # ── Row 3: module verdicts ────────────────────────────────────
+                _mod_items = []
+                _ppi = str(_brow.get('ppi_verdict') or '').strip()
+                if _ppi:
+                    _ppi_color = '#15803d' if _ppi == 'SUPPORTED' else '#b91c1c'
+                    _mod_items.append(
+                        f"<span style='background:#f0fdf4;color:{_ppi_color};"
+                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
+                        f"PPI: {_ppi}</span>"
+                    )
+                _seq_id = _brow.get('seq_val_identity')
+                if _seq_id and float(_seq_id) > 0:
+                    _mod_items.append(
+                        f"<span style='background:#eff6ff;color:#1d4ed8;"
+                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
+                        f"Seq identity: {float(_seq_id):.1%}</span>"
+                    )
+                _mech = str(_brow.get('mechanism_type') or '').strip()
+                if _mech:
+                    _mod_items.append(
+                        f"<span style='background:#faf5ff;color:#7e22ce;"
+                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
+                        f"Mechanism: {_mech}</span>"
+                    )
+                _tss = str(_brow.get('tss_class') or '').strip()
+                _tss_bp = _brow.get('tss_diff_bp')
+                if _tss:
+                    _tss_txt = f"TSS: {_tss}"
+                    if _tss_bp:
+                        _tss_txt += f" ({int(_tss_bp):+d}bp)"
+                    _mod_items.append(
+                        f"<span style='background:#fff7ed;color:#c2410c;"
+                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
+                        f"{_tss_txt}</span>"
+                    )
+                _apa = str(_brow.get('apa_class') or '').strip()
+                if _apa:
+                    _apa_bp = _brow.get('tts_diff_bp')
+                    _apa_txt = f"APA: {_apa}"
+                    if _apa_bp:
+                        _apa_txt += f" ({int(_apa_bp):+d}bp)"
+                    _mod_items.append(
+                        f"<span style='background:#ecfdf5;color:#065f46;"
+                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
+                        f"{_apa_txt}</span>"
+                    )
+                if _mod_items:
+                    st.markdown(
+                        "<div style='margin:10px 0 6px;display:flex;gap:6px;flex-wrap:wrap'>"
+                        + "".join(_mod_items) + "</div>",
+                        unsafe_allow_html=True,
+                    )
+
+                # ── Warnings ──────────────────────────────────────────────────
                 if _brow.get('nat'):
                     st.warning("⚠️ NAT (Natural Antisense Transcript) overlap 감지됨")
                 if _brow.get('young_l1_cds'):
                     st.warning("⚠️ Young L1 retrotransposon이 CDS 내 삽입됨")
+                if _brow.get('nmd_relevant'):
+                    st.info("ℹ️ NMD (Nonsense-Mediated Decay) 관련 구조 감지됨")
+
+                # ── Option C: PRISM GO score chart for S1-overlapping genes ──
+                if _is_s1 and _gene in _gene_to_rows:
+                    st.divider()
+                    st.markdown(
+                        "<div style='background:#fef9c3;border-left:3px solid #eab308;"
+                        "padding:8px 12px;border-radius:4px;font-size:0.85rem;margin-bottom:8px'>"
+                        "🔴 <b>Scenario 1 확인됨</b> — 현재 데이터셋에서 DTU + 신규 GO 예측 교차 검증"
+                        "</div>",
+                        unsafe_allow_html=True,
+                    )
+                    _gene_rows = _gene_to_rows[_gene]
+                    # Show top isoforms by max_score
+                    _top_isos = _gene_rows.nlargest(min(5, len(_gene_rows)), 'max_score')
+                    for _, _irow in _top_isos.iterrows():
+                        _iso_idx_arr = np.where(np.asarray(ids, dtype=str) == _irow['isoform_id'])[0]
+                        if len(_iso_idx_arr) == 0:
+                            continue
+                        _iso_idx = _iso_idx_arr[0]
+                        _go_scores = sm[_iso_idx]
+                        _go_df = pd.DataFrame({
+                            'GO': [gnames.get(g, g)[:30] for g in go],
+                            'Score': _go_scores,
+                            'GO_ID': go,
+                        }).sort_values('Score', ascending=False)
+                        _fig = px.bar(
+                            _go_df, x='GO', y='Score',
+                            color='Score', color_continuous_scale='RdYlGn',
+                            range_color=[0, 1],
+                            title=f"PRISM GO scores: {_irow['isoform_id']} (max={_irow['max_score']:.3f})",
+                            height=260,
+                        )
+                        _fig.update_layout(
+                            xaxis_tickangle=-35,
+                            showlegend=False,
+                            plot_bgcolor='white',
+                            margin=dict(t=40, b=60, l=10, r=10),
+                        )
+                        _fig.add_hline(
+                            y=float(thr), line_dash='dash', line_color='grey',
+                            annotation_text=f"threshold ({thr})",
+                        )
+                        st.plotly_chart(_fig, use_container_width=True)
 
     st.divider()
     st.download_button(
