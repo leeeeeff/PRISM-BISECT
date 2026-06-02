@@ -36,28 +36,78 @@ if 'cfg' not in st.session_state:
 cfg = render_sidebar()
 st.session_state.cfg = cfg
 
-# ── Hero 헤더 (항상 표시) ─────────────────────────────────────────────────────
-st.markdown(
-    "<h1 style='margin-bottom:0'>🧬 PRISM <span style='color:#2a9d8f'>+</span> BISECT</h1>",
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<p style='font-size:1.15rem; color:#555; margin-top:4px;'>"
-    "롱리드 싱글셀 아이소폼의 <b>GO 기능을 예측</b>하고, "
-    "DTU와 결합해 <b>기능 스위치를 4가지 시나리오로 분류</b>하는 인터랙티브 분석 도구"
-    "</p>",
-    unsafe_allow_html=True,
-)
+# ── CELLxGENE-style Hero (항상 표시) ─────────────────────────────────────────
+st.markdown("""
+<div style='
+    background: linear-gradient(135deg, #0f2942 0%, #1a4a6e 50%, #0f4c75 100%);
+    border-radius: 16px;
+    padding: 48px 56px 40px 56px;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+'>
+  <!-- Background decoration -->
+  <div style='position:absolute;top:-60px;right:-60px;width:300px;height:300px;
+    background:radial-gradient(circle,rgba(42,157,143,0.15) 0%,transparent 70%);
+    border-radius:50%'></div>
+  <div style='position:absolute;bottom:-40px;left:200px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(56,189,248,0.1) 0%,transparent 70%);
+    border-radius:50%'></div>
 
-# ── 핵심 성능 지표 (항상 표시) ────────────────────────────────────────────────
-st.divider()
-m1, m2, m3, m4 = st.columns(4)
-m1.metric("Macro AUPRC (근육)", "0.7022",   "랜덤 기준(0.5) 대비 +40%")
-m2.metric("Zero-shot 뇌 전이",  "0.5998",   "학습 없이 다른 조직 적용")
-m3.metric("신규 기능 발견 (뇌)", "541개",    "기존 주석 없는 Novel 아이소폼")
-m4.metric("BISECT PASS cases",  "84개",     "15개 모듈 × 증거 등급화")
+  <!-- Title -->
+  <div style='font-size:2.6rem;font-weight:800;color:#ffffff;margin-bottom:8px;
+    letter-spacing:-0.5px;line-height:1.2'>
+    🧬 PRISM <span style='color:#2dd4bf'>+</span> BISECT
+  </div>
 
-st.divider()
+  <!-- Subtitle -->
+  <div style='font-size:1.1rem;color:rgba(255,255,255,0.75);margin-bottom:36px;
+    max-width:600px;line-height:1.6'>
+    롱리드 싱글셀 아이소폼의 <b style='color:#7dd3fc'>GO 기능 예측</b>과
+    <b style='color:#7dd3fc'>기능 스위치 4-시나리오 분류</b>를 위한 인터랙티브 분석 플랫폼
+  </div>
+
+  <!-- Stats row -->
+  <div style='display:flex;gap:48px;flex-wrap:wrap'>
+    <div>
+      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>0.7022</div>
+      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
+        Macro AUPRC (근육)<br><span style='color:#86efac'>↑ +40% vs random</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.15)'></div>
+    <div>
+      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>0.5998</div>
+      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
+        Zero-shot 뇌 전이<br><span style='color:#86efac'>학습 없이 조직 전환</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.15)'></div>
+    <div>
+      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>541</div>
+      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
+        Novel 기능 발견 (뇌)<br><span style='color:#86efac'>기존 주석 없는 아이소폼</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.15)'></div>
+    <div>
+      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>84</div>
+      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
+        BISECT PASS cases<br><span style='color:#86efac'>15모듈 × 증거 등급화</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA hint -->
+  <div style='margin-top:28px;display:inline-block;background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);border-radius:8px;
+    padding:8px 20px;font-size:0.88rem;color:rgba(255,255,255,0.8)'>
+    👈 왼쪽 사이드바에서 <b>Demo</b> 또는 <b>Upload</b>를 선택하면 분석이 시작됩니다
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
 
 # ── 분석 모듈 타일 (항상 표시) ────────────────────────────────────────────────
 st.subheader("분석 모듈")
@@ -299,16 +349,49 @@ col4.metric("분석 모드",             cfg['mode'].capitalize())
 
 st.divider()
 
-st.markdown("""
-### 다음 단계로 이동하세요
+st.markdown(
+    "<div style='font-size:0.95rem;font-weight:700;color:#374151;"
+    "letter-spacing:0.5px;margin-bottom:10px'>▶ 분석 페이지로 이동</div>",
+    unsafe_allow_html=True,
+)
 
-| 페이지 | 내용 |
-|--------|------|
-| 📊 **Overview** | 전체 커버리지 · 4-시나리오 분포 · AUPRC 검증 |
-| 🗺️ **Functional Map** | GO 기능 공간 UMAP · 타입별 히트맵 · 유전자 내 비교 |
-| 🔄 **Condition Analysis** | DTU 연계 GAIN/LOSS · GO enrichment *(DTU 파일 필요)* |
-| 🔬 **Individual Analysis** | 시나리오별 후보 · 유전자 검색 · 케이스 리포트 다운로드 |
-| 🔭 **Advanced** | 조직 간 비교 · 발현량 필터 · NMD 위험 스크리닝 |
+_has_dtu = cfg.get('dtu_df') is not None
+_NAV_TILES = [
+    ("📊", "Overview",
+     "커버리지 · 시나리오 분포 · AUPRC",
+     "#0ea5e9", "#f0f9ff", "#e0f2fe", "#0369a1", None),
+    ("🗺️", "Functional Map",
+     "UMAP · 히트맵 · 유전자 내 비교",
+     "#22c55e", "#f0fdf4", "#dcfce7", "#15803d", None),
+    ("🔄", "Condition Analysis",
+     "DTU GAIN/LOSS · GO Enrichment",
+     "#f59e0b", "#fffbeb", "#fef3c7", "#b45309",
+     None if _has_dtu else "⚠️ DTU 파일 필요"),
+    ("🔬", "Individual Analysis",
+     "시나리오 탐색 · 검색 · 케이스 리포트",
+     "#a855f7", "#fdf4ff", "#f3e8ff", "#7e22ce", None),
+    ("🔭", "Advanced",
+     "조직 비교 · 발현 필터 · NMD",
+     "#ef4444", "#fef2f2", "#fee2e2", "#b91c1c", None),
+]
 
-> 사이드바의 **Score 임계값 슬라이더**를 조정하면 모든 페이지의 분류 기준이 동시에 바뀝니다.
-""")
+_nav_cols = st.columns(5)
+for col, (icon, name, desc, border, bg, bbg, bc, warn) in zip(_nav_cols, _NAV_TILES):
+    _warn_html = (
+        f"<div style='font-size:0.68rem;color:#b45309;background:#fef3c7;"
+        f"border-radius:6px;padding:2px 6px;margin-top:6px;display:inline-block'>"
+        f"{warn}</div>"
+    ) if warn else ""
+    col.markdown(
+        f"<div style='background:{bg};border:2px solid {border};"
+        f"border-radius:10px;padding:14px 10px;text-align:center;height:148px;"
+        f"cursor:pointer;transition:box-shadow 0.2s'>"
+        f"<div style='font-size:1.7rem;line-height:1.2'>{icon}</div>"
+        f"<div style='font-size:0.85rem;font-weight:700;color:#1e293b;"
+        f"margin:4px 0 2px'>{name}</div>"
+        f"<div style='font-size:0.72rem;color:#64748b;line-height:1.4'>{desc}</div>"
+        f"{_warn_html}</div>",
+        unsafe_allow_html=True,
+    )
+
+st.caption("💡 사이드바의 Score 임계값 슬라이더를 조정하면 모든 페이지의 분류 기준이 동시에 바뀝니다.")
