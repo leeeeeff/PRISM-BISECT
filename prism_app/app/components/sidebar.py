@@ -12,10 +12,11 @@ from prism_app.core.go_utils import TISSUE_PRESETS, GO_FULL_NAMES
 DEMO_DIR = Path(__file__).parents[2] / 'data' / 'demo'
 
 _TISSUE_OPTIONS = {
-    'Skeletal Muscle (18 GO terms)':            'muscle',
-    'Brain — 18-term Panel (zero-shot)':        'brain',
-    'Brain — Extended Novel (73 GO terms)':     'brain_extended',
-    'Muscle Training Terms Only':               'muscle_only',
+    'Skeletal Muscle (18 GO terms)':                'muscle',
+    'Brain — 18-term Panel (zero-shot)':            'brain',
+    'Brain — Extended Novel (73 GO terms)':         'brain_extended',
+    'Brain — Full Module Landscape (672 GO terms)': 'brain_672',
+    'Muscle Training Terms Only':                   'muscle_only',
 }
 
 
@@ -64,16 +65,19 @@ def render_sidebar() -> dict:
     go_terms   = list(go_preset.keys())
     go_names   = {**GO_FULL_NAMES, **go_preset}
 
-    # Optional: let user de-select specific GO terms
-    with st.sidebar.expander("Customise GO terms", expanded=False):
-        selected = st.multiselect(
-            "Active GO terms",
-            options=go_terms,
-            default=go_terms,
-            format_func=lambda g: f"{g}: {go_preset.get(g, g)[:35]}",
-        )
-        if selected:
-            go_terms = selected
+    # Optional: let user de-select specific GO terms (disabled for large panels)
+    if len(go_terms) <= 100:
+        with st.sidebar.expander("Customise GO terms", expanded=False):
+            selected = st.multiselect(
+                "Active GO terms",
+                options=go_terms,
+                default=go_terms,
+                format_func=lambda g: f"{g}: {go_preset.get(g, g)[:35]}",
+            )
+            if selected:
+                go_terms = selected
+    else:
+        st.sidebar.caption(f"📋 {len(go_terms)} GO terms loaded (large panel — customisation disabled)")
 
     st.sidebar.divider()
 
@@ -118,6 +122,7 @@ def _render_demo_context(tissue: str) -> None:
         'muscle':         ("근골격근", "36,748", "18", False),
         'brain':          ("뇌 (zero-shot)", "63,994", "18", True),
         'brain_extended': ("뇌 전체 확장", "63,994", "73", True),
+        'brain_672':      ("뇌 전체 모듈 (672 BP GO)", "63,994", "672", True),
         'muscle_only':    ("근골격근", "36,748", "18", False),
     }.get(tissue, ("—", "—", "—", False))
     tissue_name, n_iso, n_go, has_dtu = info
@@ -175,6 +180,7 @@ def _load_demo_data(tissue: str, go_terms: list) -> dict:
         'muscle':         ('muscle_scores.npy',              'muscle_ids.npy',              'muscle_types.npy',              'muscle_gene_ids.npy'),
         'brain':          ('brain_full_scores.npy',           'brain_full_ids.npy',          'brain_full_types.npy',          'brain_full_gene_ids.npy'),
         'brain_extended': ('brain_full_extended_scores.npy',  'brain_full_extended_ids.npy', 'brain_full_extended_types.npy', 'brain_full_extended_gene_ids.npy'),
+        'brain_672':      ('brain_full_672_scores.npy',       'brain_full_672_ids.npy',      'brain_full_672_types.npy',      'brain_full_672_gene_ids.npy'),
         'muscle_only':    ('muscle_scores.npy',              'muscle_ids.npy',              'muscle_types.npy',              'muscle_gene_ids.npy'),
     }
     score_f, id_f, type_f, gene_f = files.get(tissue, files['muscle'])
@@ -198,9 +204,11 @@ def _load_demo_data(tissue: str, go_terms: list) -> dict:
 
     # Slice columns to match selected GO terms
     all_go = list(TISSUE_PRESETS[tissue].keys())
-    col_idx = [all_go.index(g) for g in go_terms if g in all_go]
-    if col_idx and score_matrix.shape[1] > len(col_idx):
-        score_matrix = score_matrix[:, col_idx]
+    if len(go_terms) < len(all_go):
+        go_idx_map = {g: i for i, g in enumerate(all_go)}
+        col_idx = [go_idx_map[g] for g in go_terms if g in go_idx_map]
+        if col_idx:
+            score_matrix = score_matrix[:, col_idx]
 
     # Load DTU if available for this tissue
     dtu_df = _load_demo_dtu(tissue)
@@ -220,6 +228,7 @@ def _load_demo_dtu(tissue: str) -> Optional[pd.DataFrame]:
     _DTU_FILES = {
         'brain':          'brain_dtu.tsv',
         'brain_extended': 'brain_dtu.tsv',
+        'brain_672':      'brain_dtu.tsv',
     }
     fname = _DTU_FILES.get(tissue)
     if fname is None:

@@ -103,18 +103,36 @@ BRAIN_EXTENDED = {
     'GO:0001508': 'Action potential',
 }
 
+# ── Brain 672-term preset (loaded dynamically from JSON) ────────────────────
+def _load_brain672() -> Dict[str, str]:
+    import json
+    candidates = [
+        Path(__file__).parents[2] / 'hMuscle/data/brain672_go_terms.json',
+        Path(__file__).parents[3] / 'hMuscle/data/brain672_go_terms.json',
+    ]
+    for p in candidates:
+        if p.exists():
+            with open(p) as f:
+                d = json.load(f)
+            return d.get('go_names', {})
+    return {}
+
+BRAIN_672: Dict[str, str] = _load_brain672()
+
 # ── Tissue presets ──────────────────────────────────────────────────────────
 # brain = 18-term PRISM model applied zero-shot to brain data
 # brain_extended = 73-term extended panel for novel brain isoforms
+# brain_672 = 672-term full BP panel (brain>=100, train>=50)
 TISSUE_PRESETS: Dict[str, Dict[str, str]] = {
     'muscle':         MUSCLE_18,
     'brain':          MUSCLE_18,
     'muscle_only':    MUSCLE_18,
     'brain_extended': BRAIN_EXTENDED,
+    'brain_672':      BRAIN_672,
 }
 
 # ── Full name mapping (union of all known terms) ────────────────────────────
-GO_FULL_NAMES: Dict[str, str] = {**MUSCLE_18, **BRAIN_EXTENDED}
+GO_FULL_NAMES: Dict[str, str] = {**MUSCLE_18, **BRAIN_EXTENDED, **BRAIN_672}
 
 
 def load_go_names(extra_csv: Optional[str] = None) -> Dict[str, str]:

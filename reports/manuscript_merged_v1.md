@@ -439,7 +439,7 @@ The tool operates in two modes: a **Demo mode** that bundles all pre-computed re
 study, and an **Upload mode** that accepts user-provided ESM-2 score matrices (NPY format) for
 analysis of new datasets.
 
-**Architecture.** The application consists of five analytical modules accessible as separate
+**Architecture.** The application consists of six analytical modules accessible as separate
 pages within a multi-page Streamlit application (MPA):
 
 1. *Overview* — Coverage statistics (isoform count by type, GO panel), 4-Scenario classification
@@ -460,12 +460,26 @@ pages within a multi-page Streamlit application (MPA):
    BISECT cross-link highlights 32 genes confirmed by both analyses (at score threshold 0.5;
    dynamically updated with the sidebar slider), with PRISM GO score charts rendered inline.
 5. *Advanced* — Cross-tissue comparison, expression-level filtering, and NMD risk screening.
+6. *Functional Module Landscape* — Interactive exploration of the 672 BP GO term × 44 module
+   structure (§3.13). Four analysis views: (i) module assignment distribution for user data with
+   per-module isoform counts and module_score histogram; (ii) novel isoform enrichment analysis
+   per module (Fisher's exact test, Benjamini-Hochberg FDR) with downloadable candidate tables
+   for significantly enriched modules; (iii) gene-level functional diversity map — scatter plot
+   of isoform count vs. number of distinct modules per gene, identifying genes whose isoforms
+   occupy functionally distinct niches (functional switch candidates); (iv) condition × module
+   analysis integrating DTU results with module assignments to visualise per-module isoform
+   GAIN/LOSS across conditions or cell types. A reference sub-tab provides the GO-GO Pearson
+   correlation block heatmap and module summary bubble chart (mean AUPRC vs. NIC+NNIC enrichment)
+   as static context. For user-uploaded data with partial GO panel overlap, real-time module
+   assignment is computed on-the-fly using the subset of overlapping GO terms.
 
 **Demo data.** The following pre-computed datasets are bundled with the application:
 skeletal muscle PRISM scores (36,748 × 18, float32 NPY), brain zero-shot scores (63,994 × 18),
-brain extended-panel scores (7,903 × 73), brain DTU results (133,240 records across 8 cell types,
-AD vs Control; AD vs mid-stage Active Control), BISECT Stage 2 PASS cases (84 cases, 36 columns
-of module evidence), and pre-computed UMAP coordinates (15,000-isoform subsample).
+brain extended-panel scores (63,994 × 73), brain full module landscape scores (63,994 × 672,
+172 MB), brain DTU results (133,240 records across 8 cell types, AD vs Control; AD vs mid-stage
+Active Control), BISECT Stage 2 PASS cases (84 cases, 36 columns of module evidence),
+pre-computed UMAP coordinates (15,000-isoform subsample), and brain isoform-to-module
+assignments (63,994 isoforms × 44 modules, Ward hierarchical clustering result).
 
 **Input format.** Upload mode accepts: (i) PRISM score matrix (NPY, shape N × |GO|);
 (ii) isoform ID list (NPY or TXT); (iii) gene ID list (optional); (iv) isoform type labels
@@ -1052,6 +1066,44 @@ These 541 constitutively expressed novel isoforms represent functional predictio
 | GO:0071805 | K⁺ ion transmembrane transport | 37 | 0.834 | No |
 | GO:0006813 | Potassium ion transport | 36 | 0.847 | No |
 | GO:0031175 | Neuron projection development | 37 | 0.623 | Yes |
+
+---
+
+### 3.13 Brain isoform functional module landscape: 672 BP GO terms reveal 44 biologically coherent modules
+
+The 73-term extended brain GO panel (§3.12) targeted neuron-specific biological processes selected by cell-type enrichment criteria. To ask whether PRISM's cross-tissue representation captures a broader functional landscape without term pre-selection, we expanded the GO target set to all BP GO terms satisfying simultaneous annotation density thresholds in both training (muscle ≥ 50 annotated genes) and evaluation (brain ≥ 100 annotated unique genes) data, yielding **672 GO terms** spanning diverse biological processes.
+
+**Model training and evaluation.** A joint multi-label PRISM v15d model (672-dimensional sigmoid output, architecture otherwise identical to §3.9) was trained on muscle ESM-2 embeddings and evaluated zero-shot on 63,994 brain isoforms. Training converged in 8.4 minutes (5-seed ensemble, AUPRC-based early stopping). The zero-shot brain test Macro AUPRC across 672 terms was **0.357** (median 0.358, 95/672 terms AUPRC > 0.5). The lower aggregate performance relative to the 73-term panel (0.597, §3.9) reflects the inclusion of non-brain-relevant terms: the five lowest-performing terms (cell division, Wnt signalling pathway, myeloid cell differentiation, ossification, protein-containing complex assembly; AUPRC 0.063–0.088) have no brain-specific expression signature in ESM-2 embedding space. The top-performing terms (homophilic cell-cell adhesion 0.737, monoatomic ion transport 0.732, ion transmembrane transport 0.709, protein phosphorylation 0.648) are consistent with the brain-enriched predictions observed in the 73-term panel.
+
+**Functional module discovery by GO-GO score correlation clustering.** The brain score matrix (63,994 × 672) encodes co-regulation of GO term predictions across isoforms. We computed the pairwise Pearson correlation matrix across GO terms (672 × 672) and applied Ward hierarchical clustering. The optimal cluster count (k = 44, silhouette score = 0.401, selected by silhouette scoring over k = 10–44) yielded **44 functional modules** with biologically interpretable identities. Module assignments are determined by PRISM score co-variation, independent of the GO annotation DAG structure.
+
+Selected brain-relevant modules include: Module 37 (CNS development / brain development, 32 terms), Module 36 (neuron differentiation / neuron development, 28 terms), Module 13 (chemical synaptic transmission / cell-cell signalling, 10 terms), Module 14 (GPCR signalling / nervous system process, 8 terms), Module 11 (monoatomic ion transmembrane transport / cation transport, 16 terms), and Module 35 (cell adhesion / homophilic cell-cell adhesion, 8 terms). The remaining modules partition cell-cycle, transcription regulation, mRNA splicing, protein ubiquitination, mitochondrial organization, and other canonical biological process categories.
+
+**Biological validation independent of PRISM scores.** To confirm that modules reflect shared biological function rather than arbitrary PRISM score co-variation, we computed the GO annotation co-occurrence Jaccard similarity between GO term pairs using the external annotation database (human_annotations_unified_bp.txt) without reference to any PRISM score. Within-module mean Jaccard similarity was **0.172 ± 0.192**, compared to **0.016 ± 0.022** for cross-module term pairs (Mann-Whitney U test, p ≈ 0, 10.5-fold enrichment). This result confirms that modules are semantically coherent by an annotation-DAG-based criterion fully independent of PRISM predictions, ruling out circular validation.
+
+**Isoform-module assignment and type stratification.** Of 63,994 brain isoforms, 41,559 (64.9%) received high-confidence primary module assignments (maximum GO score > 0.3). The remaining 35.1% form a low-confidence residual group (mean maximum score 0.22) corresponding to isoforms from genes without sufficient GO annotation density or with sequence features absent from the ESM-2 muscle training distribution. Among high-confidence isoforms, the module distribution differed significantly across isoform types (Known/NIC/NNIC; χ² = 1633.9, p = 2.44 × 10⁻²⁸⁴, 86 d.f.), establishing that splice variant novelty is associated with distinct functional module preferences (Table 4).
+
+Notably, NIC and NNIC isoforms are systematically underrepresented in synaptic transmission (Module 13: 7.0% NIC+NNIC vs 9.0% background; p < 0.05) and ion homeostasis (Module 12: 5.4%) modules while showing enrichment in GPCR signalling (Module 14: 11.2%). This is consistent with the biological expectation that novel isoforms — transcripts absent from canonical annotations — are less likely to carry the canonical synaptic domain architectures and more likely to generate functional diversification in signalling pathways.
+
+BISECT-validated genes exhibit biologically coherent module assignments: DLG1 isoforms span synaptic transmission (M13) and cell adhesion (M35), consistent with PSD-95's dual scaffold role; PTPRF isoforms span cell adhesion (M35) and neuron differentiation (M36), consistent with its receptor tyrosine phosphatase function in neural circuit formation; KIF21B isoforms cluster in organelle assembly (M43/M44), consistent with its kinesin-II microtubule function.
+
+**Table 4. Brain-specific module composition by isoform type (high-confidence, score > 0.3).**
+
+| Module | GO Content (representative terms) | N (isoforms) | Known (%) | NIC (%) | NNIC (%) |
+|--------|----------------------------------|-------------|-----------|---------|----------|
+| M37 | CNS development / brain development | 440 | 89.8 | 5.9 | 4.3 |
+| M36 | Neuron differentiation / development | 852 | 91.8 | 4.2 | 4.0 |
+| M13 | Synaptic transmission | 540 | 93.0 | 3.9 | 3.1 |
+| M14 | GPCR / nervous system | 528 | 88.8 | 5.9 | 5.3 |
+| M11 | Ion transmembrane transport | 2,032 | 90.9 | 4.8 | 4.3 |
+| M35 | Cell adhesion | 1,028 | 91.0 | 4.5 | 4.5 |
+| M12 | Ion homeostasis | 516 | 94.6 | 2.5 | 2.9 |
+
+*Background NIC+NNIC rate among high-confidence isoforms: 9.0%*
+
+This result expands the functional annotation coverage from the 73 targeted brain-specific GO terms to a 672-term landscape spanning the full breadth of represented human BP functions, providing module-level resolution of the 63,994 brain isoform space without requiring tissue-specific term pre-selection.
+
+The complete module landscape — including per-module novel isoform enrichment statistics (Fisher's exact test, BH-FDR), gene-level functional diversity scores, and DTU-linked condition × module analysis — is interactively accessible via the PRISM+BISECT web application (§2.32, *Functional Module Landscape* page). Users may apply the pre-trained 672-term module definitions to their own long-read single-cell data by providing a PRISM score matrix, enabling direct comparison to the brain reference landscape described here.
 
 ---
 
