@@ -174,7 +174,7 @@ def _load_demo_data(tissue: str, go_terms: list) -> dict:
     files = {
         'muscle':         ('muscle_scores.npy',     'muscle_ids.npy',     'muscle_types.npy',     'muscle_gene_ids.npy'),
         'brain':          ('brain_full_scores.npy',  'brain_full_ids.npy', 'brain_full_types.npy', 'brain_full_gene_ids.npy'),
-        'brain_extended': ('brain_novel_scores.npy', 'brain_novel_ids.npy', None, None),
+        'brain_extended': ('brain_novel_scores.npy', 'brain_novel_ids.npy', 'brain_novel_types.npy', None),
         'muscle_only':    ('muscle_scores.npy',     'muscle_ids.npy',     'muscle_types.npy',     'muscle_gene_ids.npy'),
     }
     score_f, id_f, type_f, gene_f = files.get(tissue, files['muscle'])

@@ -66,8 +66,8 @@ dtu   = cfg.get('dtu_df')
 # ── Coverage Report ──────────────────────────────────────────────────────────
 st.subheader("A1 · Coverage Summary — 얼마나 많은 아이소폼에 GO 기능이 예측됐는가")
 st.caption(
-    "PRISM이 각 아이소폼에 대해 18~73개 GO 기능 중 **어느 기능을 예측했고, 얼마나 자신 있게 예측했는지** 개요를 보여줍니다. "
-    f"Score > {'{thr}'}(사이드바 임계값) 인 GO term이 하나라도 있는 아이소폼을 '예측 성공'으로 집계합니다. "
+    f"PRISM이 각 아이소폼에 대해 18~73개 GO 기능 중 **어느 기능을 예측했고, 얼마나 자신 있게 예측했는지** 개요를 보여줍니다. "
+    f"Score > {thr}(사이드바 임계값) 인 GO term이 하나라도 있는 아이소폼을 '예측 성공'으로 집계합니다. "
     "Known(Ensembl 주석 있음) vs NIC/NNIC(Novel) 간 커버리지 비율 차이가 클수록 "
     "PRISM이 주석 없는 아이소폼에서도 기능을 예측하고 있음을 의미합니다."
 )
@@ -132,9 +132,9 @@ st.divider()
 # ── Scenario Summary ─────────────────────────────────────────────────────────
 st.subheader("D1 · 4-Scenario Classification — DTU × GO 기능 예측으로 아이소폼 분류")
 st.caption(
-    "각 아이소폼을 두 축으로 분류합니다: "
+    f"각 아이소폼을 두 축으로 분류합니다: "
     "① **DTU(Differential Transcript Usage)** — 조건 간 사용 비율이 유의미하게 변했는가 (DTU 파일 필요) · "
-    f"② **신규 GO 예측** — PRISM 스코어 > {'{thr}'}인 GO term이 있는가 · "
+    f"② **신규 GO 예측** — PRISM 스코어 > {thr}인 GO term이 있는가 · "
     "S1(DTU+ & GO+)이 질병 메커니즘과 가장 직접 관련된 최우선 후보이며, "
     "S3(DTU- & GO+)는 조건 무관하게 새로운 기능을 하는 구성적(constitutive) 신규 기능 아이소폼입니다."
 )
@@ -234,9 +234,9 @@ st.divider()
 # ── Novel Isoform Summary ────────────────────────────────────────────────────
 st.subheader("A3 · Novel Isoform Function Predictions — 주석 없는 아이소폼의 GO 기능 예측")
 st.caption(
-    "NIC(Novel In Catalog)·NNIC(Novel Not In Catalog) 아이소폼은 Ensembl에 GO 주석이 없습니다. "
+    f"NIC(Novel In Catalog)·NNIC(Novel Not In Catalog) 아이소폼은 Ensembl에 GO 주석이 없습니다. "
     "PRISM은 서열 기반으로 이들의 GO 기능을 예측하며, 이 섹션은 GO 기능별로 몇 개의 Novel 아이소폼이 "
-    f"Score > {'{thr}'} 예측을 받았는지 집계합니다. "
+    f"Score > {thr} 예측을 받았는지 집계합니다. "
     "**여기 나온 GO 기능은 기존 주석이 전혀 없는 상태에서 PRISM이 발굴한 신규 기능 후보입니다.** "
     "N_novel이 많고 Mean_score가 높은 GO 기능이 가장 유력한 실험 검증 대상입니다."
 )
@@ -386,8 +386,10 @@ else:
                 f"Macro AUPRC **{val_rep.macro_auprc:.4f}** "
                 f"(95% CI: {val_rep.macro_auprc_ci[0]:.4f}–{val_rep.macro_auprc_ci[1]:.4f}) "
                 f"across {val_rep.n_go_terms} GO terms evaluated with ≥2 positives.\n\n"
-                "A random classifier scores 0.5; PRISM achieves **0.70** on muscle "
-                "(Lee et al. 2026, §3.3)."
+                "AUPRC의 랜덤 기준 = GO term별 양성 비율 (~0.01–0.10). "
+                "0.5가 아님(AUROC의 랜덤 기준과 혼동 주의). "
+                "차트 점선이 실제 랜덤 기준값. "
+                "PRISM은 근육에서 Macro AUPRC **0.70** 달성 (Lee et al. 2026, §3.3)."
             )
             st.dataframe(
                 per_go_df[['name', 'auprc', 'n_pos']].rename(
