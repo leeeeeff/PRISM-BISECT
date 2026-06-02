@@ -165,7 +165,9 @@ def build_umap_figure(
         df = df.merge(meta, on='isoform_id', how='left')
 
     # ── Add max_score / max_go if score_matrix available ─────────────────
-    if score_matrix is not None and 'max_score' not in df.columns:
+    # Check max_go_name (not max_score) — classified_df already carries max_score
+    # but never max_go_name, so the block must run whenever max_go_name is absent.
+    if score_matrix is not None and 'max_go_name' not in df.columns:
         max_idx = score_matrix.argmax(axis=1)
         df['max_score'] = score_matrix.max(axis=1).round(3)
         if go_terms:

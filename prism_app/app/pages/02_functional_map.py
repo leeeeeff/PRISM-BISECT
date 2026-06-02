@@ -98,6 +98,18 @@ with tab_umap:
     sampled_classified = (classified.iloc[sample_idx].reset_index(drop=True)
                           if classified is not None else None)
 
+    # Inject isoform_type from cfg (not in classified_df by default)
+    if types is not None:
+        _sampled_types = np.asarray(types, dtype=str)[sample_idx]
+        if sampled_classified is not None:
+            sampled_classified = sampled_classified.copy()
+            sampled_classified['isoform_type'] = _sampled_types
+        else:
+            sampled_classified = pd.DataFrame({
+                'isoform_id':   sampled_ids,
+                'isoform_type': _sampled_types,
+            })
+
     note_parts = [f"투영 방법: **{embed_method}**"]
     if n_total > _MAX_UMAP:
         note_parts.append(f"{_MAX_UMAP:,}개 샘플링 (전체 {n_total:,}개)")
