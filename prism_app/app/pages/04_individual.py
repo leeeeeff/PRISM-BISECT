@@ -368,6 +368,7 @@ with tab_bisect:
                 # ── Isoform pair ──────────────────────────────────────────────
                 _ct_tx = str(_brow.get('ct_transcript_id') or '').strip()
                 _ad_tx = str(_brow.get('ad_transcript_id') or '').strip()
+                _safe_ct_key = _ct.replace(' ', '_').replace('-', '_')
                 if _ct_tx or _ad_tx:
                     st.markdown(
                         f"<div style='background:#f8fafc;border-radius:6px;"
@@ -376,6 +377,52 @@ with tab_bisect:
                         f"🔴 AD: <code>{_ad_tx or '—'}</code></div>",
                         unsafe_allow_html=True,
                     )
+
+                # ── DTU Δ Usage bar chart ─────────────────────────────────────
+                _dtu_src = cfg.get('dtu_df')
+                _CT_COND_MAP = {'Excitatory': 'Excitatory neuron',
+                                'Inhibitory': 'Inhibitory neuron'}
+                _dtu_cond = _CT_COND_MAP.get(_ct, _ct)
+                if _dtu_src is not None:
+                    _g_dtu = (
+                        _dtu_src[(_dtu_src['gene_id'] == _gene) &
+                                  (_dtu_src['condition'] == _dtu_cond)]
+                        if 'condition' in _dtu_src.columns
+                        else _dtu_src[_dtu_src['gene_id'] == _gene]
+                    ).copy()
+                    if not _g_dtu.empty:
+                        _g_dtu = _g_dtu.sort_values('delta_IF').reset_index(drop=True)
+                        _g_dtu['role'] = _g_dtu['isoform_id'].map(
+                            lambda iso: ('CT (Control)' if iso == _ct_tx
+                                         else ('AD (Disease)' if iso == _ad_tx
+                                               else 'Other isoform'))
+                        )
+                        _g_dtu['label'] = _g_dtu['delta_IF'].map(lambda v: f'{v:+.3f}')
+                        _fig_dtu = px.bar(
+                            _g_dtu,
+                            x='isoform_id', y='delta_IF',
+                            color='role',
+                            color_discrete_map={
+                                'CT (Control)':   '#3b82f6',
+                                'AD (Disease)':   '#ef4444',
+                                'Other isoform':  '#94a3b8',
+                            },
+                            title=f"Δ Usage (AD − CT) — {_gene}  ·  {_ct}",
+                            labels={'delta_IF': 'Δ Usage (AD − CT)', 'isoform_id': ''},
+                            text='label',
+                            height=max(240, len(_g_dtu) * 30 + 80),
+                        )
+                        _fig_dtu.add_hline(y=0, line_color='#1e293b', line_width=1.2)
+                        _fig_dtu.update_traces(textposition='outside', textfont_size=9)
+                        _fig_dtu.update_layout(
+                            xaxis_tickangle=-35,
+                            legend_title='',
+                            plot_bgcolor='white',
+                            yaxis=dict(gridcolor='#f0f0f0'),
+                            margin=dict(t=40, b=80, l=10, r=10),
+                        )
+                        st.plotly_chart(_fig_dtu, use_container_width=True,
+                                        key=f"dtu_usage_{_gene}_{_safe_ct_key}")
 
                 # ── Row 1: core metrics (6-col) ───────────────────────────────
                 _r1c1, _r1c2, _r1c3, _r1c4, _r1c5, _r1c6 = st.columns(6)
@@ -536,6 +583,80 @@ with tab_bisect:
                         unsafe_allow_html=True,
                     )
 
+                # ── Domain structure + IGV genomic view ───────────────────────
+                _BISECT_OUT = Path(__file__).parents[3] / \
+                    'Final_analysis' / 'pipeline_bioanalysis' / 'outputs'
+                _dmap = _BISECT_OUT / f"{_gene}_{_ct}" / "domain_map.png"
+                if _dmap.exists():
+                    st.divider()
+                    st.markdown(
+                        "<div style='font-size:0.88rem;font-weight:600;"
+                        "color:#1e293b;margin-bottom:4px'>"
+                        "🗺️ 도메인 구조 변화 (CT → AD)</div>",
+                        unsafe_allow_html=True,
+                    )
+                    st.caption(
+                        f"Primary pair: 🔵 `{_ct_tx or '—'}` (Control) → "
+                        f"🔴 `{_ad_tx or '—'}` (AD). "
+                        "BISECT m11 AlphaFold + Pfam 기반 도메인 GAIN/LOSS 주석."
+                    )
+                    st.image(str(_dmap), use_column_width=True)
+
+                # ── IGV.js genomic view ───────────────────────────────────────
+                st.divider()
+                st.markdown(
+                    "<div style='font-size:0.88rem;font-weight:600;"
+                    "color:#1e293b;margin-bottom:4px'>"
+                    "🧬 유전체 뷰 (hg38 RefSeq 주석)</div>",
+                    unsafe_allow_html=True,
+                )
+                st.caption(
+                    f"유전자 좌위: **{_gene}** | "
+                    f"핵심 전사체: 🔵 CT `{_ct_tx or '—'}` / 🔴 AD `{_ad_tx or '—'}`. "
+                    "아래 트랙에서 엑손 구조와 스플라이싱 차이를 확인하세요."
+                )
+                _igv_div_id = f"igv_{_gene}_{_safe_ct_key}"
+                _igv_html = f"""
+<div id="{_igv_div_id}" style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden"></div>
+<script>
+(function() {{
+    // Load igv.js only once per page via a flag
+    function _initIGV() {{
+        var el = document.getElementById('{_igv_div_id}');
+        if (!el || el.dataset.igvLoaded) return;
+        el.dataset.igvLoaded = '1';
+        igv.createBrowser(el, {{
+            genome: 'hg38',
+            locus: '{_gene}',
+            showNavigation: true,
+            showRuler: true,
+            tracks: [{{
+                name: 'RefSeq Genes',
+                type: 'annotation',
+                format: 'refgene',
+                url: 'https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/ncbiRefSeq.txt.gz',
+                displayMode: 'EXPANDED',
+                color: 'rgb(0,80,180)',
+                visibilityWindow: 500000,
+            }}]
+        }}).catch(function(e) {{
+            el.innerHTML = '<p style="color:#64748b;font-size:0.8rem;padding:12px">'
+                + 'IGV 로드 실패 (네트워크 필요): ' + e.message + '</p>';
+        }});
+    }}
+    if (typeof igv !== 'undefined') {{
+        _initIGV();
+    }} else {{
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/igv@2.15.5/dist/igv.min.js';
+        s.onload = _initIGV;
+        document.head.appendChild(s);
+    }}
+}})();
+</script>"""
+                import streamlit.components.v1 as _components
+                _components.html(_igv_html, height=380, scrolling=False)
+
                 # ── Warnings ──────────────────────────────────────────────────
                 if _brow.get('nat'):
                     st.warning("⚠️ NAT (Natural Antisense Transcript) overlap 감지됨")
@@ -587,7 +708,7 @@ with tab_bisect:
                         )
                         _safe_irow_key = _irow['isoform_id'].replace('/', '_').replace('.', '_')
                         st.plotly_chart(_fig, use_container_width=True,
-                                        key=f"bisect_s1_go_{_gene}_{_safe_irow_key}")
+                                        key=f"bisect_s1_go_{_gene}_{_safe_ct_key}_{_safe_irow_key}")
 
     st.divider()
     st.download_button(
