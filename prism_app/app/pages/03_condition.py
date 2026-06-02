@@ -9,7 +9,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import plotly.graph_objects as go
+import plotly.graph_objects as pgo
 
 from prism_app.pipeline.dtu_connector import (
     compute_functional_consequence,
@@ -366,7 +366,7 @@ with tab_sankey:
                         link_labels.append(f"{v} isoforms")
 
             if source:
-                fig_s = go.Figure(go.Sankey(
+                fig_s = pgo.Figure(pgo.Sankey(
                     arrangement='freeform',
                     node=dict(
                         pad=18, thickness=22,
