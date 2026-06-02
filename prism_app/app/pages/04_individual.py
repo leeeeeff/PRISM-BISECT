@@ -361,72 +361,123 @@ with tab_bisect:
                 _title += "  ·  🔴 Scenario 1 PASS"
 
             with st.expander(_title, expanded=bool(_bq)):
-                # ── Row 1: core metrics ───────────────────────────────────────
-                _r1c1, _r1c2, _r1c3, _r1c4 = st.columns(4)
+                # ── Isoform pair ──────────────────────────────────────────────
+                _ct_tx = str(_brow.get('ct_transcript_id') or '').strip()
+                _ad_tx = str(_brow.get('ad_transcript_id') or '').strip()
+                if _ct_tx or _ad_tx:
+                    st.markdown(
+                        f"<div style='background:#f8fafc;border-radius:6px;"
+                        f"padding:6px 12px;font-size:0.82rem;color:#475569;margin-bottom:8px'>"
+                        f"🔵 CT: <code>{_ct_tx or '—'}</code> &nbsp;→&nbsp; "
+                        f"🔴 AD: <code>{_ad_tx or '—'}</code></div>",
+                        unsafe_allow_html=True,
+                    )
+
+                # ── Row 1: core metrics (6-col) ───────────────────────────────
+                _r1c1, _r1c2, _r1c3, _r1c4, _r1c5, _r1c6 = st.columns(6)
                 _delta = _brow.get('delta')
                 _r1c1.metric("Δ Usage (AD−CT)",
                              f"{float(_delta):.3f}" if _delta is not None else "N/A")
                 _dtu_p = _brow.get('dtu_p')
                 _r1c2.metric("DTU p-value",
                              f"{float(_dtu_p):.2e}" if _dtu_p else "N/A")
-                _plddt = _brow.get('af_ad_plddt_mean')
-                _r1c3.metric("AlphaFold pLDDT",
-                             f"{float(_plddt):.1f}" if _plddt else "N/A",
-                             delta="신뢰" if _plddt and float(_plddt) >= 70 else None)
+                _ct_plddt = _brow.get('af_ct_plddt_mean')
+                _r1c3.metric("CT pLDDT",
+                             f"{float(_ct_plddt):.1f}" if _ct_plddt else "N/A",
+                             help="AlphaFold pLDDT for Control transcript")
+                _ad_plddt = _brow.get('af_ad_plddt_mean')
+                _r1c4.metric("AD pLDDT",
+                             f"{float(_ad_plddt):.1f}" if _ad_plddt else "N/A",
+                             delta="신뢰" if _ad_plddt and float(_ad_plddt) >= 70 else None,
+                             help="AlphaFold pLDDT for AD transcript")
+                _dplddt = _brow.get('af_delta_plddt')
+                _r1c5.metric("ΔpLDDT (AD−CT)",
+                             f"{float(_dplddt):+.1f}" if _dplddt else "N/A",
+                             help="Positive = AD isoform more structured")
                 _phylo = _brow.get('cons_ad_phylop')
-                _r1c4.metric("phyloP 보존도",
-                             f"{float(_phylo):.3f}" if _phylo else "N/A")
+                _r1c6.metric("phyloP (AD exon)",
+                             f"{float(_phylo):.3f}" if _phylo else "N/A",
+                             help="Mean phyloP100way for AD-specific exon")
 
-                # ── Row 2: domain changes ─────────────────────────────────────
-                _dg = str(_brow.get('domains_gained') or '').strip()
-                _dl = str(_brow.get('domains_lost')  or '').strip()
-                if _dg or _dl:
-                    _dc1, _dc2 = st.columns(2)
-                    with _dc1:
-                        if _dg:
-                            st.markdown(
-                                f"<div style='background:#f0fdf4;border-left:3px solid #22c55e;"
-                                f"padding:8px 12px;border-radius:4px;font-size:0.85rem'>"
-                                f"<b>도메인 획득 (AD)</b><br>"
-                                f"{'<br>'.join(f'<code>{d}</code>' for d in _dg.split(';') if d)}"
-                                f"</div>",
-                                unsafe_allow_html=True,
-                            )
-                        else:
-                            st.markdown(
-                                "<div style='background:#f8fafc;border-left:3px solid #cbd5e1;"
-                                "padding:8px 12px;border-radius:4px;font-size:0.85rem;color:#94a3b8'>"
-                                "도메인 획득 없음</div>",
-                                unsafe_allow_html=True,
-                            )
-                    with _dc2:
-                        if _dl:
-                            st.markdown(
-                                f"<div style='background:#fef2f2;border-left:3px solid #ef4444;"
-                                f"padding:8px 12px;border-radius:4px;font-size:0.85rem'>"
-                                f"<b>도메인 손실 (CT)</b><br>"
-                                f"{'<br>'.join(f'<code>{d}</code>' for d in _dl.split(';') if d)}"
-                                f"</div>",
-                                unsafe_allow_html=True,
-                            )
-                        else:
-                            st.markdown(
-                                "<div style='background:#f8fafc;border-left:3px solid #cbd5e1;"
-                                "padding:8px 12px;border-radius:4px;font-size:0.85rem;color:#94a3b8'>"
-                                "도메인 손실 없음</div>",
-                                unsafe_allow_html=True,
-                            )
+                # ── Row 2: domain changes with AlphaFold confidence ───────────
+                _dg     = str(_brow.get('domains_gained')       or '').strip()
+                _dl     = str(_brow.get('domains_lost')         or '').strip()
+                _af_gd  = str(_brow.get('af_gained_confident')  or '').strip()
+                _af_ld  = str(_brow.get('af_lost_confident')    or '').strip()
 
-                # ── Row 3: module verdicts ────────────────────────────────────
-                _mod_items = []
-                _ppi = str(_brow.get('ppi_verdict') or '').strip()
-                if _ppi:
-                    _ppi_color = '#15803d' if _ppi == 'SUPPORTED' else '#b91c1c'
-                    _mod_items.append(
-                        f"<span style='background:#f0fdf4;color:{_ppi_color};"
-                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
-                        f"PPI: {_ppi}</span>"
+                _dc1, _dc2 = st.columns(2)
+                with _dc1:
+                    _dg_items = [d for d in _dg.split(';') if d]
+                    _dg_html  = ''.join(
+                        f"<code style='background:#dcfce7;padding:1px 5px;"
+                        f"border-radius:3px'>{d}</code> " for d in _dg_items
+                    ) if _dg_items else '<span style="color:#94a3b8">없음</span>'
+                    _af_gd_html = (
+                        f"<br><span style='font-size:0.75rem;color:#15803d'>"
+                        f"🏗 AlphaFold 확인: {_af_gd}</span>"
+                    ) if _af_gd else ''
+                    st.markdown(
+                        f"<div style='background:#f0fdf4;border-left:3px solid #22c55e;"
+                        f"padding:8px 12px;border-radius:4px;font-size:0.85rem'>"
+                        f"<b>도메인 획득 (AD)</b><br>{_dg_html}{_af_gd_html}</div>",
+                        unsafe_allow_html=True,
                     )
+                with _dc2:
+                    _dl_items = [d for d in _dl.split(';') if d]
+                    _dl_html  = ''.join(
+                        f"<code style='background:#fee2e2;padding:1px 5px;"
+                        f"border-radius:3px'>{d}</code> " for d in _dl_items
+                    ) if _dl_items else '<span style="color:#94a3b8">없음</span>'
+                    _af_ld_html = (
+                        f"<br><span style='font-size:0.75rem;color:#b91c1c'>"
+                        f"🏗 AlphaFold 확인: {_af_ld}</span>"
+                    ) if _af_ld else ''
+                    st.markdown(
+                        f"<div style='background:#fef2f2;border-left:3px solid #ef4444;"
+                        f"padding:8px 12px;border-radius:4px;font-size:0.85rem'>"
+                        f"<b>도메인 손실 (CT)</b><br>{_dl_html}{_af_ld_html}</div>",
+                        unsafe_allow_html=True,
+                    )
+
+                # ── Row 3: PPI + conservation detail ─────────────────────────
+                _ppi_v  = str(_brow.get('ppi_verdict')    or '').strip()
+                _ppi_p  = str(_brow.get('ppi_top_partner')or '').strip()
+                _ppi_s  = _brow.get('ppi_top_score')
+                _ppi_n  = _brow.get('ppi_n_string_hits')
+                _cons_c = str(_brow.get('cons_ad_class')  or '').strip()
+                _cons_bg= _brow.get('cons_background_phylop')
+                _top_reg= str(_brow.get('top_regulators') or '').strip()
+
+                _det_items = []
+                if _ppi_v:
+                    _ppi_clr = '#15803d' if _ppi_v == 'SUPPORTED' else '#b91c1c'
+                    _ppi_txt = f"PPI: <b style='color:{_ppi_clr}'>{_ppi_v}</b>"
+                    if _ppi_p:
+                        _ppi_txt += f" (top: {_ppi_p}"
+                        if _ppi_s:
+                            _ppi_txt += f" score={int(_ppi_s)}"
+                        _ppi_txt += f", n={int(_ppi_n) if _ppi_n else '?'})"
+                    _det_items.append(_ppi_txt)
+                if _phylo:
+                    _cons_txt = f"Conservation: phyloP={float(_phylo):.3f}"
+                    if _cons_c:
+                        _cons_txt += f" ({_cons_c})"
+                    if _cons_bg:
+                        _cons_txt += f" | bg={float(_cons_bg):.3f}"
+                    _det_items.append(_cons_txt)
+                if _top_reg:
+                    _det_items.append(f"Top regulators: {_top_reg}")
+
+                if _det_items:
+                    st.markdown(
+                        "<div style='background:#f8fafc;border-radius:6px;padding:8px 12px;"
+                        "font-size:0.82rem;color:#374151;margin:8px 0;line-height:1.8'>"
+                        + "<br>".join(_det_items) + "</div>",
+                        unsafe_allow_html=True,
+                    )
+
+                # ── Row 4: module verdict badges ──────────────────────────────
+                _mod_items = []
                 _seq_id = _brow.get('seq_val_identity')
                 if _seq_id and float(_seq_id) > 0:
                     _mod_items.append(
@@ -446,7 +497,7 @@ with tab_bisect:
                 if _tss:
                     _tss_txt = f"TSS: {_tss}"
                     if _tss_bp:
-                        _tss_txt += f" ({int(_tss_bp):+d}bp)"
+                        _tss_txt += f" ({int(float(_tss_bp)):+d}bp)"
                     _mod_items.append(
                         f"<span style='background:#fff7ed;color:#c2410c;"
                         f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
@@ -457,11 +508,22 @@ with tab_bisect:
                     _apa_bp = _brow.get('tts_diff_bp')
                     _apa_txt = f"APA: {_apa}"
                     if _apa_bp:
-                        _apa_txt += f" ({int(_apa_bp):+d}bp)"
+                        _apa_txt += f" ({int(float(_apa_bp)):+d}bp)"
                     _mod_items.append(
                         f"<span style='background:#ecfdf5;color:#065f46;"
                         f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
                         f"{_apa_txt}</span>"
+                    )
+                _ad_nmd = _brow.get('ad_nmd')
+                _ct_nmd = _brow.get('ct_nmd')
+                if _ad_nmd or _ct_nmd:
+                    _nmd_txt = "NMD: "
+                    _nmd_txt += ("AD✓" if _ad_nmd else "AD✗") + " / "
+                    _nmd_txt += ("CT✓" if _ct_nmd else "CT✗")
+                    _mod_items.append(
+                        f"<span style='background:#fef9c3;color:#854d0e;"
+                        f"border-radius:4px;padding:2px 8px;font-size:0.8rem'>"
+                        f"{_nmd_txt}</span>"
                     )
                 if _mod_items:
                     st.markdown(

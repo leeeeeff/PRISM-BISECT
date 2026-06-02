@@ -205,6 +205,33 @@ with tab_matrix:
         fig_summ.update_layout(xaxis_tickangle=-35, legend_title='')
         st.plotly_chart(fig_summ, use_container_width=True)
 
+        # ── GAIN / LOSS binary chart (NEUTRAL 제외) ───────────────────────────
+        _gl = summ[['go_name', 'GAIN', 'LOSS']].copy()
+        _gl['total'] = _gl['GAIN'] + _gl['LOSS']
+        _gl = _gl[_gl['total'] > 0].sort_values('total', ascending=True)
+
+        if not _gl.empty:
+            fig_gl = px.bar(
+                _gl,
+                x=['GAIN', 'LOSS'],
+                y='go_name',
+                orientation='h',
+                barmode='group',
+                title="GAIN / LOSS only — functional switch 집중 GO term (NEUTRAL 제외)",
+                labels={'value': 'N genes', 'go_name': '', 'variable': ''},
+                color_discrete_map={'GAIN': '#2a9d8f', 'LOSS': '#e63946'},
+                height=max(300, len(_gl) * 28),
+                text_auto=True,
+            )
+            fig_gl.update_traces(textposition='outside', textfont_size=10)
+            fig_gl.update_layout(
+                yaxis_tickfont_size=11,
+                legend_title='',
+                plot_bgcolor='white',
+                xaxis=dict(gridcolor='#f0f0f0'),
+            )
+            st.plotly_chart(fig_gl, use_container_width=True)
+
         # ── Gene × GO heatmap (score delta) ──────────────────────────────────
         pivot = build_consequence_pivot(conseq_df)
 
