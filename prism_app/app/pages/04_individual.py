@@ -264,6 +264,334 @@ with tab_search:
                         key=f"dl_case_report_{_safe_iso_key}",
                     )
 
+# ── Bio-report helper (called inside BISECT expanders) ───────────────────────
+_DOMAIN_FUNC_MAP = {
+    'Kinesin':       'microtubule-based motor activity (ATP-dependent)',
+    'WD40':          'β-propeller scaffold for protein–protein interactions',
+    'PDZ':           'synaptic scaffolding, C-terminal peptide binding',
+    'SAM':           'oligomerization / RNA-binding (context-dependent)',
+    'SH3':           'proline-rich sequence binding, signaling assembly',
+    'SH2':           'phosphotyrosine binding, downstream signaling',
+    'RRM':           'RNA recognition motif, post-transcriptional regulation',
+    'Microtub_bd':   'direct microtubule binding and stabilization',
+    'NDUS4':         'NADH:ubiquinone oxidoreductase (Complex I) assembly',
+    'RVT_1':         'reverse-transcriptase / RNA-dependent DNA polymerase',
+    'DUF5082':       'domain of unknown function (DUF5082)',
+    'ANAPC4_WD40':   'APC/C complex scaffold, cell-cycle regulation',
+    'Nup160':        'nuclear pore complex, nucleocytoplasmic transport',
+    'PH':            'phosphoinositide binding, membrane recruitment',
+    'Guanylate_kin': 'guanylate kinase activity, scaffolding at PSD',
+    'RhoGAP':        'Rho GTPase-activating protein, cytoskeleton regulation',
+    'RhoGEF':        'Rho guanine-nucleotide exchange factor',
+    'Pkinase':       'serine/threonine protein kinase, signal transduction',
+    'CARD':          'caspase recruitment domain, apoptosis regulation',
+    'FN3':           'fibronectin type-III fold, cell adhesion',
+    'EGF':           'EGF receptor binding, proliferation signaling',
+    'BEACH':         'lysosome/endosome biogenesis regulation',
+    'GRAM':          'membrane association with PH domain',
+}
+
+
+def _build_bio_report_html(
+    brow: dict,
+    gene: str,
+    ct_type: str,
+    ct_tx: str,
+    ad_tx: str,
+    ct_scores,
+    ad_scores,
+    go_ids: list,
+    go_names: dict,
+    threshold: float,
+) -> str:
+    """Return styled HTML biological prediction report from BISECT evidence."""
+    import ast
+
+    # ── Extract fields ────────────────────────────────────────────────────────
+    delta   = brow.get('delta')
+    dtu_p   = brow.get('dtu_p')
+    dg      = str(brow.get('domains_gained') or '').strip()
+    dl      = str(brow.get('domains_lost')   or '').strip()
+    ppi_v   = str(brow.get('ppi_verdict')    or '').strip()
+    ppi_p   = str(brow.get('ppi_top_partner')or '').strip()
+    ppi_s   = brow.get('ppi_top_score')
+    phylo   = brow.get('cons_ad_phylop')
+    cons_c  = str(brow.get('cons_ad_class')  or '').strip()
+    mech    = str(brow.get('mechanism_type') or '').strip()
+    tss_cls = str(brow.get('tss_class')      or '').strip()
+    apa_cls = str(brow.get('apa_class')      or '').strip()
+    tss_bp  = brow.get('tss_diff_bp')
+    apa_bp  = brow.get('tts_diff_bp')
+    reg_raw = str(brow.get('top_regulators') or '').strip()
+    ad_nmd  = brow.get('ad_nmd')
+    ct_nmd  = brow.get('ct_nmd')
+    af_ad   = brow.get('af_ad_plddt_mean')
+
+    # parse top regulator name
+    reg_name = ''
+    if reg_raw and reg_raw not in ('None', ''):
+        try:
+            _rd = ast.literal_eval(reg_raw)
+            reg_name = _rd.get('gene', '')
+            reg_logfc = _rd.get('logFC', None)
+        except Exception:
+            reg_name = ''
+
+    dg_list = [d for d in dg.split(';') if d]
+    dl_list = [d for d in dl.split(';') if d]
+
+    def _domain_func(d):
+        for k, v in _DOMAIN_FUNC_MAP.items():
+            if k.lower() in d.lower():
+                return v
+        return 'function uncharacterised'
+
+    # ── PRISM top GO terms ────────────────────────────────────────────────────
+    def _top_go(scores, n=3):
+        if scores is None:
+            return []
+        idxs = np.argsort(scores)[-n:][::-1]
+        return [(go_ids[i], go_names.get(go_ids[i], go_ids[i]), float(scores[i]))
+                for i in idxs if scores[i] > 0.15]
+
+    ct_top = _top_go(ct_scores)
+    ad_top = _top_go(ad_scores)
+    ct_go_ids_set = {g for g, _, _ in ct_top}
+    ad_go_ids_set = {g for g, _, _ in ad_top}
+    gained_go = [(g, n, s) for g, n, s in ad_top if g not in ct_go_ids_set]
+    lost_go   = [(g, n, s) for g, n, s in ct_top if g not in ad_go_ids_set]
+
+    # ── Confidence score ──────────────────────────────────────────────────────
+    ev_count = sum([
+        bool(delta and abs(float(delta)) > 0.1),
+        bool(dtu_p and float(dtu_p) < 1e-5),
+        bool(dg_list),
+        bool(dl_list),
+        ppi_v == 'SUPPORTED',
+        bool(phylo and float(phylo) > 1.0),
+        bool(gained_go or lost_go),
+    ])
+    conf_label = ['Low', 'Low', 'Moderate', 'Moderate', 'High', 'High', 'Very High'][min(ev_count, 6)]
+    conf_color = {'Low': '#ef4444', 'Moderate': '#f59e0b', 'High': '#22c55e', 'Very High': '#15803d'}[conf_label]
+
+    # ── Narrative sentences ───────────────────────────────────────────────────
+    lines = []
+
+    # 1. Isoform switch
+    try:
+        dv = float(delta)
+    except Exception:
+        dv = None
+    if dv is not None:
+        direction = '감소하며 대체됨' if dv < 0 else '증가함'
+        lines.append(
+            f"알츠하이머 조건 {ct_type} 세포에서 <b>{ct_tx or 'CT 이소폼'}</b>의 "
+            f"사용 비율이 <b>Δ = {dv:+.3f}</b>로 {direction}하고 "
+            f"<b>{ad_tx or 'AD 이소폼'}</b>으로 전환이 관측되었다"
+            + (f" (DTU p = {float(dtu_p):.2e})" if dtu_p else "") + "."
+        )
+
+    # 2. Structural domain change
+    if dg_list:
+        gained_descs = '; '.join(
+            f"<b>{d}</b> ({_domain_func(d)})" for d in dg_list
+        )
+        lines.append(f"AD 이소폼은 {gained_descs} 도메인을 새로 획득하여 기능적 다양성이 증가한다.")
+    if dl_list:
+        lost_descs = '; '.join(
+            f"<b>{d}</b> ({_domain_func(d)})" for d in dl_list
+        )
+        lines.append(f"반면 {lost_descs} 도메인이 제거됨으로써 정상 이소폼의 주요 기능적 역량이 소실된다.")
+
+    # 3. PRISM functional shift
+    if gained_go:
+        gfstr = ', '.join(f"{n[:35]} ({s:.3f})" for _, n, s in gained_go[:2])
+        lines.append(
+            f"PRISM GO 기능 예측에서 AD 이소폼은 정상 이소폼에는 없는 "
+            f"<b>{gfstr}</b> 기능 공간을 새로 점유한다."
+        )
+    if lost_go:
+        lfstr = ', '.join(f"{n[:35]} ({s:.3f})" for _, n, s in lost_go[:2])
+        lines.append(
+            f"정상 이소폼에서 높았던 <b>{lfstr}</b> 기능 점수가 AD 이소폼에서 유의미하게 낮아져, "
+            f"질병 전환에 의한 기능 소실이 시사된다."
+        )
+
+    # 4. PPI
+    if ppi_v == 'SUPPORTED' and ppi_p:
+        ppi_score_str = f" (STRING score = {int(float(ppi_s))})" if ppi_s else ""
+        lines.append(
+            f"STRING PPI 분석에서 AD 이소폼은 <b>{ppi_p}</b>와의 상호작용이 예측되며"
+            f"{ppi_score_str}, 이는 {ct_type} 내 새로운 단백질 복합체 형성 가능성을 시사한다."
+        )
+
+    # 5. AlphaFold
+    if af_ad:
+        try:
+            af_val = float(af_ad)
+            qual = "구조적으로 신뢰도 높은 (pLDDT ≥ 70)" if af_val >= 70 else "부분적으로 무질서한"
+            lines.append(
+                f"AlphaFold 구조 예측에서 AD 이소폼은 {qual} 단백질로 예측된다 (pLDDT = {af_val:.1f})."
+            )
+        except Exception:
+            pass
+
+    # 6. Conservation
+    if phylo:
+        try:
+            phv = float(phylo)
+            cs = ("고보존 — 100-way vertebrate alignment에서 강한 purifying selection" if phv > 1.5
+                  else ("중간 보존" if phv > 0.5 else "낮은 보존 — 최근 진화적 혁신 가능성"))
+            lines.append(
+                f"AD 특이적 엑손의 보존성 (phyloP100way = {phv:.3f}, {cs})은 "
+                f"{'이 서열의 기능적 중요성을 강하게 지지한다' if phv > 1.5 else '추가적인 기능 검증이 필요함을 시사한다'}."
+            )
+        except Exception:
+            pass
+
+    # 7. Regulatory mechanism
+    _mech_ko = {
+        'alternative_splicing': '선택적 스플라이싱 (exon inclusion/exclusion)',
+        'alternative_tss':      '대체 프로모터 사용 (alternative TSS)',
+        'alternative_apa':      '대체 폴리아데닐화 (alternative APA)',
+        'intron_retention':     '인트론 유지 (intron retention)',
+    }
+    if mech:
+        mech_desc = _mech_ko.get(mech, mech)
+        tss_note = f" TSS 차이: {int(float(tss_bp)):+d}bp" if tss_bp else ""
+        apa_note = f" APA 차이: {int(float(apa_bp)):+d}bp" if apa_bp else ""
+        reg_note = f" 핵심 조절 인자: <b>{reg_name}</b>" if reg_name else ""
+        lines.append(f"전사체 생성 기전: <b>{mech_desc}</b>.{tss_note}{apa_note}{reg_note}")
+
+    # 8. NMD caveat
+    if ad_nmd and str(ad_nmd).lower() not in ('false', ''):
+        lines.append(
+            "⚠️ AD 이소폼은 NMD (Nonsense-Mediated Decay) 감수성 구조를 포함하므로, "
+            "단백질 번역 여부를 Ribo-seq 또는 질량분석으로 검증해야 한다."
+        )
+
+    # ── HTML assembly ─────────────────────────────────────────────────────────
+    def _tag(text, bg, fg='#1e293b'):
+        return (f"<code style='background:{bg};color:{fg};padding:2px 6px;"
+                f"border-radius:3px;font-size:0.8rem'>{text}</code>")
+
+    evid_rows_html = ''
+    if delta:
+        evid_rows_html += f"<tr><td class='rl'>Δ Usage (AD−CT)</td><td class='rv'>{float(delta):+.3f}</td><td class='rc'>DTU</td></tr>"
+    if dtu_p:
+        evid_rows_html += f"<tr><td class='rl'>DTU p-value</td><td class='rv'>{float(dtu_p):.2e}</td><td class='rc'>DTU</td></tr>"
+    if dg_list:
+        evid_rows_html += f"<tr><td class='rl'>도메인 획득</td><td class='rv'>{'·'.join(dg_list)}</td><td class='rc'>Structure</td></tr>"
+    if dl_list:
+        evid_rows_html += f"<tr><td class='rl'>도메인 손실</td><td class='rv'>{'·'.join(dl_list)}</td><td class='rc'>Structure</td></tr>"
+    if ppi_v:
+        evid_rows_html += f"<tr><td class='rl'>PPI support</td><td class='rv'>{ppi_v}</td><td class='rc'>Interaction</td></tr>"
+    if phylo:
+        evid_rows_html += f"<tr><td class='rl'>phyloP (AD exon)</td><td class='rv'>{float(phylo):.3f} ({cons_c or '?'})</td><td class='rc'>Conservation</td></tr>"
+    if mech:
+        evid_rows_html += f"<tr><td class='rl'>기전</td><td class='rv'>{_mech_ko.get(mech,mech)}</td><td class='rc'>Regulation</td></tr>"
+
+    def _go_badges(top_list, bg):
+        if not top_list:
+            return "<span style='color:#9ca3af;font-size:0.78rem'>데이터 없음</span>"
+        return ''.join(
+            f"<span style='background:{bg};border-radius:3px;padding:2px 6px;"
+            f"margin:2px 2px;display:inline-block;font-size:0.78rem'>"
+            f"{n[:32]} <b>{s:.3f}</b></span>"
+            for _, n, s in top_list[:3]
+        )
+
+    domain_gained_li = ''.join(
+        f"<li style='margin:3px 0;font-size:0.82rem'>"
+        f"{_tag(d,'#dcfce7','#14532d')} — {_domain_func(d)}</li>"
+        for d in dg_list
+    ) or "<li style='color:#9ca3af;font-size:0.82rem'>변화 없음</li>"
+
+    domain_lost_li = ''.join(
+        f"<li style='margin:3px 0;font-size:0.82rem'>"
+        f"{_tag(d,'#fee2e2','#7f1d1d')} — {_domain_func(d)}</li>"
+        for d in dl_list
+    ) or "<li style='color:#9ca3af;font-size:0.82rem'>변화 없음</li>"
+
+    interp_html = ''.join(
+        f"<p style='margin:0 0 9px;font-size:0.84rem;line-height:1.65;color:#1e293b'>{l}</p>"
+        for l in lines
+    ) or "<p style='color:#9ca3af'>해석 데이터 불충분</p>"
+
+    return f"""
+<style>
+.rl{{padding:3px 8px;color:#6b7280;font-size:0.79rem;white-space:nowrap}}
+.rv{{padding:3px 8px;font-weight:600;font-size:0.79rem}}
+.rc{{padding:3px 8px;font-size:0.72rem;color:#9ca3af}}
+</style>
+<div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+  padding:20px 22px;margin:14px 0;font-family:Arial,sans-serif'>
+
+  <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:14px'>
+    <span style='font-size:1.0rem;font-weight:700;color:#1e293b'>
+      📋 생물학적 기능 예측 리포트 — <span style='color:#0ea5e9'>{gene}</span>
+      <span style='font-size:0.85rem;color:#64748b;font-weight:400'> · {ct_type}</span>
+    </span>
+    <span style='background:{conf_color};color:white;padding:3px 12px;
+      border-radius:12px;font-size:0.78rem;font-weight:600;white-space:nowrap'>
+      예측 신뢰도: {conf_label}
+    </span>
+  </div>
+
+  <div style='display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px'>
+
+    <div>
+      <div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;
+        letter-spacing:0.5px;margin-bottom:6px'>증거 요약</div>
+      <table style='border-collapse:collapse;width:100%'>
+        {evid_rows_html}
+      </table>
+    </div>
+
+    <div>
+      <div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;
+        letter-spacing:0.5px;margin-bottom:6px'>도메인 기능 변화</div>
+      <div style='font-size:0.78rem;color:#15803d;margin-bottom:3px'>▲ 획득 (AD 이소폼)</div>
+      <ul style='margin:0 0 8px 14px;padding:0'>{domain_gained_li}</ul>
+      <div style='font-size:0.78rem;color:#dc2626;margin-bottom:3px'>▼ 손실 (CT→AD 전환 시)</div>
+      <ul style='margin:0 0 0 14px;padding:0'>{domain_lost_li}</ul>
+    </div>
+
+  </div>
+
+  <div style='display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px'>
+    <div style='background:#eff6ff;border-radius:6px;padding:10px 12px'>
+      <div style='font-size:0.75rem;font-weight:600;color:#1d4ed8;margin-bottom:5px'>
+        🔵 Control 이소폼 TOP GO
+        <span style='font-weight:400;color:#64748b;font-size:0.72rem'> · {(ct_tx or '—')[:30]}</span>
+      </div>
+      {_go_badges(ct_top, '#dbeafe')}
+    </div>
+    <div style='background:#fef2f2;border-radius:6px;padding:10px 12px'>
+      <div style='font-size:0.75rem;font-weight:600;color:#dc2626;margin-bottom:5px'>
+        🔴 AD 이소폼 TOP GO
+        <span style='font-weight:400;color:#64748b;font-size:0.72rem'> · {(ad_tx or '—')[:30]}</span>
+      </div>
+      {_go_badges(ad_top, '#fee2e2')}
+    </div>
+  </div>
+
+  <div style='background:white;border:1px solid #e2e8f0;border-radius:8px;
+    padding:14px 16px;margin-bottom:8px'>
+    <div style='font-size:0.8rem;font-weight:700;color:#374151;margin-bottom:10px;
+      border-bottom:1px solid #f1f5f9;padding-bottom:6px'>
+      🧬 종합 해석 및 기능 예측
+    </div>
+    {interp_html}
+  </div>
+
+  <div style='font-size:0.7rem;color:#9ca3af;text-align:right'>
+    PRISM+BISECT 자동 생성 · Lee et al. (2026) · 실험적 검증 필요
+  </div>
+</div>
+"""
+
+
 # ── BISECT Cases tab ──────────────────────────────────────────────────────────
 with tab_bisect:
     import json
@@ -603,6 +931,152 @@ with tab_bisect:
                         + "".join(_mod_items) + "</div>",
                         unsafe_allow_html=True,
                     )
+
+                # ── Proportion chart + GO comparison + Bio report ────────────
+                _ids_arr_b = np.asarray(ids, dtype=str)
+                _ct_idx_b  = np.where(_ids_arr_b == _ct_tx)[0]
+                _ad_idx_b  = np.where(_ids_arr_b == _ad_tx)[0]
+                _ct_go_scores = sm[_ct_idx_b[0]] if len(_ct_idx_b) > 0 else None
+                _ad_go_scores = sm[_ad_idx_b[0]] if len(_ad_idx_b) > 0 else None
+
+                st.divider()
+
+                # 1. Proportion chart — estimated isoform usage ratio CT vs AD
+                if not _g_dtu.empty and (_ct_tx or _ad_tx):
+                    _n_iso = len(_g_dtu)
+                    _prop = _g_dtu[['isoform_id', 'delta_IF']].copy()
+                    _prop['ct_frac'] = 1.0 / _n_iso
+                    _prop['ad_frac'] = (_prop['ct_frac'] + _prop['delta_IF']).clip(lower=0)
+                    _sum_ad = _prop['ad_frac'].sum()
+                    if _sum_ad > 0:
+                        _prop['ad_frac'] /= _sum_ad
+
+                    # Collapse non-focal isoforms into 'Other'
+                    _focal_set = {_ct_tx, _ad_tx}
+                    _prop_rows = []
+                    _other_ct = _other_ad = 0.0
+                    for _, _pr in _prop.iterrows():
+                        _iso = _pr['isoform_id']
+                        if _iso in _focal_set:
+                            _label = (f'🔵 CT: {_iso[:22]}' if _iso == _ct_tx
+                                      else f'🔴 AD: {_iso[:22]}')
+                            _prop_rows.append({'Condition': 'Control (CT)', 'Label': _label,
+                                               'Fraction': _pr['ct_frac'], 'IsoType': _iso})
+                            _prop_rows.append({'Condition': 'Disease (AD)', 'Label': _label,
+                                               'Fraction': _pr['ad_frac'], 'IsoType': _iso})
+                        else:
+                            _other_ct += _pr['ct_frac']
+                            _other_ad += _pr['ad_frac']
+                    _prop_rows.append({'Condition': 'Control (CT)', 'Label': '◻ Other isoforms',
+                                       'Fraction': _other_ct, 'IsoType': 'other'})
+                    _prop_rows.append({'Condition': 'Disease (AD)', 'Label': '◻ Other isoforms',
+                                       'Fraction': _other_ad, 'IsoType': 'other'})
+
+                    _prop_df2 = pd.DataFrame(_prop_rows)
+                    _ct_label = f'🔵 CT: {_ct_tx[:22]}'
+                    _ad_label = f'🔴 AD: {_ad_tx[:22]}'
+                    _color_map_prop = {
+                        _ct_label:           '#3b82f6',
+                        _ad_label:           '#ef4444',
+                        '◻ Other isoforms':  '#cbd5e1',
+                    }
+                    _cat_order_prop = [_ct_label, _ad_label, '◻ Other isoforms']
+
+                    _fig_prop = px.bar(
+                        _prop_df2,
+                        x='Condition', y='Fraction', color='Label',
+                        barmode='stack',
+                        color_discrete_map=_color_map_prop,
+                        category_orders={'Label': _cat_order_prop},
+                        title=f'Transcript Usage — {_gene}  ·  {_ct} (추정)',
+                        labels={'Fraction': '이소폼 사용 비율 (추정)', 'Condition': ''},
+                        height=310,
+                    )
+                    _fig_prop.update_layout(
+                        plot_bgcolor='white',
+                        yaxis=dict(tickformat='.0%', range=[0, 1.05], gridcolor='#f0f0f0'),
+                        legend_title='이소폼',
+                        margin=dict(t=38, b=30, l=10, r=10),
+                        bargap=0.35,
+                    )
+                    _fig_prop.update_yaxes(tickformat='.0%')
+                    st.markdown("**📊 Control vs Disease Transcript Usage (비율 추정)**")
+                    st.caption(
+                        "CT 조건에서 균등 baseline(1/n)을 가정하고 DTU delta_IF로 "
+                        "AD 비율을 추정합니다. 핵심 이소폼 쌍만 강조 표시됩니다."
+                    )
+                    st.plotly_chart(_fig_prop, use_container_width=True,
+                                    key=f"prop_{_gene}_{_safe_ct_key}")
+
+                # 2. GO function comparison chart — CT vs AD isoform
+                if _ct_go_scores is not None or _ad_go_scores is not None:
+                    _top_n_go = 6
+                    _union_idx: set = set()
+                    if _ct_go_scores is not None:
+                        _union_idx |= set(np.argsort(_ct_go_scores)[-_top_n_go:].tolist())
+                    if _ad_go_scores is not None:
+                        _union_idx |= set(np.argsort(_ad_go_scores)[-_top_n_go:].tolist())
+
+                    _cmp_rows = []
+                    for _gi in sorted(_union_idx):
+                        _gn = gnames.get(go[_gi], go[_gi])[:38]
+                        if _ct_go_scores is not None:
+                            _cmp_rows.append({'GO term': _gn, 'Score': float(_ct_go_scores[_gi]),
+                                              'Isoform': 'CT', 'IsoLabel': f'🔵 CT ({(_ct_tx or "—")[:18]})'})
+                        if _ad_go_scores is not None:
+                            _cmp_rows.append({'GO term': _gn, 'Score': float(_ad_go_scores[_gi]),
+                                              'Isoform': 'AD', 'IsoLabel': f'🔴 AD ({(_ad_tx or "—")[:18]})'})
+
+                    if _cmp_rows:
+                        _cmp_df = pd.DataFrame(_cmp_rows)
+                        _go_order = (
+                            _cmp_df.groupby('GO term')['Score'].max()
+                            .sort_values(ascending=False).index.tolist()
+                        )
+                        _ct_iso_label = f'🔵 CT ({(_ct_tx or "—")[:18]})'
+                        _ad_iso_label = f'🔴 AD ({(_ad_tx or "—")[:18]})'
+                        _fig_cmp = px.bar(
+                            _cmp_df, x='GO term', y='Score', color='IsoLabel',
+                            barmode='group',
+                            color_discrete_map={
+                                _ct_iso_label: '#3b82f6',
+                                _ad_iso_label: '#ef4444',
+                            },
+                            category_orders={
+                                'GO term': _go_order,
+                                'IsoLabel': [_ct_iso_label, _ad_iso_label],
+                            },
+                            title=f'PRISM GO Score — CT vs AD Isoform · {_gene}',
+                            labels={'Score': 'PRISM Score', 'GO term': '', 'IsoLabel': '이소폼'},
+                            height=330,
+                        )
+                        _fig_cmp.add_hline(
+                            y=float(thr), line_dash='dash', line_color='#94a3b8',
+                            annotation_text=f'threshold ({thr})',
+                        )
+                        _fig_cmp.update_layout(
+                            xaxis_tickangle=-38,
+                            plot_bgcolor='white',
+                            yaxis=dict(range=[0, 1.05], gridcolor='#f0f0f0'),
+                            legend_title='',
+                            margin=dict(t=38, b=80, l=10, r=10),
+                        )
+                        st.markdown("**🧬 GO Function Score: CT vs AD Isoform 비교**")
+                        st.caption(
+                            "두 이소폼의 PRISM GO 점수 상위 항목을 합집합하여 기능 차이를 비교합니다. "
+                            "점수 차이가 큰 GO term이 이소폼 스위치로 인한 기능 변화 후보입니다."
+                        )
+                        st.plotly_chart(_fig_cmp, use_container_width=True,
+                                        key=f"go_cmp_{_gene}_{_safe_ct_key}")
+
+                # 3. Biological prediction report
+                _bio_html = _build_bio_report_html(
+                    brow=_brow, gene=_gene, ct_type=_ct,
+                    ct_tx=_ct_tx, ad_tx=_ad_tx,
+                    ct_scores=_ct_go_scores, ad_scores=_ad_go_scores,
+                    go_ids=go, go_names=gnames, threshold=thr,
+                )
+                st.markdown(_bio_html, unsafe_allow_html=True)
 
                 # ── Domain structure + IGV genomic view ───────────────────────
                 _BISECT_OUT = Path(__file__).parents[3] / \
