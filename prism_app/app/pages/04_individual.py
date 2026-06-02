@@ -470,126 +470,131 @@ def _build_bio_report_html(
             "단백질 번역 여부를 Ribo-seq 또는 질량분석으로 검증해야 한다."
         )
 
-    # ── HTML assembly ─────────────────────────────────────────────────────────
+    # ── HTML assembly (inline styles only — no CSS classes) ──────────────────
+    _TD_L = "style='padding:4px 10px;color:#6b7280;font-size:0.83rem;white-space:nowrap;vertical-align:top'"
+    _TD_V = "style='padding:4px 10px;font-weight:700;font-size:0.83rem;vertical-align:top'"
+    _TD_C = "style='padding:4px 10px;font-size:0.75rem;color:#9ca3af;vertical-align:top'"
+
     def _tag(text, bg, fg='#1e293b'):
         return (f"<code style='background:{bg};color:{fg};padding:2px 6px;"
-                f"border-radius:3px;font-size:0.8rem'>{text}</code>")
+                f"border-radius:3px;font-size:0.82rem'>{text}</code>")
 
     evid_rows_html = ''
     if delta:
-        evid_rows_html += f"<tr><td class='rl'>Δ Usage (AD−CT)</td><td class='rv'>{float(delta):+.3f}</td><td class='rc'>DTU</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>Δ Usage (AD−CT)</td><td {_TD_V}>{float(delta):+.3f}</td><td {_TD_C}>DTU</td></tr>"
     if dtu_p:
-        evid_rows_html += f"<tr><td class='rl'>DTU p-value</td><td class='rv'>{float(dtu_p):.2e}</td><td class='rc'>DTU</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>DTU p-value</td><td {_TD_V}>{float(dtu_p):.2e}</td><td {_TD_C}>DTU</td></tr>"
     if dg_list:
-        evid_rows_html += f"<tr><td class='rl'>도메인 획득</td><td class='rv'>{'·'.join(dg_list)}</td><td class='rc'>Structure</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>도메인 획득</td><td {_TD_V}>{'&nbsp;·&nbsp;'.join(dg_list)}</td><td {_TD_C}>Structure</td></tr>"
     if dl_list:
-        evid_rows_html += f"<tr><td class='rl'>도메인 손실</td><td class='rv'>{'·'.join(dl_list)}</td><td class='rc'>Structure</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>도메인 손실</td><td {_TD_V}>{'&nbsp;·&nbsp;'.join(dl_list)}</td><td {_TD_C}>Structure</td></tr>"
     if ppi_v:
-        evid_rows_html += f"<tr><td class='rl'>PPI support</td><td class='rv'>{ppi_v}</td><td class='rc'>Interaction</td></tr>"
+        _ppi_clr = '#15803d' if ppi_v == 'SUPPORTED' else '#b91c1c'
+        evid_rows_html += f"<tr><td {_TD_L}>PPI support</td><td {_TD_V}><span style='color:{_ppi_clr}'>{ppi_v}</span></td><td {_TD_C}>Interaction</td></tr>"
     if phylo:
-        evid_rows_html += f"<tr><td class='rl'>phyloP (AD exon)</td><td class='rv'>{float(phylo):.3f} ({cons_c or '?'})</td><td class='rc'>Conservation</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>phyloP (AD exon)</td><td {_TD_V}>{float(phylo):.3f}&nbsp;<span style='color:#9ca3af;font-size:0.75rem'>({cons_c or '?'})</span></td><td {_TD_C}>Conservation</td></tr>"
     if mech:
-        evid_rows_html += f"<tr><td class='rl'>기전</td><td class='rv'>{_mech_ko.get(mech,mech)}</td><td class='rc'>Regulation</td></tr>"
+        evid_rows_html += f"<tr><td {_TD_L}>기전</td><td {_TD_V}>{_mech_ko.get(mech, mech)}</td><td {_TD_C}>Regulation</td></tr>"
+    if not evid_rows_html:
+        evid_rows_html = f"<tr><td {_TD_L} colspan='3'>증거 데이터 없음</td></tr>"
 
-    def _go_badges(top_list, bg):
+    def _go_badges(top_list, bg, border):
         if not top_list:
-            return "<span style='color:#9ca3af;font-size:0.78rem'>데이터 없음</span>"
+            return "<span style='color:#9ca3af;font-size:0.82rem'>데이터 없음</span>"
         return ''.join(
-            f"<span style='background:{bg};border-radius:3px;padding:2px 6px;"
-            f"margin:2px 2px;display:inline-block;font-size:0.78rem'>"
-            f"{n[:32]} <b>{s:.3f}</b></span>"
+            f"<div style='background:{bg};border-left:3px solid {border};"
+            f"border-radius:4px;padding:5px 8px;margin:3px 0;font-size:0.83rem'>"
+            f"<b>{n[:36]}</b>&nbsp;&nbsp;"
+            f"<span style='color:#64748b'>{s:.3f}</span></div>"
             for _, n, s in top_list[:3]
         )
 
     domain_gained_li = ''.join(
-        f"<li style='margin:3px 0;font-size:0.82rem'>"
-        f"{_tag(d,'#dcfce7','#14532d')} — {_domain_func(d)}</li>"
+        f"<div style='margin:4px 0;font-size:0.83rem'>"
+        f"{_tag(d, '#dcfce7', '#14532d')}"
+        f"<span style='color:#374151;margin-left:6px'>{_domain_func(d)}</span></div>"
         for d in dg_list
-    ) or "<li style='color:#9ca3af;font-size:0.82rem'>변화 없음</li>"
+    ) or "<div style='color:#9ca3af;font-size:0.83rem;padding:4px 0'>변화 없음</div>"
 
     domain_lost_li = ''.join(
-        f"<li style='margin:3px 0;font-size:0.82rem'>"
-        f"{_tag(d,'#fee2e2','#7f1d1d')} — {_domain_func(d)}</li>"
+        f"<div style='margin:4px 0;font-size:0.83rem'>"
+        f"{_tag(d, '#fee2e2', '#7f1d1d')}"
+        f"<span style='color:#374151;margin-left:6px'>{_domain_func(d)}</span></div>"
         for d in dl_list
-    ) or "<li style='color:#9ca3af;font-size:0.82rem'>변화 없음</li>"
+    ) or "<div style='color:#9ca3af;font-size:0.83rem;padding:4px 0'>변화 없음</div>"
 
     interp_html = ''.join(
-        f"<p style='margin:0 0 9px;font-size:0.84rem;line-height:1.65;color:#1e293b'>{l}</p>"
+        f"<p style='margin:0 0 10px 0;font-size:0.86rem;line-height:1.7;color:#1e293b'>{l}</p>"
         for l in lines
-    ) or "<p style='color:#9ca3af'>해석 데이터 불충분</p>"
+    ) or "<p style='color:#9ca3af;font-size:0.86rem'>해석 데이터 불충분</p>"
 
-    return f"""
-<style>
-.rl{{padding:3px 8px;color:#6b7280;font-size:0.79rem;white-space:nowrap}}
-.rv{{padding:3px 8px;font-weight:600;font-size:0.79rem}}
-.rc{{padding:3px 8px;font-size:0.72rem;color:#9ca3af}}
-</style>
-<div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
-  padding:20px 22px;margin:14px 0;font-family:Arial,sans-serif'>
+    return (
+        f"<div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;"
+        f"padding:20px 22px;margin:14px 0;font-family:Arial,sans-serif'>"
 
-  <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:14px'>
-    <span style='font-size:1.0rem;font-weight:700;color:#1e293b'>
-      📋 생물학적 기능 예측 리포트 — <span style='color:#0ea5e9'>{gene}</span>
-      <span style='font-size:0.85rem;color:#64748b;font-weight:400'> · {ct_type}</span>
-    </span>
-    <span style='background:{conf_color};color:white;padding:3px 12px;
-      border-radius:12px;font-size:0.78rem;font-weight:600;white-space:nowrap'>
-      예측 신뢰도: {conf_label}
-    </span>
-  </div>
+        # ── Header ──
+        f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
+        f"<td style='vertical-align:middle'>"
+        f"<span style='font-size:1.0rem;font-weight:700;color:#1e293b'>"
+        f"📋 생물학적 기능 예측 리포트</span>"
+        f"&nbsp;<span style='font-size:0.88rem;color:#0ea5e9;font-weight:700'>{gene}</span>"
+        f"&nbsp;<span style='font-size:0.85rem;color:#64748b'>· {ct_type}</span>"
+        f"</td>"
+        f"<td style='text-align:right;vertical-align:middle;white-space:nowrap'>"
+        f"<span style='background:{conf_color};color:white;padding:4px 14px;"
+        f"border-radius:12px;font-size:0.8rem;font-weight:700'>신뢰도: {conf_label}</span>"
+        f"</td></tr></table>"
 
-  <div style='display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px'>
+        # ── Row 1: Evidence table | Domain changes ──
+        f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
+        f"<td width='50%' style='vertical-align:top;padding-right:12px'>"
+        f"<div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;"
+        f"letter-spacing:0.5px;margin-bottom:8px'>📊 증거 요약</div>"
+        f"<table width='100%' cellspacing='0' style='border-collapse:collapse'>{evid_rows_html}</table>"
+        f"</td>"
+        f"<td width='50%' style='vertical-align:top;padding-left:12px;"
+        f"border-left:1px solid #e2e8f0'>"
+        f"<div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;"
+        f"letter-spacing:0.5px;margin-bottom:8px'>🔩 도메인 기능 변화</div>"
+        f"<div style='font-size:0.78rem;color:#15803d;font-weight:600;margin-bottom:4px'>▲ 획득 (AD 이소폼)</div>"
+        f"{domain_gained_li}"
+        f"<div style='font-size:0.78rem;color:#dc2626;font-weight:600;margin:10px 0 4px'>▼ 손실 (CT 이소폼)</div>"
+        f"{domain_lost_li}"
+        f"</td></tr></table>"
 
-    <div>
-      <div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;
-        letter-spacing:0.5px;margin-bottom:6px'>증거 요약</div>
-      <table style='border-collapse:collapse;width:100%'>
-        {evid_rows_html}
-      </table>
-    </div>
+        # ── Row 2: CT GO | AD GO ──
+        f"<table width='100%' cellspacing='0' cellpadding='0' style='margin-bottom:14px'><tr>"
+        f"<td width='50%' style='vertical-align:top;padding-right:8px'>"
+        f"<div style='background:#eff6ff;border-radius:6px;padding:10px 12px'>"
+        f"<div style='font-size:0.78rem;font-weight:700;color:#1d4ed8;margin-bottom:6px'>"
+        f"🔵 Control 이소폼 TOP GO"
+        f"<span style='font-weight:400;color:#94a3b8;font-size:0.72rem;display:block'>{(ct_tx or '—')[:35]}</span>"
+        f"</div>"
+        f"{_go_badges(ct_top, '#dbeafe', '#3b82f6')}"
+        f"</div></td>"
+        f"<td width='50%' style='vertical-align:top;padding-left:8px'>"
+        f"<div style='background:#fef2f2;border-radius:6px;padding:10px 12px'>"
+        f"<div style='font-size:0.78rem;font-weight:700;color:#dc2626;margin-bottom:6px'>"
+        f"🔴 AD 이소폼 TOP GO"
+        f"<span style='font-weight:400;color:#94a3b8;font-size:0.72rem;display:block'>{(ad_tx or '—')[:35]}</span>"
+        f"</div>"
+        f"{_go_badges(ad_top, '#fee2e2', '#ef4444')}"
+        f"</div></td>"
+        f"</tr></table>"
 
-    <div>
-      <div style='font-size:0.75rem;font-weight:700;color:#374151;text-transform:uppercase;
-        letter-spacing:0.5px;margin-bottom:6px'>도메인 기능 변화</div>
-      <div style='font-size:0.78rem;color:#15803d;margin-bottom:3px'>▲ 획득 (AD 이소폼)</div>
-      <ul style='margin:0 0 8px 14px;padding:0'>{domain_gained_li}</ul>
-      <div style='font-size:0.78rem;color:#dc2626;margin-bottom:3px'>▼ 손실 (CT→AD 전환 시)</div>
-      <ul style='margin:0 0 0 14px;padding:0'>{domain_lost_li}</ul>
-    </div>
+        # ── Narrative ──
+        f"<div style='background:white;border:1px solid #e2e8f0;border-radius:8px;"
+        f"padding:16px 18px;margin-bottom:10px'>"
+        f"<div style='font-size:0.85rem;font-weight:700;color:#1e293b;margin-bottom:12px;"
+        f"padding-bottom:8px;border-bottom:2px solid #f1f5f9'>🧬 종합 해석 및 기능 예측</div>"
+        f"{interp_html}"
+        f"</div>"
 
-  </div>
-
-  <div style='display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px'>
-    <div style='background:#eff6ff;border-radius:6px;padding:10px 12px'>
-      <div style='font-size:0.75rem;font-weight:600;color:#1d4ed8;margin-bottom:5px'>
-        🔵 Control 이소폼 TOP GO
-        <span style='font-weight:400;color:#64748b;font-size:0.72rem'> · {(ct_tx or '—')[:30]}</span>
-      </div>
-      {_go_badges(ct_top, '#dbeafe')}
-    </div>
-    <div style='background:#fef2f2;border-radius:6px;padding:10px 12px'>
-      <div style='font-size:0.75rem;font-weight:600;color:#dc2626;margin-bottom:5px'>
-        🔴 AD 이소폼 TOP GO
-        <span style='font-weight:400;color:#64748b;font-size:0.72rem'> · {(ad_tx or '—')[:30]}</span>
-      </div>
-      {_go_badges(ad_top, '#fee2e2')}
-    </div>
-  </div>
-
-  <div style='background:white;border:1px solid #e2e8f0;border-radius:8px;
-    padding:14px 16px;margin-bottom:8px'>
-    <div style='font-size:0.8rem;font-weight:700;color:#374151;margin-bottom:10px;
-      border-bottom:1px solid #f1f5f9;padding-bottom:6px'>
-      🧬 종합 해석 및 기능 예측
-    </div>
-    {interp_html}
-  </div>
-
-  <div style='font-size:0.7rem;color:#9ca3af;text-align:right'>
-    PRISM+BISECT 자동 생성 · Lee et al. (2026) · 실험적 검증 필요
-  </div>
-</div>
-"""
+        # ── Footer ──
+        f"<div style='font-size:0.72rem;color:#9ca3af;text-align:right'>"
+        f"PRISM+BISECT 자동 생성 · Lee et al. (2026) · 실험적 검증 필요</div>"
+        f"</div>"
+    )
 
 
 # ── BISECT Cases tab ──────────────────────────────────────────────────────────
@@ -960,6 +965,7 @@ with tab_bisect:
                 st.divider()
 
                 # 1. Proportion chart — estimated isoform usage ratio CT vs AD
+                st.markdown("**📊 Control vs Disease Transcript Usage**")
                 if not _g_dtu.empty and (_ct_tx or _ad_tx):
                     _n_iso = len(_g_dtu)
                     _prop = _g_dtu[['isoform_id', 'delta_IF']].copy()
@@ -1018,13 +1024,50 @@ with tab_bisect:
                         bargap=0.35,
                     )
                     _fig_prop.update_yaxes(tickformat='.0%')
-                    st.markdown("**📊 Control vs Disease Transcript Usage (비율 추정)**")
                     st.caption(
-                        "CT 조건에서 균등 baseline(1/n)을 가정하고 DTU delta_IF로 "
-                        "AD 비율을 추정합니다. 핵심 이소폼 쌍만 강조 표시됩니다."
+                        "CT 조건 균등 baseline(1/n) + DTU delta_IF로 비율 추정. "
+                        "핵심 이소폼 쌍만 강조 표시됩니다."
                     )
                     st.plotly_chart(_fig_prop, use_container_width=True,
                                     key=f"prop_{_gene}_{_safe_ct_key}")
+
+                elif _ct_tx or _ad_tx:
+                    # Fallback: DTU 데이터 없을 때 BISECT delta로 방향성 표시
+                    _dv = float(_brow.get('delta') or 0)
+                    _fb_rows = []
+                    if _ct_tx:
+                        _fb_rows.append({'이소폼': f'CT: {_ct_tx[:30]}',
+                                         '역할': '🔵 CT (Control)',
+                                         'Δ Usage': _dv})
+                    if _ad_tx:
+                        _fb_rows.append({'이소폼': f'AD: {_ad_tx[:30]}',
+                                         '역할': '🔴 AD (Disease)',
+                                         'Δ Usage': -_dv})
+                    if _fb_rows:
+                        _fb_df = pd.DataFrame(_fb_rows)
+                        _fig_fb = px.bar(
+                            _fb_df, x='이소폼', y='Δ Usage', color='역할',
+                            color_discrete_map={
+                                '🔵 CT (Control)': '#3b82f6',
+                                '🔴 AD (Disease)': '#ef4444',
+                            },
+                            title=f'BISECT Δ Usage 방향 — {_gene} · {_ct}',
+                            labels={'Δ Usage': 'Δ Usage (AD − CT)', '이소폼': ''},
+                            height=260,
+                        )
+                        _fig_fb.add_hline(y=0, line_color='#1e293b', line_width=1.2)
+                        _fig_fb.update_layout(
+                            plot_bgcolor='white',
+                            yaxis=dict(gridcolor='#f0f0f0'),
+                            legend_title='',
+                            margin=dict(t=38, b=40, l=10, r=10),
+                        )
+                        st.caption(
+                            "DTU 상세 데이터 없음 — BISECT delta로 방향성만 표시. "
+                            "Brain 조직 선택 시 전체 이소폼 비율 차트로 전환됩니다."
+                        )
+                        st.plotly_chart(_fig_fb, use_container_width=True,
+                                        key=f"prop_fb_{_gene}_{_safe_ct_key}")
 
                 # 2. GO function comparison chart — CT vs AD isoform
                 if _ct_go_scores is not None or _ad_go_scores is not None:
