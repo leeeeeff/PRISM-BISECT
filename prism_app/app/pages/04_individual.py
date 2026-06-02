@@ -147,6 +147,7 @@ def _render_scenario_table(scenario_id: int) -> None:
         csv,
         f"scenario_{scenario_id}_candidates.csv",
         "text/csv",
+        key=f"dl_scenario_{scenario_id}",
     )
 
 
@@ -239,7 +240,9 @@ with tab_search:
                     fig.add_hline(y=float(cfg['score_threshold']),
                                   line_dash='dash', line_color='grey',
                                   annotation_text=f"threshold ({cfg['score_threshold']})")
-                    st.plotly_chart(fig, use_container_width=True)
+                    _safe_iso_key = row['isoform_id'].replace('/', '_').replace('.', '_')
+                    st.plotly_chart(fig, use_container_width=True,
+                                    key=f"search_go_chart_{_safe_iso_key}")
 
                     # Summary table
                     high_go_df = go_df[go_df['Score'] > thr][['GO', 'Score', 'GO_ID']]
@@ -256,8 +259,9 @@ with tab_search:
                     st.download_button(
                         "Download case report (Markdown)",
                         md.encode('utf-8'),
-                        f"case_report_{row['isoform_id'].replace('/','_')}.md",
+                        f"case_report_{_safe_iso_key}.md",
                         "text/markdown",
+                        key=f"dl_case_report_{_safe_iso_key}",
                     )
 
 # ── BISECT Cases tab ──────────────────────────────────────────────────────────
@@ -581,7 +585,9 @@ with tab_bisect:
                             y=float(thr), line_dash='dash', line_color='grey',
                             annotation_text=f"threshold ({thr})",
                         )
-                        st.plotly_chart(_fig, use_container_width=True)
+                        _safe_irow_key = _irow['isoform_id'].replace('/', '_').replace('.', '_')
+                        st.plotly_chart(_fig, use_container_width=True,
+                                        key=f"bisect_s1_go_{_gene}_{_safe_irow_key}")
 
     st.divider()
     st.download_button(
