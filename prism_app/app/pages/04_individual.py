@@ -284,6 +284,203 @@ with tab_search:
     query = st.text_input("Search by isoform ID or gene name",
                           placeholder="e.g. NDUFS4-201, KIF21B, tr319500")
 
+    # ── Module × DTU gene-level view ──────────────────────────────────────────
+    @st.cache_data(show_spinner=False)
+    def _load_module_dtu_data():
+        """Load pre-computed module assignments and DTU data for module×DTU view."""
+        import json
+        mod_path = Path(__file__).parents[3] / 'reports' / 'brain_isoform_modules.tsv'
+        dtu_path = Path(__file__).parents[2] / 'data' / 'demo' / 'brain_dtu.tsv'
+        mod_j    = Path(__file__).parents[3] / 'reports' / 'brain_go_modules_672.json'
+
+        df_mod = pd.read_csv(mod_path, sep='\t') if mod_path.exists() else None
+        df_dtu = pd.read_csv(dtu_path, sep='\t') if dtu_path.exists() else None
+        modules_dict = json.loads(mod_j.read_text())['modules'] if mod_j.exists() else {}
+        return df_mod, df_dtu, modules_dict
+
+    def _render_gene_module_dtu(gene_query: str) -> None:
+        """Show module assignment + DTU heatmap for all isoforms of a gene."""
+        df_mod, df_dtu, mod_dict = _load_module_dtu_data()
+        if df_mod is None:
+            return
+
+        gene_mod = df_mod[df_mod['gene'].str.upper() == gene_query.upper()]
+        if gene_mod.empty:
+            return
+
+        st.markdown("---")
+        st.markdown(f"### 🧩 기능 모듈 × 조건 분석 — *{gene_query.upper()}*")
+        st.caption(
+            "각 아이소폼의 모듈 배정(PRISM 672-term)과 DTU(AD vs CT) 이벤트를 통합 시각화합니다. "
+            "모듈이 다른 아이소폼 간 dIF 방향 변화 = 기능 스위치 신호."
+        )
+
+        col_mod, col_dtu = st.columns([1, 1])
+
+        with col_mod:
+            st.markdown("**모듈 배정 (module_score 기준)**")
+            gene_mod_sorted = gene_mod.sort_values('module_score', ascending=False).head(15)
+            gene_mod_sorted['mod_label'] = gene_mod_sorted['primary_module'].apply(
+                lambda m: f"M{int(m)}: {mod_dict.get(str(int(m)),{}).get('label','').split('/')[0].strip()[:30]}"
+            )
+            _type_colors = {'known': '#2196F3', 'nic': '#FF9800', 'nnic': '#E91E63'}
+            gene_mod_sorted['color'] = gene_mod_sorted['type'].map(_type_colors).fillna('#9E9E9E')
+
+            fig_mod = px.bar(
+                gene_mod_sorted,
+                x='module_score', y='isoform_id',
+                color='type',
+                color_discrete_map=_type_colors,
+                orientation='h',
+                text='mod_label',
+                labels={'module_score': 'Module score', 'isoform_id': ''},
+                height=max(280, len(gene_mod_sorted) * 36),
+            )
+            fig_mod.update_traces(textposition='inside', textfont=dict(size=9))
+            fig_mod.add_vline(x=0.3, line_dash='dash', line_color='red',
+                              annotation_text='고신뢰도', annotation_font_size=9)
+            fig_mod.update_layout(
+                margin=dict(l=10, r=10, t=10, b=30),
+                legend=dict(title='Type', orientation='h', y=1.02),
+                yaxis=dict(autorange='reversed'),
+            )
+            st.plotly_chart(fig_mod, use_container_width=True, key=f"mod_bar_{gene_query}")
+            st.caption("파랑=Known · 주황=NIC · 분홍=NNIC. 막대 안 텍스트 = 배정 모듈명.")
+
+        with col_dtu:
+            st.markdown("**DTU 이벤트 (|dIF| > 0.05, p < 0.1)**")
+
+            _dtu_source = cfg.get('dtu_df') if cfg.get('dtu_df') is not None else df_dtu
+            if _dtu_source is None:
+                st.info("DTU 데이터 없음.")
+            else:
+                # Normalize column names
+                _dtu = _dtu_source.copy()
+                for _old, _new in [('dIF','delta_IF'),('padj','pvalue'),('p_adj','pvalue')]:
+                    if _old in _dtu.columns and _new not in _dtu.columns:
+                        _dtu = _dtu.rename(columns={_old: _new})
+
+                gene_dtu = _dtu[
+                    _dtu['isoform_id'].str.upper().str.startswith(gene_query.upper()) |
+                    (_dtu.get('gene_id', pd.Series(dtype=str)).str.upper() == gene_query.upper()
+                     if 'gene_id' in _dtu.columns else False)
+                ].copy()
+
+                if gene_dtu.empty:
+                    st.info(f"DTU 데이터에서 {gene_query} isoform을 찾을 수 없습니다.")
+                else:
+                    # Merge with module info
+                    gene_dtu = gene_dtu.merge(
+                        gene_mod[['isoform_id', 'primary_module', 'type']],
+                        on='isoform_id', how='left'
+                    )
+                    gene_dtu['mod_label'] = gene_dtu['primary_module'].apply(
+                        lambda m: f"M{int(m)}" if pd.notna(m) else '?'
+                    )
+                    gene_dtu['sig'] = (
+                        gene_dtu['delta_IF'].abs() > 0.05
+                    ) & (gene_dtu['pvalue'] < 0.1 if 'pvalue' in gene_dtu.columns else True)
+                    gene_dtu_sig = gene_dtu[gene_dtu['sig']].copy()
+
+                    if gene_dtu_sig.empty:
+                        st.info("유의한 DTU 이벤트 없음 (|dIF|>0.05, p<0.1).")
+                    else:
+                        # Shorten isoform ID for display
+                        gene_dtu_sig['iso_short'] = gene_dtu_sig['isoform_id'].apply(
+                            lambda x: x if len(x) <= 20 else x[:8]+'…'+x[-6:]
+                        )
+                        has_cond = 'condition' in gene_dtu_sig.columns
+
+                        if has_cond:
+                            # Heatmap: isoforms × conditions
+                            pivot = gene_dtu_sig.pivot_table(
+                                index='iso_short', columns='condition',
+                                values='delta_IF', aggfunc='mean'
+                            ).fillna(0)
+                            annot_mod = gene_dtu_sig.groupby('iso_short')['mod_label'].first()
+
+                            fig_heat = px.imshow(
+                                pivot,
+                                color_continuous_scale='RdBu_r',
+                                color_continuous_midpoint=0,
+                                zmin=-0.5, zmax=0.5,
+                                labels={'x': '조건 (cell type)', 'y': '아이소폼', 'color': 'dIF'},
+                                height=max(280, len(pivot) * 40),
+                                aspect='auto',
+                            )
+                            # Annotate module assignments on y-axis
+                            for i, iso in enumerate(pivot.index):
+                                ml = annot_mod.get(iso, '')
+                                fig_heat.add_annotation(
+                                    x=-0.5, y=i,
+                                    text=ml, showarrow=False,
+                                    xref='x', yref='y',
+                                    xanchor='right', font=dict(size=8, color='#555'),
+                                )
+                            fig_heat.update_layout(
+                                margin=dict(l=60, r=10, t=10, b=60),
+                                xaxis_tickangle=-35,
+                                coloraxis_colorbar=dict(title='dIF', len=0.6),
+                            )
+                            st.plotly_chart(fig_heat, use_container_width=True,
+                                            key=f"dtu_heat_{gene_query}")
+                            st.caption(
+                                "빨강(dIF > 0): AD에서 해당 isoform 사용 증가. "
+                                "파랑(dIF < 0): 감소. "
+                                "왼쪽 레이블 = 배정 모듈(M번호)."
+                            )
+                        else:
+                            fig_dtu_bar = px.bar(
+                                gene_dtu_sig.sort_values('delta_IF'),
+                                x='delta_IF', y='iso_short', orientation='h',
+                                color='delta_IF',
+                                color_continuous_scale='RdBu_r',
+                                color_continuous_midpoint=0,
+                                text='mod_label',
+                                labels={'delta_IF': 'dIF (AD−CT)', 'iso_short': ''},
+                                height=max(280, len(gene_dtu_sig) * 36),
+                            )
+                            fig_dtu_bar.update_traces(textposition='inside', textfont=dict(size=9))
+                            fig_dtu_bar.add_vline(x=0, line_color='grey', line_width=1)
+                            fig_dtu_bar.update_layout(margin=dict(l=10, r=10, t=10, b=30))
+                            st.plotly_chart(fig_dtu_bar, use_container_width=True,
+                                            key=f"dtu_bar_{gene_query}")
+
+                        # Key switch callout
+                        switch_isos = gene_dtu_sig.copy()
+                        if 'condition' in switch_isos.columns:
+                            switch_isos = switch_isos.groupby('isoform_id').agg(
+                                mean_dIF=('delta_IF','mean'),
+                                mod_label=('mod_label','first'),
+                                type=('type','first'),
+                            ).reset_index()
+                        gain_isos = switch_isos[switch_isos['mean_dIF' if 'mean_dIF' in switch_isos.columns else 'delta_IF'] > 0.1]
+                        loss_isos = switch_isos[switch_isos['mean_dIF' if 'mean_dIF' in switch_isos.columns else 'delta_IF'] < -0.1]
+
+                        if len(gain_isos) > 0 and len(loss_isos) > 0:
+                            gain_mods = gain_isos['mod_label'].unique().tolist()
+                            loss_mods = loss_isos['mod_label'].unique().tolist()
+                            if set(gain_mods) != set(loss_mods):
+                                st.warning(
+                                    f"**⚡ 모듈 간 기능 스위치 감지**: "
+                                    f"GAIN 모듈 {gain_mods} ↔ LOSS 모듈 {loss_mods} — "
+                                    f"서로 다른 기능 영역 간 isoform 교환."
+                                )
+
+        # Detailed table
+        with st.expander("상세 데이터 테이블"):
+            merged_detail = gene_mod.merge(
+                (_dtu_source[_dtu_source['isoform_id'].str.upper().str.startswith(gene_query.upper())]
+                 if _dtu_source is not None else pd.DataFrame()),
+                on='isoform_id', how='left'
+            ) if df_dtu is not None or cfg.get('dtu_df') is not None else gene_mod
+
+            show_cols = [c for c in ['isoform_id','type','primary_module','module_label',
+                                      'module_score','condition','delta_IF','pvalue']
+                         if c in merged_detail.columns]
+            st.dataframe(merged_detail[show_cols].sort_values('module_score', ascending=False),
+                         use_container_width=True, hide_index=True)
+
     if query:
         ids_arr = np.asarray(ids, dtype=str)
         mask = np.array([query.lower() in i.lower() for i in ids_arr])
@@ -300,6 +497,14 @@ with tab_search:
             hits = classified[classified['isoform_id'].str.contains(query, case=False, na=False)
                               | classified['gene_id'].str.contains(query, case=False, na=False)]
             st.write(f"**{len(hits)} isoforms found**")
+
+            # Gene-level module × DTU view (shown when query matches a gene name)
+            _is_gene_query = (
+                genes is not None and
+                any(query.upper() == str(g).upper() for g in np.asarray(genes, dtype=str))
+            )
+            if _is_gene_query or (len(hits) > 1 and not '-' in query):
+                _render_gene_module_dtu(query)
 
             for _, row in hits.iterrows():
                 iso_idx = np.where(ids_arr == row['isoform_id'])[0]
