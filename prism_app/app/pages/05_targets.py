@@ -133,14 +133,193 @@ if st.session_state.get('auto_search') and _auto_gene and sm is not None:
     st.session_state['auto_search'] = False
     _render_gene_landing(
         _auto_gene, sm, ids, genes, go, gnames,
-        cfg.get('score_threshold', 0.4), cfg.get('dtu_df'),
+        cfg.get('score_threshold', 0.4), cfg.get('dtu_df'), cfg,
     )
 
-def _render_gene_landing(gene: str, sm, ids, genes, go, gnames, thr, dtu_df):
+@st.cache_data(show_spinner=False)
+def _load_umap_precomp():
+    """Load precomputed UMAP coords and sample indices (brain_672 only)."""
+    demo = Path(__file__).parents[2] / 'data' / 'demo'
+    cp = demo / 'umap_coords.npy'
+    sp = demo / 'umap_sample_idx.npy'
+    if cp.exists() and sp.exists():
+        return np.load(cp), np.load(sp)
+    return None, None
+
+
+def _build_umap_figure(gene: str, hit_ids, hit_scores, hit_types,
+                        sm, ids_arr, iso_types, tissue: str) -> object:
+    """Build Plotly UMAP scatter with the target gene highlighted.
+
+    Strategy:
+    - brain_672: use precomputed 20K coords as background; project off-sample
+      gene isoforms via cosine nearest-neighbour averaging.
+    - other/upload: compute fresh UMAP on random subsample + gene isoforms.
+    """
+    import plotly.graph_objects as go_plotly
+    from plotly.subplots import make_subplots
+
+    TYPE_COLORS = {'known': '#94a3b8', 'nic': '#f97316', 'nnic': '#8b5cf6', '': '#94a3b8'}
+    GENE_TYPE_COLORS = {'known': '#2563eb', 'nic': '#ea580c', 'nnic': '#7c3aed', '': '#2563eb'}
+
+    coords_pre, samp_idx = _load_umap_precomp()
+    use_precomp = (tissue == 'brain_672' and coords_pre is not None
+                   and samp_idx is not None and sm is not None
+                   and sm.shape[0] == len(ids_arr))
+
+    if use_precomp:
+        # Background: 20K sampled isoforms
+        bg_ids   = ids_arr[samp_idx]
+        bg_types = np.array(iso_types, dtype=str)[samp_idx] if iso_types is not None else np.full(len(samp_idx), '')
+        bg_x, bg_y = coords_pre[:, 0], coords_pre[:, 1]
+
+        # Find gene isoform indices in the full array
+        gene_global_idx = np.where(np.isin(ids_arr, hit_ids))[0]
+        # Which are in the UMAP sample?
+        samp_set = set(samp_idx.tolist())
+        in_samp  = [i for i in gene_global_idx if i in samp_set]
+        off_samp = [i for i in gene_global_idx if i not in samp_set]
+
+        gene_x, gene_y = [], []
+        gene_labels, gene_type_list = [], []
+
+        # Exact coords for in-sample isoforms
+        samp_pos = {v: k for k, v in enumerate(samp_idx)}
+        for gi in in_samp:
+            si = samp_pos[gi]
+            gene_x.append(float(coords_pre[si, 0]))
+            gene_y.append(float(coords_pre[si, 1]))
+            gene_labels.append(str(ids_arr[gi]))
+            gene_type_list.append(str(iso_types[gi]) if iso_types is not None else '')
+
+        # NN approximation for off-sample isoforms
+        if off_samp:
+            samp_scores = sm[samp_idx].astype(np.float32)  # (20K, n_go)
+            samp_norms  = np.linalg.norm(samp_scores, axis=1, keepdims=True) + 1e-8
+            samp_unit   = samp_scores / samp_norms
+            for gi in off_samp:
+                v = sm[gi].astype(np.float32)
+                vn = np.linalg.norm(v) + 1e-8
+                sims = samp_unit @ (v / vn)
+                top5 = np.argsort(sims)[-5:]
+                ax = float(coords_pre[top5, 0].mean())
+                ay = float(coords_pre[top5, 1].mean())
+                gene_x.append(ax); gene_y.append(ay)
+                gene_labels.append(str(ids_arr[gi]) + ' ≈')
+                gene_type_list.append(str(iso_types[gi]) if iso_types is not None else '')
+
+    else:
+        # Fresh mini-UMAP: subsample + gene isoforms
+        try:
+            from umap import UMAP
+        except ImportError:
+            return None
+
+        n_total = sm.shape[0] if sm is not None else 0
+        if n_total == 0:
+            return None
+
+        n_bg = min(3000, n_total)
+        rng  = np.random.default_rng(42)
+        bg_idx = rng.choice(n_total, size=n_bg, replace=False)
+        gene_global_idx = np.where(np.isin(ids_arr, hit_ids))[0]
+
+        all_idx = np.concatenate([bg_idx, gene_global_idx])
+        all_idx_unique, inv = np.unique(all_idx, return_inverse=True)
+        X = sm[all_idx_unique].astype(np.float32)
+
+        with st.spinner("UMAP 계산 중 (15-30초)…"):
+            emb = UMAP(n_components=2, random_state=42, n_neighbors=15,
+                       min_dist=0.1, metric='cosine').fit_transform(X)
+
+        bg_pos_in_unique  = np.where(np.isin(all_idx_unique, bg_idx))[0]
+        gene_pos_in_unique = np.where(np.isin(all_idx_unique, gene_global_idx))[0]
+
+        bg_x = emb[bg_pos_in_unique, 0]; bg_y = emb[bg_pos_in_unique, 1]
+        bg_ids_local   = ids_arr[all_idx_unique[bg_pos_in_unique]]
+        bg_types       = (np.array(iso_types, dtype=str)[all_idx_unique[bg_pos_in_unique]]
+                          if iso_types is not None else np.full(len(bg_pos_in_unique), ''))
+
+        gene_x = emb[gene_pos_in_unique, 0].tolist()
+        gene_y = emb[gene_pos_in_unique, 1].tolist()
+        gene_labels = ids_arr[all_idx_unique[gene_pos_in_unique]].tolist()
+        gene_type_list = (np.array(iso_types, dtype=str)[all_idx_unique[gene_pos_in_unique]].tolist()
+                          if iso_types is not None else [''] * len(gene_pos_in_unique))
+        bg_ids = bg_ids_local
+
+    # Build Plotly figure
+    fig = go_plotly.Figure()
+
+    # Background traces by type
+    for ttype, tcolor in TYPE_COLORS.items():
+        tmask = np.array([str(t) == ttype for t in bg_types]) if len(bg_types) > 0 else np.array([])
+        if not tmask.any():
+            continue
+        fig.add_trace(go_plotly.Scatter(
+            x=bg_x[tmask] if isinstance(bg_x, np.ndarray) else [bg_x[i] for i, m in enumerate(tmask) if m],
+            y=bg_y[tmask] if isinstance(bg_y, np.ndarray) else [bg_y[i] for i, m in enumerate(tmask) if m],
+            mode='markers',
+            marker=dict(size=3, color=tcolor, opacity=0.25),
+            name=ttype or 'other',
+            showlegend=False,
+            hoverinfo='skip',
+        ))
+
+    # Gene isoform traces
+    max_s = hit_scores.max(axis=1)
+    for i, (gx, gy, glab, gtype) in enumerate(zip(gene_x, gene_y, gene_labels, gene_type_list)):
+        score_val = float(max_s[i]) if i < len(max_s) else 0.0
+        gcolor = GENE_TYPE_COLORS.get(str(gtype), '#2563eb')
+        approx = '≈' in str(glab)
+        fig.add_trace(go_plotly.Scatter(
+            x=[gx], y=[gy],
+            mode='markers+text',
+            marker=dict(
+                size=14 + 6 * score_val,
+                color=gcolor,
+                opacity=0.9,
+                symbol='diamond' if approx else 'circle',
+                line=dict(width=2, color='white'),
+            ),
+            text=[str(glab).replace(' ≈', '')],
+            textposition='top center',
+            textfont=dict(size=9, color='#1e293b'),
+            name=str(glab),
+            hovertemplate=(
+                f"<b>{glab}</b><br>type: {gtype}<br>max score: {score_val:.3f}"
+                + ('<br><i>(approx. position)</i>' if approx else '')
+                + "<extra></extra>"
+            ),
+            showlegend=False,
+        ))
+
+    fig.update_layout(
+        title=dict(text=f"Score space UMAP — {gene.upper()}", font_size=12),
+        height=340,
+        margin=dict(t=36, b=10, l=10, r=10),
+        xaxis=dict(showticklabels=False, showgrid=False, zeroline=False),
+        yaxis=dict(showticklabels=False, showgrid=False, zeroline=False),
+        plot_bgcolor='#f8fafc',
+        paper_bgcolor='white',
+    )
+    if use_precomp:
+        fig.add_annotation(
+            text="● known  ● NIC  ● NNIC  ◆ approx.",
+            xref='paper', yref='paper', x=0.01, y=0.01,
+            showarrow=False, font=dict(size=9, color='#64748b'),
+            align='left',
+        )
+    return fig
+
+
+def _render_gene_landing(gene: str, sm, ids, genes, go, gnames, thr, dtu_df, cfg_local=None):
     """Inline gene report card — shown above tabs when arriving from Hub/sidebar."""
-    import plotly.express as px
+    _cfg = cfg_local or {}
     ids_arr  = np.array(ids,   dtype=str)
     gene_arr = np.array(genes, dtype=str) if genes is not None else None
+    _ityp = _cfg.get('isoform_types')
+    iso_types_arr = np.array(_ityp, dtype=str) if _ityp is not None else None
+    tissue = _cfg.get('tissue', '')
 
     # Find matching isoforms
     gene_upper = gene.upper()
@@ -148,91 +327,111 @@ def _render_gene_landing(gene: str, sm, ids, genes, go, gnames, thr, dtu_df):
         mask = np.char.upper(gene_arr) == gene_upper
     else:
         mask = np.char.upper(ids_arr).startswith(gene_upper)
-
     if not mask.any():
-        # Try partial match
         mask = np.array([gene_upper in str(g).upper() for g in (gene_arr if gene_arr is not None else ids_arr)])
-
     if not mask.any():
         st.warning(f"'{gene}' not found in loaded dataset.")
         return
 
     hit_ids    = ids_arr[mask]
-    hit_scores = sm[mask]   # shape (n_hits, n_go)
-    hit_genes  = gene_arr[mask] if gene_arr is not None else np.full(mask.sum(), gene)
+    hit_scores = sm[mask]
+    hit_types  = iso_types_arr[mask] if iso_types_arr is not None else np.full(mask.sum(), '')
+    max_per_iso = hit_scores.max(axis=1)
 
     st.markdown(f"""
 <div style='background:linear-gradient(90deg,#0f2942,#1e3a5f);border-radius:12px;
 padding:16px 24px 12px;margin-bottom:16px'>
 <span style='color:#93c5fd;font-size:0.8rem'>GENE QUICK REPORT</span>
 <h2 style='color:white;margin:4px 0 2px;font-size:1.6rem'>{gene.upper()}</h2>
-<span style='color:#bfdbfe;font-size:0.9rem'>{mask.sum()} isoforms found</span>
+<span style='color:#bfdbfe;font-size:0.9rem'>{mask.sum()} isoforms · {len(go)} GO terms</span>
 </div>
 """, unsafe_allow_html=True)
 
-    lc1, lc2, lc3 = st.columns([2, 2, 1])
+    lc_umap, lc_table, lc_metrics = st.columns([2, 2, 1])
 
-    with lc1:
-        # Score heatmap: isoforms × top GO terms
-        max_per_iso = hit_scores.max(axis=1)
-        top_go_idx  = np.argsort(hit_scores.max(axis=0))[-min(15, len(go)):][::-1]
-        top_go_ids  = [go[i] for i in top_go_idx]
-        top_go_names = [gnames.get(g, g)[:22] for g in top_go_ids]
-        hm_data = hit_scores[:, top_go_idx]
-
-        fig_hm = px.imshow(
-            hm_data,
-            x=top_go_names,
-            y=[str(i) for i in hit_ids],
-            color_continuous_scale='Blues',
-            aspect='auto',
-            title=f"PRISM scores — top GO terms",
-            zmin=0, zmax=1,
+    # ── Mini UMAP ─────────────────────────────────────────────────────────
+    with lc_umap:
+        fig_umap = _build_umap_figure(
+            gene, hit_ids, hit_scores, hit_types,
+            sm, ids_arr, iso_types_arr, tissue,
         )
-        fig_hm.update_layout(height=max(180, 30 * len(hit_ids) + 60),
-                             margin=dict(t=36, b=10, l=10, r=10),
-                             coloraxis_showscale=False)
-        fig_hm.update_xaxes(tickangle=-40, tickfont_size=10)
-        fig_hm.update_yaxes(tickfont_size=10)
-        st.plotly_chart(fig_hm, use_container_width=True)
+        if fig_umap is not None:
+            st.plotly_chart(fig_umap, use_container_width=True)
+        else:
+            # Fallback: score heatmap
+            import plotly.express as px_local
+            top_go_idx   = np.argsort(hit_scores.max(axis=0))[-min(12, len(go)):][::-1]
+            top_go_names = [gnames.get(go[i], go[i])[:20] for i in top_go_idx]
+            fig_hm = px_local.imshow(
+                hit_scores[:, top_go_idx],
+                x=top_go_names, y=[str(i) for i in hit_ids],
+                color_continuous_scale='Blues', aspect='auto',
+                title="PRISM score heatmap", zmin=0, zmax=1,
+            )
+            fig_hm.update_layout(height=340, margin=dict(t=36,b=10,l=10,r=10),
+                                  coloraxis_showscale=False)
+            fig_hm.update_xaxes(tickangle=-40, tickfont_size=9)
+            st.plotly_chart(fig_hm, use_container_width=True)
 
-    with lc2:
-        # Top scored isoforms table
-        top_go_per_iso = [go[np.argmax(hit_scores[i])] for i in range(len(hit_ids))]
-        top_name_per_iso = [gnames.get(g, g)[:30] for g in top_go_per_iso]
+    # ── Isoform table ─────────────────────────────────────────────────────
+    with lc_table:
+        top_go_per_iso   = [go[np.argmax(hit_scores[i])] for i in range(len(hit_ids))]
+        top_name_per_iso = [gnames.get(g, g)[:28] for g in top_go_per_iso]
+
+        _user_mods = st.session_state.get('user_modules') or st.session_state.get('brain672_modules')
+        mod_labels = []
+        if _user_mods:
+            go_mod_map = _user_mods.get('go_module_map', {})
+            for i in range(len(hit_ids)):
+                top_g = go[np.argmax(hit_scores[i])]
+                mid   = go_mod_map.get(top_g)
+                mod_labels.append(f"M{mid}" if mid else "—")
+        else:
+            mod_labels = ["—"] * len(hit_ids)
+
         df_land = pd.DataFrame({
-            'Isoform':     hit_ids,
-            'Max score':   max_per_iso.round(3),
-            'Top GO':      top_name_per_iso,
-            'High-conf GO': [(hit_scores[i] >= thr).sum() for i in range(len(hit_ids))],
-        })
-        df_land = df_land.sort_values('Max score', ascending=False)
+            'Isoform':   hit_ids,
+            'Type':      hit_types,
+            'Max score': max_per_iso.round(3),
+            'Top GO':    top_name_per_iso,
+            'Module':    mod_labels,
+        }).sort_values('Max score', ascending=False)
+
         st.dataframe(
             df_land.style.background_gradient(subset=['Max score'], cmap='Blues'),
             use_container_width=True, hide_index=True,
-            height=min(300, 35 * len(df_land) + 38),
+            height=min(320, 35 * len(df_land) + 38),
         )
 
-        # Module info if available
-        _user_mods = st.session_state.get('user_modules') or st.session_state.get('brain672_modules')
-        if _user_mods:
-            go_mod_map = _user_mods.get('go_module_map', {})
-            mod_info   = _user_mods.get('modules', {})
-            isoform_mod_ids = []
-            for i in range(len(hit_ids)):
-                top_go_i = go[np.argmax(hit_scores[i])]
-                mid = go_mod_map.get(top_go_i)
-                isoform_mod_ids.append(f"M{mid}" if mid else "—")
-            st.markdown("**Primary modules:**  " + " · ".join(
-                f"`{m}`" for m in dict.fromkeys(isoform_mod_ids)
-            ))
+        unique_mods = list(dict.fromkeys(m for m in mod_labels if m != "—"))
+        if unique_mods:
+            st.markdown("**Primary modules:** " + " · ".join(f"`{m}`" for m in unique_mods))
 
-    with lc3:
+        # Score heatmap in expander
+        with st.expander("📊 GO score heatmap"):
+            import plotly.express as px_hm
+            top_go_idx   = np.argsort(hit_scores.max(axis=0))[-min(15, len(go)):][::-1]
+            top_go_names = [gnames.get(go[i], go[i])[:22] for i in top_go_idx]
+            fig_hm2 = px_hm.imshow(
+                hit_scores[:, top_go_idx], x=top_go_names,
+                y=[str(i) for i in hit_ids],
+                color_continuous_scale='Blues', aspect='auto', zmin=0, zmax=1,
+            )
+            fig_hm2.update_layout(height=max(160, 28*len(hit_ids)+50),
+                                   margin=dict(t=10,b=10,l=10,r=10),
+                                   coloraxis_showscale=False)
+            fig_hm2.update_xaxes(tickangle=-45, tickfont_size=9)
+            st.plotly_chart(fig_hm2, use_container_width=True)
+
+    # ── Metrics ───────────────────────────────────────────────────────────
+    with lc_metrics:
         st.metric("Isoforms", str(mask.sum()))
         n_high = int((max_per_iso >= thr).sum())
-        st.metric("High-confidence", str(n_high), delta=f"≥{thr}")
+        st.metric("High-conf", str(n_high), delta=f"≥{thr}")
+        novel_types = {'nic', 'nnic'}
+        n_novel = int(sum(str(t).lower() in novel_types for t in hit_types))
+        st.metric("Novel", str(n_novel))
         if dtu_df is not None:
-            # Count DTU events for this gene
             _ids_upper = set(str(x).upper() for x in hit_ids)
             n_dtu = 0
             for col in ['isoform_id', 'transcript_id', 'feature']:
@@ -242,8 +441,9 @@ padding:16px 24px 12px;margin-bottom:16px'>
             st.metric("DTU events", str(n_dtu))
 
     st.caption(
-        "↓ 탭에서 전체 Scenario 분류, 모듈×DTU 히트맵, BISECT 케이스를 확인하세요. "
-        "아래 **🔍 Search Isoform** 탭 클릭 시 동일 유전자로 검색이 유지됩니다."
+        "UMAP: 배경 = 20K 무작위 샘플(gray), 강조 = 검색 유전자 이소폼(대형). "
+        "◆ = 샘플 외 이소폼(cosine NN 근사 위치). "
+        "↓ 탭에서 Scenario 분류 · 모듈×DTU 히트맵 · BISECT 케이스 확인."
     )
     st.divider()
 
