@@ -102,6 +102,33 @@ if dtu_df is None:
 # ── DTU loaded ────────────────────────────────────────────────────────────────
 st.success(f"DTU 데이터 로드 완료: **{len(dtu_df):,}** 아이소폼-조건 레코드.")
 
+# ── Highlight panel (from UMAP click in Target page) ─────────────────────────
+_hl_isos  = st.session_state.get('highlight_isoforms', [])
+_hl_genes = []
+if _hl_isos:
+    st.markdown(
+        f"<div style='background:#fef3c7;border-left:4px solid #d97706;border-radius:8px;"
+        f"padding:10px 16px;margin-bottom:12px'>"
+        f"<b>🔗 Target 페이지 연동:</b> {len(_hl_isos)}개 이소폼 하이라이트 활성 — "
+        f"<code>{'  |  '.join(_hl_isos[:6])}{'…' if len(_hl_isos)>6 else ''}</code><br>"
+        f"<span style='font-size:0.8rem;color:#92400e'>"
+        f"아래 Gene Detail 탭에서 해당 이소폼이 강조 표시됩니다. "
+        f"'필터 해제'로 전체 데이터로 복귀.</span></div>",
+        unsafe_allow_html=True,
+    )
+    _hc1, _hc2 = st.columns([1, 3])
+    with _hc1:
+        if st.button("✖ 하이라이트 해제", key='cond_clear_hl'):
+            st.session_state['highlight_isoforms'] = []
+            st.rerun()
+    # Pre-set gene detail search from highlighted isoforms
+    _hl_genes = []
+    for iso in _hl_isos:
+        # Extract gene name: e.g. "NDUFS4-204" → "NDUFS4"
+        _g = iso.split('-')[0] if '-' in iso else iso
+        if _g not in _hl_genes:
+            _hl_genes.append(_g)
+
 with st.expander("📐 분석 원리 — GAIN/LOSS/NEUTRAL은 무엇을 의미하는가", expanded=True):
     st.markdown("""
 ### 핵심 개념: 아이소폼 쌍 비교를 통한 GO 기능 방향성 판단
@@ -573,7 +600,16 @@ with tab_genes:
         "**막대 길이**: 두 아이소폼 간 PRISM 스코어 차이의 크기 (0~1 범위)."
     )
 
-    gene_query = st.text_input("Gene symbol or ID", placeholder="e.g. NDUFS4, KIF21B, DLG1")
+    # Pre-fill from UMAP highlight (Target page cross-link)
+    _hl_default = _hl_genes[0] if _hl_genes else ''
+    gene_query = st.text_input(
+        "Gene symbol or ID",
+        value=_hl_default,
+        placeholder="e.g. NDUFS4, KIF21B, DLG1",
+        key='cond_gene_input',
+    )
+    if _hl_isos and gene_query:
+        st.caption(f"🔗 Highlighted isoforms: `{'` · `'.join(_hl_isos[:8])}`")
 
     if gene_query and not conseq_df.empty:
         gene_hits = conseq_df[
@@ -607,6 +643,14 @@ with tab_genes:
             )
 
             # Bar chart: score delta per GO term
+            # Highlight rows where up/down isoform is in basket_isoforms
+            _hl = st.session_state.get('highlight_isoforms', [])
+            _hl_set = set(str(x) for x in _hl)
+            def _is_hl(row):
+                return str(row.get('up_isoform','')) in _hl_set or str(row.get('down_isoform','')) in _hl_set
+            gene_hits = gene_hits.copy()
+            gene_hits['_highlighted'] = gene_hits.apply(_is_hl, axis=1)
+
             fig_gene = px.bar(
                 gene_hits.sort_values('score_delta'),
                 x='score_delta', y='go_name',
@@ -619,6 +663,23 @@ with tab_genes:
                 height=max(300, len(gene_hits) * 26),
             )
             fig_gene.add_vline(x=0, line_color='#374151', line_width=1.5)
+
+            # Add highlight markers for UMAP-clicked isoforms
+            if _hl and gene_hits['_highlighted'].any():
+                hl_rows = gene_hits[gene_hits['_highlighted']]
+                fig_gene.add_trace(
+                    __import__('plotly.graph_objects', fromlist=['Scatter']).Scatter(
+                        x=hl_rows['score_delta'],
+                        y=hl_rows['go_name'],
+                        mode='markers',
+                        marker=dict(symbol='star', size=16, color='#f59e0b',
+                                    line=dict(width=1.5, color='#92400e')),
+                        name='★ UMAP 선택',
+                        hovertemplate='<b>%{y}</b><br>score_delta: %{x:.3f}<br><i>UMAP 선택 이소폼 포함</i><extra></extra>',
+                    )
+                )
+                st.caption(f"★ = UMAP에서 클릭한 이소폼 포함 레코드 ({hl_rows.shape[0]}개)")
+
             st.plotly_chart(fig_gene, use_container_width=True)
             st.caption(
                 f"유전자 {gene_query}의 DTU 이벤트에서: "

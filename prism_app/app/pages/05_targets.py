@@ -265,33 +265,37 @@ def _build_umap_figure(gene: str, hit_ids, hit_scores, hit_types,
             hoverinfo='skip',
         ))
 
-    # Gene isoform traces
+    # Gene isoform — single consolidated trace with customdata for on_select
     max_s = hit_scores.max(axis=1)
-    for i, (gx, gy, glab, gtype) in enumerate(zip(gene_x, gene_y, gene_labels, gene_type_list)):
-        score_val = float(max_s[i]) if i < len(max_s) else 0.0
-        gcolor = GENE_TYPE_COLORS.get(str(gtype), '#2563eb')
-        approx = '≈' in str(glab)
-        fig.add_trace(go_plotly.Scatter(
-            x=[gx], y=[gy],
-            mode='markers+text',
-            marker=dict(
-                size=14 + 6 * score_val,
-                color=gcolor,
-                opacity=0.9,
-                symbol='diamond' if approx else 'circle',
-                line=dict(width=2, color='white'),
-            ),
-            text=[str(glab).replace(' ≈', '')],
-            textposition='top center',
-            textfont=dict(size=9, color='#1e293b'),
-            name=str(glab),
-            hovertemplate=(
-                f"<b>{glab}</b><br>type: {gtype}<br>max score: {score_val:.3f}"
-                + ('<br><i>(approx. position)</i>' if approx else '')
-                + "<extra></extra>"
-            ),
-            showlegend=False,
-        ))
+    g_colors  = [GENE_TYPE_COLORS.get(str(t), '#2563eb') for t in gene_type_list]
+    g_sizes   = [14 + 6 * (float(max_s[i]) if i < len(max_s) else 0.0) for i in range(len(gene_x))]
+    g_symbols = ['diamond' if '≈' in str(lab) else 'circle' for lab in gene_labels]
+    g_texts   = [str(lab).replace(' ≈', '') for lab in gene_labels]
+    g_scores  = [float(max_s[i]) if i < len(max_s) else 0.0 for i in range(len(gene_x))]
+    # customdata: [[isoform_id, type, max_score], ...]
+    g_custom  = [[str(lab).replace(' ≈', ''), str(t), f"{s:.3f}"]
+                 for lab, t, s in zip(gene_labels, gene_type_list, g_scores)]
+
+    fig.add_trace(go_plotly.Scatter(
+        x=gene_x, y=gene_y,
+        mode='markers+text',
+        marker=dict(
+            size=g_sizes, color=g_colors, opacity=0.92,
+            symbol=g_symbols, line=dict(width=2, color='white'),
+        ),
+        text=g_texts,
+        textposition='top center',
+        textfont=dict(size=9, color='#1e293b'),
+        customdata=g_custom,
+        hovertemplate=(
+            "<b>%{customdata[0]}</b><br>"
+            "type: %{customdata[1]}<br>"
+            "max score: %{customdata[2]}"
+            "<br><i>클릭하여 바스켓에 추가</i><extra></extra>"
+        ),
+        name='gene_isoforms',
+        showlegend=False,
+    ))
 
     fig.update_layout(
         title=dict(text=f"Score space UMAP — {gene.upper()}", font_size=12),
@@ -356,7 +360,51 @@ padding:16px 24px 12px;margin-bottom:16px'>
             sm, ids_arr, iso_types_arr, tissue,
         )
         if fig_umap is not None:
-            st.plotly_chart(fig_umap, use_container_width=True)
+            umap_event = st.plotly_chart(
+                fig_umap, use_container_width=True,
+                key='umap_landing', on_select='rerun',
+                selection_mode='points',
+            )
+            # ── Click handler: add selected isoform to basket ─────────────
+            sel_pts = getattr(getattr(umap_event, 'selection', None), 'points', [])
+            if sel_pts:
+                for pt in sel_pts:
+                    cd = pt.get('customdata')
+                    if cd and len(cd) >= 1:
+                        sel_iso = str(cd[0])
+                        sel_type = str(cd[1]) if len(cd) > 1 else ''
+                        sel_score = str(cd[2]) if len(cd) > 2 else ''
+                        # Add to basket_isoforms
+                        basket_iso = st.session_state.get('basket_isoforms', [])
+                        if sel_iso not in basket_iso:
+                            basket_iso.append(sel_iso)
+                            st.session_state['basket_isoforms'] = basket_iso
+                        # Also update highlight_isoforms for Condition page
+                        st.session_state['highlight_isoforms'] = basket_iso[:]
+                        st.toast(f"✅ {sel_iso} 바스켓 추가 (type={sel_type}, score={sel_score})")
+
+            # Show basket_isoforms actions
+            basket_iso = st.session_state.get('basket_isoforms', [])
+            if basket_iso:
+                st.markdown(
+                    f"<div style='background:#f0fdf4;border-radius:6px;padding:6px 10px;"
+                    f"font-size:0.8rem;color:#15803d;margin-top:4px'>"
+                    f"🧬 선택된 이소폼 ({len(basket_iso)}): "
+                    f"<b>{', '.join(basket_iso[:5])}{'…' if len(basket_iso)>5 else ''}</b>"
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
+                ci1, ci2 = st.columns(2)
+                with ci1:
+                    if st.button("🔄 Condition 분석에서 하이라이트", key='umap_goto_cond',
+                                 use_container_width=True):
+                        st.session_state['highlight_isoforms'] = basket_iso[:]
+                        st.toast("Condition 페이지에서 해당 이소폼이 강조됩니다.")
+                with ci2:
+                    if st.button("🗑️ 선택 초기화", key='umap_clear_iso', use_container_width=True):
+                        st.session_state['basket_isoforms'] = []
+                        st.session_state['highlight_isoforms'] = []
+                        st.rerun()
         else:
             # Fallback: score heatmap
             import plotly.express as px_local
