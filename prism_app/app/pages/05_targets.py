@@ -13,8 +13,8 @@ import plotly.express as px
 from prism_app.core.classifier import get_scenario_candidates, IsoformScenario
 from prism_app.app.components.interpretation import render_data_context_banner
 
-st.set_page_config(page_title="Individual Analysis — PRISM", layout="wide")
-st.title("🔬 Individual Isoform Analysis")
+st.set_page_config(page_title="Target Analysis — PRISM", layout="wide")
+st.title("🎯 Target Analysis")
 st.caption(
     "아이소폼별 GO 기능 예측 결과를 4가지 시나리오로 분류하고, "
     "BISECT 파이프라인이 검증한 질병 특이적 기능 스위치 케이스를 심층 탐색합니다."
@@ -82,6 +82,8 @@ BISECT 파이프라인은 15개 모듈(구조·PPI·계통보존·규제 인자 
 
 # ── Data ─────────────────────────────────────────────────────────────────────
 cfg = st.session_state.get('cfg', {})
+if 'analysis_step' not in st.session_state: st.session_state['analysis_step'] = {}
+st.session_state['analysis_step']['targets'] = True
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page."); st.stop()
@@ -281,8 +283,21 @@ with tab_search:
     st.subheader("Isoform Case Report")
     if _cids:
         st.caption(f"🔗 Functional Map 연동: {len(_cids):,}개 아이소폼 대상 검색 중")
-    query = st.text_input("Search by isoform ID or gene name",
-                          placeholder="e.g. NDUFS4-201, KIF21B, tr319500")
+    # Pre-populate from sidebar persistent search or hub basket
+    _default_query = st.session_state.get('search_gene', '')
+    if _default_query and not st.session_state.get('_targets_query_loaded'):
+        st.session_state['_targets_query_loaded'] = True
+        st.session_state['targets_search_key'] = _default_query
+
+    query = st.text_input(
+        "Search by isoform ID or gene name",
+        value=st.session_state.get('targets_search_key', _default_query),
+        placeholder="e.g. NDUFS4-201, KIF21B, tr319500",
+        key='targets_gene_input',
+    )
+    # Write back to shared session state so sidebar reflects current query
+    if query:
+        st.session_state['search_gene'] = query
 
     # ── Module × DTU gene-level view ──────────────────────────────────────────
     @st.cache_data(show_spinner=False)

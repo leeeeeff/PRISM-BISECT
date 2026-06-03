@@ -54,6 +54,8 @@ with st.expander("📖 이 페이지 사용법", expanded=False):
 
 # ── Session data ──────────────────────────────────────────────────────────────
 cfg = st.session_state.get('cfg', {})
+if 'analysis_step' not in st.session_state: st.session_state['analysis_step'] = {}
+st.session_state['analysis_step']['condition'] = True
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page."); st.stop()
@@ -664,3 +666,16 @@ with tab_table:
                                 "dtu_scenarios.csv", "text/csv")
         except ValueError as e:
             st.error(f"DTU parse error: {e}")
+
+# ── Next Step Banner ─────────────────────────────────────────────────────────
+st.divider()
+st.markdown("""
+<div style='background:linear-gradient(90deg,#fdf4ff,#fae8ff);border-radius:10px;
+padding:16px 24px;border-left:4px solid #9333ea;margin-top:16px'>
+<b>다음 단계: 🎯 Target Analysis</b><br>
+<span style='color:#374151;font-size:0.9rem'>
+조건별 모듈 전환 유전자를 확인했다면 → 사이드바 Gene Search에 유전자명 입력 →
+Target Analysis 페이지에서 이소폼별 모듈 스코어 + DTU 히트맵으로 메커니즘을 검증하세요.
+</span>
+</div>
+""", unsafe_allow_html=True)

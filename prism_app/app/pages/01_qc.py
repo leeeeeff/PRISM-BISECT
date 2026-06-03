@@ -22,8 +22,8 @@ from prism_app.app.components.interpretation import (
     render_auprc_interpretation,
 )
 
-st.set_page_config(page_title="Overview — PRISM", layout="wide")
-st.title("📊 Overview")
+st.set_page_config(page_title="QC & Overview — PRISM", layout="wide")
+st.title("📊 QC & Overview")
 st.caption("Coverage report, GO-term distribution, and scenario summary.")
 
 with st.expander("📖 이 페이지 사용법", expanded=False):
@@ -48,6 +48,8 @@ with st.expander("📖 이 페이지 사용법", expanded=False):
 
 # ── Get data from session ─────────────────────────────────────────────────
 cfg = st.session_state.get('cfg', {})
+if 'analysis_step' not in st.session_state: st.session_state['analysis_step'] = {}
+st.session_state['analysis_step']['qc'] = True
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page and select a data source.")
@@ -460,3 +462,16 @@ else:
                 file_name="prism_auprc_results.csv",
                 mime="text/csv",
             )
+
+# ── Next Step Banner ─────────────────────────────────────────────────────────
+st.divider()
+st.markdown("""
+<div style='background:linear-gradient(90deg,#eff6ff,#dbeafe);border-radius:10px;
+padding:16px 24px;border-left:4px solid #3b82f6;margin-top:16px'>
+<b>다음 단계: 🗺️ Module Landscape</b><br>
+<span style='color:#374151;font-size:0.9rem'>
+데이터 품질을 확인했다면 → 아이소폼들이 어떤 기능 모듈에 분포하는지 전체 지형도를 확인하세요.<br>
+<i>사이드바에서 "Module Landscape" 페이지로 이동하거나 아래 버튼을 클릭하세요.</i>
+</span>
+</div>
+""", unsafe_allow_html=True)

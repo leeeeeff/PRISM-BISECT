@@ -14,6 +14,9 @@ import plotly.graph_objects as go
 st.set_page_config(page_title="Advanced — PRISM", layout="wide")
 st.title("🔭 Advanced Analytics")
 st.caption("Cross-tissue isoform function comparison and multi-dataset analysis.")
+if 'analysis_step' not in st.session_state:
+    st.session_state['analysis_step'] = {}
+st.session_state['analysis_step']['advanced'] = True
 
 with st.expander("📖 이 페이지 사용법", expanded=False):
     st.markdown("""

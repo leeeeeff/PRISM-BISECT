@@ -8,6 +8,19 @@ import streamlit as st
 
 from prism_app.core.go_utils import TISSUE_PRESETS, GO_FULL_NAMES
 
+# ── Session-state initialisation (call once per app boot) ─────────────────────
+
+def _init_session_state() -> None:
+    defaults = {
+        'search_gene':    '',
+        'basket_genes':   [],
+        'active_module':  None,
+        'analysis_step':  {},   # {'qc': True, 'landscape': True, ...}
+    }
+    for k, v in defaults.items():
+        if k not in st.session_state:
+            st.session_state[k] = v
+
 # Demo data directory (bundled with the package)
 DEMO_DIR = Path(__file__).parents[2] / 'data' / 'demo'
 
@@ -36,7 +49,10 @@ def render_sidebar() -> dict:
         isoform_types   : ndarray of str | None
         gene_ids        : ndarray of str | None
         dtu_df          : DataFrame | None
+        search_gene     : str  (persistent gene search query)
     """
+    _init_session_state()
+
     st.sidebar.markdown(
         "**PRISM + BISECT** `v0.1.0`  \n"
         "*Isoform Function Analysis*"
@@ -100,6 +116,7 @@ def render_sidebar() -> dict:
         isoform_types=None,
         gene_ids=None,
         dtu_df=None,
+        search_gene='',
     )
 
     # ── Demo mode: load bundled data ──────────────────────────────────────
@@ -113,7 +130,80 @@ def render_sidebar() -> dict:
         cfg.update(_upload_section(go_terms))
         _render_upload_context(cfg)
 
+    # ── Persistent gene search (always visible) ───────────────────────────
+    st.sidebar.divider()
+    st.sidebar.markdown("**🔍 Gene Search**")
+    gene_query = st.sidebar.text_input(
+        "Gene / isoform ID",
+        value=st.session_state.get('search_gene', ''),
+        placeholder="e.g. KIF21B, NDUFS4",
+        key='sidebar_gene_input',
+        label_visibility='collapsed',
+    )
+    if gene_query != st.session_state.get('search_gene', ''):
+        st.session_state['search_gene'] = gene_query
+    if gene_query:
+        if st.sidebar.button("➕ Add to basket", key='sidebar_add_basket'):
+            basket = st.session_state.get('basket_genes', [])
+            if gene_query not in basket:
+                basket.append(gene_query)
+                st.session_state['basket_genes'] = basket
+        st.sidebar.caption("*Enter gene name → navigate to Targets page for detailed analysis*")
+    cfg['search_gene'] = st.session_state.get('search_gene', '')
+
+    # ── Analysis progress + basket ────────────────────────────────────────
+    _render_progress_panel()
+
     return cfg
+
+
+def _render_progress_panel() -> None:
+    """Show analysis progress steps and gene basket in sidebar."""
+    steps = st.session_state.get('analysis_step', {})
+    basket = st.session_state.get('basket_genes', [])
+    active_mod = st.session_state.get('active_module', None)
+
+    step_labels = [
+        ('hub',       '🏠 분석 시작'),
+        ('qc',        '📊 데이터 QC'),
+        ('landscape', '🗺️ 모듈 지형도'),
+        ('patterns',  '🔬 기능 패턴'),
+        ('condition', '🔄 조건별 변화'),
+        ('targets',   '🎯 후보 타겟'),
+    ]
+
+    completed = [k for k, _ in step_labels if steps.get(k)]
+    if not completed and not basket and active_mod is None:
+        return  # nothing to show yet
+
+    st.sidebar.divider()
+
+    if completed:
+        st.sidebar.markdown("**분석 진행 상황**")
+        for k, label in step_labels:
+            icon = "✅" if steps.get(k) else "⬜"
+            st.sidebar.markdown(f"<span style='font-size:0.8rem'>{icon} {label}</span>",
+                                unsafe_allow_html=True)
+
+    if active_mod is not None:
+        st.sidebar.markdown(
+            f"<div style='background:#eff6ff;border-radius:4px;padding:4px 8px;"
+            f"font-size:0.8rem;color:#1d4ed8;margin-top:6px'>"
+            f"🔖 활성 모듈: <b>M{active_mod}</b></div>",
+            unsafe_allow_html=True,
+        )
+
+    if basket:
+        st.sidebar.markdown(
+            f"<div style='background:#f0fdf4;border-radius:4px;padding:4px 8px;"
+            f"font-size:0.8rem;color:#15803d;margin-top:6px'>"
+            f"🧬 후보 바스켓 ({len(basket)}개): "
+            f"<b>{', '.join(basket[:5])}{'…' if len(basket)>5 else ''}</b></div>",
+            unsafe_allow_html=True,
+        )
+        if st.sidebar.button("🗑️ 바스켓 초기화", key='clear_basket'):
+            st.session_state['basket_genes'] = []
+            st.rerun()
 
 
 def _render_demo_context(tissue: str) -> None:

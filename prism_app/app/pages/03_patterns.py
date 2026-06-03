@@ -17,8 +17,8 @@ from prism_app.app.components.interpretation import (
     render_data_context_banner, render_umap_interpretation, render_within_gene_interpretation,
 )
 
-st.set_page_config(page_title="Functional Map — PRISM", layout="wide")
-st.title("🗺️ Functional Map")
+st.set_page_config(page_title="Functional Patterns — PRISM", layout="wide")
+st.title("🔬 Functional Patterns")
 st.caption("GO-score space UMAP, isoform-type × GO heatmap, and within-gene comparison.")
 
 with st.expander("📖 이 페이지 사용법", expanded=False):
@@ -38,6 +38,8 @@ with st.expander("📖 이 페이지 사용법", expanded=False):
 
 # ── Data ─────────────────────────────────────────────────────────────────────
 cfg = st.session_state.get('cfg', {})
+if 'analysis_step' not in st.session_state: st.session_state['analysis_step'] = {}
+st.session_state['analysis_step']['patterns'] = True
 sm  = cfg.get('score_matrix')
 if sm is None:
     st.warning("No data loaded. Return to the main page."); st.stop()
@@ -305,3 +307,16 @@ with tab_net:
             "군집된 GO term들은 같은 기능 경로를 공유하는 아이소폼에서 동반 예측됨 · "
             "임계값을 높이면 더 강한 공동예측 쌍만 남습니다."
         )
+
+# ── Next Step Banner ─────────────────────────────────────────────────────────
+st.divider()
+st.markdown("""
+<div style='background:linear-gradient(90deg,#eff6ff,#dbeafe);border-radius:10px;
+padding:16px 24px;border-left:4px solid #3b82f6;margin-top:16px'>
+<b>다음 단계: 🎯 Target Analysis</b><br>
+<span style='color:#374151;font-size:0.9rem'>
+기능 패턴에서 흥미로운 유전자/아이소폼을 발견했다면 → 사이드바 Gene Search에 입력 →
+Target Analysis 페이지에서 isoform-level 기능 스코어와 모듈 귀속을 심화 분석하세요.
+</span>
+</div>
+""", unsafe_allow_html=True)

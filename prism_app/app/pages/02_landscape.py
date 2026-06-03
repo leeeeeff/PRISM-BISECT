@@ -428,6 +428,7 @@ with tab_novel:
                         f"{row['novel_pct']:.1f}% Novel ({row['n_novel']} isoforms, "
                         f"enrichment {row['enrichment']:.2f}×, FDR={row['fdr']:.3f})"
                     ):
+                        st.session_state['active_module'] = mid
                         cands = df_hi[
                             (df_hi['primary_module'] == mid) &
                             (df_hi['type'].isin(['nic', 'nnic']))
@@ -586,6 +587,21 @@ with tab_div:
             "📥 전체 유전자 기능 다양성 테이블 다운로드",
             csv_div, file_name="gene_functional_diversity.csv", mime="text/csv",
         )
+
+        # Quick basket add
+        top_genes = top_div['gene'].head(8).tolist() if 'gene' in top_div.columns else []
+        if top_genes:
+            st.markdown("**후보 바스켓에 추가** (클릭 → 사이드바에 저장 → Target Analysis에서 분석)")
+            _bcols = st.columns(min(len(top_genes), 8))
+            for _bi, _bg in enumerate(top_genes):
+                with _bcols[_bi]:
+                    if st.button(f"➕{_bg}", key=f'basket_div_{_bi}', use_container_width=True):
+                        _b = st.session_state.get('basket_genes', [])
+                        if _bg not in _b:
+                            _b.append(_bg)
+                            st.session_state['basket_genes'] = _b
+                        st.session_state['search_gene'] = _bg
+                        st.toast(f"{_bg} → 바스켓 추가 완료")
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -851,3 +867,28 @@ with tab_ref:
                 "빨강 블록(대각): 모듈 내 GO term들이 같이 높게 예측됨 (within r=0.818). "
                 "흰색/파랑: 서로 독립적인 기능 모듈 (cross r=0.277)."
             )
+
+# ── Next Step Banner ─────────────────────────────────────────────────────────
+st.divider()
+_has_dtu = bool(st.session_state.get('cfg', {}).get('dtu_df') is not None)
+if _has_dtu:
+    st.markdown("""
+<div style='background:linear-gradient(90deg,#f0fdf4,#dcfce7);border-radius:10px;
+padding:16px 24px;border-left:4px solid #16a34a;margin-top:16px'>
+<b>다음 단계 (DTU 데이터 있음): 🔄 Condition Analysis</b><br>
+<span style='color:#374151;font-size:0.9rem'>
+AD vs CT 조건에서 모듈 전환이 일어나는 유전자를 확인하세요.<br>
+관심 모듈 발견 시 → 사이드바 바스켓에 저장 → Condition 페이지에서 심화 분석
+</span>
+</div>
+""", unsafe_allow_html=True)
+else:
+    st.markdown("""
+<div style='background:linear-gradient(90deg,#eff6ff,#dbeafe);border-radius:10px;
+padding:16px 24px;border-left:4px solid #3b82f6;margin-top:16px'>
+<b>다음 단계: 🔬 Functional Patterns</b><br>
+<span style='color:#374151;font-size:0.9rem'>
+모듈 구조를 파악했다면 → GO co-occurrence 네트워크로 기능 패턴을 심화 탐색하세요.
+</span>
+</div>
+""", unsafe_allow_html=True)
