@@ -182,12 +182,12 @@ c5.metric("Brain isoforms", f"{meta['n_isoforms_brain']:,}")
 st.divider()
 
 # ── Tab layout ────────────────────────────────────────────────────────────────
-tab_assign, tab_novel, tab_div, tab_cond, tab_ref = st.tabs([
+tab_ref, tab_assign, tab_novel, tab_div, tab_cond = st.tabs([
+    "📊 참조 지형도",
     "📍 모듈 배정",
     "🔬 Novel 기능 후보",
     "🧬 유전자 기능 다양성",
     "🔄 조건별 기능 변화",
-    "📊 참조 지형도",
 ])
 
 

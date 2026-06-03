@@ -130,6 +130,9 @@ def render_sidebar() -> dict:
         cfg.update(_upload_section(go_terms))
         _render_upload_context(cfg)
 
+    # ── Active features panel ─────────────────────────────────────────────
+    _render_active_features(mode_key, tissue_key, cfg)
+
     # ── Persistent gene search (always visible) ───────────────────────────
     st.sidebar.divider()
     st.sidebar.markdown("**🔍 Gene Search**")
@@ -155,6 +158,36 @@ def render_sidebar() -> dict:
     _render_progress_panel()
 
     return cfg
+
+
+def _render_active_features(mode: str, tissue: str, cfg: dict) -> None:
+    """Show which analysis features are available for the current data config."""
+    has_sm = cfg.get('score_matrix') is not None
+    has_dtu = cfg.get('dtu_df') is not None
+    n_go = len(cfg.get('go_terms', []))
+    has_modules = tissue == 'brain_672'
+
+    features = [
+        ('QC & Overview',      True,         '항상'),
+        ('Target Analysis',    has_sm,       '스코어 데이터 있을 때'),
+        ('Functional Patterns', has_sm,      '스코어 데이터 있을 때'),
+        ('Module Landscape',   has_modules,  'Brain-672 패널만'),
+        ('Condition Analysis', has_dtu,      'DTU 데이터 있을 때'),
+        ('Advanced',           True,         '항상 (count matrix 업로드 필요)'),
+    ]
+
+    st.sidebar.divider()
+    with st.sidebar.expander("🛠️ 현재 활성 기능", expanded=False):
+        for name, active, condition in features:
+            icon = "✅" if active else "⬜"
+            color = "#15803d" if active else "#9ca3af"
+            st.markdown(
+                f"<span style='font-size:0.78rem;color:{color}'>{icon} **{name}**</span>  \n"
+                f"<span style='font-size:0.72rem;color:#9ca3af;padding-left:18px'>{condition}</span>",
+                unsafe_allow_html=True,
+            )
+        if not has_modules:
+            st.caption("Module Landscape 활성화: 사이드바에서 'Brain — Full Module Landscape (672)' 선택")
 
 
 def _render_progress_panel() -> None:

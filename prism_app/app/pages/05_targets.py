@@ -283,11 +283,17 @@ with tab_search:
     st.subheader("Isoform Case Report")
     if _cids:
         st.caption(f"🔗 Functional Map 연동: {len(_cids):,}개 아이소폼 대상 검색 중")
-    # Pre-populate from sidebar persistent search or hub basket
+    # Pre-populate from sidebar / Hub auto_search
     _default_query = st.session_state.get('search_gene', '')
+    _auto_search = st.session_state.get('auto_search', False)
+
     if _default_query and not st.session_state.get('_targets_query_loaded'):
         st.session_state['_targets_query_loaded'] = True
         st.session_state['targets_search_key'] = _default_query
+
+    if _auto_search and _default_query:
+        st.info(f"🔍 **자동 검색**: '{_default_query}'  (Hub에서 연결됨)")
+        st.session_state['auto_search'] = False
 
     query = st.text_input(
         "Search by isoform ID or gene name",
@@ -298,6 +304,7 @@ with tab_search:
     # Write back to shared session state so sidebar reflects current query
     if query:
         st.session_state['search_gene'] = query
+        st.session_state['targets_search_key'] = query
 
     # ── Module × DTU gene-level view ──────────────────────────────────────────
     @st.cache_data(show_spinner=False)
