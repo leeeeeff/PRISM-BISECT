@@ -127,6 +127,126 @@ if classified is None:
                                    dtu_df=cfg.get('dtu_df'))
     st.session_state['classified_df'] = classified
 
+# ── Gene Landing Card (auto_search) — shown ABOVE tabs ───────────────────────
+_auto_gene = st.session_state.get('search_gene', '')
+if st.session_state.get('auto_search') and _auto_gene and sm is not None:
+    st.session_state['auto_search'] = False
+    _render_gene_landing(
+        _auto_gene, sm, ids, genes, go, gnames,
+        cfg.get('score_threshold', 0.4), cfg.get('dtu_df'),
+    )
+
+def _render_gene_landing(gene: str, sm, ids, genes, go, gnames, thr, dtu_df):
+    """Inline gene report card — shown above tabs when arriving from Hub/sidebar."""
+    import plotly.express as px
+    ids_arr  = np.array(ids,   dtype=str)
+    gene_arr = np.array(genes, dtype=str) if genes is not None else None
+
+    # Find matching isoforms
+    gene_upper = gene.upper()
+    if gene_arr is not None:
+        mask = np.char.upper(gene_arr) == gene_upper
+    else:
+        mask = np.char.upper(ids_arr).startswith(gene_upper)
+
+    if not mask.any():
+        # Try partial match
+        mask = np.array([gene_upper in str(g).upper() for g in (gene_arr if gene_arr is not None else ids_arr)])
+
+    if not mask.any():
+        st.warning(f"'{gene}' not found in loaded dataset.")
+        return
+
+    hit_ids    = ids_arr[mask]
+    hit_scores = sm[mask]   # shape (n_hits, n_go)
+    hit_genes  = gene_arr[mask] if gene_arr is not None else np.full(mask.sum(), gene)
+
+    st.markdown(f"""
+<div style='background:linear-gradient(90deg,#0f2942,#1e3a5f);border-radius:12px;
+padding:16px 24px 12px;margin-bottom:16px'>
+<span style='color:#93c5fd;font-size:0.8rem'>GENE QUICK REPORT</span>
+<h2 style='color:white;margin:4px 0 2px;font-size:1.6rem'>{gene.upper()}</h2>
+<span style='color:#bfdbfe;font-size:0.9rem'>{mask.sum()} isoforms found</span>
+</div>
+""", unsafe_allow_html=True)
+
+    lc1, lc2, lc3 = st.columns([2, 2, 1])
+
+    with lc1:
+        # Score heatmap: isoforms × top GO terms
+        max_per_iso = hit_scores.max(axis=1)
+        top_go_idx  = np.argsort(hit_scores.max(axis=0))[-min(15, len(go)):][::-1]
+        top_go_ids  = [go[i] for i in top_go_idx]
+        top_go_names = [gnames.get(g, g)[:22] for g in top_go_ids]
+        hm_data = hit_scores[:, top_go_idx]
+
+        fig_hm = px.imshow(
+            hm_data,
+            x=top_go_names,
+            y=[str(i) for i in hit_ids],
+            color_continuous_scale='Blues',
+            aspect='auto',
+            title=f"PRISM scores — top GO terms",
+            zmin=0, zmax=1,
+        )
+        fig_hm.update_layout(height=max(180, 30 * len(hit_ids) + 60),
+                             margin=dict(t=36, b=10, l=10, r=10),
+                             coloraxis_showscale=False)
+        fig_hm.update_xaxes(tickangle=-40, tickfont_size=10)
+        fig_hm.update_yaxes(tickfont_size=10)
+        st.plotly_chart(fig_hm, use_container_width=True)
+
+    with lc2:
+        # Top scored isoforms table
+        top_go_per_iso = [go[np.argmax(hit_scores[i])] for i in range(len(hit_ids))]
+        top_name_per_iso = [gnames.get(g, g)[:30] for g in top_go_per_iso]
+        df_land = pd.DataFrame({
+            'Isoform':     hit_ids,
+            'Max score':   max_per_iso.round(3),
+            'Top GO':      top_name_per_iso,
+            'High-conf GO': [(hit_scores[i] >= thr).sum() for i in range(len(hit_ids))],
+        })
+        df_land = df_land.sort_values('Max score', ascending=False)
+        st.dataframe(
+            df_land.style.background_gradient(subset=['Max score'], cmap='Blues'),
+            use_container_width=True, hide_index=True,
+            height=min(300, 35 * len(df_land) + 38),
+        )
+
+        # Module info if available
+        _user_mods = st.session_state.get('user_modules') or st.session_state.get('brain672_modules')
+        if _user_mods:
+            go_mod_map = _user_mods.get('go_module_map', {})
+            mod_info   = _user_mods.get('modules', {})
+            isoform_mod_ids = []
+            for i in range(len(hit_ids)):
+                top_go_i = go[np.argmax(hit_scores[i])]
+                mid = go_mod_map.get(top_go_i)
+                isoform_mod_ids.append(f"M{mid}" if mid else "—")
+            st.markdown("**Primary modules:**  " + " · ".join(
+                f"`{m}`" for m in dict.fromkeys(isoform_mod_ids)
+            ))
+
+    with lc3:
+        st.metric("Isoforms", str(mask.sum()))
+        n_high = int((max_per_iso >= thr).sum())
+        st.metric("High-confidence", str(n_high), delta=f"≥{thr}")
+        if dtu_df is not None:
+            # Count DTU events for this gene
+            _ids_upper = set(str(x).upper() for x in hit_ids)
+            n_dtu = 0
+            for col in ['isoform_id', 'transcript_id', 'feature']:
+                if col in dtu_df.columns:
+                    n_dtu = dtu_df[dtu_df[col].str.upper().isin(_ids_upper)].shape[0]
+                    break
+            st.metric("DTU events", str(n_dtu))
+
+    st.caption(
+        "↓ 탭에서 전체 Scenario 분류, 모듈×DTU 히트맵, BISECT 케이스를 확인하세요. "
+        "아래 **🔍 Search Isoform** 탭 클릭 시 동일 유전자로 검색이 유지됩니다."
+    )
+    st.divider()
+
 # ── Scenario filter tabs ──────────────────────────────────────────────────────
 tab1, tab2, tab3, tab4, tab_search, tab_bisect = st.tabs([
     "🔴 Scenario 1: Functional Switch",

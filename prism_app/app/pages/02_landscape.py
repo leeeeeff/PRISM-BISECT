@@ -67,19 +67,6 @@ def _load_corr():
 
 mod_data, meta, df_iso_ref, missing = _load_refs()
 
-if missing:
-    st.error(
-        "필요 파일 없음. 아래를 순서대로 실행하세요:\n\n"
-        "```bash\nconda activate isoform_env\n"
-        "python scripts/train_prism_v15d_brain672.py\n"
-        "python scripts/build_go_modules.py\n"
-        "python scripts/assign_isoform_modules.py\n```"
-    )
-    st.stop()
-
-modules  = mod_data['modules']
-per_go   = {p['go']: p for p in meta['per_go']}
-
 # ── Sidebar cfg ────────────────────────────────────────────────────────────────
 cfg      = st.session_state.get('cfg', {})
 tissue   = cfg.get('tissue', '')
@@ -90,7 +77,38 @@ gene_ids = cfg.get('gene_ids')
 dtu_df   = cfg.get('dtu_df')
 go_terms = cfg.get('go_terms', [])
 
-USE_PRECOMP = (tissue == 'brain_672')
+# Determine module source: brain_672 precomputed > user_modules > fallback partial
+_user_mods = st.session_state.get('user_modules')
+
+if tissue == 'brain_672':
+    if missing:
+        st.error(
+            "Brain-672 필요 파일 없음:\n\n"
+            "```bash\nconda activate isoform_env\n"
+            "python scripts/build_go_modules.py\n"
+            "python scripts/assign_isoform_modules.py\n```"
+        )
+        st.stop()
+    modules = mod_data['modules']
+    per_go  = {p['go']: p for p in meta['per_go']}
+    USE_PRECOMP = True
+elif _user_mods is not None:
+    # Use user-generated modules (Upload mode after clustering)
+    modules = _user_mods['modules']
+    per_go  = {}   # no per-GO AUPRC data for user modules
+    USE_PRECOMP = False
+    if mod_data is not None:
+        # Store brain_672 in session state for Target page module lookups
+        st.session_state['brain672_modules'] = mod_data
+else:
+    # Partial mode: use brain_672 modules for overlap if available, else empty
+    if mod_data is not None:
+        modules = mod_data['modules']
+        per_go  = {p['go']: p for p in meta['per_go']}
+    else:
+        modules = {}
+        per_go  = {}
+    USE_PRECOMP = False
 
 # ── Module assignment (real-time for non-brain_672) ────────────────────────────
 @st.cache_data(show_spinner="모듈 배정 계산 중…")
@@ -158,11 +176,36 @@ if USE_PRECOMP:
     st.success("Brain — Full Module Landscape (672 GO terms) 데이터 로드됨.")
     df_main = df_iso_ref.copy()
     df_main['high_conf'] = df_main['module_score'] > 0.3
+elif _user_mods is not None and sm is not None:
+    # User-generated modules
+    from prism_app.core.clustering import assign_isoforms_to_modules
+    _pm, _ms = assign_isoforms_to_modules(sm, go_terms, _user_mods)
+    df_main = pd.DataFrame({
+        'isoform_id':     np.asarray(iso_ids, dtype=str),
+        'primary_module': _pm,
+        'module_score':   _ms,
+    })
+    if iso_types is not None:
+        df_main['type'] = np.asarray(iso_types, dtype=str)
+    if gene_ids is not None:
+        df_main['gene'] = np.asarray(gene_ids, dtype=str)
+    df_main['module_label'] = df_main['primary_module'].apply(
+        lambda m: modules.get(str(m), {}).get('label', f'M{m}').split('/')[0].strip()[:35]
+    )
+    df_main['high_conf'] = df_main['module_score'] > 0.3
+    n_mods = _user_mods['n_modules']
+    sil    = _user_mods['best_silhouette']
+    st.info(
+        f"자동 생성 모듈 적용됨: **{n_mods}개 모듈** (silhouette={sil:.3f}, GO term {len(go_terms)}개). "
+        "사이드바에서 '재생성'으로 k를 조정할 수 있습니다."
+    )
 elif sm is not None:
     df_main, ok = _get_assignment_df()
     if ok:
-        n_ov = sum(1 for g in go_terms if any(g in m['go_ids'] for m in modules.values()))
+        n_ov = sum(1 for g in go_terms if any(g in m.get('go_ids', []) for m in modules.values()))
         st.info(f"사용자 데이터 ({tissue}): GO term {len(go_terms)}개 중 672-모듈과 **{n_ov}개** 겹침. 부분 배정 완료.")
+        if n_ov == 0:
+            st.caption("💡 사이드바에서 **모듈 자동 생성**을 실행하면 전체 Landscape 분석이 활성화됩니다.")
     else:
         st.warning("모듈 배정 실패: score matrix 또는 GO term 목록을 확인하세요.")
         df_main = None

@@ -129,6 +129,7 @@ def render_sidebar() -> dict:
         st.sidebar.subheader("Upload files")
         cfg.update(_upload_section(go_terms))
         _render_upload_context(cfg)
+        _render_auto_cluster_panel(cfg, go_terms, go_names)
 
     # ── Active features panel ─────────────────────────────────────────────
     _render_active_features(mode_key, tissue_key, cfg)
@@ -160,20 +161,59 @@ def render_sidebar() -> dict:
     return cfg
 
 
+def _render_auto_cluster_panel(cfg: dict, go_terms: list, go_names: dict) -> None:
+    """Upload mode only: offer automatic functional module generation."""
+    sm = cfg.get('score_matrix')
+    if sm is None or len(go_terms) < 4:
+        return
+
+    existing = st.session_state.get('user_modules')
+    st.sidebar.divider()
+    st.sidebar.markdown("**🧩 기능 모듈 자동 생성**")
+
+    if existing is not None:
+        n_mods = existing.get('n_modules', '?')
+        sil    = existing.get('best_silhouette', 0)
+        st.sidebar.markdown(
+            f"<div style='background:#f0fdf4;border-radius:6px;padding:6px 10px;"
+            f"font-size:0.8rem;color:#15803d'>"
+            f"✅ {n_mods}개 모듈 생성 완료 (silhouette={sil:.3f})</div>",
+            unsafe_allow_html=True,
+        )
+        if st.sidebar.button("♻️ 재생성", key='recluster'):
+            del st.session_state['user_modules']
+            st.rerun()
+    else:
+        n_go = len(go_terms)
+        st.sidebar.caption(
+            f"{n_go}개 GO term → Ward 계층 클러스터링으로 기능 모듈 자동 생성. "
+            "Module Landscape 페이지가 활성화됩니다."
+        )
+        if st.sidebar.button("⚙️ 모듈 생성 (10-30초)", key='run_cluster'):
+            with st.sidebar.spinner("클러스터링 중…"):
+                try:
+                    from prism_app.core.clustering import generate_user_modules
+                    result = generate_user_modules(sm, go_terms, go_names)
+                    st.session_state['user_modules'] = result
+                    st.rerun()
+                except Exception as e:
+                    st.sidebar.error(f"클러스터링 오류: {e}")
+
+
 def _render_active_features(mode: str, tissue: str, cfg: dict) -> None:
     """Show which analysis features are available for the current data config."""
     has_sm = cfg.get('score_matrix') is not None
     has_dtu = cfg.get('dtu_df') is not None
     n_go = len(cfg.get('go_terms', []))
-    has_modules = tissue == 'brain_672'
+    has_modules = tissue == 'brain_672' or st.session_state.get('user_modules') is not None
 
     features = [
-        ('QC & Overview',      True,         '항상'),
-        ('Target Analysis',    has_sm,       '스코어 데이터 있을 때'),
+        ('QC & Overview',       True,        '항상'),
+        ('Target Analysis',     has_sm,      '스코어 데이터 있을 때'),
         ('Functional Patterns', has_sm,      '스코어 데이터 있을 때'),
-        ('Module Landscape',   has_modules,  'Brain-672 패널만'),
-        ('Condition Analysis', has_dtu,      'DTU 데이터 있을 때'),
-        ('Advanced',           True,         '항상 (count matrix 업로드 필요)'),
+        ('Module Landscape',    has_modules, 'Brain-672 또는 모듈 생성 후'),
+        ('Condition Analysis',  has_dtu,     'DTU 데이터 있을 때'),
+        ('Advanced',            True,        '항상 (count matrix 업로드 필요)'),
     ]
 
     st.sidebar.divider()
