@@ -258,7 +258,26 @@ if not st.session_state.get('app_entered'):
     st.stop()
 
 # ── Normal app mode (hero dismissed) ──────────────────────────────────────
-st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
+st.markdown("""
+<div style='background:linear-gradient(135deg,#0a0a0a 0%,#0f2942 60%,#0a1628 100%);
+border-radius:16px;padding:48px 56px;margin-bottom:8px;color:white;text-align:center'>
+  <div style='font-size:clamp(2.8rem,8vw,5rem);font-weight:700;
+    letter-spacing:-0.04em;line-height:1;margin-bottom:12px'>PRISM</div>
+  <div style='font-size:clamp(0.95rem,2vw,1.15rem);color:rgba(255,255,255,0.55);
+    font-weight:300;letter-spacing:0.01em'>
+    Isoform function. Decoded.
+  </div>
+  <div style='margin-top:18px;display:flex;justify-content:center;gap:32px;
+    font-size:0.82rem;color:rgba(255,255,255,0.38);letter-spacing:0.04em'>
+    <span>ESM-2 · 672 GO terms</span>
+    <span>|</span>
+    <span>Zero-shot transfer</span>
+    <span>|</span>
+    <span>Lee et al. 2026 · NMI</span>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # WHAT THIS TOOL DOES
