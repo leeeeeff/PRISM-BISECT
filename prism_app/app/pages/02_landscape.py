@@ -122,6 +122,10 @@ def _assign_modules(_sm, go_terms_tuple, _modules_json):
     n_mods  = len(mod_ids)
     n_iso   = len(_sm)
 
+    if n_mods == 0:
+        return (np.zeros(n_iso, dtype=int),
+                np.zeros(n_iso, dtype=np.float32), 0)
+
     mod_score_mat = np.zeros((n_iso, n_mods), dtype=np.float32)
     overlap_counts = []
     for j, mid_str in enumerate(mod_ids):
@@ -146,7 +150,7 @@ def _get_assignment_df():
         df['high_conf'] = df['module_score'] > 0.3
         return df, True
 
-    if sm is None or iso_ids is None or len(go_terms) == 0:
+    if sm is None or iso_ids is None or len(go_terms) == 0 or not modules:
         return None, False
 
     modules_json = json.dumps(modules)

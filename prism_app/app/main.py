@@ -180,8 +180,8 @@ if _qp.get('autostart') == '1' and not st.session_state.get('_autostart_done'):
     if _at_mode == 'demo' and not st.session_state.get('_applied_data'):
         from prism_app.app.components.sidebar import _load_demo_data
         from prism_app.core.go_utils import TISSUE_PRESETS
-        _at_tissue = 'brain_672'
-        _at_go     = list(TISSUE_PRESETS[_at_tissue].keys())
+        _at_tissue = 'brain_41'
+        _at_go     = list(TISSUE_PRESETS.get(_at_tissue, TISSUE_PRESETS['muscle']).keys())
         _at_raw    = _load_demo_data(_at_tissue, _at_go)
         if _at_raw.get('score_matrix') is not None:
             st.session_state['_applied_data'] = {
@@ -194,6 +194,26 @@ if _qp.get('autostart') == '1' and not st.session_state.get('_autostart_done'):
 
 cfg = render_sidebar()
 st.session_state.cfg = cfg
+
+# Auto-apply brain_41 when user enters from hero splash ("Explore demo data")
+if (st.session_state.get('_hero_mode') == 'demo'
+        and not st.session_state.get('_applied_data')):
+    from prism_app.app.components.sidebar import _load_demo_data
+    from prism_app.core.go_utils import TISSUE_PRESETS
+    _h_tissue = 'brain_41'
+    _h_go     = list(TISSUE_PRESETS.get(_h_tissue, TISSUE_PRESETS['muscle']).keys())
+    _h_raw    = _load_demo_data(_h_tissue, _h_go)
+    if _h_raw.get('score_matrix') is not None:
+        st.session_state['_applied_data'] = {
+            **_h_raw, 'tissue': _h_tissue, 'mode': 'demo',
+        }
+        st.session_state['_data_just_loaded'] = True
+        st.session_state.pop('classified_df',    None)
+        st.session_state.pop('_clf_fingerprint', None)
+        cfg.update({k: v for k, v in _h_raw.items() if k in cfg})
+        cfg['tissue'] = _h_tissue
+        st.session_state.cfg = cfg
+    st.session_state.pop('_hero_mode', None)
 
 # When Apply button was just clicked (or autostart triggered):
 # run pre-computations with progress display, then rerun normally.

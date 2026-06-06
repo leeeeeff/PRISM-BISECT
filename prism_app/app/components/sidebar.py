@@ -85,10 +85,13 @@ def render_sidebar() -> dict:
     st.sidebar.divider()
 
     # ── Tissue / GO preset ────────────────────────────────────────────────
+    _tissue_keys = list(_TISSUE_OPTIONS.keys())
+    _default_idx = _tissue_keys.index('Brain — 41-term Panel (AUPRC 0.672, zero-shot)') \
+                   if 'Brain — 41-term Panel (AUPRC 0.672, zero-shot)' in _tissue_keys else 0
     tissue_label = st.sidebar.selectbox(
         "Tissue / GO panel",
-        list(_TISSUE_OPTIONS.keys()),
-        index=0,
+        _tissue_keys,
+        index=_default_idx,
     )
     tissue_key = _TISSUE_OPTIONS.get(tissue_label, 'muscle')
     if tissue_key not in TISSUE_PRESETS:
