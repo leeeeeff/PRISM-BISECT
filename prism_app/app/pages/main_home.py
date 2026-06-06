@@ -225,27 +225,39 @@ document.getElementById('btn-upload').addEventListener('click', () => {
 </html>"""
 
 if not st.session_state.get('app_entered'):
-    # ── Fullscreen hero mode: hide Streamlit chrome ────────────────────────
+    # ── Fullscreen hero mode ───────────────────────────────────────────────
+    # CSS hides Streamlit chrome AND makes the component iframe cover the
+    # entire viewport (position:fixed overrides the inline height attribute).
+    # Only one iframe exists in hero mode, so the selector is unambiguous.
     st.markdown("""<style>
-    [data-testid="stSidebar"]        { display: none !important; }
-    [data-testid="collapsedControl"] { display: none !important; }
-    header[data-testid="stHeader"]   { display: none !important; }
-    #MainMenu                        { display: none !important; }
-    footer                           { display: none !important; }
-    .main .block-container {
-        padding-top: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+    [data-testid="stSidebar"],
+    [data-testid="collapsedControl"],
+    header[data-testid="stHeader"],
+    #MainMenu, footer { display: none !important; }
+
+    .main, .block-container,
+    [data-testid="stAppViewContainer"],
+    [data-testid="stAppViewBlockContainer"] {
+        background: #000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
         max-width: 100% !important;
     }
+
+    iframe {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 999999 !important;
+        border: none !important;
+    }
     </style>""", unsafe_allow_html=True)
-    components.html(_HERO_HTML, height=820, scrolling=True)
+    components.html(_HERO_HTML, height=800, scrolling=True)
     st.stop()
 
-# ── Normal app mode (after entering) ──────────────────────────────────────
-components.html(_HERO_HTML, height=560, scrolling=True)
-st.caption("☝️ 스크롤해서 스토리를 확인하고, 사이드바에서 데이터를 선택하세요.")
-
+# ── Normal app mode (hero dismissed) ──────────────────────────────────────
 st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
