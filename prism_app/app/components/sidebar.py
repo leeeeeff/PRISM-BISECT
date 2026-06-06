@@ -8,6 +8,19 @@ import streamlit as st
 
 from prism_app.core.go_utils import TISSUE_PRESETS, GO_FULL_NAMES
 
+# ── Patch: load brain_41 from meta.json if go_utils cache is stale ────────────
+# Streamlit Cloud can reuse old Python bytecode cache, leaving brain_41 absent.
+# The meta.json is always current (committed alongside the .npy files).
+if 'brain_41' not in TISSUE_PRESETS:
+    import json as _json
+    _meta_path = Path(__file__).parents[2] / 'data' / 'demo' / 'brain_full_expanded_41_meta.json'
+    if _meta_path.exists():
+        with open(_meta_path) as _f:
+            _meta = _json.load(_f)
+        _b41 = {go: name for go, name in _meta['go_names'].items()}
+        TISSUE_PRESETS['brain_41'] = _b41
+        GO_FULL_NAMES.update(_b41)
+
 # ── Session-state initialisation (call once per app boot) ─────────────────────
 
 def _init_session_state() -> None:
