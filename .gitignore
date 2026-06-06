@@ -45,6 +45,11 @@ hMuscle/saved_models/
 !prism_app/data/demo/*.json
 !prism_app/data/demo/*.tsv
 !prism_app/data/annotations/
+# brain_672 dataset exceeds GitHub 100MB limit — hosted on Hugging Face Hub
+prism_app/data/demo/brain_full_672_scores.npy
+prism_app/data/demo/brain_full_672_ids.npy
+prism_app/data/demo/brain_full_672_types.npy
+prism_app/data/demo/brain_full_672_gene_ids.npy
 
 # --- BISECT: local configuration (contains absolute paths) ---
 Final_analysis/pipeline_bioanalysis/config.yaml
@@ -146,3 +151,6 @@ DIFFUSE_*_Report_*.md
 RESEARCH_TUTORIAL.md
 ebbert_replication.py
 patch_missing.sh
+
+# --- Streamlit secrets (access tokens — NEVER commit) ---
+.streamlit/secrets.toml
