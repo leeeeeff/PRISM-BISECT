@@ -5,6 +5,7 @@ _root = str(Path(__file__).parents[3])
 if _root not in sys.path:
     sys.path.insert(0, _root)
 
+import numpy as np
 import pandas as pd
 import streamlit as st
 import plotly.express as px
@@ -126,6 +127,77 @@ st.dataframe(
     _pivot.style.background_gradient(cmap='Oranges'),
     use_container_width=True,
 )
+
+# ── DTU × PRISM Functional Consequence Scatter ───────────────────────────────
+_sm_mat  = cfg.get('score_matrix')
+_iso_ids = cfg.get('isoform_ids')
+_g_ids   = cfg.get('gene_ids')
+
+if _sm_mat is not None and _iso_ids is not None and _g_ids is not None and _ic:
+    st.divider()
+    st.markdown("#### DTU × PRISM 기능 변화 연관성")
+    st.caption(
+        "x축: 조건 간 아이소폼 전환 강도 |ΔIF| · "
+        "y축: 유전자 내 중앙값 대비 최대 ΔPRISM score. "
+        "우상단 = 발현 전환이 강하고 기능 변화도 큰 케이스 (BISECT S1 후보)."
+    )
+
+    _iso_arr  = np.asarray(_iso_ids, dtype=str)
+    _gene_arr = np.asarray(_g_ids,   dtype=str)
+    _sm_arr   = np.asarray(_sm_mat,  dtype=float)
+
+    _scatter_rows = []
+    for _sg in _gene_sel:
+        _g_mask = np.char.upper(_gene_arr) == _sg.upper()
+        if not _g_mask.any():
+            continue
+        _g_sm     = _sm_arr[_g_mask]     # (n_iso, n_go)
+        _g_median = np.median(_g_sm, axis=0)  # (n_go,) — gene reference
+
+        _dtu_gene = _dtu_filt[_dtu_filt[_gc].astype(str).str.upper() == _sg.upper()]
+        for _, _row in _dtu_gene.iterrows():
+            _iso_name = str(_row[_ic])
+            _iso_idx  = np.where(_iso_arr == _iso_name)[0]
+            if not len(_iso_idx):
+                _iso_idx = np.where(np.char.upper(_iso_arr) == _iso_name.upper())[0]
+            if not len(_iso_idx):
+                continue
+            _delta_prism = float((_sm_arr[_iso_idx[0]] - _g_median).max())
+            _scatter_rows.append({
+                '유전자':     _sg,
+                '아이소폼':   _iso_name,
+                '조건':       str(_row[_cc]),
+                '|ΔIF|':      round(abs(float(_row[_dfc])), 3),
+                'max ΔPRISM': round(_delta_prism, 3),
+            })
+
+    if _scatter_rows:
+        _sdf = pd.DataFrame(_scatter_rows)
+        _fig_sc = px.scatter(
+            _sdf, x='|ΔIF|', y='max ΔPRISM',
+            color='유전자', symbol='조건',
+            hover_data=['아이소폼', '조건', '유전자'],
+            title="DTU 강도 vs PRISM 기능 변화 (유전자 내 중앙값 기준)",
+            height=460,
+        )
+        _fig_sc.add_hline(y=0,   line_dash='dash', line_color='#94a3b8', line_width=1)
+        _fig_sc.add_vline(x=0.1, line_dash='dash', line_color='#94a3b8', line_width=1,
+                          annotation_text="|ΔIF|=0.1", annotation_font_size=11)
+        _fig_sc.update_layout(plot_bgcolor='white')
+        st.plotly_chart(_fig_sc, use_container_width=True, key='mdtu_prism_scatter')
+
+        from scipy.stats import spearmanr as _spearmanr
+        _r, _p = _spearmanr(_sdf['|ΔIF|'], _sdf['max ΔPRISM'])
+        _n_pts  = len(_sdf)
+        _q1 = (_sdf['|ΔIF|'] >= 0.1) & (_sdf['max ΔPRISM'] > 0)
+        st.caption(
+            f"Spearman r = **{_r:.3f}** (p = {_p:.2e}, n = {_n_pts:,}) · "
+            f"우상단 고신뢰 케이스: {int(_q1.sum())}개 "
+            f"(|ΔIF| ≥ 0.1 ∩ ΔPRISM > 0)"
+        )
+    else:
+        st.info("선택된 유전자의 DTU 아이소폼과 PRISM 데이터 간 매칭 결과 없음 "
+                "(아이소폼 ID 형식이 다를 수 있음)")
 
 # Per-gene isoform breakdown (if isoform column exists)
 if _ic:

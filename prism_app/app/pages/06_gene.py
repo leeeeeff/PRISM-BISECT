@@ -272,6 +272,53 @@ with col_g:
 st.divider()
 
 # ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1.5: Functional Spread (max_delta)
+# 유전자 내 아이소폼 간 GO score 최대 차 — PRISM isoform-level 기여 수치화
+# cosine similarity 기반 FDI와 달리 magnitude 차이를 직접 포착
+# ══════════════════════════════════════════════════════════════════════════════
+if _n_iso >= 2 and go_terms:
+    _per_go_delta = _hit_sm.max(axis=0) - _hit_sm.min(axis=0)  # (n_go,)
+    _max_delta    = float(_per_go_delta.max())
+    _argmax_go    = int(np.argmax(_per_go_delta))
+    _max_go_name  = (gnames.get(go_terms[_argmax_go], go_terms[_argmax_go])[:42]
+                     if _argmax_go < len(go_terms) else '—')
+
+    if _max_delta >= 0.3:
+        _fd_color, _fd_label = '#16a34a', '기능 분기 유의 ↑'
+    elif _max_delta >= 0.1:
+        _fd_color, _fd_label = '#d97706', '기능 분기 중간'
+    else:
+        _fd_color, _fd_label = '#94a3b8', '기능 분기 낮음'
+
+    _fd1, _fd2 = st.columns([1, 2])
+    with _fd1:
+        st.markdown(
+            f"<div style='border:1px solid {_fd_color};border-radius:8px;"
+            f"padding:12px 16px;background:{_fd_color}18'>"
+            f"<div style='color:{_fd_color};font-size:0.72rem;font-weight:600;"
+            f"letter-spacing:0.05em'>FUNCTIONAL SPREAD</div>"
+            f"<div style='font-size:2rem;font-weight:700;color:{_fd_color};line-height:1.1'>"
+            f"{_max_delta:.3f}</div>"
+            f"<div style='font-size:0.8rem;color:#64748b;margin-top:2px'>{_fd_label}</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+    with _fd2:
+        st.markdown(
+            f"<div style='padding:10px 0 4px'>"
+            f"<div style='font-size:0.78rem;color:#94a3b8'>최대 분기 GO term</div>"
+            f"<div style='font-size:0.97rem;font-weight:600;color:#1e293b;margin:2px 0'>"
+            f"{_max_go_name}</div>"
+            f"<div style='font-size:0.75rem;color:#94a3b8'>"
+            f"max(score_max − score_min) across {len(go_terms)} GO terms · "
+            f"{_n_iso}개 아이소폼 비교"
+            f"</div></div>",
+            unsafe_allow_html=True,
+        )
+
+    st.divider()
+
+# ══════════════════════════════════════════════════════════════════════════════
 # SECTION 2: Isoform Ranking
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("##### 아이소폼 랭킹 (max PRISM score 기준)")
@@ -321,6 +368,115 @@ with _ic2:
         st.plotly_chart(_fig_rank, use_container_width=True, key='gene_iso_rank')
     else:
         st.caption(f"{len(_iso_df)}개 아이소폼 — 차트는 30개 이하 유전자만 표시")
+
+st.divider()
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 3: Cell-type Concordance (8 cell types × AD/CT DTU)
+# ══════════════════════════════════════════════════════════════════════════════
+@st.cache_data(show_spinner=False)
+def _load_diu_all_celltypes() -> 'pd.DataFrame | None':
+    """Load 8 cell-type DIU CSVs and concatenate with cell_type label."""
+    _diu_dir = Path('/home/dhkim1674/Project_AD_with_refTSS_novel/06_DIU')
+    _cell_types = [
+        'Excitatory_neuron', 'Inhibitory_neuron', 'Astrocyte', 'Microglia',
+        'Oligodendrocyte', 'OPC', 'Vascular_cell', 'Lymphocyte',
+    ]
+    _frames = []
+    for _ct in _cell_types:
+        _fp = _diu_dir / f'DIU_by_condition_{_ct}.csv'
+        if _fp.exists():
+            try:
+                _df = pd.read_csv(_fp)
+                _df['cell_type'] = _ct.replace('_', ' ')
+                _frames.append(_df)
+            except Exception:
+                pass
+    return pd.concat(_frames, ignore_index=True) if _frames else None
+
+_diu_all = _load_diu_all_celltypes()
+
+with st.expander("🔬 세포유형별 DTU 일관성 (Cell-type Concordance)", expanded=False):
+    if _diu_all is None:
+        st.info("세포유형별 DIU 데이터에 접근할 수 없습니다 (내부 분석 환경 전용).")
+    else:
+        _gene_diu = _diu_all[_diu_all['gene_name'].str.upper() == _gene_name.upper()].copy()
+        if _gene_diu.empty:
+            st.caption(f"{_gene_name}의 세포유형별 DTU 이벤트 없음")
+        else:
+            # Pivot: rows = isoform, cols = cell_type, values = delta_usage
+            _sig_mask = _gene_diu['chi_significant'] == True
+            _pivot_du = (
+                _gene_diu[_sig_mask]
+                .pivot_table(index='transcript_name', columns='cell_type',
+                             values='delta_usage', aggfunc='first')
+                .fillna(0)
+            )
+            _cell_order = [c for c in
+                ['Excitatory neuron', 'Inhibitory neuron', 'Astrocyte', 'Microglia',
+                 'Oligodendrocyte', 'OPC', 'Vascular cell', 'Lymphocyte']
+                if c in _pivot_du.columns]
+            _pivot_du = _pivot_du[[c for c in _cell_order if c in _pivot_du.columns]]
+
+            if not _pivot_du.empty:
+                # Concordance score: fraction of significant cell types with same direction
+                _concord = {}
+                for _iso in _pivot_du.index:
+                    _vals = _pivot_du.loc[_iso]
+                    _nonzero = _vals[_vals != 0]
+                    if len(_nonzero) >= 2:
+                        _pos = int((_nonzero > 0).sum())
+                        _neg = int((_nonzero < 0).sum())
+                        _dom = max(_pos, _neg) / len(_nonzero)
+                        _concord[_iso] = round(_dom, 2)
+                    elif len(_nonzero) == 1:
+                        _concord[_iso] = 1.0
+                    else:
+                        _concord[_iso] = 0.0
+
+                # Summary text
+                _ad_iso = _gene_diu[_sig_mask & (_gene_diu['usage_direction'].str.contains('AD', na=False))]
+                _n_ad_ct = _ad_iso['cell_type'].nunique()
+                st.caption(
+                    f"**{_gene_name}**: {len(_pivot_du)}개 아이소폼 · "
+                    f"AD-enriched 이벤트 {len(_ad_iso)}건 ({_n_ad_ct}개 세포유형)"
+                )
+
+                # Heatmap
+                _fig_ct = px.imshow(
+                    _pivot_du,
+                    color_continuous_scale='RdBu_r',
+                    color_continuous_midpoint=0,
+                    zmin=-0.5, zmax=0.5,
+                    title=f"{_gene_name} — 세포유형별 ΔUTF (유의한 이벤트만)",
+                    labels={'color': 'delta_usage'},
+                    aspect='auto',
+                    height=max(280, 45 * len(_pivot_du) + 80),
+                )
+                _fig_ct.update_layout(
+                    xaxis_tickangle=-30,
+                    coloraxis_colorbar=dict(title='ΔIF', len=0.6),
+                )
+                st.plotly_chart(_fig_ct, use_container_width=True, key='gene_ct_heatmap')
+
+                # Concordance table
+                _conc_df = pd.DataFrame([
+                    {'아이소폼': k,
+                     'Concordance': v,
+                     'N 세포유형': int((_pivot_du.loc[k] != 0).sum())}
+                    for k, v in _concord.items()
+                ]).sort_values('Concordance', ascending=False).reset_index(drop=True)
+                st.dataframe(
+                    _conc_df.style.background_gradient(subset=['Concordance'],
+                                                        cmap='Greens', vmin=0, vmax=1),
+                    use_container_width=True, hide_index=True, height=200,
+                )
+                st.caption(
+                    "Concordance = 유의한 세포유형 중 같은 방향(AD-enriched 또는 CT-enriched)의 비율. "
+                    "1.0 = 모든 세포유형에서 일관된 방향."
+                )
+            else:
+                st.caption("유의한 DTU 이벤트 없음 (chi_significant = True 조건 없음)")
 
 st.divider()
 
