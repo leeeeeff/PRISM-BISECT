@@ -136,9 +136,31 @@ def render_sidebar() -> dict:
         search_gene='',
     )
 
-    # ── Demo mode: load bundled data ──────────────────────────────────────
+    # ── Demo mode: Apply button + session-state caching ──────────────────
     if mode_key == 'demo':
-        cfg.update(_load_demo_data(tissue_key, go_terms))
+        _prev    = st.session_state.get('_applied_data', {})
+        _changed = (_prev.get('tissue') != tissue_key or
+                    _prev.get('mode')   != 'demo'      or
+                    _prev.get('score_matrix') is None)
+
+        _btn_label = "▶ 적용" if _changed else "✅ 적용됨  (재적용)"
+        _btn_type  = "primary" if _changed else "secondary"
+
+        if st.sidebar.button(_btn_label, type=_btn_type,
+                             use_container_width=True, key='apply_demo'):
+            raw = _load_demo_data(tissue_key, go_terms)
+            if raw.get('score_matrix') is not None:
+                st.session_state['_applied_data'] = {
+                    **raw, 'tissue': tissue_key, 'mode': 'demo',
+                }
+                st.session_state['_data_just_loaded'] = True
+                st.session_state.pop('classified_df',    None)
+                st.session_state.pop('_clf_fingerprint', None)
+
+        _applied = st.session_state.get('_applied_data', {})
+        if _applied.get('score_matrix') is not None:
+            cfg.update({k: v for k, v in _applied.items() if k in cfg})
+
         _render_demo_context(tissue_key)
 
     # ── Upload mode ───────────────────────────────────────────────────────
