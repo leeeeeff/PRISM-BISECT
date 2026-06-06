@@ -103,6 +103,53 @@ BRAIN_EXTENDED = {
     'GO:0001508': 'Action potential',
 }
 
+# ── Brain 41-term expanded panel (18 muscle + 23 brain-specific) ────────────
+# Column order matches brain_full_expanded_41_scores.npy (meta.json go_ids order)
+BRAIN_41 = {
+    'GO:0007204': 'Ca2+-mediated signaling',
+    'GO:0045214': 'Sarcomere organization',
+    'GO:0006941': 'Striated muscle contraction',
+    'GO:0006914': 'Autophagy',
+    'GO:0043161': 'Proteasome-mediated UPS',
+    'GO:0007519': 'Skeletal muscle tissue development',
+    'GO:0042692': 'Muscle cell differentiation',
+    'GO:0055074': 'Calcium ion homeostasis',
+    'GO:0007005': 'Mitochondrial organization',
+    'GO:0007517': 'Muscle organ development',
+    'GO:0032006': 'Regulation of TOR signaling',
+    'GO:0030048': 'Actin filament-based movement',
+    'GO:0006096': 'Glycolytic process',
+    'GO:0007268': 'Chemical synaptic transmission',
+    'GO:0007018': 'Microtubule-based movement',
+    'GO:0031175': 'Neuron projection development',
+    'GO:0030182': 'Neuron differentiation',
+    'GO:0000226': 'Microtubule cytoskeleton organization',
+    # 23 additional brain terms
+    'GO:0007156': 'Homophilic cell-cell adhesion',
+    'GO:0006813': 'Potassium ion transport',
+    'GO:0055085': 'Transmembrane transport',
+    'GO:0006812': 'Monoatomic cation transport',
+    'GO:0006820': 'Monoatomic anion transport',
+    'GO:0006468': 'Protein phosphorylation',
+    'GO:0016311': 'Dephosphorylation',
+    'GO:0043408': 'Regulation of MAPK cascade',
+    'GO:0007186': 'G protein-coupled receptor signaling pathway',
+    'GO:0006357': 'Regulation of transcription by RNA Pol II',
+    'GO:0016567': 'Protein ubiquitination',
+    'GO:0006511': 'Ubiquitin-dependent protein catabolic process',
+    'GO:0006508': 'Proteolysis',
+    'GO:0000398': 'mRNA splicing, via spliceosome',
+    'GO:0006397': 'mRNA processing',
+    'GO:0032543': 'Mitochondrial translation',
+    'GO:0045664': 'Regulation of neuron differentiation',
+    'GO:0006836': 'Neurotransmitter transport',
+    'GO:0007411': 'Axon guidance',
+    'GO:0007155': 'Cell adhesion',
+    'GO:0006913': 'Nucleocytoplasmic transport',
+    'GO:0006753': 'Nucleoside phosphate metabolic process',
+    'GO:0016071': 'mRNA metabolic process',
+}
+
 # ── Brain 672-term preset (loaded dynamically from JSON) ────────────────────
 def _load_brain672() -> Dict[str, str]:
     import json
@@ -127,12 +174,13 @@ TISSUE_PRESETS: Dict[str, Dict[str, str]] = {
     'muscle':         MUSCLE_18,
     'brain':          MUSCLE_18,
     'muscle_only':    MUSCLE_18,
+    'brain_41':       BRAIN_41,
     'brain_extended': BRAIN_EXTENDED,
     'brain_672':      BRAIN_672,
 }
 
 # ── Full name mapping (union of all known terms) ────────────────────────────
-GO_FULL_NAMES: Dict[str, str] = {**MUSCLE_18, **BRAIN_EXTENDED, **BRAIN_672}
+GO_FULL_NAMES: Dict[str, str] = {**MUSCLE_18, **BRAIN_41, **BRAIN_EXTENDED, **BRAIN_672}
 
 
 def load_go_names(extra_csv: Optional[str] = None) -> Dict[str, str]:

@@ -25,11 +25,12 @@ def _init_session_state() -> None:
 DEMO_DIR = Path(__file__).parents[2] / 'data' / 'demo'
 
 _TISSUE_OPTIONS = {
-    'Skeletal Muscle (18 GO terms)':                'muscle',
-    'Brain — 18-term Panel (zero-shot)':            'brain',
-    'Brain — Extended Novel (73 GO terms)':         'brain_extended',
-    'Brain — Full Module Landscape (672 GO terms)': 'brain_672',
-    'Muscle Training Terms Only':                   'muscle_only',
+    'Skeletal Muscle (18 GO terms)':                     'muscle',
+    'Brain — 18-term Panel (zero-shot)':                 'brain',
+    'Brain — 41-term Panel (AUPRC 0.672, zero-shot)':   'brain_41',
+    'Brain — Extended Novel (73 GO terms)':              'brain_extended',
+    'Brain — Full Module Landscape (672 GO terms)':      'brain_672',
+    'Muscle Training Terms Only':                        'muscle_only',
 }
 
 
@@ -284,6 +285,7 @@ def _render_demo_context(tissue: str) -> None:
     info = {
         'muscle':         ("근골격근", "36,748", "18", False),
         'brain':          ("뇌 (zero-shot)", "63,994", "18", True),
+        'brain_41':       ("뇌 41-term (zero-shot, AUPRC 0.672)", "63,994", "41", True),
         'brain_extended': ("뇌 전체 확장", "63,994", "73", True),
         'brain_672':      ("뇌 전체 모듈 (672 BP GO)", "63,994", "672", True),
         'muscle_only':    ("근골격근", "36,748", "18", False),
@@ -340,11 +342,12 @@ def _render_upload_context(cfg: dict) -> None:
 def _load_demo_data(tissue: str, go_terms: list) -> dict:
     """Load pre-computed demo data; cached per session."""
     files = {
-        'muscle':         ('muscle_scores.npy',              'muscle_ids.npy',              'muscle_types.npy',              'muscle_gene_ids.npy'),
-        'brain':          ('brain_full_scores.npy',           'brain_full_ids.npy',          'brain_full_types.npy',          'brain_full_gene_ids.npy'),
-        'brain_extended': ('brain_full_extended_scores.npy',  'brain_full_extended_ids.npy', 'brain_full_extended_types.npy', 'brain_full_extended_gene_ids.npy'),
-        'brain_672':      ('brain_full_672_scores.npy',       'brain_full_672_ids.npy',      'brain_full_672_types.npy',      'brain_full_672_gene_ids.npy'),
-        'muscle_only':    ('muscle_scores.npy',              'muscle_ids.npy',              'muscle_types.npy',              'muscle_gene_ids.npy'),
+        'muscle':         ('muscle_scores.npy',                      'muscle_ids.npy',                      'muscle_types.npy',                      'muscle_gene_ids.npy'),
+        'brain':          ('brain_full_scores.npy',                  'brain_full_ids.npy',                  'brain_full_types.npy',                  'brain_full_gene_ids.npy'),
+        'brain_41':       ('brain_full_expanded_41_scores.npy',      'brain_full_expanded_41_ids.npy',      'brain_full_expanded_41_types.npy',      'brain_full_expanded_41_gene_ids.npy'),
+        'brain_extended': ('brain_full_extended_scores.npy',         'brain_full_extended_ids.npy',         'brain_full_extended_types.npy',         'brain_full_extended_gene_ids.npy'),
+        'brain_672':      ('brain_full_672_scores.npy',              'brain_full_672_ids.npy',              'brain_full_672_types.npy',              'brain_full_672_gene_ids.npy'),
+        'muscle_only':    ('muscle_scores.npy',                      'muscle_ids.npy',                      'muscle_types.npy',                      'muscle_gene_ids.npy'),
     }
     score_f, id_f, type_f, gene_f = files.get(tissue, files['muscle'])
 
@@ -390,6 +393,7 @@ def _load_demo_dtu(tissue: str) -> Optional[pd.DataFrame]:
     """Load bundled DTU results for demo tissues that have one."""
     _DTU_FILES = {
         'brain':          'brain_dtu.tsv',
+        'brain_41':       'brain_dtu.tsv',
         'brain_extended': 'brain_dtu.tsv',
         'brain_672':      'brain_dtu.tsv',
     }
