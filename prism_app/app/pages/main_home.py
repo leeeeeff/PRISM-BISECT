@@ -11,6 +11,16 @@ import streamlit.components.v1 as components
 cfg = st.session_state.get('cfg') or {}
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ENTRY GATE — hero splash until user clicks CTA
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+_qp = st.query_params
+if _qp.get('entered'):
+    st.session_state['app_entered'] = True
+    st.session_state['_hero_mode'] = _qp.get('entered', 'demo')
+    st.query_params.clear()
+    st.rerun()
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # HERO — embedded via st.components (GSAP-style, iframe-optimized)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 _HERO_HTML = """<!DOCTYPE html>
@@ -203,17 +213,36 @@ window.addEventListener('scroll', () => {
 
 // ── CTA buttons ───────────────────────────────────────────────────────────
 document.getElementById('btn-demo').addEventListener('click', () => {
-  try { window.parent.location.href = '/?mode=demo&autostart=1'; }
-  catch(e) { window.location.href = '/?mode=demo&autostart=1'; }
+  try { window.parent.location.href = '?entered=demo'; }
+  catch(e) { window.location.href = '?entered=demo'; }
 });
 document.getElementById('btn-upload').addEventListener('click', () => {
-  try { window.parent.location.href = '/?mode=upload'; }
-  catch(e) { window.location.href = '/?mode=upload'; }
+  try { window.parent.location.href = '?entered=upload'; }
+  catch(e) { window.location.href = '?entered=upload'; }
 });
 </script>
 </body>
 </html>"""
 
+if not st.session_state.get('app_entered'):
+    # ── Fullscreen hero mode: hide Streamlit chrome ────────────────────────
+    st.markdown("""<style>
+    [data-testid="stSidebar"]        { display: none !important; }
+    [data-testid="collapsedControl"] { display: none !important; }
+    header[data-testid="stHeader"]   { display: none !important; }
+    #MainMenu                        { display: none !important; }
+    footer                           { display: none !important; }
+    .main .block-container {
+        padding-top: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+    }
+    </style>""", unsafe_allow_html=True)
+    components.html(_HERO_HTML, height=820, scrolling=True)
+    st.stop()
+
+# ── Normal app mode (after entering) ──────────────────────────────────────
 components.html(_HERO_HTML, height=560, scrolling=True)
 st.caption("☝️ 스크롤해서 스토리를 확인하고, 사이드바에서 데이터를 선택하세요.")
 
