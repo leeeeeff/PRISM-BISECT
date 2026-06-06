@@ -6,100 +6,218 @@ if _root not in sys.path:
     sys.path.insert(0, _root)
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 cfg = st.session_state.get('cfg') or {}
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# HERO
+# HERO — embedded via st.components (GSAP-style, iframe-optimized)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-st.markdown("""
-<div style='
-    background: linear-gradient(135deg, #0a1f35 0%, #0f2942 40%, #0d3a5c 70%, #0f4c75 100%);
-    border-radius: 18px;
-    padding: 56px 64px 48px;
-    margin-bottom: 4px;
-    position: relative;
-    overflow: hidden;
-'>
-  <div style='position:absolute;top:-80px;right:-80px;width:380px;height:380px;
-    background:radial-gradient(circle,rgba(45,212,191,0.12) 0%,transparent 65%);
-    border-radius:50%;pointer-events:none'></div>
-  <div style='position:absolute;bottom:-60px;left:180px;width:260px;height:260px;
-    background:radial-gradient(circle,rgba(56,189,248,0.08) 0%,transparent 65%);
-    border-radius:50%;pointer-events:none'></div>
+_HERO_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#000;--white:#fff;--off-white:#f5f5f7;--near-black:#1d1d1f;
+  --muted-dark:rgba(255,255,255,0.45);--muted-light:rgba(29,29,31,0.45);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  background:var(--black);color:var(--white);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background-color 0.8s ease,color 0.8s ease;
+}
+body.light{background:var(--off-white);color:var(--near-black)}
 
-  <div style='font-size:0.8rem;letter-spacing:0.12em;color:#7dd3fc;
-    text-transform:uppercase;font-weight:600;margin-bottom:14px'>
-    Nature Machine Intelligence · in review
+/* Scenes */
+.scene{width:100%;height:100vh;display:flex;align-items:center;
+  justify-content:center;position:relative}
+.scene-inner{width:100%;height:100%;display:flex;align-items:center;
+  justify-content:center;padding:0 max(32px,8vw)}
+.text-block{display:flex;flex-direction:column;gap:clamp(6px,1vw,12px);
+  text-align:center;max-width:860px;width:100%}
+
+/* Typography */
+.wordmark{font-size:clamp(60px,11vw,128px);font-weight:600;letter-spacing:-0.04em;
+  line-height:1;opacity:0;animation:rise 1.1s var(--ease) 0.1s forwards}
+.tagline{font-size:clamp(15px,1.8vw,22px);font-weight:300;
+  color:var(--muted-dark);margin-top:clamp(12px,1.8vw,20px);
+  opacity:0;animation:rise 1.1s var(--ease) 0.38s forwards}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.headline{font-size:clamp(32px,6vw,76px);font-weight:600;letter-spacing:-0.03em;
+  line-height:1.06;opacity:0;transform:translateY(22px);
+  transition:opacity 0.65s var(--ease),transform 0.65s var(--ease)}
+.headline.massive{font-size:clamp(56px,11vw,136px);letter-spacing:-0.04em}
+.headline:nth-child(2){transition-delay:0.18s}
+.subline{font-size:clamp(14px,1.4vw,18px);font-weight:300;line-height:1.6;
+  color:var(--muted-dark);margin-top:clamp(16px,2.2vw,28px);
+  opacity:0;transform:translateY(12px);
+  transition:opacity 0.65s var(--ease) 0.35s,transform 0.65s var(--ease) 0.35s}
+.subline.light{color:var(--muted-light)}
+.visible .headline,.visible .subline{opacity:1;transform:translateY(0)}
+
+/* CTA */
+.cta-block{display:flex;flex-direction:column;align-items:center;
+  text-align:center;gap:0}
+.cta-headline{font-size:clamp(30px,5vw,60px);font-weight:600;letter-spacing:-0.03em;
+  line-height:1.05;color:var(--near-black);
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.7s var(--ease),transform 0.7s var(--ease)}
+.cta-buttons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+  margin-top:clamp(32px,4vw,52px);
+  opacity:0;transform:translateY(16px);
+  transition:opacity 0.7s var(--ease) 0.2s,transform 0.7s var(--ease) 0.2s}
+.cta-caption{margin-top:32px;font-size:11px;letter-spacing:0.04em;
+  color:var(--muted-light);
+  opacity:0;transition:opacity 0.7s ease 0.42s}
+.visible .cta-headline,.visible .cta-buttons,.visible .cta-caption{
+  opacity:1;transform:translateY(0)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;
+  height:48px;padding:0 28px;border-radius:100px;font-family:inherit;
+  font-size:15px;font-weight:500;letter-spacing:0.01em;
+  border:none;cursor:pointer;
+  transition:transform 0.18s var(--ease),opacity 0.18s}
+.btn:hover{transform:scale(1.025)}
+.btn:active{transform:scale(0.975);opacity:0.85}
+.btn-dark{background:var(--near-black);color:var(--white)}
+.btn-outline{background:transparent;color:var(--near-black);
+  border:1.5px solid rgba(29,29,31,0.35)}
+.btn-outline:hover{border-color:var(--near-black)}
+
+/* Scroll hint */
+.scroll-hint{position:absolute;bottom:40px;left:50%;
+  transform:translateX(-50%);color:rgba(255,255,255,0.3);
+  opacity:0;animation:sfade 1s ease 1.5s both,bob 2.2s ease-in-out 1.5s infinite;
+  transition:opacity 0.4s}
+.scroll-hint.gone{opacity:0!important;animation:none}
+@keyframes sfade{from{opacity:0}to{opacity:1}}
+@keyframes bob{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(6px)}}
+
+@media(max-width:600px){
+  .cta-buttons{flex-direction:column;align-items:stretch}
+  .btn{width:100%;height:52px}}
+</style>
+</head>
+<body>
+
+<section class="scene" id="s1">
+  <div class="scene-inner" style="flex-direction:column;gap:0">
+    <h1 class="wordmark">PRISM</h1>
+    <p class="tagline">Isoform function. Decoded.</p>
   </div>
-
-  <div style='font-size:3rem;font-weight:800;color:#ffffff;
-    letter-spacing:-1px;line-height:1.15;margin-bottom:10px'>
-    🧬 PRISM <span style='color:#2dd4bf'>+</span> BISECT
+  <div class="scroll-hint" id="scroll-hint">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+         stroke="currentColor" stroke-width="1.5">
+      <path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
+</section>
 
-  <div style='font-size:1.15rem;color:rgba(255,255,255,0.7);
-    max-width:620px;line-height:1.7;margin-bottom:40px'>
-    롱리드 싱글셀 데이터의 수만 개 아이소폼에 대해<br>
-    <b style='color:#93c5fd'>GO 기능 예측</b>과 <b style='color:#93c5fd'>기능 스위치 분류</b>를
-    수행하는 딥러닝 분석 플랫폼
-  </div>
+<section class="scene" id="s2">
+  <div class="scene-inner"><div class="text-block">
+    <h2 class="headline">One gene.</h2>
+    <h2 class="headline">Many proteins.</h2>
+    <p class="subline">That's alternative splicing.</p>
+  </div></div>
+</section>
 
-  <div style='display:flex;gap:52px;flex-wrap:wrap;margin-bottom:40px'>
-    <div>
-      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>0.7022</div>
-      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
-        Macro AUPRC<br><span style='color:#86efac'>근육 GO 18-term 예측</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
-    <div>
-      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>0.672</div>
-      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
-        Zero-shot 뇌 전이<br><span style='color:#86efac'>41-term panel, 추가 학습 없이</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
-    <div>
-      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>45×</div>
-      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
-        도메인 DB 대비 성능<br><span style='color:#86efac'>domain-LR 0.0156 vs PRISM 0.7022</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
-    <div>
-      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>541</div>
-      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
-        Novel 아이소폼 기능 발견<br><span style='color:#86efac'>기존 주석 없는 전사체</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
-    <div>
-      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>83</div>
-      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
-        BISECT 케이스<br><span style='color:#86efac'>26 DTU검증 + 57 SRA단일조건</span>
-      </div>
-    </div>
-  </div>
+<section class="scene" id="s3">
+  <div class="scene-inner"><div class="text-block">
+    <h2 class="headline">Each isoform</h2>
+    <h2 class="headline">carries a different function.</h2>
+  </div></div>
+</section>
 
-  <div style='display:flex;gap:12px;flex-wrap:wrap'>
-    <div style='background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.35);
-      border-radius:8px;padding:8px 18px;font-size:0.85rem;color:#2dd4bf;font-weight:600'>
-      ✦ ESM-2 단백질 언어 모델
-    </div>
-    <div style='background:rgba(147,197,253,0.12);border:1px solid rgba(147,197,253,0.3);
-      border-radius:8px;padding:8px 18px;font-size:0.85rem;color:#93c5fd;font-weight:600'>
-      ✦ 672 GO BP terms · 44 기능 모듈
-    </div>
-    <div style='background:rgba(134,239,172,0.12);border:1px solid rgba(134,239,172,0.3);
-      border-radius:8px;padding:8px 18px;font-size:0.85rem;color:#86efac;font-weight:600'>
-      ✦ 63,994 뇌 아이소폼 제로샷 분석
+<section class="scene" id="s4">
+  <div class="scene-inner"><div class="text-block">
+    <h2 class="headline">Under disease,</h2>
+    <h2 class="headline">a different isoform takes over.</h2>
+    <p class="subline">The function changes. Completely.</p>
+  </div></div>
+</section>
+
+<section class="scene" id="s5">
+  <div class="scene-inner"><div class="text-block">
+    <h2 class="headline">No existing tool</h2>
+    <h2 class="headline">could see the difference.</h2>
+  </div></div>
+</section>
+
+<section class="scene" id="s6">
+  <div class="scene-inner"><div class="text-block">
+    <h2 class="headline massive">PRISM can.</h2>
+    <p class="subline light">Sequence-based. 672 GO terms.<br>Zero-shot transfer.</p>
+  </div></div>
+</section>
+
+<section class="scene" id="s7">
+  <div class="scene-inner">
+    <div class="cta-block">
+      <p class="cta-headline">Explore isoform function.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-dark" id="btn-demo">Explore demo data</button>
+        <button class="btn btn-outline" id="btn-upload">Upload your data</button>
+      </div>
+      <p class="cta-caption">PRISM + BISECT &nbsp;·&nbsp; Lee et al. (2026) &nbsp;·&nbsp; Nature Machine Intelligence</p>
     </div>
   </div>
-</div>
-""", unsafe_allow_html=True)
+</section>
 
-st.markdown("<div style='height:6px'></div>", unsafe_allow_html=True)
+<script>
+// ── IntersectionObserver: reveal scenes on scroll ─────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.45 });
+document.querySelectorAll('#s2,#s3,#s4,#s5,#s6,#s7').forEach(s => io.observe(s));
+
+// ── Background: dark → light when s6 appears ─────────────────────────────
+const bgObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.body.classList.add('light');
+    } else if (e.boundingClientRect.top > 0) {
+      document.body.classList.remove('light');
+    }
+  });
+}, { threshold: 0.15 });
+bgObs.observe(document.getElementById('s6'));
+
+// ── Scroll hint fade ──────────────────────────────────────────────────────
+let gone = false;
+window.addEventListener('scroll', () => {
+  if (!gone && window.scrollY > 50) {
+    document.getElementById('scroll-hint').classList.add('gone');
+    gone = true;
+  }
+}, { passive: true });
+
+// ── CTA buttons ───────────────────────────────────────────────────────────
+document.getElementById('btn-demo').addEventListener('click', () => {
+  try { window.parent.location.href = '/?mode=demo&autostart=1'; }
+  catch(e) { window.location.href = '/?mode=demo&autostart=1'; }
+});
+document.getElementById('btn-upload').addEventListener('click', () => {
+  try { window.parent.location.href = '/?mode=upload'; }
+  catch(e) { window.location.href = '/?mode=upload'; }
+});
+</script>
+</body>
+</html>"""
+
+components.html(_HERO_HTML, height=560, scrolling=True)
+st.caption("☝️ 스크롤해서 스토리를 확인하고, 사이드바에서 데이터를 선택하세요.")
+
+st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # WHAT THIS TOOL DOES
