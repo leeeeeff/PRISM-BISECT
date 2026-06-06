@@ -1,8 +1,8 @@
-"""PRISM Interactive Analysis Tool — Streamlit entry point.
+"""PRISM+BISECT — application entry point.
 
 Run with:
-    ./run_app.sh          (로컬, UMAP 정상)
-    streamlit run prism_app/app/main.py   (Community Cloud)
+    ./run_app.sh
+    streamlit run prism_app/app/main.py
 """
 import sys
 from pathlib import Path
@@ -27,609 +27,209 @@ st.set_page_config(
     },
 )
 
+
+def _precompute(cfg: dict) -> None:
+    """Run all analyses up-front after data is applied.
+
+    Shows st.status() in the main area so the user sees real-time progress.
+    Results are stored in session_state so every page can access them
+    without re-computing per-page.
+    """
+    from prism_app.core.classifier import classify_isoforms
+
+    sm = cfg.get('score_matrix')
+    if sm is None:
+        return
+
+    n_iso, n_go = sm.shape
+    tissue_label = cfg.get('tissue', '데이터').replace('_', ' ')
+
+    with st.status(f"📊 **{tissue_label}** 분석 데이터 준비 중…", expanded=True) as _sts:
+
+        # Step 1: isoform classification
+        st.write(f"🧬 아이소폼 분류 계산 중… ({n_iso:,}개 × {n_go} GO term)")
+        try:
+            classified = classify_isoforms(
+                sm,
+                cfg['isoform_ids'],
+                gene_ids=cfg.get('gene_ids'),
+                go_terms=cfg['go_terms'],
+                dtu_df=cfg.get('dtu_df'),
+                score_threshold=cfg['score_threshold'],
+            )
+            st.session_state['classified_df'] = classified
+            n_s1 = int((classified['scenario'] == 1).sum()) if 'scenario' in classified.columns else 0
+            st.write(f"  ✅ {len(classified):,}개 분류 완료 (S1 고신뢰: {n_s1:,}개)")
+        except Exception as _e:
+            st.write(f"  ⚠️ 분류 오류: {_e}")
+
+        # Step 2: gene-level score summary (fast lookup for 06_gene.py)
+        gene_ids = cfg.get('gene_ids')
+        if gene_ids is not None:
+            st.write("📊 유전자 스코어 요약 계산 중…")
+            try:
+                _g2idx: dict = {}
+                for _i, (_iso, _gene) in enumerate(zip(cfg['isoform_ids'], gene_ids)):
+                    _g2idx.setdefault(str(_gene), []).append(_i)
+                _cache = {}
+                for _gene, _idxs in _g2idx.items():
+                    _rows = sm[_idxs, :]
+                    _cache[_gene] = {
+                        'max_score': float(_rows.max()),
+                        'mean_score': float(_rows.mean()),
+                        'n_isoforms': len(_idxs),
+                        'isoform_list': [str(cfg['isoform_ids'][_i]) for _i in _idxs],
+                    }
+                st.session_state['gene_score_cache'] = _cache
+                st.write(f"  ✅ {len(_cache):,}개 유전자 요약 완료")
+            except Exception as _e:
+                st.write(f"  ⚠️ 유전자 요약 오류: {_e}")
+
+        # Step 3: UMAP embedding
+        st.write("🗺️ UMAP 임베딩 계산 중…")
+        try:
+            from prism_app.visualization.umap_plot import compute_umap_coords
+            from pathlib import Path as _Path
+            _DEMO = _Path(__file__).parents[1] / 'data' / 'demo'
+            _MAX_UMAP = 15_000
+            _coords_p  = _DEMO / 'umap_coords.npy'
+            _samp_p    = _DEMO / 'umap_sample_idx.npy'
+            _tissue    = cfg.get('tissue', '')
+            if _coords_p.exists() and _samp_p.exists() and _tissue == 'brain_672':
+                import numpy as _np
+                _coords   = _np.load(_coords_p)
+                _samp_idx = _np.load(_samp_p)
+                _method   = 'UMAP'
+                st.write(f"  ✅ 사전 계산 UMAP 로드 완료 ({len(_samp_idx):,}개 샘플)")
+            else:
+                import numpy as _np
+                _n_total = sm.shape[0]
+                _rng = _np.random.default_rng(42)
+                if _n_total > _MAX_UMAP:
+                    _samp_idx = _np.sort(_rng.choice(_n_total, _MAX_UMAP, replace=False))
+                else:
+                    _samp_idx = _np.arange(_n_total)
+                _coords, _method = compute_umap_coords(
+                    sm[_samp_idx].astype(_np.float32), random_state=42
+                )
+                st.write(f"  ✅ UMAP 계산 완료 ({len(_samp_idx):,}개, 방법: {_method})")
+            st.session_state['_precomp_umap'] = {
+                'coords': _coords, 'sample_idx': _samp_idx, 'method': _method,
+            }
+        except Exception as _e:
+            st.write(f"  ⚠️ UMAP 오류: {_e}")
+
+        # Step 4: DTU functional consequence (condition analysis)
+        # Skipped for large GO panels (≥100 terms) — O(n_dtu × n_go) makes it
+        # prohibitively slow at Apply time; @st.cache_data in 04_condition.py
+        # handles it lazily on first page visit instead.
+        dtu_df = cfg.get('dtu_df')
+        _n_go  = len(cfg.get('go_terms') or [])
+        if dtu_df is not None and _n_go < 100:
+            st.write("🔄 조건 분석 계산 중 (DTU × PRISM)…")
+            try:
+                from prism_app.pipeline.dtu_connector import compute_functional_consequence
+                import numpy as _np
+                _pval_thr  = 0.05
+                _delta_thr = 0.1
+                _score_thr = cfg.get('score_threshold', 0.4)
+                _conseq = compute_functional_consequence(
+                    dtu_df,
+                    sm.astype(_np.float32),
+                    _np.asarray(cfg['isoform_ids'], dtype=str),
+                    cfg['go_terms'],
+                    cfg['go_names'],
+                    score_threshold=_score_thr,
+                    dtu_pval_threshold=_pval_thr,
+                    delta_if_threshold=_delta_thr,
+                )
+                st.session_state['_precomp_conseq_df'] = {
+                    'df': _conseq,
+                    'pval_thr': _pval_thr,
+                    'delta_thr': _delta_thr,
+                    'score_thr': _score_thr,
+                }
+                st.write(f"  ✅ 조건 분석 완료 ({len(_conseq):,}개 이벤트)")
+            except Exception as _e:
+                st.write(f"  ⚠️ 조건 분석 오류: {_e}")
+        elif dtu_df is not None:
+            st.write(f"🔄 조건 분석: GO {_n_go}개 대규모 패널 — 첫 방문 시 자동 계산됩니다")
+
+        # Step 5: fingerprint so threshold changes re-trigger classification
+        st.session_state['_clf_fingerprint'] = (
+            f"{cfg.get('tissue', '')}_{cfg.get('score_threshold', 0.4)}"
+        )
+
+        _sts.update(label="✅ 분석 준비 완료 — 페이지를 선택하세요",
+                    state="complete", expanded=False)
+
+
 from prism_app.app.components.sidebar import render_sidebar
-from prism_app.app.components.interpretation import render_onboarding_guide, render_data_context_banner
 
 if 'cfg' not in st.session_state:
     st.session_state.cfg = None
 
+# ── Hero page autostart: ?mode=demo&autostart=1 ───────────────────────────────
+# When the user clicks "Explore demo data" on the hero landing page (port 8500),
+# they land here with these query params. We pre-load the default dataset so the
+# Apply button is bypassed and pre-computation starts immediately.
+_qp = st.query_params
+if _qp.get('autostart') == '1' and not st.session_state.get('_autostart_done'):
+    st.session_state['_autostart_done'] = True
+    _at_mode = _qp.get('mode', 'demo')
+    if _at_mode == 'demo' and not st.session_state.get('_applied_data'):
+        from prism_app.app.components.sidebar import _load_demo_data
+        from prism_app.core.go_utils import TISSUE_PRESETS
+        _at_tissue = 'brain_672'
+        _at_go     = list(TISSUE_PRESETS[_at_tissue].keys())
+        _at_raw    = _load_demo_data(_at_tissue, _at_go)
+        if _at_raw.get('score_matrix') is not None:
+            st.session_state['_applied_data'] = {
+                **_at_raw, 'tissue': _at_tissue, 'mode': 'demo',
+            }
+            st.session_state['_data_just_loaded'] = True
+            st.session_state.pop('classified_df', None)
+            st.session_state.pop('_clf_fingerprint', None)
+    st.query_params.clear()
+
 cfg = render_sidebar()
 st.session_state.cfg = cfg
 
-# ── CELLxGENE-style Hero (항상 표시) ─────────────────────────────────────────
-st.markdown("""
-<div style='
-    background: linear-gradient(135deg, #0f2942 0%, #1a4a6e 50%, #0f4c75 100%);
-    border-radius: 16px;
-    padding: 48px 56px 40px 56px;
-    margin-bottom: 8px;
-    position: relative;
-    overflow: hidden;
-'>
-  <!-- Background decoration -->
-  <div style='position:absolute;top:-60px;right:-60px;width:300px;height:300px;
-    background:radial-gradient(circle,rgba(42,157,143,0.15) 0%,transparent 70%);
-    border-radius:50%'></div>
-  <div style='position:absolute;bottom:-40px;left:200px;width:200px;height:200px;
-    background:radial-gradient(circle,rgba(56,189,248,0.1) 0%,transparent 70%);
-    border-radius:50%'></div>
+# When Apply button was just clicked (or autostart triggered):
+# run pre-computations with progress display, then rerun normally.
+if st.session_state.pop('_data_just_loaded', False):
+    _precompute(cfg)
+    st.rerun()
 
-  <!-- Title -->
-  <div style='font-size:2.6rem;font-weight:800;color:#ffffff;margin-bottom:8px;
-    letter-spacing:-0.5px;line-height:1.2'>
-    🧬 PRISM <span style='color:#2dd4bf'>+</span> BISECT
-  </div>
-
-  <!-- Subtitle -->
-  <div style='font-size:1.1rem;color:rgba(255,255,255,0.75);margin-bottom:36px;
-    max-width:600px;line-height:1.6'>
-    롱리드 싱글셀 아이소폼의 <b style='color:#7dd3fc'>GO 기능 예측</b>과
-    <b style='color:#7dd3fc'>기능 스위치 4-시나리오 분류</b>를 위한 인터랙티브 분석 플랫폼
-  </div>
-
-  <!-- Stats row -->
-  <div style='display:flex;gap:48px;flex-wrap:wrap'>
-    <div>
-      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>0.7022</div>
-      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
-        Macro AUPRC (근육)<br><span style='color:#86efac'>↑ +40% vs random</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.15)'></div>
-    <div>
-      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>0.5998</div>
-      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
-        Zero-shot 뇌 전이<br><span style='color:#86efac'>학습 없이 조직 전환</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.15)'></div>
-    <div>
-      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>541</div>
-      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
-        Novel 기능 발견 (뇌)<br><span style='color:#86efac'>기존 주석 없는 아이소폼</span>
-      </div>
-    </div>
-    <div style='width:1px;background:rgba(255,255,255,0.15)'></div>
-    <div>
-      <div style='font-size:2.4rem;font-weight:800;color:#2dd4bf;line-height:1'>84</div>
-      <div style='font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:4px'>
-        BISECT PASS cases<br><span style='color:#86efac'>15모듈 × 증거 등급화</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA hint -->
-  <div style='margin-top:28px;display:inline-block;background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.2);border-radius:8px;
-    padding:8px 20px;font-size:0.88rem;color:rgba(255,255,255,0.8)'>
-    👈 왼쪽 사이드바에서 <b>Demo</b> 또는 <b>Upload</b>를 선택하면 분석이 시작됩니다
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-
-# ── 분석 모듈 타일 (항상 표시) ────────────────────────────────────────────────
-st.subheader("분석 모듈")
-
-# Row 1
-row1 = st.columns(3)
-_TILES_R1 = [
-    ("#f0f9ff", "#0ea5e9", "📊", "Overview",
-     "기능 커버리지 · 시나리오 분류 · AUPRC 검증",
-     "#e0f2fe", "#0369a1", "Demo 제공"),
-    ("#f0fdf4", "#22c55e", "🗺️", "Functional Map",
-     "GO 기능 공간 UMAP · 타입별 히트맵 · 유전자 내 비교",
-     "#dcfce7", "#15803d", "Demo 제공"),
-    ("#fff7ed", "#f59e0b", "🔄", "Condition Analysis",
-     "DTU 연계 기능 GAIN/LOSS · GO Enrichment · Sankey",
-     "#fef3c7", "#b45309", "⚠️ DTU 파일 필요"),
-]
-for col, (bg, bd, icon, name, desc, bbg, bc, badge) in zip(row1, _TILES_R1):
-    col.markdown(
-        f"<div style='background:{bg};border:2px solid {bd};border-radius:12px;"
-        f"padding:18px 16px;text-align:center;height:190px'>"
-        f"<div style='font-size:2rem'>{icon}</div>"
-        f"<b style='font-size:1.05rem;color:#1e293b'>{name}</b><br>"
-        f"<span style='font-size:0.78rem;color:#475569;line-height:1.5'>{desc}</span><br><br>"
-        f"<span style='background:{bbg};color:{bc};font-size:0.72rem;"
-        f"padding:2px 8px;border-radius:12px'>{badge}</span></div>",
-        unsafe_allow_html=True,
-    )
-
-st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
-
-# Row 2
-row2 = st.columns(3)
-_TILES_R2 = [
-    ("#fdf4ff", "#a855f7", "🔬", "Individual Analysis",
-     "시나리오별 후보 탐색 · 유전자 검색 · 케이스 리포트",
-     "#f3e8ff", "#7e22ce", "Demo 제공"),
-    ("#fef2f2", "#ef4444", "🔭", "Advanced",
-     "조직 간 비교 · 발현 필터 · NMD 위험 스크리닝",
-     "#fee2e2", "#b91c1c", "Demo 제공"),
-    ("#f8fafc", "#94a3b8", "🚀", "바로 시작하기",
-     "왼쪽 사이드바에서 Demo 또는 Upload를 선택하면 분석이 즉시 시작됩니다.",
-     "#f1f5f9", "#64748b", "👈 사이드바 선택"),
-]
-for col, (bg, bd, icon, name, desc, bbg, bc, badge) in zip(row2, _TILES_R2):
-    col.markdown(
-        f"<div style='background:{bg};border:2px {'dashed' if name == '바로 시작하기' else 'solid'} {bd};"
-        f"border-radius:12px;padding:18px 16px;text-align:center;height:190px'>"
-        f"<div style='font-size:2rem'>{icon}</div>"
-        f"<b style='font-size:1.05rem;color:#1e293b'>{name}</b><br>"
-        f"<span style='font-size:0.78rem;color:#475569;line-height:1.5'>{desc}</span><br><br>"
-        f"<span style='background:{bbg};color:{bc};font-size:0.72rem;"
-        f"padding:2px 8px;border-radius:12px'>{badge}</span></div>",
-        unsafe_allow_html=True,
-    )
-
-st.divider()
-
-# ── 데이터가 없을 때만: 가이드 + stop ─────────────────────────────────────────
-if cfg.get('score_matrix') is None:
-
-    # ── 3단계 시작 가이드 ──────────────────────────────────────────────────────
-    with st.expander("📋 3단계 시작 가이드", expanded=True):
-        s1, s2, s3 = st.columns(3)
-
-        with s1:
-            st.markdown("""
-<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
-<h2 style='color:#2a9d8f;margin:0'>①</h2>
-<h4>데이터 선택</h4>
-<p style='font-size:0.9rem'>
-왼쪽 사이드바에서<br>
-<b>Demo</b> (논문 결과 탐색) 또는<br>
-<b>Upload</b> (자체 NPY 파일) 선택
-</p>
-<p style='font-size:0.85rem;color:#666'>
-조직 패널(근육 18 GO · 뇌 18 GO · 뇌 확장 73 GO)과<br>
-Score 임계값(기본 0.5) 조정
-</p>
-</div>
-            """, unsafe_allow_html=True)
-
-        with s2:
-            st.markdown("""
-<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
-<h2 style='color:#2a9d8f;margin:0'>②</h2>
-<h4>Overview 확인</h4>
-<p style='font-size:0.9rem'>
-📊 Overview 페이지에서<br>
-<b>커버리지 · 시나리오 분포 · AUPRC</b>를<br>
-한눈에 파악
-</p>
-<p style='font-size:0.85rem;color:#666'>
-S3(신규 기능)와 S1(기능 스위치) 비율이<br>
-분석의 핵심 지표입니다
-</p>
-</div>
-            """, unsafe_allow_html=True)
-
-        with s3:
-            st.markdown("""
-<div style='background:#e8f4f8;padding:20px;border-radius:10px;text-align:center'>
-<h2 style='color:#2a9d8f;margin:0'>③</h2>
-<h4>후보 아이소폼 탐색</h4>
-<p style='font-size:0.9rem'>
-🔬 Individual 페이지에서<br>
-유전자 이름 검색 →<br>
-<b>케이스 리포트 다운로드</b>
-</p>
-<p style='font-size:0.85rem;color:#666'>
-DTU 파일 추가 시 🔄 Condition에서<br>
-GAIN/LOSS 기능 변화 분석 가능
-</p>
-</div>
-            """, unsafe_allow_html=True)
-
-    # ── 문헌 검증 쇼케이스 ────────────────────────────────────────────────────
-    with st.expander("✅ 문헌 검증 — 교과서 사례 및 알려진 질환 기능 스위치 케이스 10건", expanded=True):
-        import pandas as _pd_val
-        import plotly.express as _px_val
-
-        st.markdown("""
-PRISM+BISECT의 **예측 신뢰도**를 검증하기 위해 두 가지 유형의 케이스를 대조했습니다.
-
-- **📘 교과서적 아이소폼 사례** — RTN4(Nogo-A/B/C), EGFR 처럼 생물학 교과서에 이미 확립된 아이소폼 기능 다양성 예시. PRISM+BISECT가 기존 아이소폼 생물학 지식을 정확히 포착하는지 확인.
-- **🔬 알려진 질환 연관 스위치** — 알츠하이머(뇌) 및 근육병 관련 유전자에서 문헌에 보고된 기능 변화를 BISECT가 사전 지식 없이 재현하는지 확인.
-
-**10건 전원 BISECT PASS.** 아래 표는 각 케이스의 문헌 근거와 BISECT 증거를 보여주며,
-표 아래 메시지에서 이 툴이 기존 문헌을 넘어 추가로 예측하는 내용을 설명합니다.
-        """)
-
-        _vc1, _vc2, _vc3, _vc4 = st.columns(4)
-        _vc1.metric("BISECT PASS", "10 / 10", help="10개 문헌 검증 케이스 전원 BISECT PASS 달성")
-        _vc2.metric("교과서적 유명 사례", "2건", help="RTN4(Nogo), EGFR — 생물학 교과서 수록 아이소폼 다양성 예시")
-        _vc3.metric("질환 연관 케이스", "8건", help="AD 뇌 5건 + 근육 질환 3건 (문헌 보고된 기능 스위치)")
-        _vc4.metric("총 도메인 변화 감지", "33개", help="10케이스에서 BISECT가 감지한 단백질 도메인 획득·손실 합계")
-
-        st.markdown("---")
-
-        # ── 산점도 ──────────────────────────────────────────────────────────
-        _VAL_DATA = [
-            {"Gene": "KIF21B",  "Tissue": "Brain (AD)", "Cell Type": "Excitatory", "|ΔUsage|": 0.855, "phyloP": 1.954, "PPI": "SUPPORTED",   "n_domains": 6},
-            {"Gene": "DLG1",    "Tissue": "Brain (AD)", "Cell Type": "OPC",        "|ΔUsage|": 0.857, "phyloP": 1.896, "PPI": "SUPPORTED",   "n_domains": 6},
-            {"Gene": "DMD",     "Tissue": "Brain (AD)", "Cell Type": "Inhibitory", "|ΔUsage|": 0.919, "phyloP": 5.625, "PPI": "SUPPORTED",   "n_domains": 3},
-            {"Gene": "NDUFS4",  "Tissue": "Brain (AD)", "Cell Type": "Excitatory", "|ΔUsage|": 0.563, "phyloP": 0.003, "PPI": "SUPPORTED",   "n_domains": 2},
-            {"Gene": "SYNE1",   "Tissue": "Brain (AD)", "Cell Type": "Inhibitory", "|ΔUsage|": 0.839, "phyloP": 2.097, "PPI": "SUPPORTED",   "n_domains": 1},
-            {"Gene": "NDUFS7",  "Tissue": "Muscle",     "Cell Type": "Skeletal",   "|ΔUsage|": 0.508, "phyloP": 0.0,   "PPI": "UNSUPPORTED", "n_domains": 1},
-            {"Gene": "NDUFS8",  "Tissue": "Muscle",     "Cell Type": "Skeletal",   "|ΔUsage|": 0.500, "phyloP": 0.0,   "PPI": "UNSUPPORTED", "n_domains": 5},
-            {"Gene": "TMOD1",   "Tissue": "Muscle",     "Cell Type": "Skeletal",   "|ΔUsage|": 0.542, "phyloP": 0.0,   "PPI": "UNSUPPORTED", "n_domains": 1},
-        ]
-        _vdf = _pd_val.DataFrame(_VAL_DATA)
-
-        _fig_val = _px_val.scatter(
-            _vdf,
-            x="|ΔUsage|",
-            y="phyloP",
-            color="Tissue",
-            size="n_domains",
-            symbol="PPI",
-            text="Gene",
-            hover_data={"Cell Type": True, "n_domains": True, "PPI": True, "|ΔUsage|": ":.3f", "phyloP": ":.3f"},
-            color_discrete_map={"Brain (AD)": "#f97316", "Muscle": "#3b82f6"},
-            symbol_map={"SUPPORTED": "circle", "UNSUPPORTED": "diamond-open"},
-            title="문헌 검증 케이스 — 아이소폼 사용 변화 × 서열 보존성 (phyloP)",
-            labels={"|ΔUsage|": "|ΔUsage| (아이소폼 사용 비율 변화)", "phyloP": "phyloP 점수 (서열 진화 보존성)"},
-            size_max=28,
-            height=420,
-        )
-        _fig_val.update_traces(
-            textposition="top center",
-            textfont=dict(size=11, color="#1e293b", family="Arial"),
-            marker=dict(opacity=0.88, line=dict(color="white", width=1.5)),
-        )
-        _fig_val.add_hline(
-            y=1.0, line_dash="dot", line_color="#94a3b8", line_width=1.5,
-            annotation_text="phyloP > 1 (진화적 보존 구간)", annotation_position="top right",
-            annotation_font=dict(size=10, color="#64748b"),
-        )
-        _fig_val.add_vline(
-            x=0.5, line_dash="dot", line_color="#94a3b8", line_width=1.5,
-            annotation_text="|ΔUsage| > 0.5 (유의한 사용 변화)", annotation_position="top left",
-            annotation_font=dict(size=10, color="#64748b"),
-        )
-        _fig_val.update_layout(
-            plot_bgcolor="white",
-            xaxis=dict(gridcolor="#f0f0f0", range=[0.46, 0.96], title_font=dict(size=12)),
-            yaxis=dict(gridcolor="#f0f0f0", title_font=dict(size=12)),
-            legend=dict(orientation="h", yanchor="bottom", y=-0.28, title=""),
-            margin=dict(t=52, b=80, l=60, r=20),
-            font=dict(size=11, family="Arial"),
-        )
-        st.plotly_chart(_fig_val, use_container_width=True, key="validation_scatter")
-        st.caption(
-            "● 원 크기 = 도메인 변화 수 (획득+손실) · ◇ 빈 마름모 = PPI 미지원 (근육 케이스, AlphaFold 구조 없음 → phyloP = 0 표시) · "
-            "모든 케이스 |ΔUsage| > 0.5 기준 충족"
-        )
-
-        st.markdown("#### 케이스별 상세 증거")
-
-        _TABLE_DATA = [
-            # ── 교과서적 아이소폼 다양성 사례 ──────────────────────────────────
-            {"유형":    "📘 교과서",
-             "유전자":  "RTN4 (Nogo)",
-             "조직":    "근육",
-             "세포 유형": "Skeletal",
-             "|ΔUsage|": 0.776,
-             "phyloP":  "—",
-             "PPI":     "◻ UNSUPPORTED",
-             "도메인 변화": "Reticulon + DUF639 손실 (0+2)",
-             "BISECT 해석": "Nogo-A → 단축형 전환. 축삭 재생 억제 Reticulon 도메인 소실 재현",
-             "문헌 근거": "Grandpré & Strittmatter, Neuroscientist (2001)"},
-            {"유형":    "📘 교과서",
-             "유전자":  "EGFR",
-             "조직":    "근육",
-             "세포 유형": "Skeletal",
-             "|ΔUsage|": 0.635,
-             "phyloP":  "—",
-             "PPI":     "◻ UNSUPPORTED",
-             "도메인 변화": "Pkinase·Recep_L·Furin-like 외 6개 손실 (0+6)",
-             "BISECT 해석": "키나아제 + 리간드결합 도메인 전체 손실 → 비기능성 절단형 EGFR 재현",
-             "문헌 근거": "Reiter et al., Oncogene (2001)"},
-            # ── 뇌 (알츠하이머 vs 정상) ────────────────────────────────────────
-            {"유형":    "🧠 AD 뇌",
-             "유전자":  "KIF21B",
-             "조직":    "뇌 (AD)",
-             "세포 유형": "Excitatory",
-             "|ΔUsage|": 0.855,
-             "phyloP":  1.954,
-             "PPI":     "✅ SUPPORTED",
-             "도메인 변화": "Kinesin·Microtub_bd 손실 / WD40·Nup160 획득 (3+3)",
-             "BISECT 해석": "운동단백질 미세소관 결합 기능 손실. AD 뇌에서 Kinesin 활성 감소 재현",
-             "문헌 근거": "van der Vaart et al., Neuron (2013)"},
-            {"유형":    "🧠 AD 뇌",
-             "유전자":  "DLG1",
-             "조직":    "뇌 (AD)",
-             "세포 유형": "OPC",
-             "|ΔUsage|": 0.857,
-             "phyloP":  1.896,
-             "PPI":     "✅ SUPPORTED",
-             "도메인 변화": "PDZ×3·SH3×2·Guanylate_kin 획득 (6+0)",
-             "BISECT 해석": "OPC 시냅스 스캐폴딩 기능 변화. DLG1 AD 관련성 재현",
-             "문헌 근거": "Bhatt et al., Nat. Commun. (2020)"},
-            {"유형":    "🧠 AD 뇌",
-             "유전자":  "DMD",
-             "조직":    "뇌 (AD)",
-             "세포 유형": "Inhibitory",
-             "|ΔUsage|": 0.919,
-             "phyloP":  5.625,
-             "PPI":     "✅ SUPPORTED",
-             "도메인 변화": "SOGA 획득 / Spectrin·WW 손실 (1+2)",
-             "BISECT 해석": "Dystrophin 세포골격 앵커링 기능 손실 재현 (phyloP 최고 5.6)",
-             "문헌 근거": "Fritschy et al., J. Neurosci. (1998)"},
-            {"유형":    "🧠 AD 뇌",
-             "유전자":  "NDUFS4",
-             "조직":    "뇌 (AD)",
-             "세포 유형": "Excitatory",
-             "|ΔUsage|": 0.563,
-             "phyloP":  0.003,
-             "PPI":     "✅ SUPPORTED",
-             "도메인 변화": "RVT_1 획득 / NDUS4 손실 (1+1)",
-             "BISECT 해석": "Complex I 서브유닛 4 기능 손실. AD 미토콘드리아 기능 저하 재현",
-             "문헌 근거": "Papa et al., J. Biol. Chem. (2002)"},
-            {"유형":    "🧠 AD 뇌",
-             "유전자":  "SYNE1",
-             "조직":    "뇌 (AD)",
-             "세포 유형": "Inhibitory",
-             "|ΔUsage|": 0.839,
-             "phyloP":  2.097,
-             "PPI":     "✅ SUPPORTED",
-             "도메인 변화": "Spectrin 손실 (0+1)",
-             "BISECT 해석": "핵막-세포골격 연결 앵커 기능 손실. AD 억제성 뉴런 취약성 재현",
-             "문헌 근거": "Gros-Louis et al., AJHG (2007)"},
-            # ── 근육 질환 ──────────────────────────────────────────────────────
-            {"유형":    "💪 근육 질환",
-             "유전자":  "NDUFS7",
-             "조직":    "근육",
-             "세포 유형": "Skeletal",
-             "|ΔUsage|": 0.508,
-             "phyloP":  "—",
-             "PPI":     "◻ UNSUPPORTED",
-             "도메인 변화": "Oxidored_q6 손실 (0+1)",
-             "BISECT 해석": "Complex I 퀴논-결합 전자전달 기능 손실 재현",
-             "문헌 근거": "Triepels et al., Biochem. Soc. Trans. (2001)"},
-            {"유형":    "💪 근육 질환",
-             "유전자":  "NDUFS8",
-             "조직":    "근육",
-             "세포 유형": "Skeletal",
-             "|ΔUsage|": 0.500,
-             "phyloP":  "—",
-             "PPI":     "◻ UNSUPPORTED",
-             "도메인 변화": "Fer4 철-황 클러스터 ×5 손실 (0+5)",
-             "BISECT 해석": "전자전달계 철-황 중심부 기능 손실 재현",
-             "문헌 근거": "Schuelke et al., Ann. Neurol. (1999)"},
-            {"유형":    "💪 근육 질환",
-             "유전자":  "TMOD1",
-             "조직":    "근육",
-             "세포 유형": "Skeletal",
-             "|ΔUsage|": 0.542,
-             "phyloP":  "—",
-             "PPI":     "◻ UNSUPPORTED",
-             "도메인 변화": "Tropomodulin 액틴캡핑 손실 (0+1)",
-             "BISECT 해석": "액틴 필라멘트 말단 보호 기능 손실 재현",
-             "문헌 근거": "Gregorio et al., J. Cell Biol. (1995)"},
-        ]
-        _tdf = _pd_val.DataFrame(_TABLE_DATA)
-
-        def _highlight_val_row(row):
-            _유형 = str(row.get("유형", ""))
-            if "교과서" in _유형:
-                return ["background-color: #f5f3ff; color: #1e293b"] * len(row)
-            elif "AD 뇌" in _유형:
-                return ["background-color: #fff7ed; color: #1e293b"] * len(row)
-            return ["background-color: #eff6ff; color: #1e293b"] * len(row)
-
-        st.dataframe(
-            _tdf.style.apply(_highlight_val_row, axis=1).format({"|ΔUsage|": "{:.3f}"}),
-            use_container_width=True,
-            hide_index=True,
-        )
-        st.caption(
-            "보라색 행 = 📘 교과서적 유명 사례 (RTN4/Nogo, EGFR) · 주황색 행 = 🧠 AD 뇌 케이스 · "
-            "파란색 행 = 💪 근육 질환 케이스 · phyloP '—' = AlphaFold 구조 미보유 (도메인 증거로 대체) · "
-            "도메인 변화 표기: (획득+손실) · PPI ◻ = STRING 구조 증거 없음"
-        )
-
-        st.markdown("""
-<div style='background:#fafafa;border-left:4px solid #6366f1;border-radius:6px;
-padding:16px 20px;margin-top:12px'>
-<b style='color:#3730a3'>📌 이 툴이 기존 문헌보다 더 말해주는 것</b><br><br>
-<span style='color:#312e81;font-size:0.92rem'>
-위 10개 케이스는 "PRISM+BISECT가 이미 알려진 생물학을 정확히 재현하는가"를 보여줍니다.
-그런데 BISECT는 문헌이 <b>유전자 수준</b>에서 보고한 것을 <b>아이소폼 수준 도메인 변화</b>로 분해합니다.<br><br>
-예시: <b>KIF21B</b> — 문헌은 "KIF21B 활성 저하"를 보고했습니다.
-BISECT는 어떤 특정 아이소폼이 우세해지며 Kinesin·Microtub_bd 도메인을 잃는 동시에
-WD40·Nup160 도메인을 새로 획득하는지까지 자동으로 예측합니다.<br>
-예시: <b>RTN4</b> — 문헌은 Nogo-A/B/C 이형체를 개별 실험으로 구분했습니다.
-BISECT는 대체 프로모터 TSS 차이(36 kb)와 Reticulon 도메인 손실을 자동으로 감지해
-어떤 아이소폼 전환이 일어났는지를 데이터만으로 예측합니다.<br><br>
-<b>유전자 수준 분석이 "어떤 유전자"를 알려준다면,
-PRISM+BISECT는 "어떤 아이소폼이 어떤 도메인을 통해 무슨 기능을 잃거나 얻는가"를 알려줍니다.</b>
-</span>
-</div>
-        """, unsafe_allow_html=True)
-
-    # ── 4. 기존 도구 대비 차별점 ──────────────────────────────────────────────
-    with st.expander("🔬 기존 도구 대비 차별점", expanded=False):
-        with st.container():
-            col_what, col_how = st.columns([1, 1], gap="large")
-
-            with col_what:
-                st.subheader("무엇을 해결하나요?")
-                st.markdown("""
-롱리드 싱글셀 시퀀싱은 수만 개의 **아이소폼(전사체 변이)**을 발견하지만,
-대부분에 기능 주석이 없습니다.
-
-기존 방법의 한계:
-- **유전자 수준 주석**만 존재 → 아이소폼별 차이 구별 불가
-- **Novel isoform**(NIC/NNIC)은 주석 자체가 없음
-- **DTU 분석**은 "어떤 아이소폼이 바뀌었나"만 알려주고, "무슨 기능이 바뀌었나"는 말해주지 않음
-
-**PRISM+BISECT**는 이 세 가지를 동시에 해결합니다.
-                """)
-
-            with col_how:
-                st.subheader("어떻게 해결하나요?")
-                st.markdown("""
-**PRISM** — GO 기능 예측 모델
-- ESM-2 단백질 언어 모델로 아이소폼 고유 서열 특징 추출
-- 18~73개 GO BP 기능을 동시에 예측 (0~1 신뢰도 점수)
-- 기존 주석이 없는 Novel 아이소폼도 예측 가능
-
-**BISECT** — 기능 스위치 분류 파이프라인
-- DTU + PRISM 스코어 결합 → **4-시나리오 분류**
-- 15개 독립 증거 모듈로 케이스별 등급 산정
-- S1(기능 스위치) · S2(발현 스위치) · S3(신규 기능) · S4(배경)
-                """)
-
-        st.markdown("---")
-        feat_cols = st.columns(4)
-        features = [
-            ("Novel 아이소폼 예측", "🆕",
-             "NIC·NNIC 등 **기존 Ensembl 주석이 없는** 아이소폼도 GO 기능 예측 가능. "
-             "InterPro·Pfam 기반 도구는 알려진 도메인이 있어야 작동함."),
-            ("Gene-level bias 극복", "🎯",
-             "ESM-2 기반 **아이소폼 고유 서열 특징** 사용. "
-             "DIFFUSE(Yao et al., 2022) 등 기존 모델은 유전자 평균 특징에 수렴하는 문제가 있음."),
-            ("DTU → 기능 변화 통합", "🔄",
-             "satuRn·DEXSeq 등 DTU 결과를 직접 연결해 **어떤 기능이 획득/손실됐는지** 정량화. "
-             "IsoformSwitchAnalyzeR는 DTU 탐지만 하고 기능 예측은 별도 과정이 필요함."),
-            ("Zero-shot 조직 전이", "🧠",
-             "근육 데이터로 학습한 모델을 추가 학습 없이 **뇌에 바로 적용** (AUPRC 0.5998). "
-             "조직별 재학습 없이 다양한 데이터셋에 활용 가능."),
-        ]
-        for col, (title, icon, desc) in zip(feat_cols, features):
-            col.markdown(
-                f"<div style='background:#f0faf9;border-left:4px solid #2a9d8f;"
-                f"padding:14px;border-radius:6px;height:100%'>"
-                f"<b style='font-size:1rem'>{icon} {title}</b><br><br>"
-                f"<span style='font-size:0.88rem;color:#333'>{desc}</span></div>",
-                unsafe_allow_html=True,
-            )
-
-    # ── 5. 도구 비교표 ─────────────────────────────────────────────────────────
-    with st.expander("도구 비교표 (PRISM vs 기존 방법)", expanded=False):
-        st.markdown("""
-| 기능 | **PRISM+BISECT** | DIFFUSE (2022) | IsoformSwitchAnalyzeR | InterPro/Pfam |
-|------|:---:|:---:|:---:|:---:|
-| 아이소폼별 기능 예측 | ✅ | △ (유전자 기준) | ❌ | ❌ |
-| Novel isoform 지원 | ✅ | ❌ | ❌ | ❌ |
-| Gene-level bias 극복 | ✅ | ❌ | — | — |
-| DTU 결과 통합 | ✅ | ❌ | ✅ (DTU만) | ❌ |
-| 기능 변화 정량화 | ✅ GAIN/LOSS | ❌ | ❌ | ❌ |
-| Zero-shot 조직 전이 | ✅ | ❌ | — | △ |
-| 인터랙티브 웹 분석 | ✅ | ❌ | ❌ | ❌ |
-| 케이스 증거 등급화 | ✅ (BISECT 15모듈) | ❌ | ❌ | ❌ |
-
-> ✅ 완전 지원 · △ 부분 지원 · ❌ 미지원 · — 해당 없음
-        """)
-
-    # ── 6. 입력 파일 형식 ──────────────────────────────────────────────────────
-    with st.expander("📁 Upload 모드 — 입력 파일 형식", expanded=False):
-        st.markdown("""
-| 파일 | 필수 | 형식 | 설명 |
-|------|:----:|------|------|
-| 스코어 매트릭스 | **필수** | `.npy` — shape `(N × GO)` float32 | PRISM 예측 결과 (0~1) |
-| 아이소폼 ID | **필수** | `.npy` 또는 `.txt` — 1D 문자열 | 전사체 ID 목록 (행 순서 일치) |
-| 유전자 ID | 권장 | `.npy` 또는 `.txt` — 1D 문자열 | 유전자 심볼 또는 ENSG ID |
-| 아이소폼 타입 | 선택 | `.npy` 또는 `.txt` — `known`/`nic`/`nnic` | Novel 섹션(A3) 활성화 |
-| DTU 결과 | 선택 | `.tsv` 또는 `.csv` | Condition 분석 활성화 |
-
-**스코어 매트릭스 생성 방법** (로컬에서 PRISM 추론 후 업로드):
-```bash
-conda activate isoform_env
-python hMuscle/model/v15d_bp_clean.py --predict \\
-    --embeddings your_esm2.npy --output scores.npy
-```
-
-**DTU 파일 허용 컬럼 이름** (자동 인식):
-- 아이소폼 ID: `isoform_id`, `transcriptID`, `featureID`
-- 발현 변화: `delta_IF`, `dIF`, `deltaPSI`, `logFC`
-- 유의도: `pvalue`, `padj`, `FDR`, `adj.p.value`
-- 조건: `condition`, `comparison`, `contrast`
-        """)
-
-    st.info("👈 왼쪽 사이드바에서 **Demo** 또는 **Upload** 를 선택하면 분석이 시작됩니다.", icon="ℹ️")
-    render_onboarding_guide()
-    st.stop()
-
-
-# ── 데이터 로드 후: 현재 데이터셋 요약 배너 ──────────────────────────────────
-sm  = cfg['score_matrix']
-ids = cfg['isoform_ids']
-thr = cfg['score_threshold']
-
-n_iso  = len(ids)
-n_go   = sm.shape[1]
-n_high = int((sm > thr).any(axis=1).sum())
-
-st.divider()
-render_data_context_banner(cfg)
-
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("로드된 아이소폼",       f"{n_iso:,}")
-col2.metric("GO 기능 패널",          f"{n_go}개")
-col3.metric(f"Score > {thr} (신뢰)", f"{n_high:,}", f"{100*n_high/n_iso:.1f}%")
-col4.metric("분석 모드",             cfg['mode'].capitalize())
-
-st.divider()
-
-st.markdown(
-    "<div style='font-size:0.95rem;font-weight:700;color:#374151;"
-    "letter-spacing:0.5px;margin-bottom:10px'>▶ 분석 페이지로 이동</div>",
-    unsafe_allow_html=True,
+pg = st.navigation(
+    {
+        "": [
+            st.Page("pages/main_home.py", title="PRISM+BISECT",  icon="🧬", default=True),
+            st.Page("pages/00_hub.py",    title="Analysis Hub",  icon="🏠"),
+        ],
+        "데이터셋 분석": [
+            st.Page("pages/01_qc.py",        title="QC & Overview",       icon="📊"),
+            st.Page("pages/02_landscape.py",  title="Module Landscape",    icon="🗺️"),
+            st.Page("pages/03_patterns.py",   title="Functional Patterns", icon="🔬"),
+            st.Page("pages/04_condition.py",  title="Condition Analysis",  icon="🔄"),
+            st.Page("pages/06_advanced.py",   title="Advanced",            icon="⚙️"),
+        ],
+        "타겟 분석": [
+            st.Page("pages/05_target_hub.py", title="타겟 탐색",       icon="🎯"),
+            st.Page("pages/05_targets.py",    title="시나리오 & 분석",  icon="📋"),
+            st.Page("pages/07_bisect.py",     title="BISECT Cases",    icon="🧫"),
+        ],
+        "개별 분석": [
+            st.Page("pages/06_gene.py",     title="유전자 분석",   icon="🧬"),
+            st.Page("pages/06_isoform.py",  title="아이소폼 분석", icon="🔬"),
+        ],
+        "다중 분석": [
+            st.Page("pages/08_multi_scenario.py", title="Scenario 비교",  icon="📊"),
+            st.Page("pages/09_multi_module.py",   title="기능 모듈 비교", icon="🗂️"),
+            st.Page("pages/10_multi_go.py",        title="GO term 비교",   icon="🧬"),
+            st.Page("pages/11_multi_dtu.py",       title="DTU 조건 비교",  icon="🔄"),
+        ],
+    },
+    position="sidebar",
 )
-
-_has_dtu = cfg.get('dtu_df') is not None
-_NAV_TILES = [
-    ("📊", "Overview",
-     "커버리지 · 시나리오 분포 · AUPRC",
-     "#0ea5e9", "#f0f9ff", "#e0f2fe", "#0369a1", None),
-    ("🗺️", "Functional Map",
-     "UMAP · 히트맵 · 유전자 내 비교",
-     "#22c55e", "#f0fdf4", "#dcfce7", "#15803d", None),
-    ("🔄", "Condition Analysis",
-     "DTU GAIN/LOSS · GO Enrichment",
-     "#f59e0b", "#fffbeb", "#fef3c7", "#b45309",
-     None if _has_dtu else "⚠️ DTU 파일 필요"),
-    ("🔬", "Individual Analysis",
-     "시나리오 탐색 · 검색 · 케이스 리포트",
-     "#a855f7", "#fdf4ff", "#f3e8ff", "#7e22ce", None),
-    ("🔭", "Advanced",
-     "조직 비교 · 발현 필터 · NMD",
-     "#ef4444", "#fef2f2", "#fee2e2", "#b91c1c", None),
-]
-
-_PAGE_PATHS = {
-    "Overview":           "pages/01_overview.py",
-    "Functional Map":     "pages/02_functional_map.py",
-    "Condition Analysis": "pages/03_condition.py",
-    "Individual Analysis":"pages/04_individual.py",
-    "Advanced":           "pages/05_advanced.py",
-}
-
-_nav_cols = st.columns(5)
-for col, (icon, name, desc, border, bg, bbg, bc, warn) in zip(_nav_cols, _NAV_TILES):
-    _warn_html = (
-        f"<div style='font-size:0.68rem;color:#b45309;background:#fef3c7;"
-        f"border-radius:6px;padding:2px 6px;margin-top:6px;display:inline-block'>"
-        f"{warn}</div>"
-    ) if warn else ""
-    with col:
-        st.markdown(
-            f"<div style='background:{bg};border:2px solid {border};"
-            f"border-radius:10px;padding:14px 10px;text-align:center;height:120px;'>"
-            f"<div style='font-size:1.7rem;line-height:1.2'>{icon}</div>"
-            f"<div style='font-size:0.85rem;font-weight:700;color:#1e293b;"
-            f"margin:4px 0 2px'>{name}</div>"
-            f"<div style='font-size:0.72rem;color:#64748b;line-height:1.4'>{desc}</div>"
-            f"{_warn_html}</div>",
-            unsafe_allow_html=True,
-        )
-        if st.button("▶ 이동", key=f"nav_{name.replace(' ', '_')}", use_container_width=True):
-            st.switch_page(_PAGE_PATHS[name])
-
-st.caption("💡 사이드바의 Score 임계값 슬라이더를 조정하면 모든 페이지의 분류 기준이 동시에 바뀝니다.")
+pg.run()
