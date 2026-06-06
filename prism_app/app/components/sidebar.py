@@ -77,7 +77,10 @@ def render_sidebar() -> dict:
         list(_TISSUE_OPTIONS.keys()),
         index=0,
     )
-    tissue_key = _TISSUE_OPTIONS[tissue_label]
+    tissue_key = _TISSUE_OPTIONS.get(tissue_label, 'muscle')
+    if tissue_key not in TISSUE_PRESETS:
+        st.sidebar.warning(f"GO panel '{tissue_key}' not available — defaulting to Muscle 18.")
+        tissue_key = 'muscle'
     go_preset  = TISSUE_PRESETS[tissue_key]
     go_terms   = list(go_preset.keys())
     go_names   = {**GO_FULL_NAMES, **go_preset}

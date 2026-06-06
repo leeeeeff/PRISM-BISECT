@@ -1,5 +1,6 @@
 """GO term utilities: presets, name mapping, annotation loading."""
 from __future__ import annotations
+_VERSION = "2026-06-07-brain41"  # bump to bust Python bytecode cache
 import os
 from pathlib import Path
 from typing import Dict, List, Optional
