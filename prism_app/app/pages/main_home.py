@@ -259,25 +259,92 @@ if not st.session_state.get('app_entered'):
 
 # ── Normal app mode (hero dismissed) ──────────────────────────────────────
 st.markdown("""
-<div style='background:linear-gradient(135deg,#0a0a0a 0%,#0f2942 60%,#0a1628 100%);
-border-radius:16px;padding:48px 56px;margin-bottom:8px;color:white;text-align:center'>
-  <div style='font-size:clamp(2.8rem,8vw,5rem);font-weight:700;
-    letter-spacing:-0.04em;line-height:1;margin-bottom:12px'>PRISM</div>
-  <div style='font-size:clamp(0.95rem,2vw,1.15rem);color:rgba(255,255,255,0.55);
-    font-weight:300;letter-spacing:0.01em'>
-    Isoform function. Decoded.
+<div style='
+    background: linear-gradient(135deg, #0a1f35 0%, #0f2942 40%, #0d3a5c 70%, #0f4c75 100%);
+    border-radius: 18px;
+    padding: 56px 64px 48px;
+    margin-bottom: 4px;
+    position: relative;
+    overflow: hidden;
+'>
+  <div style='position:absolute;top:-80px;right:-80px;width:380px;height:380px;
+    background:radial-gradient(circle,rgba(45,212,191,0.12) 0%,transparent 65%);
+    border-radius:50%;pointer-events:none'></div>
+  <div style='position:absolute;bottom:-60px;left:180px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(56,189,248,0.08) 0%,transparent 65%);
+    border-radius:50%;pointer-events:none'></div>
+
+  <div style='font-size:0.8rem;letter-spacing:0.12em;color:#7dd3fc;
+    text-transform:uppercase;font-weight:600;margin-bottom:14px'>
+    Nature Machine Intelligence · in review
   </div>
-  <div style='margin-top:18px;display:flex;justify-content:center;gap:32px;
-    font-size:0.82rem;color:rgba(255,255,255,0.38);letter-spacing:0.04em'>
-    <span>ESM-2 · 672 GO terms</span>
-    <span>|</span>
-    <span>Zero-shot transfer</span>
-    <span>|</span>
-    <span>Lee et al. 2026 · NMI</span>
+
+  <div style='font-size:3rem;font-weight:800;color:#ffffff;
+    letter-spacing:-1px;line-height:1.15;margin-bottom:10px'>
+    🧬 PRISM <span style='color:#2dd4bf'>+</span> BISECT
+  </div>
+
+  <div style='font-size:1.15rem;color:rgba(255,255,255,0.7);
+    max-width:620px;line-height:1.7;margin-bottom:40px'>
+    롱리드 싱글셀 데이터의 수만 개 아이소폼에 대해<br>
+    <b style='color:#93c5fd'>GO 기능 예측</b>과 <b style='color:#93c5fd'>기능 스위치 분류</b>를
+    수행하는 딥러닝 분석 플랫폼
+  </div>
+
+  <div style='display:flex;gap:52px;flex-wrap:wrap;margin-bottom:40px'>
+    <div>
+      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>0.7022</div>
+      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
+        Macro AUPRC<br><span style='color:#86efac'>근육 GO 18-term 예측</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
+    <div>
+      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>0.672</div>
+      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
+        Zero-shot 뇌 전이<br><span style='color:#86efac'>41-term panel, 추가 학습 없이</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
+    <div>
+      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>45×</div>
+      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
+        도메인 DB 대비 성능<br><span style='color:#86efac'>domain-LR 0.0156 vs PRISM 0.7022</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
+    <div>
+      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>541</div>
+      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
+        Novel 아이소폼 기능 발견<br><span style='color:#86efac'>기존 주석 없는 전사체</span>
+      </div>
+    </div>
+    <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
+    <div>
+      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>83</div>
+      <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
+        BISECT 케이스<br><span style='color:#86efac'>26 DTU검증 + 57 SRA단일조건</span>
+      </div>
+    </div>
+  </div>
+
+  <div style='display:flex;gap:12px;flex-wrap:wrap'>
+    <div style='background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.35);
+      border-radius:8px;padding:8px 18px;font-size:0.85rem;color:#2dd4bf;font-weight:600'>
+      ✦ ESM-2 단백질 언어 모델
+    </div>
+    <div style='background:rgba(147,197,253,0.12);border:1px solid rgba(147,197,253,0.3);
+      border-radius:8px;padding:8px 18px;font-size:0.85rem;color:#93c5fd;font-weight:600'>
+      ✦ 672 GO BP terms · 44 기능 모듈
+    </div>
+    <div style='background:rgba(134,239,172,0.12);border:1px solid rgba(134,239,172,0.3);
+      border-radius:8px;padding:8px 18px;font-size:0.85rem;color:#86efac;font-weight:600'>
+      ✦ 63,994 뇌 아이소폼 제로샷 분석
+    </div>
   </div>
 </div>
 """, unsafe_allow_html=True)
-st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height:6px'></div>", unsafe_allow_html=True)
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # WHAT THIS TOOL DOES
