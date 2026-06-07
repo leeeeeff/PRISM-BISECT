@@ -5,9 +5,26 @@ _root = str(Path(__file__).parents[3])
 if _root not in sys.path:
     sys.path.insert(0, _root)
 
+import json
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+
+@st.cache_data(show_spinner=False)
+def _load_bisect_for_module() -> dict:
+    """Return {GENE_UPPER: [case_dict, ...]} from bisect_cases.json."""
+    _p = Path(__file__).parents[2] / 'data' / 'demo' / 'bisect_cases.json'
+    if not _p.exists():
+        return {}
+    try:
+        _cases = json.load(open(_p))
+        _out: dict = {}
+        for _c in _cases:
+            _g = str(_c.get('gene', '') or '').upper()
+            _out.setdefault(_g, []).append(_c)
+        return _out
+    except Exception:
+        return {}
 
 from prism_app.app.components.basket import init_basket, get_analysis_cases
 
@@ -152,3 +169,127 @@ for _mod_key, _mod_genes in sorted(_dom_map.items()):
         f"padding:3px 8px;font-size:0.8rem'>{_mod_key}</span>&nbsp; {_gene_str}",
         unsafe_allow_html=True,
     )
+
+# ── BISECT 연동: 모듈 클러스터 → 경로 수렴 증거 ─────────────────────────────
+_bisect_lookup = _load_bisect_for_module()
+st.divider()
+st.markdown("#### 🧫 BISECT 연동 — 모듈 경로 수렴 분석")
+st.caption(
+    "선택된 유전자 중 BISECT PASS 케이스가 있는지 확인하고, "
+    "같은 기능 모듈 내 복수 유전자가 BISECT 검증을 받은 경우를 경로 수렴 증거로 표시합니다."
+)
+
+# Build BISECT status for each selected gene
+_bisect_rows = []
+_TIER_LABEL = {
+    'tier1_functional_switch': '🔬 T1 스위치',
+    'tier2_functional_loss':   '📉 T2 소실',
+    'tier2_complex_loss':      '⚡ T2 ComplexI',
+    'tier2_partial_change':    '↔ T2 변화',
+    'tier2_gain_no_direction': '↑ T2 획득',
+    'tier3_gene_median':       '〜 T3 추정',
+    'tier3_structural_only':   '△ T3 구조',
+    'tier3_no_match':          '? T3 미매칭',
+}
+_COMPLEX1 = {'NDUFS4', 'NDUFS7', 'NDUFS8'}
+
+for _g in _gene_sel:
+    _cases = _bisect_lookup.get(_g.upper(), [])
+    if _cases:
+        for _case in _cases:
+            _tier_raw = str(_case.get('prism_tier') or '')
+            # Runtime inference if null (same logic as 07_bisect.py)
+            if not _tier_raw or _tier_raw == 'None':
+                _af_g = str(_case.get('af_gained_confident', '') or '').strip()
+                _af_l = str(_case.get('af_lost_confident', '') or '').strip()
+                _dg   = str(_case.get('domains_gained', '') or '').strip()
+                _dl   = str(_case.get('domains_lost', '') or '').strip()
+                if _g.upper() in _COMPLEX1:
+                    _tier_raw = 'tier2_complex_loss'
+                elif _af_g:
+                    _tier_raw = 'tier1_functional_switch'
+                elif _af_l:
+                    _tier_raw = 'tier2_functional_loss'
+                elif _dg or _dl:
+                    _tier_raw = 'tier2_partial_change'
+                else:
+                    _tier_raw = 'tier3_structural_only'
+            _bisect_rows.append({
+                '유전자': _g,
+                'BISECT': '✅ PASS',
+                '세포유형': str(_case.get('cell_type', '—')),
+                'Tier': _TIER_LABEL.get(_tier_raw, _tier_raw),
+                'Δ Usage': round(float(_case.get('delta', 0) or 0), 3),
+                'DTU p': _case.get('dtu_p'),
+                'Domains +': str(_case.get('domains_gained', '') or '')[:30] or '—',
+                'Domains −': str(_case.get('domains_lost', '') or '')[:30] or '—',
+            })
+    else:
+        _bisect_rows.append({
+            '유전자': _g, 'BISECT': '—', '세포유형': '—',
+            'Tier': '—', 'Δ Usage': None, 'DTU p': None,
+            'Domains +': '—', 'Domains −': '—',
+        })
+
+if _bisect_rows:
+    _bdf_mod = pd.DataFrame(_bisect_rows)
+    _n_pass  = int((_bdf_mod['BISECT'] == '✅ PASS').sum())
+
+    # Summary badge
+    st.markdown(
+        f"<span style='background:#15803d;color:white;border-radius:6px;"
+        f"padding:4px 14px;font-size:0.9rem;font-weight:600'>"
+        f"✅ BISECT PASS: {_n_pass}건</span>"
+        f"&nbsp;<span style='color:#6b7280;font-size:0.85rem'>"
+        f"/ {len(_gene_sel)}개 선택 유전자</span>",
+        unsafe_allow_html=True,
+    )
+    st.markdown("")
+
+    # Style: highlight PASS rows
+    def _style_bisect(row):
+        if row.get('BISECT') == '✅ PASS':
+            return ['background-color: #f0fdf4'] * len(row)
+        return ['color: #9ca3af'] * len(row)
+
+    _show_cols = ['유전자', 'BISECT', '세포유형', 'Tier', 'Δ Usage', 'DTU p', 'Domains +', 'Domains −']
+    st.dataframe(
+        _bdf_mod[_show_cols].style.apply(_style_bisect, axis=1).format({
+            'Δ Usage': lambda v: f'{v:.3f}' if v == v and v is not None else '—',
+            'DTU p':   lambda v: f'{v:.2e}' if v == v and v is not None else '단일조건',
+        }),
+        use_container_width=True, hide_index=True,
+    )
+
+    # ── 경로 수렴 분석: 같은 모듈에 BISECT PASS 유전자가 2+개 ────────────────
+    _pass_genes = set(_bdf_mod[_bdf_mod['BISECT'] == '✅ PASS']['유전자'].unique())
+    _convergence = {
+        _mod: [_g for _g in _gs if _g in _pass_genes]
+        for _mod, _gs in _dom_map.items()
+        if sum(1 for _g in _gs if _g in _pass_genes) >= 2
+    }
+
+    if _convergence:
+        st.markdown("##### 🔴 경로 수렴 클러스터 (같은 모듈 내 BISECT 2개 이상)")
+        for _conv_mod, _conv_genes in sorted(_convergence.items()):
+            _is_complex1 = all(g.upper() in _COMPLEX1 for g in _conv_genes)
+            _badge_clr = '#7f1d1d' if _is_complex1 else '#1e3a8a'
+            _badge_txt = '⚡ Complex I 삼각 수렴' if _is_complex1 else '🔗 경로 수렴'
+            st.markdown(
+                f"<div style='border-left:4px solid {_badge_clr};padding:8px 14px;"
+                f"background:#f8fafc;border-radius:0 8px 8px 0;margin:6px 0'>"
+                f"<span style='background:{_badge_clr};color:white;border-radius:4px;"
+                f"padding:2px 8px;font-size:0.78rem'>{_badge_txt}</span>&nbsp;"
+                f"<b>{_conv_mod}</b>&nbsp;—&nbsp;"
+                f"{'&nbsp;·&nbsp;'.join(_conv_genes)}</div>",
+                unsafe_allow_html=True,
+            )
+        st.caption(
+            "같은 기능 모듈의 복수 유전자가 모두 BISECT 검증 통과 = "
+            "해당 모듈이 나타내는 생물학적 경로 전체가 AD에서 교란되고 있음을 시사."
+        )
+    elif _n_pass > 0:
+        st.info("선택된 BISECT PASS 유전자들은 서로 다른 기능 모듈에 속합니다 (경로 수렴 없음).")
+    else:
+        st.info("선택된 유전자 중 BISECT PASS 케이스가 없습니다. BISECT 검증 유전자를 추가해보세요."
+                " (예: NDUFS4, DLG1, KIF21B, DMD)")
