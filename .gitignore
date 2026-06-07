@@ -139,6 +139,8 @@ reports/typeAB_classifier/
 reports/within_gene/
 reports/xgb_baseline/
 reports/*.json
+!reports/brain_full_672_meta.json
+!reports/brain_go_modules_672.json
 reports/*.csv
 reports/*.glb
 reports/*.py

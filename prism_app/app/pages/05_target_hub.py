@@ -481,8 +481,10 @@ if 'gene_id' in classified.columns:
         if len(g) < 2:
             return None
         top_i = g['max_score'].idxmax()
+        # pandas ≥2.2: grouped-by column may be excluded from group; use g.name as fallback
+        _gid = g['gene_id'].iloc[0] if 'gene_id' in g.columns else g.name
         return pd.Series({
-            'gene_id':        g['gene_id'].iloc[0],
+            'gene_id':        _gid,
             'isoform_id':     g.loc[top_i, 'isoform_id'],
             'n_isoforms':     len(g),
             'score_range':    round(float(g['max_score'].max() - g['max_score'].min()), 4),

@@ -347,6 +347,97 @@ def _load_all_sig_regulators(bisect_path: str) -> list:
     return _rows
 
 
+@st.cache_data(show_spinner=False)
+def _load_bisect_splice_diversity() -> dict:
+    """Return {GENE_UPPER: float(max_pairwise_splice_dist)} from splicing_delta_v2."""
+    _SD   = Path(__file__).parents[3] / 'hMuscle/results_isoform/features/splicing/splicing_delta_v2.npy'
+    _GENE = Path(__file__).parents[3] / 'hMuscle/model/my_gene_list_fixed.npy'
+    _SYM  = (Path(__file__).parents[3]
+             / 'hMuscle/data/raw_data/data/id_lists/ensembl_to_symbol.txt')
+    if not _SD.exists() or not _GENE.exists():
+        return {}
+    _sd    = np.load(_SD).astype(np.float32)
+    _graw  = np.load(_GENE, allow_pickle=True)
+    _genes = [x.decode() if isinstance(x, bytes) else str(x) for x in _graw]
+    _smap: dict = {}
+    if _SYM.exists():
+        with open(_SYM) as _f:
+            next(_f)
+            for _ln in _f:
+                _p = _ln.strip().split()
+                if len(_p) >= 5:
+                    _smap[_p[0]] = _p[4]
+    _syms = [_smap.get(g.split('.')[0], g.split('.')[0]) for g in _genes]
+    _g2i: dict = {}
+    for _i, _g in enumerate(_syms):
+        _g2i.setdefault(_g, []).append(_i)
+    _out: dict = {}
+    for _g, _idxs in _g2i.items():
+        if len(_idxs) < 2:
+            continue
+        _d = _sd[_idxs]
+        _mx = 0.0
+        for _a in range(len(_idxs)):
+            for _b in range(_a + 1, len(_idxs)):
+                _dist = float(np.linalg.norm(_d[_a] - _d[_b]))
+                if _dist > _mx:
+                    _mx = _dist
+        _out[_g.upper()] = round(_mx, 2)
+    return _out
+
+
+@st.cache_data(show_spinner=False)
+def _load_bisect_celltypes() -> dict:
+    """Return {GENE_UPPER: {'n_ct': int, 'n_ad': int, 'cell_types': list}} from 8 DIU CSVs."""
+    _diu_dir = Path('/home/dhkim1674/Project_AD_with_refTSS_novel/06_DIU')
+    _cell_names = [
+        'Excitatory_neuron', 'Inhibitory_neuron', 'Astrocyte', 'Microglia',
+        'Oligodendrocyte', 'OPC', 'Vascular_cell', 'Lymphocyte',
+    ]
+    _frames = []
+    for _ct in _cell_names:
+        _fp = _diu_dir / f'DIU_by_condition_{_ct}.csv'
+        if _fp.exists():
+            try:
+                _df = pd.read_csv(_fp, usecols=['gene_name', 'chi_significant', 'usage_direction'])
+                _df['cell_type'] = _ct.replace('_', ' ')
+                _frames.append(_df)
+            except Exception:
+                pass
+    if not _frames:
+        return {}
+    _all = pd.concat(_frames, ignore_index=True)
+    _sig = _all[_all['chi_significant'] == True]
+    _out: dict = {}
+    for _gene, _grp in _sig.groupby('gene_name'):
+        _n_ct  = _grp['cell_type'].nunique()
+        _n_ad  = int(_grp['usage_direction'].str.contains('AD_enriched', na=False).sum())
+        _cts   = sorted(_grp['cell_type'].unique().tolist())
+        _out[str(_gene).upper()] = {'n_ct': _n_ct, 'n_ad': _n_ad, 'cell_types': _cts}
+    return _out
+
+
+@st.cache_data(show_spinner=False)
+def _load_bisect_diu_full() -> 'pd.DataFrame | None':
+    """Load 8 cell-type DIU CSVs with delta_usage for per-case heatmaps."""
+    _diu_dir = Path('/home/dhkim1674/Project_AD_with_refTSS_novel/06_DIU')
+    _cell_names = [
+        'Excitatory_neuron', 'Inhibitory_neuron', 'Astrocyte', 'Microglia',
+        'Oligodendrocyte', 'OPC', 'Vascular_cell', 'Lymphocyte',
+    ]
+    _frames = []
+    for _ct in _cell_names:
+        _fp = _diu_dir / f'DIU_by_condition_{_ct}.csv'
+        if _fp.exists():
+            try:
+                _df = pd.read_csv(_fp)
+                _df['cell_type'] = _ct.replace('_', ' ')
+                _frames.append(_df)
+            except Exception:
+                pass
+    return pd.concat(_frames, ignore_index=True) if _frames else None
+
+
 _DOMAIN_FUNC_MAP = {
     'Kinesin':       'microtubule-based motor activity (ATP-dependent)',
     'WD40':          'β-propeller scaffold for protein–protein interactions',
@@ -908,6 +999,29 @@ with open(_BISECT_PATH) as _f:
 
 _bdf = pd.DataFrame(_bisect_raw)
 
+# ── Runtime tier inference (prism_tier stored as null → infer from evidence) ─
+_COMPLEX1_GENES = {'NDUFS4', 'NDUFS7', 'NDUFS8'}
+
+def _infer_prism_tier(row: dict) -> str:
+    """Assign prism_tier from structural evidence fields when JSON value is null."""
+    gene  = str(row.get('gene', '') or '').upper()
+    af_g  = str(row.get('af_gained_confident', '') or '').strip()
+    af_l  = str(row.get('af_lost_confident',  '') or '').strip()
+    dom_g = str(row.get('domains_gained',     '') or '').strip()
+    dom_l = str(row.get('domains_lost',       '') or '').strip()
+    if gene in _COMPLEX1_GENES:
+        return 'tier2_complex_loss'
+    if af_g:
+        return 'tier1_functional_switch'
+    if af_l:
+        return 'tier2_functional_loss'
+    if dom_g or dom_l:
+        return 'tier2_partial_change'
+    return 'tier3_structural_only'
+
+if 'prism_tier' not in _bdf.columns or _bdf['prism_tier'].isna().all():
+    _bdf['prism_tier'] = [_infer_prism_tier(r) for r in _bisect_raw]
+
 # ── Cross-link: build S1 gene → isoform map ───────────────────────────────
 _s1_genes = set()
 _gene_to_rows = {}   # gene_id → list of classified rows (for PRISM chart)
@@ -1175,11 +1289,26 @@ with _ff2:
     _ct_opts = sorted(_ct_all)
     _ct_sel  = st.multiselect("Cell type 필터", _ct_opts, default=_ct_opts, key='bisect_ct')
 with _ff3:
+    _from_gene_page = st.session_state.pop('bisect_filter_gene', None)
+    if _from_gene_page and not st.session_state.get('bisect_gene_q'):
+        st.session_state['bisect_gene_q'] = _from_gene_page
     _bq = st.text_input("유전자 검색", placeholder="예: KIF21B, DLG1, NEK1", key='bisect_gene_q')
 with _ff4:
     st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
     _dtu_only = st.checkbox("DTU p 있는 케이스만", value=False, key='bisect_dtu_only',
                             help="단일조건(AD 전용) 케이스를 제외하고 AD/CT 비교군 DTU p-value가 있는 26개 뇌 케이스만 표시")
+
+_ff5, _ff6 = st.columns([2, 8])
+with _ff5:
+    _MIN_CT_OPTS = {'전체': 0, '≥ 2CT': 2, '≥ 3CT': 3, '≥ 4CT': 4, '≥ 5CT': 5}
+    _min_ct_label = st.select_slider(
+        "DIU 재현 세포유형 수",
+        options=list(_MIN_CT_OPTS.keys()),
+        value='전체',
+        key='bisect_min_ct',
+        help="8개 뇌 세포유형 중 유의한 DTU(chi_significant=True)가 확인된 세포유형이 N개 이상인 유전자만 표시",
+    )
+_min_ct = _MIN_CT_OPTS[_min_ct_label]
 
 _bdf_filt = _bdf.copy()
 _tier_vals = _TIER_FILTER_OPTS[_tier_sel_label]
@@ -1196,6 +1325,10 @@ if _bq:
     _bdf_filt = _bdf_filt[_bdf_filt['gene'].str.contains(_bq, case=False, na=False)]
 if _dtu_only and 'dtu_p' in _bdf_filt.columns:
     _bdf_filt = _bdf_filt[_bdf_filt['dtu_p'].notna() & (_bdf_filt['dtu_note'] != 'single_condition_no_comparison')]
+if _min_ct > 0 and _bisect_ct_lookup:
+    _bdf_filt = _bdf_filt[_bdf_filt['gene'].apply(
+        lambda _g: _bisect_ct_lookup.get(str(_g).upper(), {}).get('n_ct', 0) >= _min_ct
+    )]
 
 # ── Summary table ─────────────────────────────────────────────────────────
 # Build display-friendly tier label column
@@ -1216,18 +1349,43 @@ if 'prism_tier' in _bdf_filt.columns:
     _bdf_filt['_prism_score'] = _bdf_filt['prism_ad_max_score'].apply(
         lambda x: f"{x:.3f}" if pd.notna(x) else '—')
 
+# ── Splice diversity column ───────────────────────────────────────────────
+_bisect_sd_lookup = _load_bisect_splice_diversity()
+if _bisect_sd_lookup:
+    _bdf_filt = _bdf_filt.copy()
+    _bdf_filt['_splice_div'] = _bdf_filt['gene'].apply(
+        lambda _g: _bisect_sd_lookup.get(str(_g).upper())
+    )
+
+# ── Cell-type concordance column ──────────────────────────────────────────
+_bisect_ct_lookup = _load_bisect_celltypes()
+if _bisect_ct_lookup:
+    _bdf_filt = _bdf_filt.copy()
+
+    def _ct_conc_str(_g):
+        _e = _bisect_ct_lookup.get(str(_g).upper())
+        if not _e:
+            return None
+        _n = _e['n_ct']
+        _a = _e['n_ad']
+        return f"{_n}CT (AD:{_a})"
+
+    _bdf_filt['_ct_conc'] = _bdf_filt['gene'].apply(_ct_conc_str)
+
 _col_map = {
     'gene': 'Gene', 'cell_type': 'Cell Type',
     '_tier_label': 'PRISM Tier',
     '_prism_score': 'AD Score',
     'prism_ad_max_go': 'AD Top GO',
     'delta': 'Δ Usage', 'dtu_p': 'DTU p-val',
+    '_splice_div': 'Splice Div',
+    '_ct_conc': 'DIU 세포유형',
     'domains_gained': 'Domains Gained', 'domains_lost': 'Domains Lost',
     'ppi_verdict': 'PPI', 'af_ad_plddt_mean': 'pLDDT',
     'cons_ad_phylop': 'phyloP',
 }
 _show_cols_raw = ['gene', 'cell_type', '_tier_label', '_prism_score', 'prism_ad_max_go',
-                  'delta', 'dtu_p', 'domains_gained', 'domains_lost',
+                  'delta', 'dtu_p', '_splice_div', '_ct_conc', 'domains_gained', 'domains_lost',
                   'ppi_verdict', 'af_ad_plddt_mean', 'cons_ad_phylop']
 _show_cols = [c for c in _show_cols_raw if c in _bdf_filt.columns]
 _bdf_show  = _bdf_filt[_show_cols].rename(columns=_col_map).copy()
@@ -1257,10 +1415,16 @@ _caption_parts = [
     "🟡 노랑 = 도메인 구조 변화 또는 Scenario 1",
 ]
 st.caption(" | ".join(_caption_parts))
+_fmt_dict = {
+    'Δ Usage': '{:.3f}', 'pLDDT': '{:.1f}', 'phyloP': '{:.3f}',
+}
+if 'Splice Div' in _bdf_show.columns:
+    _fmt_dict['Splice Div'] = lambda v: f'{v:.2f}' if v == v and v is not None else '—'
+if 'DIU 세포유형' in _bdf_show.columns:
+    _fmt_dict['DIU 세포유형'] = lambda v: v if (v and v == v) else '—'
 st.dataframe(
     _bdf_show.style.apply(_highlight_bisect_row, axis=1).format(
-        {'Δ Usage': '{:.3f}', 'pLDDT': '{:.1f}', 'phyloP': '{:.3f}'},
-        na_rep='단일조건',
+        _fmt_dict, na_rep='단일조건',
     ).format(
         {'DTU p-val': lambda v: f'{v:.2e}' if v == v and v is not None else '단일조건'},
     ),
@@ -1276,6 +1440,8 @@ with st.expander("📋 표 컬럼 설명 — 약어가 낯설다면 펼쳐보세
 | **AD Top GO** | AD 아이소폼에서 가장 높은 점수의 GO 생물 과정 | 해당 아이소폼의 주요 예측 기능 |
 | **Δ Usage** | AD − CT 조건 간 아이소폼 사용 비율 차이 | ±0.1 이상이면 의미 있는 전환 |
 | **DTU p-val** | 아이소폼 비율 차이 통계 검정 p-value | < 0.05 (또는 < 1e-5) 이면 유의미 |
+| **Splice Div** | 유전자 내 아이소폼 간 splice_delta 최대 pairwise L2 거리 | >1.0 = 주요 exon 변이, 0.1–1.0 = 부분(A5SS/A3SS), <0.1 = 미세/UTR |
+| **DIU 세포유형** | 8개 뇌 세포유형 중 유의한 DTU 이벤트가 확인된 세포유형 수 (AD-enriched 건수) | 예: `3CT (AD:2)` = 3개 세포유형 유의 · AD-enriched 2건. 세포유형 재현성 지표 |
 | **Domains Gained** | AD 아이소폼에서 새로 생긴 Pfam 도메인 | 도메인 획득 = 기능 추가 직접 증거 |
 | **Domains Lost** | CT 아이소폼에서 제거된 Pfam 도메인 | 도메인 손실 = 정상 기능 소실 |
 | **PPI** | STRING PPI 데이터베이스 기반 상호작용 지원 여부 | SUPPORTED = 새로운 단백질 파트너 예측 |
@@ -1390,7 +1556,8 @@ if _bq and not _bdf_filt.empty:
                 "②&nbsp;<b>Δ Usage 차트</b>: 아이소폼 비율이 얼마나 바뀌었는지 "
                 "③&nbsp;<b>도메인 구조</b>: 어떤 단백질 기능이 추가/제거됐는지 "
                 "④&nbsp;<b>GO 비교</b>: CT vs AD 이소폼의 기능 공간 차이 "
-                "⑤&nbsp;<b>종합 리포트</b>: 인과 경로 전체 서사"
+                "⑤&nbsp;<b>종합 리포트</b>: 인과 경로 전체 서사 "
+                "⑥&nbsp;<b>세포유형 재현성</b>: 8개 뇌 세포유형 간 DTU 일관성"
                 "</div>",
                 unsafe_allow_html=True,
             )
@@ -2105,6 +2272,93 @@ if _bq and not _bdf_filt.empty:
                 go_ids=go, go_names=gnames, threshold=thr,
             )
             st.markdown(_bio_html, unsafe_allow_html=True)
+
+            # ── ⑥ Cell-type Concordance ───────────────────────────────────
+            _diu_full = _load_bisect_diu_full()
+            if _diu_full is not None:
+                _diu_gene = _diu_full[
+                    _diu_full['gene_name'].str.upper() == _gene.upper()
+                ].copy()
+                _sig_mask = _diu_gene['chi_significant'] == True
+                _pivot_ct = (
+                    _diu_gene[_sig_mask]
+                    .pivot_table(
+                        index='transcript_name', columns='cell_type',
+                        values='delta_usage', aggfunc='first',
+                    )
+                    .fillna(0)
+                )
+                _cell_order_ct = [c for c in [
+                    'Excitatory neuron', 'Inhibitory neuron', 'Astrocyte',
+                    'Microglia', 'Oligodendrocyte', 'OPC',
+                    'Vascular cell', 'Lymphocyte',
+                ] if c in _pivot_ct.columns]
+                _pivot_ct = _pivot_ct[[c for c in _cell_order_ct if c in _pivot_ct.columns]]
+
+                if not _pivot_ct.empty:
+                    st.divider()
+                    _n_ct_gene = len(_pivot_ct.columns)
+                    _dir_counts = _diu_gene[_sig_mask]['usage_direction'].value_counts()
+                    _n_ad_gene  = int(_dir_counts.get('AD_enriched', 0))
+                    _n_ctrl_gene = int(_dir_counts.get('CT_enriched', 0))
+                    st.markdown(
+                        f"**⑥ 세포유형 재현성**&nbsp;"
+                        f"<span style='font-size:0.8rem;color:#6b7280;font-weight:400'>"
+                        f"— {_n_ct_gene}개 세포유형 · "
+                        f"유의 DTU {int(_sig_mask.sum())}건 · "
+                        f"AD-enriched {_n_ad_gene}건 · CT-enriched {_n_ctrl_gene}건</span>",
+                        unsafe_allow_html=True,
+                    )
+
+                    _fig_ct6 = px.imshow(
+                        _pivot_ct,
+                        color_continuous_scale='RdBu_r',
+                        color_continuous_midpoint=0,
+                        zmin=-0.5, zmax=0.5,
+                        labels={'color': 'ΔIF'},
+                        aspect='auto',
+                        height=max(240, 38 * len(_pivot_ct) + 80),
+                    )
+                    _fig_ct6.update_layout(
+                        xaxis_tickangle=-25,
+                        margin=dict(t=20, b=40, l=10, r=10),
+                        coloraxis_colorbar=dict(title='ΔIF', len=0.6, thickness=12),
+                    )
+                    st.plotly_chart(_fig_ct6, use_container_width=True,
+                                    key=f'bisect_ct6_{_gene}_{_ct}')
+
+                    # Concordance table (compact)
+                    _conc6 = {}
+                    for _iso6 in _pivot_ct.index:
+                        _v6 = _pivot_ct.loc[_iso6]
+                        _nz6 = _v6[_v6 != 0]
+                        if len(_nz6) >= 2:
+                            _p6, _n6 = int((_nz6 > 0).sum()), int((_nz6 < 0).sum())
+                            _conc6[_iso6] = round(max(_p6, _n6) / len(_nz6), 2)
+                        elif len(_nz6) == 1:
+                            _conc6[_iso6] = 1.0
+                        else:
+                            _conc6[_iso6] = 0.0
+                    _conc6_df = pd.DataFrame([
+                        {'아이소폼': k,
+                         'Concordance': v,
+                         'N 세포유형': int((_pivot_ct.loc[k] != 0).sum()),
+                         '방향': ('AD↑' if _pivot_ct.loc[k][_pivot_ct.loc[k] != 0].mean() > 0
+                                  else 'CT↑')}
+                        for k, v in sorted(_conc6.items(), key=lambda x: -x[1])
+                    ])
+                    st.dataframe(
+                        _conc6_df.style.background_gradient(
+                            subset=['Concordance'], cmap='Greens', vmin=0, vmax=1,
+                        ),
+                        use_container_width=True, hide_index=True,
+                        height=min(220, 38 * len(_conc6_df) + 40),
+                    )
+                    st.caption(
+                        "빨강 = AD에서 아이소폼 사용 증가 (AD-enriched) · "
+                        "파랑 = CT에서 증가. "
+                        "Concordance 1.0 = 모든 세포유형에서 같은 방향."
+                    )
 
             # ── Domain structure + IGV genomic view ───────────────────────
             _BISECT_OUT = Path(__file__).parents[3] / \

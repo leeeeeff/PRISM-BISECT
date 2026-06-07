@@ -16,6 +16,47 @@ from prism_app.app.components.search import gene_search_autocomplete
 
 REPORTS = Path(__file__).parents[3] / 'reports'
 
+
+@st.cache_data(show_spinner=False)
+def _load_gene_splice_diversity() -> dict:
+    """Return {GENE_UPPER: {'dist': float, 'frac': float}} from splicing_delta_v2."""
+    _SD   = Path(__file__).parents[3] / 'hMuscle/results_isoform/features/splicing/splicing_delta_v2.npy'
+    _GENE = Path(__file__).parents[3] / 'hMuscle/model/my_gene_list_fixed.npy'
+    _SYM  = (Path(__file__).parents[3]
+             / 'hMuscle/data/raw_data/data/id_lists/ensembl_to_symbol.txt')
+    if not _SD.exists() or not _GENE.exists():
+        return {}
+    _sd    = np.load(_SD).astype(np.float32)
+    _graw  = np.load(_GENE, allow_pickle=True)
+    _genes = [x.decode() if isinstance(x, bytes) else str(x) for x in _graw]
+    _smap: dict = {}
+    if _SYM.exists():
+        with open(_SYM) as _f:
+            next(_f)
+            for _ln in _f:
+                _p = _ln.strip().split()
+                if len(_p) >= 5:
+                    _smap[_p[0]] = _p[4]
+    _syms = [_smap.get(g.split('.')[0], g.split('.')[0]) for g in _genes]
+    _g2i: dict = {}
+    for _i, _g in enumerate(_syms):
+        _g2i.setdefault(_g, []).append(_i)
+    _out: dict = {}
+    for _g, _idxs in _g2i.items():
+        if len(_idxs) < 2:
+            continue
+        _d   = _sd[_idxs]
+        _mx  = 0.0
+        for _a in range(len(_idxs)):
+            for _b in range(_a + 1, len(_idxs)):
+                _dist = float(np.linalg.norm(_d[_a] - _d[_b]))
+                if _dist > _mx:
+                    _mx = _dist
+        _nz  = _d[_d != 0]
+        _fr  = float(((_nz > -1) & (_nz < 1)).sum() / max(len(_nz), 1)) if len(_nz) else 0.0
+        _out[_g.upper()] = {'dist': round(_mx, 3), 'frac': round(_fr, 3)}
+    return _out
+
 # ── Session data ──────────────────────────────────────────────────────────────
 cfg           = st.session_state.get('cfg') or {}
 sm            = cfg.get('score_matrix')
@@ -150,7 +191,9 @@ _n_iso     = int(_mask.sum())
 _n_high    = int((_max_per >= thr).sum())
 _bisect_ok = _gene_name.upper() in _bisect_genes
 
-st.markdown(f"""
+_hdr_col, _bisect_btn_col = st.columns([5, 1])
+with _hdr_col:
+    st.markdown(f"""
 <div style='background:linear-gradient(90deg,#1e1b4b,#312e81);border-radius:12px;
 padding:16px 24px 12px;margin-bottom:16px'>
 <span style='color:#a5b4fc;font-size:0.8rem'>GENE REPORT</span>
@@ -160,6 +203,13 @@ padding:16px 24px 12px;margin-bottom:16px'>
 {"· <b>BISECT PASS ✅</b>" if _bisect_ok else ""}
 </span></div>
 """, unsafe_allow_html=True)
+with _bisect_btn_col:
+    if _bisect_ok:
+        st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
+        if st.button("🧫 BISECT\nCases →", key='gene_goto_bisect', use_container_width=True,
+                     help="BISECT Cases 페이지에서 이 유전자의 증거 패키지 보기"):
+            st.session_state['bisect_filter_gene'] = _gene_name
+            st.switch_page("pages/07_bisect.py")
 
 # ── Auto-tag values for basket add ───────────────────────────────────────────
 _cls_pre = st.session_state.get('classified_df')
@@ -319,6 +369,63 @@ if _n_iso >= 2 and go_terms:
     st.divider()
 
 # ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1.6: Splice Diversity — splice_delta 기반 구조 다양성
+# ══════════════════════════════════════════════════════════════════════════════
+_sd_lookup = _load_gene_splice_diversity()
+_sd_entry  = _sd_lookup.get(_gene_name.upper()) if _sd_lookup else None
+if _sd_entry and _n_iso >= 2:
+    _sd_dist = _sd_entry['dist']
+    _sd_frac = _sd_entry['frac']
+    if _sd_dist > 1.0:
+        _sd_color, _sd_label = '#16a34a', '엑손 변이 강함 ↑'
+    elif _sd_dist > 0.1:
+        _sd_color, _sd_label = '#d97706', '부분 엑손 변이'
+    else:
+        _sd_color, _sd_label = '#94a3b8', '미세 / UTR 변이'
+
+    _spc1, _spc2, _spc3 = st.columns(3)
+    with _spc1:
+        st.markdown(
+            f"<div style='border:1px solid {_sd_color};border-radius:8px;"
+            f"padding:10px 14px;background:{_sd_color}12'>"
+            f"<div style='color:{_sd_color};font-size:0.72rem;font-weight:600;"
+            f"letter-spacing:0.05em'>SPLICE DIVERSITY</div>"
+            f"<div style='font-size:1.9rem;font-weight:700;color:{_sd_color};line-height:1.1'>"
+            f"{_sd_dist:.3f}</div>"
+            f"<div style='font-size:0.79rem;color:#64748b;margin-top:2px'>{_sd_label}</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+    with _spc2:
+        st.markdown(
+            f"<div style='padding:10px 0 4px'>"
+            f"<div style='font-size:0.78rem;color:#94a3b8'>A5SS / A3SS 비율</div>"
+            f"<div style='font-size:1.5rem;font-weight:700;color:#1e293b;margin:2px 0'>"
+            f"{_sd_frac:.1%}</div>"
+            f"<div style='font-size:0.74rem;color:#94a3b8'>"
+            f"부분 엑손 경계 이동 비율 (0%=clean SE, 100%=A5SS/A3SS 지배)</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+    with _spc3:
+        st.markdown(
+            f"<div style='padding:10px 0 4px'>"
+            f"<div style='font-size:0.78rem;color:#94a3b8'>해석</div>"
+            f"<div style='font-size:0.84rem;color:#334155;margin:4px 0;line-height:1.4'>"
+            + (
+                "ESM-2 mean-pooling이 이 유전자의 아이소폼을 구분하지 못할 가능성 있음 "
+                "(DIFF_SPLICE 후보)" if _sd_dist > 0.5
+                else "아이소폼 간 splice 차이가 작음 — ESM-2가 충분히 구분 가능"
+            )
+            + f"</div>"
+            f"<div style='font-size:0.72rem;color:#94a3b8'>"
+            f"max pairwise splice_delta L2 · {_n_iso}개 아이소폼</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+    st.divider()
+
+# ══════════════════════════════════════════════════════════════════════════════
 # SECTION 2: Isoform Ranking
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("##### 아이소폼 랭킹 (max PRISM score 기준)")
@@ -396,7 +503,7 @@ def _load_diu_all_celltypes() -> 'pd.DataFrame | None':
 
 _diu_all = _load_diu_all_celltypes()
 
-with st.expander("🔬 세포유형별 DTU 일관성 (Cell-type Concordance)", expanded=False):
+with st.expander("🔬 세포유형별 DTU 일관성 (Cell-type Concordance)", expanded=True):
     if _diu_all is None:
         st.info("세포유형별 DIU 데이터에 접근할 수 없습니다 (내부 분석 환경 전용).")
     else:
@@ -435,11 +542,15 @@ with st.expander("🔬 세포유형별 DTU 일관성 (Cell-type Concordance)", e
                         _concord[_iso] = 0.0
 
                 # Summary text
-                _ad_iso = _gene_diu[_sig_mask & (_gene_diu['usage_direction'].str.contains('AD', na=False))]
-                _n_ad_ct = _ad_iso['cell_type'].nunique()
+                _dir_counts = _gene_diu[_sig_mask]['usage_direction'].value_counts()
+                _n_ad  = int(_dir_counts.get('AD_enriched', 0))
+                _n_ct  = int(_dir_counts.get('CT_enriched', 0))
+                _n_sig_total = int(_sig_mask.sum())
+                _n_celltypes = _gene_diu[_sig_mask]['cell_type'].nunique()
                 st.caption(
                     f"**{_gene_name}**: {len(_pivot_du)}개 아이소폼 · "
-                    f"AD-enriched 이벤트 {len(_ad_iso)}건 ({_n_ad_ct}개 세포유형)"
+                    f"유의 DTU {_n_sig_total}건 ({_n_celltypes}개 세포유형) · "
+                    f"AD-enriched {_n_ad}건 · CT-enriched {_n_ct}건"
                 )
 
                 # Heatmap

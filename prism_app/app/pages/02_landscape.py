@@ -221,13 +221,18 @@ else:
 # Reference banner (always show key numbers)
 # ─────────────────────────────────────────────────────────────────────────────
 c1, c2, c3, c4, c5 = st.columns(5)
-
-c1.metric("GO terms", f"{meta['n_go']:,}")
-c2.metric("기능 모듈", mod_data['n_modules'])
-c3.metric("Silhouette", f"{mod_data['best_silhouette']:.3f}")
-c4.metric("Brain AUPRC", f"{meta['macro_auprc_brain']:.4f}")
-c5.metric("Brain isoforms", f"{meta['n_isoforms_brain']:,}")
-
+if meta is not None and mod_data is not None:
+    c1.metric("GO terms", f"{meta['n_go']:,}")
+    c2.metric("기능 모듈", mod_data['n_modules'])
+    c3.metric("Silhouette", f"{mod_data['best_silhouette']:.3f}")
+    c4.metric("Brain AUPRC", f"{meta['macro_auprc_brain']:.4f}")
+    c5.metric("Brain isoforms", f"{meta['n_isoforms_brain']:,}")
+else:
+    c1.metric("GO terms", "—")
+    c2.metric("기능 모듈", "—")
+    c3.metric("Silhouette", "—")
+    c4.metric("Brain AUPRC", "—")
+    c5.metric("Brain isoforms", "—")
 st.divider()
 
 # ── Tab layout ────────────────────────────────────────────────────────────────
