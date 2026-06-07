@@ -10,6 +10,26 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+@st.cache_data(show_spinner=False)
+def _load_diu_for_dtu() -> 'pd.DataFrame | None':
+    """Load 8 cell-type DIU CSVs (gene_name, chi_significant, usage_direction, delta_usage, cell_type)."""
+    _diu_dir = Path('/home/dhkim1674/Project_AD_with_refTSS_novel/06_DIU')
+    _cell_names = [
+        'Excitatory_neuron', 'Inhibitory_neuron', 'Astrocyte', 'Microglia',
+        'Oligodendrocyte', 'OPC', 'Vascular_cell', 'Lymphocyte',
+    ]
+    _frames = []
+    for _ct in _cell_names:
+        _fp = _diu_dir / f'DIU_by_condition_{_ct}.csv'
+        if _fp.exists():
+            try:
+                _df = pd.read_csv(_fp)
+                _df['cell_type'] = _ct.replace('_', ' ')
+                _frames.append(_df)
+            except Exception:
+                pass
+    return pd.concat(_frames, ignore_index=True) if _frames else None
+
 from prism_app.app.components.basket import init_basket, get_analysis_cases
 
 init_basket()
@@ -211,3 +231,108 @@ if _ic:
         _detail_df[_dfc] = _detail_df[_dfc].round(3)
         _detail_df = _detail_df.sort_values(_dfc, key=abs, ascending=False)
         st.dataframe(_detail_df, use_container_width=True, hide_index=True)
+
+# ── Cell-type DIU 재현성 ──────────────────────────────────────────────────────
+_diu_full = _load_diu_for_dtu()
+if _diu_full is not None:
+    st.divider()
+    with st.expander("🔬 세포유형 DTU 재현성 — 8개 뇌 세포유형 간 일관성", expanded=True):
+        _CELL_ORDER = [
+            'Excitatory neuron', 'Inhibitory neuron', 'Astrocyte', 'Microglia',
+            'Oligodendrocyte', 'OPC', 'Vascular cell', 'Lymphocyte',
+        ]
+        # ── 1. Gene-level: 유전자 × 세포유형 유의 DTU 건수 히트맵
+        st.markdown("##### 유전자 × 세포유형 — 유의 DTU 이벤트 수")
+        _diu_sel = _diu_full[
+            _diu_full['gene_name'].str.upper().isin([g.upper() for g in _gene_sel])
+            & (_diu_full['chi_significant'] == True)
+        ].copy()
+
+        if _diu_sel.empty:
+            st.info("선택된 유전자에서 DIU 데이터(chi_significant=True) 없음")
+        else:
+            _ct_present = [c for c in _CELL_ORDER if c in _diu_sel['cell_type'].unique()]
+            _gene_ct = (
+                _diu_sel.groupby(['gene_name', 'cell_type'])
+                .size().reset_index(name='n_sig')
+                .pivot_table(index='gene_name', columns='cell_type', values='n_sig', fill_value=0)
+            )
+            _gene_ct = _gene_ct[[c for c in _ct_present if c in _gene_ct.columns]]
+
+            _fig_g = px.imshow(
+                _gene_ct,
+                color_continuous_scale='Blues',
+                labels={'color': '유의 DTU 수'},
+                aspect='auto',
+                height=max(280, 50 * len(_gene_ct) + 80),
+                title="유전자별 세포유형 DTU 재현성",
+            )
+            _fig_g.update_layout(
+                xaxis_tickangle=-25,
+                margin=dict(t=40, b=40, l=10, r=10),
+            )
+            st.plotly_chart(_fig_g, use_container_width=True, key='mdtu_diu_gene_hmap')
+
+            # Concordance summary per gene
+            _conc_rows = []
+            for _g in _gene_sel:
+                _g_sig = _diu_sel[_diu_sel['gene_name'].str.upper() == _g.upper()]
+                _n_ct  = _g_sig['cell_type'].nunique()
+                _n_ad  = int((_g_sig['usage_direction'].str.contains('AD_enriched', na=False)).sum())
+                _n_ct2 = int((_g_sig['usage_direction'].str.contains('CT_enriched', na=False)).sum())
+                _conc  = round(max(_n_ad, _n_ct2) / _n_ct, 2) if _n_ct > 0 else 0.0
+                _conc_rows.append({
+                    '유전자': _g, '재현 세포유형': _n_ct,
+                    'AD-enriched': _n_ad, 'CT-enriched': _n_ct2,
+                    'Concordance': _conc,
+                    '주요 방향': ('AD↑' if _n_ad >= _n_ct2 else 'CT↑') if _n_ct > 0 else '—',
+                })
+            _conc_df = pd.DataFrame(_conc_rows).sort_values('재현 세포유형', ascending=False)
+            st.dataframe(
+                _conc_df.style.background_gradient(subset=['재현 세포유형', 'Concordance'],
+                                                   cmap='Greens', vmin=0),
+                use_container_width=True, hide_index=True,
+            )
+
+        # ── 2. 단일 유전자 선택 시 아이소폼 × 세포유형 히트맵
+        if len(_gene_sel) >= 1:
+            st.markdown("##### 아이소폼 수준 — 세포유형별 ΔIF")
+            _detail_g2 = st.selectbox("아이소폼 히트맵 유전자", _gene_sel,
+                                      key='mdtu_diu_iso_sel')
+            _iso_diu = _diu_full[
+                _diu_full['gene_name'].str.upper() == _detail_g2.upper()
+            ].copy()
+            _sig2_mask = _iso_diu['chi_significant'] == True
+            _pivot_iso = (
+                _iso_diu[_sig2_mask]
+                .pivot_table(
+                    index='transcript_name', columns='cell_type',
+                    values='delta_usage', aggfunc='first',
+                ).fillna(0)
+            )
+            _ct_iso = [c for c in _CELL_ORDER if c in _pivot_iso.columns]
+            _pivot_iso = _pivot_iso[[c for c in _ct_iso if c in _pivot_iso.columns]]
+
+            if _pivot_iso.empty:
+                st.caption(f"{_detail_g2}: 유의 DIU 없음")
+            else:
+                _fig_iso = px.imshow(
+                    _pivot_iso,
+                    color_continuous_scale='RdBu_r',
+                    color_continuous_midpoint=0,
+                    zmin=-0.5, zmax=0.5,
+                    labels={'color': 'ΔIF'},
+                    aspect='auto',
+                    height=max(260, 40 * len(_pivot_iso) + 80),
+                    title=f"{_detail_g2} — 아이소폼 × 세포유형 ΔIF",
+                )
+                _fig_iso.update_layout(
+                    xaxis_tickangle=-25,
+                    margin=dict(t=40, b=40, l=10, r=10),
+                    coloraxis_colorbar=dict(title='ΔIF', len=0.6, thickness=12),
+                )
+                st.plotly_chart(_fig_iso, use_container_width=True, key='mdtu_diu_iso_hmap')
+                st.caption(
+                    "빨강 = AD에서 아이소폼 사용 증가 · 파랑 = CT에서 증가. "
+                    "chi_significant=True인 이벤트만 표시."
+                )

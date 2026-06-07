@@ -11,6 +11,57 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+@st.cache_data(show_spinner=False)
+def _load_iso_diu_data() -> 'pd.DataFrame | None':
+    """Load 8 cell-type DIU CSVs for isoform-level concordance display."""
+    _diu_dir = Path('/home/dhkim1674/Project_AD_with_refTSS_novel/06_DIU')
+    _cell_names = [
+        'Excitatory_neuron', 'Inhibitory_neuron', 'Astrocyte', 'Microglia',
+        'Oligodendrocyte', 'OPC', 'Vascular_cell', 'Lymphocyte',
+    ]
+    _frames = []
+    for _ct in _cell_names:
+        _fp = _diu_dir / f'DIU_by_condition_{_ct}.csv'
+        if _fp.exists():
+            try:
+                _df = pd.read_csv(_fp)
+                _df['cell_type'] = _ct.replace('_', ' ')
+                _frames.append(_df)
+            except Exception:
+                pass
+    return pd.concat(_frames, ignore_index=True) if _frames else None
+
+@st.cache_data(show_spinner=False)
+def _load_iso_splice_div() -> dict:
+    """Return {GENE_UPPER: {'dist': float, 'frac': float}} from splicing_delta_v2 (muscle)."""
+    _SD   = Path(__file__).parents[3] / 'hMuscle/results_isoform/features/splicing/splicing_delta_v2.npy'
+    _GENE = Path(__file__).parents[3] / 'hMuscle/model/my_gene_list_fixed.npy'
+    _SYM  = Path(__file__).parents[3] / 'hMuscle/data/raw_data/data/id_lists/ensembl_to_symbol.txt'
+    if not _SD.exists() or not _GENE.exists():
+        return {}
+    _sd   = np.load(_SD).astype(np.float32)
+    _graw = np.load(_GENE, allow_pickle=True)
+    _sym_map: dict = {}
+    if _SYM.exists():
+        for _line in open(_SYM):
+            _parts = _line.strip().split('\t')
+            if len(_parts) >= 2:
+                _sym_map[_parts[0]] = _parts[1]
+    _genes = np.array([_sym_map.get(str(g), str(g)) for g in _graw])
+    _out: dict = {}
+    for _ug in np.unique(_genes):
+        _idx = np.where(_genes == _ug)[0]
+        if len(_idx) < 2:
+            continue
+        _g_sd = _sd[_idx]
+        _diffs = []
+        for _i in range(len(_idx)):
+            for _j in range(_i + 1, len(_idx)):
+                _diffs.append(float(np.linalg.norm(_g_sd[_i] - _g_sd[_j])))
+        _frac = float(((_g_sd != 0).any(axis=1)).mean())
+        _out[_ug.upper()] = {'dist': max(_diffs), 'frac': _frac}
+    return _out
+
 from prism_app.app.components.analysis_context import render_analysis_context, context_for_report
 from prism_app.app.components.basket import add_to_gene_basket, add_to_isoform_basket, basket_gene_ids
 from prism_app.app.components.search import gene_search_autocomplete, isoform_search_autocomplete
@@ -513,6 +564,89 @@ if dtu_df is not None:
                     st.dataframe(_gene_dtu.head(10), use_container_width=True, hide_index=True)
                 else:
                     st.caption("이 유전자에 대한 DTU 기록이 없습니다.")
+
+# ── Splice Diversity + Cell-type Concordance ─────────────────────────────────
+_iso_diu_all = _load_iso_diu_data()
+_iso_sd_map  = _load_iso_splice_div()
+
+_sd_c1, _sd_c2 = st.columns([1, 2])
+with _sd_c1:
+    st.markdown("##### Splice Diversity")
+    _sd_entry = _iso_sd_map.get(_gene_name.upper())
+    if _sd_entry:
+        _sd_dist = _sd_entry['dist']
+        _sd_color = ('#16a34a' if _sd_dist > 1.0
+                     else '#d97706' if _sd_dist > 0.1
+                     else '#6b7280')
+        _sd_label = ('엑손 변이 강함' if _sd_dist > 1.0
+                     else '부분 엑손 변이' if _sd_dist > 0.1
+                     else 'UTR/미세 변이')
+        st.markdown(
+            f"<span style='font-size:1.5rem;font-weight:700;color:{_sd_color}'>{_sd_dist:.3f}</span>"
+            f"<span style='font-size:0.8rem;color:#6b7280;margin-left:6px'>{_sd_label}</span>",
+            unsafe_allow_html=True,
+        )
+        st.caption(f"유전자 내 최대 pairwise splice_delta L2 거리 ({_gene_name})")
+    else:
+        st.caption("splice_delta: 근육 모델 전용 (brain 아이소폼 미지원)")
+
+with _sd_c2:
+    st.markdown("##### 세포유형별 ΔIF")
+    if _iso_diu_all is not None:
+        _CELL_ORDER_ISO = [
+            'Excitatory neuron', 'Inhibitory neuron', 'Astrocyte', 'Microglia',
+            'Oligodendrocyte', 'OPC', 'Vascular cell', 'Lymphocyte',
+        ]
+        _iso_rows = _iso_diu_all[
+            _iso_diu_all['transcript_name'].str.upper() == _sel_iso.upper()
+        ].copy()
+        if _iso_rows.empty:
+            st.caption(f"{_sel_iso}: DIU 데이터 없음 (transcript_name 미매칭)")
+        else:
+            _ct_vals = {
+                row['cell_type']: row['delta_usage']
+                for _, row in _iso_rows.iterrows()
+            }
+            _ct_df = pd.DataFrame([
+                {
+                    '세포유형': ct,
+                    'ΔIF': _ct_vals.get(ct, 0),
+                    '유의': '●' if (
+                        _iso_rows[_iso_rows['cell_type'] == ct]['chi_significant'].any()
+                    ) else '○',
+                }
+                for ct in _CELL_ORDER_ISO
+            ])
+            _ct_df['방향'] = _ct_df['ΔIF'].apply(
+                lambda v: 'AD↑' if v > 0.05 else ('CT↑' if v < -0.05 else '—'))
+            _n_sig_iso = int((_iso_rows['chi_significant'] == True).sum())
+            _ct_df_show = _ct_df[_ct_df['ΔIF'] != 0]
+            if not _ct_df_show.empty:
+                _fig_iso_bar = px.bar(
+                    _ct_df, x='세포유형', y='ΔIF',
+                    color='ΔIF',
+                    color_continuous_scale='RdBu_r',
+                    color_continuous_midpoint=0,
+                    range_color=[-0.5, 0.5],
+                    height=220,
+                    title=f"{_sel_iso} — 세포유형별 ΔIF (유의 {_n_sig_iso}건)",
+                )
+                _fig_iso_bar.update_layout(
+                    plot_bgcolor='white',
+                    margin=dict(t=30, b=40, l=10, r=10),
+                    showlegend=False,
+                    xaxis_tickangle=-25,
+                    coloraxis_showscale=False,
+                )
+                _fig_iso_bar.add_hline(y=0, line_dash='solid', line_color='#94a3b8', line_width=1)
+                st.plotly_chart(_fig_iso_bar, use_container_width=True, key='iso_diu_bar')
+                st.caption("빨강 = AD-enriched · 파랑 = CT-enriched · ● = chi_significant")
+            else:
+                st.caption(f"{_sel_iso}: 세포유형 ΔIF = 0 (유의 이벤트 없음)")
+    else:
+        st.caption("세포유형별 DIU 데이터 없음 (내부 분석 환경 전용)")
+
+st.divider()
 
 # ── Case report download ───────────────────────────────────────────────────────
 with st.expander("📄 케이스 리포트 다운로드"):

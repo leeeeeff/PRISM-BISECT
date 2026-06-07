@@ -10,6 +10,26 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+@st.cache_data(show_spinner=False)
+def _load_diu_for_go() -> 'pd.DataFrame | None':
+    """Load 8 cell-type DIU CSVs for GO × cell-type heatmap."""
+    _diu_dir = Path('/home/dhkim1674/Project_AD_with_refTSS_novel/06_DIU')
+    _cell_names = [
+        'Excitatory_neuron', 'Inhibitory_neuron', 'Astrocyte', 'Microglia',
+        'Oligodendrocyte', 'OPC', 'Vascular_cell', 'Lymphocyte',
+    ]
+    _frames = []
+    for _ct in _cell_names:
+        _fp = _diu_dir / f'DIU_by_condition_{_ct}.csv'
+        if _fp.exists():
+            try:
+                _df = pd.read_csv(_fp, usecols=['gene_name', 'chi_significant', 'usage_direction'])
+                _df['cell_type'] = _ct.replace('_', ' ')
+                _frames.append(_df)
+            except Exception:
+                pass
+    return pd.concat(_frames, ignore_index=True) if _frames else None
+
 from prism_app.app.components.basket import init_basket, get_analysis_cases
 
 init_basket()
@@ -178,3 +198,88 @@ if _top_rows:
         pd.DataFrame(_top_rows).style.background_gradient(subset=['Score'], cmap='Blues'),
         use_container_width=True, hide_index=True,
     )
+
+# ── GO × 세포유형 교차 히트맵 ──────────────────────────────────────────────────
+_diu_go = _load_diu_for_go()
+if _diu_go is not None and go_terms:
+    st.divider()
+    with st.expander("🔬 GO term × 세포유형 교차 분석", expanded=True):
+        st.caption(
+            "각 GO term에서 고신뢰(≥threshold) 예측을 받은 유전자가 몇 개 세포유형에서 "
+            "유의한 DTU 이벤트를 보이는지 표시합니다. "
+            "GO 기능 예측과 세포유형별 발현 전환의 교차 증거."
+        )
+        _CELL_ORDER_GO = [
+            'Excitatory neuron', 'Inhibitory neuron', 'Astrocyte', 'Microglia',
+            'Oligodendrocyte', 'OPC', 'Vascular cell', 'Lymphocyte',
+        ]
+        # Build set of genes with significant DIU per cell type
+        _diu_sig = _diu_go[_diu_go['chi_significant'] == True]
+        _ct_gene_sets: dict = {}
+        for _ct in _CELL_ORDER_GO:
+            _ct_gene_sets[_ct] = set(
+                _diu_sig[_diu_sig['cell_type'] == _ct]['gene_name'].str.upper()
+            )
+
+        _sm_arr_go  = np.asarray(sm, dtype=float)
+        _ids_arr_go = np.asarray(ids, dtype=str)
+        _gin_arr_go = np.asarray(gins, dtype=str) if gins is not None else _ids_arr_go
+
+        _go_ct_rows = []
+        for _gi, _go in enumerate(go_terms):
+            _go_label = go_names.get(_go, _go)[:35]
+            # Genes with high-confidence prediction for this GO term
+            _go_scores = _sm_arr_go[:, _gi]  # (n_iso,)
+            _high_mask  = _go_scores >= thr
+            if not _high_mask.any():
+                continue
+            _high_genes = set(np.char.upper(_gin_arr_go[_high_mask]))
+            # Only keep selected genes
+            _sel_upper  = {g.upper() for g in _gene_sel}
+            _overlap    = _high_genes & _sel_upper
+            if not _overlap:
+                continue
+            for _ct in _CELL_ORDER_GO:
+                _n = len(_overlap & _ct_gene_sets.get(_ct, set()))
+                _go_ct_rows.append({
+                    'GO term': _go_label,
+                    '세포유형': _ct,
+                    'N 유전자': _n,
+                })
+
+        if _go_ct_rows:
+            _go_ct_df = pd.DataFrame(_go_ct_rows)
+            _go_ct_pivot = _go_ct_df.pivot_table(
+                index='GO term', columns='세포유형',
+                values='N 유전자', fill_value=0,
+            )
+            _ct_cols = [c for c in _CELL_ORDER_GO if c in _go_ct_pivot.columns]
+            _go_ct_pivot = _go_ct_pivot[_ct_cols]
+            # Sort by total hits
+            _go_ct_pivot = _go_ct_pivot.loc[
+                _go_ct_pivot.sum(axis=1).sort_values(ascending=False).index
+            ]
+
+            _fig_goct = px.imshow(
+                _go_ct_pivot,
+                color_continuous_scale='YlOrRd',
+                labels={'color': 'N 유전자'},
+                aspect='auto',
+                height=max(320, 40 * len(_go_ct_pivot) + 100),
+                title="GO term × 세포유형 교차 — 고신뢰 예측 유전자 중 유의 DTU 수",
+            )
+            _fig_goct.update_layout(
+                xaxis_tickangle=-25,
+                margin=dict(t=50, b=60, l=10, r=10),
+                coloraxis_colorbar=dict(title='N', len=0.6, thickness=12),
+            )
+            st.plotly_chart(_fig_goct, use_container_width=True, key='mgo_ct_hmap')
+            st.caption(
+                f"threshold ≥ {thr} 기준 고신뢰 GO 예측 유전자 × 세포유형별 유의 DTU 유전자 수. "
+                "높은 값 = PRISM 예측 기능 + 세포유형 특이적 발현 전환 교차 증거."
+            )
+        else:
+            st.info("선택된 유전자 + 현재 threshold에서 GO × 세포유형 교차 데이터 없음")
+else:
+    if _diu_go is None and go_terms:
+        pass  # DIU data not available — no message needed (internal env only)

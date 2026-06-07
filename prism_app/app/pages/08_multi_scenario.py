@@ -158,3 +158,70 @@ if _pct_rows:
     )
     _fig_pct.update_layout(plot_bgcolor='white', yaxis=dict(range=[0, 105]))
     st.plotly_chart(_fig_pct, use_container_width=True, key='msc_pct')
+
+# ── GO term × Scenario 분포 ───────────────────────────────────────────────────
+if 'max_go' in _classified.columns and any(c != '' for c in _classified.get('max_go', [])):
+    st.divider()
+    st.markdown("#### GO term × Scenario 분포")
+    st.caption(
+        "각 GO term에서 S1(기능 스위치)이 가장 많이 나타나는지를 시각화합니다. "
+        "GO term = 해당 아이소폼의 최고 점수 기능 예측 항목."
+    )
+    _go_sel_cls = _classified[
+        _classified['isoform_id'].isin(_ids_arr[
+            np.isin(np.array(gins if gins is not None else ids, dtype=str),
+                    np.array([g.upper() for g in _gene_sel]))
+            | np.isin(np.char.upper(np.array(gins if gins is not None else ids, dtype=str)),
+                      [g.upper() for g in _gene_sel])
+        ])
+    ]
+    # Simpler: filter classified by gene_id if available, else by isoform prefix
+    _go_cls = _classified.copy()
+    if _gins_arr is not None:
+        _gm_all = np.isin(np.char.upper(_gins_arr), [g.upper() for g in _gene_sel])
+        _go_cls = _classified[_classified['isoform_id'].isin(_ids_arr[_gm_all])]
+    else:
+        _go_cls = _classified[_classified['isoform_id'].apply(
+            lambda x: any(str(x).upper().startswith(g.upper()) for g in _gene_sel)
+        )]
+
+    if not _go_cls.empty and 'max_go' in _go_cls.columns:
+        _go_sc = (
+            _go_cls.groupby(['max_go', 'scenario'])
+            .size().reset_index(name='count')
+        )
+        _go_names_cfg = cfg.get('go_names', {})
+        _go_sc['GO 이름'] = _go_sc['max_go'].apply(
+            lambda g: (_go_names_cfg.get(g, g))[:35] if g else '—'
+        )
+        _go_sc['Scenario'] = _go_sc['scenario'].map(_sc_labels)
+
+        _go_pivot = _go_sc.pivot_table(
+            index='GO 이름', columns='Scenario', values='count', fill_value=0
+        )
+        # Only keep columns that exist
+        _col_order = [v for v in _sc_labels.values() if v in _go_pivot.columns]
+        _go_pivot = _go_pivot[[c for c in _col_order]]
+        # Sort by S1 count if available
+        if 'S1 기능스위치' in _go_pivot.columns:
+            _go_pivot = _go_pivot.sort_values('S1 기능스위치', ascending=False)
+
+        _fig_go_sc = px.imshow(
+            _go_pivot.T,
+            color_continuous_scale='Oranges',
+            labels={'color': '아이소폼 수'},
+            aspect='auto',
+            height=max(280, 60 * len(_col_order) + 80),
+            title="GO term × Scenario 히트맵 (행=Scenario, 열=GO term)",
+        )
+        _fig_go_sc.update_layout(
+            xaxis_tickangle=-35,
+            margin=dict(t=40, b=80, l=10, r=10),
+        )
+        st.plotly_chart(_fig_go_sc, use_container_width=True, key='msc_go_hmap')
+
+        # Top GO terms for S1
+        if 'S1 기능스위치' in _go_pivot.columns:
+            _top_go = _go_pivot['S1 기능스위치'].nlargest(8).reset_index()
+            _top_go.columns = ['GO term', 'S1 아이소폼 수']
+            st.dataframe(_top_go, use_container_width=True, hide_index=True)
