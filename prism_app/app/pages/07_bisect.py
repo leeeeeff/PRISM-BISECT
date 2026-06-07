@@ -999,6 +999,70 @@ with open(_BISECT_PATH) as _f:
 
 _bdf = pd.DataFrame(_bisect_raw)
 
+# Runtime PRISM score enrichment from session state score matrix
+if 'prism_ad_max_score' not in _bdf.columns and sm is not None and ids is not None and len(go) > 0:
+    _ids_arr = np.asarray(ids, dtype=str)
+    _id_to_idx = {iid: idx for idx, iid in enumerate(_ids_arr)}
+    _gene_to_idxs = {}
+    if genes is not None:
+        for _idx, _g in enumerate(genes):
+            _gene_to_idxs.setdefault(str(_g).upper(), []).append(_idx)
+    _gene_median = {}
+    for _g, _idxs in _gene_to_idxs.items():
+        _gene_median[_g] = np.median(sm[_idxs], axis=0)
+
+    _ct_max_scores = []
+    _ad_max_scores = []
+    _ct_max_gos = []
+    _ad_max_gos = []
+    _match_cts = []
+    _match_ads = []
+
+    for _, row in _bdf.iterrows():
+        _gene = str(row.get('gene', '')).upper()
+        _ct_tx = row.get('ct_transcript_id')
+        _ad_tx = row.get('ad_transcript_id')
+
+        # Control (CT)
+        _ct_vec = None
+        _ct_m = 'no_match'
+        if _ct_tx in _id_to_idx:
+            _ct_vec = sm[_id_to_idx[_ct_tx]]
+            _ct_m = 'exact'
+        elif _gene in _gene_median:
+            _ct_vec = _gene_median[_gene]
+            _ct_m = 'gene_median'
+
+        # Disease (AD)
+        _ad_vec = None
+        _ad_m = 'no_match'
+        if _ad_tx in _id_to_idx:
+            _ad_vec = sm[_id_to_idx[_ad_tx]]
+            _ad_m = 'exact'
+        elif _gene in _gene_median:
+            _ad_vec = _gene_median[_gene]
+            _ad_m = 'gene_median'
+
+        # Default fallback
+        if _ct_vec is None:
+            _ct_vec = np.zeros(len(go))
+        if _ad_vec is None:
+            _ad_vec = np.zeros(len(go))
+
+        _ct_max_scores.append(float(_ct_vec.max()))
+        _ad_max_scores.append(float(_ad_vec.max()))
+        _ct_max_gos.append(gnames.get(go[int(_ct_vec.argmax())], go[int(_ct_vec.argmax())]))
+        _ad_max_gos.append(gnames.get(go[int(_ad_vec.argmax())], go[int(_ad_vec.argmax())]))
+        _match_cts.append(_ct_m)
+        _match_ads.append(_ad_m)
+
+    _bdf['prism_ct_max_score'] = _ct_max_scores
+    _bdf['prism_ad_max_score'] = _ad_max_scores
+    _bdf['prism_ct_max_go'] = _ct_max_gos
+    _bdf['prism_ad_max_go'] = _ad_max_gos
+    _bdf['prism_match_ct'] = _match_cts
+    _bdf['prism_match_ad'] = _match_ads
+
 # ── Runtime tier inference (prism_tier stored as null → infer from evidence) ─
 _COMPLEX1_GENES = {'NDUFS4', 'NDUFS7', 'NDUFS8'}
 
@@ -1346,8 +1410,11 @@ if 'prism_tier' in _bdf_filt.columns:
     _bdf_filt = _bdf_filt.copy()
     _bdf_filt['_tier_label'] = _bdf_filt['prism_tier'].map(
         lambda x: _TIER_LABEL_MAP.get(str(x), str(x)))
-    _bdf_filt['_prism_score'] = _bdf_filt['prism_ad_max_score'].apply(
-        lambda x: f"{x:.3f}" if pd.notna(x) else '—')
+    if 'prism_ad_max_score' in _bdf_filt.columns:
+        _bdf_filt['_prism_score'] = _bdf_filt['prism_ad_max_score'].apply(
+            lambda x: f"{x:.3f}" if pd.notna(x) else '—')
+    else:
+        _bdf_filt['_prism_score'] = '—'
 
 # ── Splice diversity column ───────────────────────────────────────────────
 _bisect_sd_lookup = _load_bisect_splice_diversity()
