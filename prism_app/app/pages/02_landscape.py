@@ -222,26 +222,11 @@ else:
 # ─────────────────────────────────────────────────────────────────────────────
 c1, c2, c3, c4, c5 = st.columns(5)
 
-n_go_val = meta.get('n_go') if meta else None
-c1.metric("GO terms", f"{int(n_go_val):,}" if n_go_val is not None else "N/A")
-
-n_mods_val = mod_data.get('n_modules') if mod_data else None
-c2.metric("기능 모듈", f"{n_mods_val}" if n_mods_val is not None else "N/A")
-
-sil_val = mod_data.get('best_silhouette') if mod_data else None
-c3.metric("Silhouette", f"{float(sil_val):.3f}" if sil_val is not None else "N/A")
-
-auprc_val = meta.get('macro_auprc_brain') if meta else None
-c4.metric("Brain AUPRC", f"{float(auprc_val):.4f}" if auprc_val is not None else "N/A")
-
-n_iso_val = meta.get('n_isoforms_brain') if meta else None
-c5.metric("Brain isoforms", f"{int(n_iso_val):,}" if n_iso_val is not None else "N/A")
-
-# c1.metric("GO terms", f"{meta['n_go']:,}")
-# c2.metric("기능 모듈", mod_data['n_modules'])
-# c3.metric("Silhouette", f"{mod_data['best_silhouette']:.3f}")
-# c4.metric("Brain AUPRC", f"{meta['macro_auprc_brain']:.4f}")
-# c5.metric("Brain isoforms", f"{meta['n_isoforms_brain']:,}")
+c1.metric("GO terms", f"{meta['n_go']:,}")
+c2.metric("기능 모듈", mod_data['n_modules'])
+c3.metric("Silhouette", f"{mod_data['best_silhouette']:.3f}")
+c4.metric("Brain AUPRC", f"{meta['macro_auprc_brain']:.4f}")
+c5.metric("Brain isoforms", f"{meta['n_isoforms_brain']:,}")
 
 st.divider()
 
