@@ -1163,8 +1163,16 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
 
         # ── Global Volcano (full sig_regulators from analysis.json) ──────────
         _all_sig_rows = _load_all_sig_regulators(str(_BISECT_PATH))
+        _using_fallback_volcano = False
         if _all_sig_rows:
             _gvdf = pd.DataFrame(_all_sig_rows)
+        else:
+            # Fall back to using the top regulators from bisect_cases.json if outputs are missing
+            _gvdf = _gdf.rename(columns={'Regulator': 'Gene'})
+            _using_fallback_volcano = True
+
+        if not _gvdf.empty:
+            _gvdf = _gvdf.copy()
             _gvdf['Category'] = _gvdf['Gene'].map(
                 lambda _g: _REGULATOR_KB.get(_g, ('TF', None, ''))[0] or 'TF'
             )
@@ -1184,6 +1192,10 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
                     else ''
                 ), axis=1
             )
+            _vol_title = 'Volcano Plot — TF/ASF Activity (AD vs CT) · 26 Cases · 전체 Significant Regulators'
+            if _using_fallback_volcano:
+                _vol_title = 'Volcano Plot — TF/ASF Activity (AD vs CT) · 84 Cases · Top Regulators (Fallback)'
+
             _fig_gvol = px.scatter(
                 _gvdf,
                 x='logFC', y='-log10(padj)',
@@ -1197,7 +1209,7 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
                 },
                 text='Label',
                 hover_data=['Gene', 'Category', 'Knowledge', 'Case', 'CellType'],
-                title='Volcano Plot — TF/ASF Activity (AD vs CT) · 26 Cases · 전체 Significant Regulators',
+                title=_vol_title,
                 labels={'logFC': 'logFC (AD vs CT)', '-log10(padj)': '-log₁₀(p-adj)'},
                 height=430,
             )
@@ -1219,12 +1231,20 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
                 font=dict(size=11),
             )
             st.plotly_chart(_fig_gvol, use_container_width=True, key='glob_volcano')
-            st.caption(
-                f"Volcano: 26개 케이스 analysis.json의 모든 significant_regulators "
-                f"({len(_all_sig_rows)}개 관측). X=logFC, Y=-log₁₀(p-adj). "
-                "점선: |logFC|=0.1, -log₁₀p=2. ● = 기존 AD 연관, ◆ = 새로 발견. "
-                "레이블 = -log₁₀p > 10인 Known 인자."
-            )
+            if _using_fallback_volcano:
+                st.caption(
+                    f"Volcano (Fallback): 84개 케이스의 top_regulators 데이터 기반. "
+                    f"({len(_gvdf)}개 관측). X=logFC, Y=-log₁₀(p-adj). "
+                    "점선: |logFC|=0.1, -log₁₀p=2. ● = 기존 AD 연관, ◆ = 새로 발견. "
+                    "레이블 = -log₁₀p > 10인 Known 인자."
+                )
+            else:
+                st.caption(
+                    f"Volcano: 26개 케이스 analysis.json의 모든 significant_regulators "
+                    f"({len(_all_sig_rows)}개 관측). X=logFC, Y=-log₁₀(p-adj). "
+                    "점선: |logFC|=0.1, -log₁₀p=2. ● = 기존 AD 연관, ◆ = 새로 발견. "
+                    "레이블 = -log₁₀p > 10인 Known 인자."
+                )
             st.divider()
 
         # Show violin only for regulators appearing ≥3 times (else strip plot)
