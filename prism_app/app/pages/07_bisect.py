@@ -476,6 +476,8 @@ def _build_bio_report_html(
     go_ids: list,
     go_names: dict,
     threshold: float,
+    ct_not_in_sm: bool = False,
+    ad_not_in_sm: bool = False,
 ) -> str:
     """Return styled HTML biological prediction report from BISECT evidence."""
     # ── Extract fields ────────────────────────────────────────────────────────
@@ -762,7 +764,9 @@ def _build_bio_report_html(
     if not evid_rows_html:
         evid_rows_html = f"<tr><td {_TD_L} colspan='3'>증거 데이터 없음</td></tr>"
 
-    def _go_badges(top_list, bg, border):
+    def _go_badges(top_list, bg, border, not_in_sm=False):
+        if not_in_sm:
+            return "<span style='color:#9ca3af;font-size:0.82rem'>이소폼 미검출 (score matrix 외)</span>"
         if not top_list:
             return "<span style='color:#9ca3af;font-size:0.82rem'>데이터 없음</span>"
         return ''.join(
@@ -938,7 +942,7 @@ def _build_bio_report_html(
         f"🔵 Control 이소폼 TOP GO"
         f"<span style='font-weight:400;color:#94a3b8;font-size:0.72rem;display:block'>{(ct_tx or '—')[:35]}</span>"
         f"</div>"
-        f"{_go_badges(ct_top, '#dbeafe', '#3b82f6')}"
+        f"{_go_badges(ct_top, '#dbeafe', '#3b82f6', not_in_sm=ct_not_in_sm)}"
         f"</div></td>"
         f"<td width='50%' style='vertical-align:top;padding-left:8px'>"
         f"<div style='background:#fef2f2;border-radius:6px;padding:10px 12px'>"
@@ -946,7 +950,7 @@ def _build_bio_report_html(
         f"🔴 AD 이소폼 TOP GO"
         f"<span style='font-weight:400;color:#94a3b8;font-size:0.72rem;display:block'>{(ad_tx or '—')[:35]}</span>"
         f"</div>"
-        f"{_go_badges(ad_top, '#fee2e2', '#ef4444')}"
+        f"{_go_badges(ad_top, '#fee2e2', '#ef4444', not_in_sm=ad_not_in_sm)}"
         f"</div></td>"
         f"</tr></table>"
 
@@ -2057,6 +2061,8 @@ if _bq and not _bdf_filt.empty:
             _ad_idx_b  = np.where(_ids_arr_b == _ad_tx)[0]
             _ct_go_scores = sm[_ct_idx_b[0]] if len(_ct_idx_b) > 0 else None
             _ad_go_scores = sm[_ad_idx_b[0]] if len(_ad_idx_b) > 0 else None
+            _ct_not_in_sm = len(_ct_idx_b) == 0
+            _ad_not_in_sm = len(_ad_idx_b) == 0
 
             st.divider()
 
@@ -2357,6 +2363,7 @@ if _bq and not _bdf_filt.empty:
                 ct_tx=_ct_tx, ad_tx=_ad_tx,
                 ct_scores=_ct_go_scores, ad_scores=_ad_go_scores,
                 go_ids=go, go_names=gnames, threshold=thr,
+                ct_not_in_sm=_ct_not_in_sm, ad_not_in_sm=_ad_not_in_sm,
             )
             st.markdown(_bio_html, unsafe_allow_html=True)
 

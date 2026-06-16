@@ -506,7 +506,7 @@ if dtu_df is not None and 'gene_id' in classified.columns:
     from prism_app.core.classifier import _find_col as _fc
     try:
         _id_col  = _fc(dtu_df, ['isoform_id', 'transcript_id', 'isoform', 'id'])
-        _dif_col = _fc(dtu_df, ['delta_if', 'deltaIF', 'dIF', 'delta'], required=False)
+        _dif_col = _fc(dtu_df, ['delta_IF', 'delta_if', 'deltaIF', 'dIF', 'delta'], required=False)
         if _dif_col:
             _dtu_abs = dtu_df.copy()
             _dtu_abs['abs_dif'] = _dtu_abs[_dif_col].abs()

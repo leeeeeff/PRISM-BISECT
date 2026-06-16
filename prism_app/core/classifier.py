@@ -98,7 +98,7 @@ def classify_isoforms(
     if dtu_df is not None:
         id_col  = _find_col(dtu_df, ['isoform_id', 'transcript_id', 'isoform', 'id'])
         pv_col  = _find_col(dtu_df, ['pvalue', 'p_value', 'padj', 'adj_pvalue'])
-        dif_col = _find_col(dtu_df, ['delta_if', 'deltaIF', 'dIF', 'delta'], required=False)
+        dif_col = _find_col(dtu_df, ['delta_IF', 'delta_if', 'deltaIF', 'dIF', 'delta'], required=False)
         for _, row in dtu_df.iterrows():
             tid = str(row[id_col])
             dtu_pvals[tid]  = float(row[pv_col])

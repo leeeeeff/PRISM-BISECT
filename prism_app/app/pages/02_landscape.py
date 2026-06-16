@@ -61,8 +61,11 @@ def _load_refs():
 
 @st.cache_data(show_spinner="상관 행렬 로딩…")
 def _load_corr():
-    p = REPORTS / 'brain_go_corr_672.npy'
-    return np.load(p).astype(np.float32) if p.exists() else None
+    _DEMO = Path(__file__).parents[3] / 'prism_app' / 'data' / 'demo'
+    for p in [_DEMO / 'brain_go_corr_672.npy', REPORTS / 'brain_go_corr_672.npy']:
+        if p.exists():
+            return np.load(p).astype(np.float32)
+    return None
 
 
 mod_data, meta, df_iso_ref, missing = _load_refs()

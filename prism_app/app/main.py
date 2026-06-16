@@ -27,6 +27,34 @@ st.set_page_config(
     },
 )
 
+# ── Password gate ─────────────────────────────────────────────────────────────
+_CORRECT_PW = "welcomeFGL"
+
+if not st.session_state.get("_authenticated"):
+    st.markdown(
+        """
+        <div style='max-width:400px; margin:15vh auto 0; text-align:center;'>
+            <div style='font-size:2.4rem; margin-bottom:0.3rem;'>🧬</div>
+            <h2 style='margin:0 0 0.25rem;'>PRISM + BISECT</h2>
+            <p style='color:#888; margin:0 0 2rem; font-size:0.9rem;'>
+                Isoform Function Analysis · Lee et al. 2026
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    _col = st.columns([1, 2, 1])[1]
+    with _col:
+        _pw = st.text_input("Password", type="password", placeholder="Enter password…", label_visibility="collapsed")
+        if st.button("Enter", use_container_width=True, type="primary"):
+            if _pw == _CORRECT_PW:
+                st.session_state["_authenticated"] = True
+                st.rerun()
+            else:
+                st.error("Incorrect password.")
+    st.stop()
+# ─────────────────────────────────────────────────────────────────────────────
+
 
 def _precompute(cfg: dict) -> None:
     """Run all analyses up-front after data is applied.
