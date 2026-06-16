@@ -15,6 +15,7 @@ cfg = st.session_state.get('cfg') or {}
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 _qp = st.query_params
 if _qp.get('entered'):
+    st.session_state['_authenticated'] = True
     st.session_state['app_entered'] = True
     st.session_state['_hero_mode'] = _qp.get('entered', 'demo')
     st.query_params.clear()
