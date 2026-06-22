@@ -689,6 +689,12 @@ if view_mode == "🧠 해부학적 뇌 지도":
         show_layer_shells = st.sidebar.checkbox("피질 층 경계 쉘 애니메이션", value=True,
                                                 help="단면이 이동할 때 층 경계 쉘도 함께 이동")
         show_layer_shell_opacity = st.sidebar.slider("층 경계 투명도", 0.03, 0.20, 0.07, 0.01)
+        sweep_frame_ms = st.sidebar.slider(
+            "애니메이션 속도 (ms/프레임)", 80, 1200, 350, 40,
+            help="값이 낮을수록 빠름. 80ms=매우 빠름, 600ms=느림",
+        )
+    if not _sweep_mode:
+        sweep_frame_ms = 350  # unused outside sweep, but must be defined
 
 # 필터 적용
 mask = df['cell_type'].isin(sel_ct) & df['condition'].isin(sel_cond)
@@ -828,9 +834,20 @@ if view_mode == "🧠 해부학적 뇌 지도":
                              show_labels=show_region_labels,
                              show_lobe_boundaries=False)
 
-        # static cell scatter
+        # static cell scatter — with PRISM score injection if active
         df_plot = df_filt.sample(min(n_sample, len(df_filt)), random_state=42)
-        add_cell_scatter(fig, df_plot, color_by, pt_size, pt_opacity,
+        if overlay_mode == "PRISM Score (GO term)" and prism_go_id is not None:
+            iso_df, prism_scores, prism_meta = load_prism_data()
+            go_idx = prism_meta['go_ids'].index(prism_go_id)
+            scores_col = np.array(prism_scores[:, go_idx])
+            cluster_ps = build_cluster_prism_scores(prism_go_id, iso_df, scores_col)
+            df_plot = df_plot.copy()
+            df_plot['_prism_score'] = df_plot['leiden'].map(cluster_ps)
+            eff_color_by = 'PRISM Score'
+            st.caption(f"🔬 PRISM Score: **{prism_label}** | GO: `{prism_go_id}`")
+        else:
+            eff_color_by = color_by
+        add_cell_scatter(fig, df_plot, eff_color_by, pt_size, pt_opacity,
                          gene_highlight=gene_highlight if overlay_mode == "유전자 강조" else None)
 
         # layer shell traces (animated) — added AFTER static traces so we know their indices
@@ -878,10 +895,11 @@ if view_mode == "🧠 해부학적 뇌 지도":
             ))
 
         fig.frames = anim_frames
+        _ms = sweep_frame_ms
         sweep_sliders = [dict(
             active=0,
             steps=[dict(
-                args=[[fr.name], dict(frame=dict(duration=350, redraw=True), mode='immediate')],
+                args=[[fr.name], dict(frame=dict(duration=_ms, redraw=True), mode='immediate')],
                 label=f'{fr.name}mm',
                 method='animate',
             ) for fr in anim_frames],
@@ -896,7 +914,7 @@ if view_mode == "🧠 해부학적 뇌 지도":
                 type='buttons', showactive=False,
                 buttons=[
                     dict(label='▶ Play', method='animate',
-                         args=[None, dict(frame=dict(duration=350, redraw=True),
+                         args=[None, dict(frame=dict(duration=_ms, redraw=True),
                                           fromcurrent=True, mode='immediate')]),
                     dict(label='⏸ Pause', method='animate',
                          args=[[None], dict(frame=dict(duration=0, redraw=False),
