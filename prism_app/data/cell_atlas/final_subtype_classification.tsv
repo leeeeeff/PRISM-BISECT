@@ -1,0 +1,31 @@
+cluster	cell_type	subtype	n	AD_pct	CT_pct	delta	p	sig	markers	confidence	note
+1	Excitatory	L2/3 IT	10258	13.48	15.56	-2.08	0.972	ns	CUX1=0.91, SATB2=1.55	High	Standard CUX1⁺ L2/3 IT
+2	Excitatory	L2/3 IT	9711	12.8	14.28	-1.48	0.804	ns	CUX1=1.06, RORB=1.05	High	CUX1⁺ with moderate RORB
+27	Excitatory	L2/3 IT	666	0.94	1.07	-0.13	0.804	ns	CUX1=2.05 (peak), SATB2=2.13	High	Small, CUX1-highest cluster
+10	Excitatory	L4 IT	4156	4.0	2.84	1.16	0.121	ns	RORB=2.45, ETV1=0.02	Medium	RORB⁺ canonical L4
+11	Excitatory	L4 IT	4290	4.08	2.96	1.12	0.089	†	RORB=2.15, ETV1=0.30	Medium	RORB⁺ ETV1⁺ canonical L4
+18	Excitatory	L4 IT atypical	1603	2.27	0.81	1.46	0.0099	**	RORB=2.15, PRSS12=0.32, ETV1=0.02↓, RBFOX1=2.94↓	Medium	PRSS12⁺ ETV1⁻ BCL11A⁻ atypical; AD-enriched ★
+19	Excitatory	L5 ET	1410	0.77	2.37	-1.6	0.0368	*	FEZF2=0.19, BCL11B=0.72, TLE4=1.70	High	L5 extratelencephalic; AD-depleted ★
+26	Excitatory	L5 ET	744	0.96	1.22	-0.26	0.916	ns	FEZF2=0.29 (peak), BCL11B=1.31	High	L5a/L5b distinction; FEZF2-highest
+25	Excitatory	L6 CT	757	1.07	1.21	-0.14	0.75	ns	FOXP2=2.05, SYT6=0.10	High	FOXP2⁺ L6; RORB=2.16 also elevated
+20	Excitatory	Unclassified	1356	1.66	2.17	-0.51	0.232	ns	All layer markers low	Low	Subcortical excitatory mix possible
+7	Inhibitory	PV	5537	4.44	4.13	0.3	0.972	ns	PVALB=0.34, LHX6=0.51, GAD2=1.59	High	MGE-derived; classic basket/chandelier
+21	Inhibitory	PV	1209	1.13	1.45	-0.32	0.104	ns	PVALB=0.61, LHX6=0.68	High	MGE-derived; small PV subcluster
+9	Inhibitory	SST	2864	1.98	3.27	-1.28	0.03	*	SST=0.80, LHX6=0.58, GAD2=1.00	High	MGE-derived; AD-depleted ★ (replicated)
+8	Inhibitory	VIP	5088	6.35	6.0	0.35	0.697	ns	VIP=1.21, ADARB2=3.71, PROX1=1.30	High	CGE-derived; disinhibitory
+16	Inhibitory	VIP	2321	2.64	2.1	0.54	0.269	ns	VIP=0.76, ADARB2=4.08, RBFOX1=1.85↓	High	CGE-derived VIP; low-RBFOX1 subtype
+13	Inhibitory	LAMP5/NDNF	2652	2.48	2.41	0.07	0.916	ns	LAMP5=0.21, NDNF=0.50, ADARB2=4.03	Medium	CGE-derived; L1 neurogliaform-like
+15	Inhibitory	LAMP5/KIT	2097	2.33	1.29	1.04	0.034	*	LAMP5=0.58, KIT=2.08 (peak), ADARB2=4.09	Medium	CGE-derived; KIT⁺ ivy cell-like; AD-enriched (novel finding)
+22	Inhibitory	LAMP5/LHX6	979	0.97	0.98	-0.01	0.971	ns	LAMP5=0.91, LHX6=0.50, ADARB2=3.40	Medium	MGE-derived LAMP5; dual origin
+24	Inhibitory	CGE-derived misc	681	0.73	0.7	0.03	0.972	ns	ADARB2=4.19, SP8=0.39, NDNF=0.29	Low	CGE-derived; unresolved subtype
+0	Oligodendrocyte	MOL1/2	14993	67.5	71.4	-3.93	0.414	ns	MBP=3.55, OPALIN=1.66, ENPP2=2.08	High	Primary mature OL (corrected from MFOL)
+3	Oligodendrocyte	MOL2	3433	30.5	26.6	3.87	0.456	ns	MBP=3.43, ENPP2=2.14 (peak)	High	Mature OL, ENPP2-high (corrected from MFOL)
+28	Oligodendrocyte	MOL5/6	502	2.0	1.9	0.09	0.491	ns	MBP=3.74, KLK6=0.71, RBFOX1=1.51	Medium	KLK6⁺ MOL variant
+32	Oligodendrocyte	MOL5/6	8	0.0	0.1	-0.04	0.245	ns	MBP=2.82, KLK6=0.60	Low	n=8, too small to classify
+6	OPC	OPC	6784	97.6	99.5	-1.85	0.28	ns	PDGFRA=1.85, CSPG4=0.64, OLIG2=0.64	High	Quiescent OPC
+31	OPC	Immature OL	86	2.4	0.5	1.85	0.28	ns	PDGFRA=0.30, OLIG1=1.21	Low	Small; low PDGFRA — differentiating OPC
+4	Astrocyte	Protoplasmic	6047	100.0	100.0	0.0	1.0	ns	SLC1A2=4.05, AQP4=2.14, GJA1=1.65, C3=0.05↓	High	Gray matter astrocyte; C3 low → non-reactive; single cluster
+5	Microglia	SPP1⁺ activated	3577	100.0	100.0	0.0	1.0	ns	SPP1=2.18 (high), P2RY12=1.58, TMEM119=0.22↓, TREM2=0.25	Medium	Mixed homeostatic+activated; SPP1⁺ non-DAM state; single cluster
+17	Vascular	Pericyte	944	55.2	53.6	1.65	0.75	ns	PDGFRB=1.33, NOTCH3=0.70, RGS5=0.86	High	Standard pericyte markers
+23	Vascular	Endothelial	563	44.8	46.4	-1.65	0.75	ns	FLT1=3.00, VWF=2.48, CLDN5=1.86	High	Standard endothelial markers
+29	Lymphocyte	NK/T cell	171	100.0	100.0	0.0		ns	NKG7=0.88, GNLY=0.66, CD3E=0.32, MS4A1=0.33	Low	Mixed NK/T/B infiltrate; single cluster; n too small

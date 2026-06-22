@@ -12,12 +12,13 @@ from pathlib import Path
 
 cfg = st.session_state.get('cfg', {})
 
-SUBTYPE_TSV   = Path('/home/welcome1/sw1686/DIFFUSE/reports/final_subtype_classification.tsv')
-COHORT_TSV    = Path('/home/welcome1/sw1686/DIFFUSE/reports/cohort_batch_check/cohort_batch_results.tsv')
-DONOR_TSV     = Path('/home/welcome1/sw1686/DIFFUSE/reports/cohort_batch_check/per_donor_pct.tsv')
-LAYER_TSV     = Path('/home/welcome1/sw1686/DIFFUSE/reports/layer_annotation/layer_annotation_results.tsv')
-LAYER_MWU_TSV = Path('/home/welcome1/sw1686/DIFFUSE/reports/layer_annotation/layer_composition_mwu.tsv')
-LAYER_ADC_TSV = Path('/home/welcome1/sw1686/DIFFUSE/reports/layer_annotation/layer_composition_ad_ct.tsv')
+_DATA = Path(__file__).parents[2] / 'data' / 'cell_atlas'
+SUBTYPE_TSV   = _DATA / 'final_subtype_classification.tsv'
+COHORT_TSV    = _DATA / 'cohort_batch_results.tsv'
+DONOR_TSV     = _DATA / 'per_donor_pct.tsv'
+LAYER_TSV     = _DATA / 'layer_annotation_results.tsv'
+LAYER_MWU_TSV = _DATA / 'layer_composition_mwu.tsv'
+LAYER_ADC_TSV = _DATA / 'layer_composition_ad_ct.tsv'
 
 SIG_MARKS  = {'***': '★★★', '**': '★★', '*': '★', '†': '◆', 'ns': ''}
 SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#555566'}

@@ -19,10 +19,12 @@ from scipy.spatial import distance as sdist
 cfg = st.session_state.get('cfg', {})
 
 # ── 경로 ──────────────────────────────────────────────────────────────────────
-ANAT_CSV   = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_3d_anatomical_coords.csv')
-UMAP_CSV   = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_3d_coords.csv')
-SUBTYPE_TSV = Path('/home/welcome1/sw1686/DIFFUSE/reports/final_subtype_classification.tsv')
-MESH_DIR   = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_meshes')
+_BRAIN_DATA  = Path(__file__).parents[2] / 'data' / 'brain'
+_CELL_DATA   = Path(__file__).parents[2] / 'data' / 'cell_atlas'
+ANAT_CSV    = _BRAIN_DATA / 'brain_3d_anatomical_coords.csv'
+UMAP_CSV    = _BRAIN_DATA / 'brain_3d_coords.csv'
+SUBTYPE_TSV = _CELL_DATA  / 'final_subtype_classification.tsv'
+MESH_DIR    = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_meshes')
 
 # ── 색상 팔레트 ───────────────────────────────────────────────────────────────
 LAYER_COLORS = {

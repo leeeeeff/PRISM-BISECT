@@ -11,11 +11,12 @@ from pathlib import Path
 
 cfg = st.session_state.get('cfg', {})
 
-CELLTYPE_TSV = Path('/home/welcome1/sw1686/DIFFUSE/reports/bisect_celltype/celltype_isoform_switch.tsv')
-BRAAK_TSV    = Path('/home/welcome1/sw1686/DIFFUSE/reports/braak_correlation_results.tsv')
-C18_TSV      = Path('/home/welcome1/sw1686/DIFFUSE/reports/c18_deep_dive/c18_vs_c10c11_diff.tsv')
-LAMP5_TSV    = Path('/home/welcome1/sw1686/DIFFUSE/reports/lamp5_kit_validation/lamp5_subtypes_comparison.tsv')
-LAMP5_DONOR  = Path('/home/welcome1/sw1686/DIFFUSE/reports/lamp5_kit_validation/c15_per_donor_expression.tsv')
+_DATA = Path(__file__).parents[2] / 'data' / 'cell_atlas'
+CELLTYPE_TSV = _DATA / 'celltype_isoform_switch.tsv'
+BRAAK_TSV    = _DATA / 'braak_correlation_results.tsv'
+C18_TSV      = _DATA / 'c18_vs_c10c11_diff.tsv'
+LAMP5_TSV    = _DATA / 'lamp5_subtypes_comparison.tsv'
+LAMP5_DONOR  = _DATA / 'c15_per_donor_expression.tsv'
 
 SIG_MARKS  = {'***': '★★★', '**': '★★', '*': '★', '†': '◆', 'ns': ''}
 SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#555566'}
