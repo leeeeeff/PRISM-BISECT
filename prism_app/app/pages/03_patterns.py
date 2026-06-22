@@ -86,22 +86,28 @@ with tab_umap:
 
     _MAX_UMAP = 15_000   # cap for reasonable render speed
 
-    @st.cache_data(show_spinner="임베딩 계산 중 (첫 실행만 소요)…")
-    def _get_umap_coords(sm_bytes, sm_shape, n_total, seed):
-        import numpy as np
-        sm_arr = np.frombuffer(sm_bytes, dtype=np.float32).reshape(sm_shape)
-        rng = np.random.default_rng(seed)
-        if n_total > _MAX_UMAP:
-            idx = np.sort(rng.choice(n_total, _MAX_UMAP, replace=False))
-        else:
-            idx = np.arange(n_total)
-        coords, method = compute_umap_coords(sm_arr[idx], random_state=seed)
-        return coords, idx, method
+    _precomp = st.session_state.get('_precomp_umap')
+    if _precomp is not None:
+        coords       = _precomp['coords']
+        sample_idx   = _precomp['sample_idx']
+        embed_method = _precomp['method']
+    else:
+        @st.cache_data(show_spinner="임베딩 계산 중 (첫 실행만 소요)…")
+        def _get_umap_coords(sm_bytes, sm_shape, n_total, seed):
+            import numpy as np
+            sm_arr = np.frombuffer(sm_bytes, dtype=np.float32).reshape(sm_shape)
+            rng = np.random.default_rng(seed)
+            if n_total > _MAX_UMAP:
+                idx = np.sort(rng.choice(n_total, _MAX_UMAP, replace=False))
+            else:
+                idx = np.arange(n_total)
+            coords, method = compute_umap_coords(sm_arr[idx], random_state=seed)
+            return coords, idx, method
 
-    n_total = sm.shape[0]
-    coords, sample_idx, embed_method = _get_umap_coords(
-        sm.astype(np.float32).tobytes(), sm.shape, n_total, seed=42
-    )
+        n_total = sm.shape[0]
+        coords, sample_idx, embed_method = _get_umap_coords(
+            sm.astype(np.float32).tobytes(), sm.shape, n_total, seed=42
+        )
 
     sampled_ids        = np.asarray(ids)[sample_idx]
     sampled_sm         = sm[sample_idx]

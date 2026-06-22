@@ -12,17 +12,21 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+from prism_app.app.components.basket import (
+    init_basket, add_to_gene_basket, basket_gene_ids, get_basket_genes,
+    remove_from_basket, clear_basket, tag_badges_html, save_analysis_case,
+)
+
 st.set_page_config(page_title="Analysis Hub — PRISM", layout="wide")
 
 # Ensure session state is initialised
 if 'analysis_step' not in st.session_state:
     st.session_state['analysis_step'] = {}
-if 'basket_genes' not in st.session_state:
-    st.session_state['basket_genes'] = []
 if 'active_module' not in st.session_state:
     st.session_state['active_module'] = None
 if 'search_gene' not in st.session_state:
     st.session_state['search_gene'] = ''
+init_basket()
 
 st.session_state['analysis_step']['hub'] = True
 
@@ -71,8 +75,7 @@ with col_status3:
         st.metric("DTU events", "—", delta="not loaded")
 
 with col_status4:
-    basket = st.session_state.get('basket_genes', [])
-    st.metric("Gene basket", f"{len(basket)}", delta="saved targets")
+    st.metric("Gene basket", f"{len(basket_gene_ids())}", delta="saved targets")
 
 st.divider()
 
@@ -211,15 +214,56 @@ if has_data:
         )
         st.plotly_chart(fig_hist, use_container_width=True)
 
-    # Gene basket quick access
-    if basket:
-        st.subheader("🧬 Gene Basket")
-        cols = st.columns(min(len(basket), 6))
-        for i, gene in enumerate(basket[:6]):
-            with cols[i]:
-                if st.button(f"🎯 {gene}", key=f'hub_basket_{i}', use_container_width=True):
-                    st.session_state['search_gene'] = gene
-                    st.info(f"'{gene}' → Target Analysis 페이지에서 상세 분석을 확인하세요.")
+    # Gene basket — full management
+    st.divider()
+    _bk_genes = get_basket_genes()
+    _bk_ids   = basket_gene_ids()
+    st.subheader(f"🧺 분석 바스켓 ({len(_bk_ids)}개 유전자)")
+
+    if not _bk_genes:
+        st.info("다른 페이지에서 ➕ 버튼으로 후보 유전자를 추가하세요.")
+    else:
+        # ── Bulk actions ──────────────────────────────────────────────────
+        _bk_act1, _bk_act2, _bk_act3 = st.columns([2, 2, 1])
+        with _bk_act1:
+            if st.button(f"▶ 단일 분석 ({_bk_ids[0]})",
+                         key='hub_bk_single_first', use_container_width=True):
+                st.session_state['search_gene'] = _bk_ids[0]
+                st.session_state['auto_search'] = True
+                st.session_state['_targets_query_loaded'] = False
+                st.switch_page("pages/05_targets.py")
+        with _bk_act2:
+            if st.button(f"📊 다중 분석 ({len(_bk_ids)}개 → Scenario 비교)",
+                         key='hub_bk_multi', use_container_width=True):
+                save_analysis_case('gene', 'multi', 'scenario', _bk_ids, note='Hub 바스켓')
+                st.switch_page("pages/08_multi_scenario.py")
+        with _bk_act3:
+            if st.button("🗑️ 전체 초기화", key='hub_bk_clear', use_container_width=True):
+                clear_basket('gene')
+                st.rerun()
+
+        st.caption("각 유전자별 분석 이동 또는 제거:")
+        # ── Per-item rows ─────────────────────────────────────────────────
+        for _bi, _item in enumerate(_bk_genes):
+            _gid = _item['id'] if isinstance(_item, dict) else _item
+            _tags_html = tag_badges_html(_item) if isinstance(_item, dict) else ''
+            _rc1, _rc2, _rc3, _rc4 = st.columns([3, 2, 2, 1])
+            with _rc1:
+                st.markdown(f"**{_gid}** &nbsp;{_tags_html}", unsafe_allow_html=True)
+            with _rc2:
+                if st.button("▶ 단일 분석", key=f'hub_bk_s_{_bi}', use_container_width=True):
+                    st.session_state['search_gene'] = _gid
+                    st.session_state['auto_search'] = True
+                    st.session_state['_targets_query_loaded'] = False
+                    st.switch_page("pages/05_targets.py")
+            with _rc3:
+                if st.button("📊 다중 분석에 추가", key=f'hub_bk_m_{_bi}', use_container_width=True):
+                    save_analysis_case('gene', 'multi', 'scenario', [_gid], note=f'{_gid} 단독')
+                    st.switch_page("pages/08_multi_scenario.py")
+            with _rc4:
+                if st.button("✕", key=f'hub_bk_rm_{_bi}', use_container_width=True):
+                    remove_from_basket(_gid, kind='gene')
+                    st.rerun()
 
 else:
     # No data: show onboarding
@@ -431,11 +475,11 @@ padding:12px 14px;height:160px;overflow:hidden'>
                     st.toast(f"{_sel_gene} → Target Analysis 페이지를 열면 자동 검색됩니다.")
             with _bc2:
                 if st.button("➕ 바스켓에 추가", key='bisect_add_basket'):
-                    _b = st.session_state.get('basket_genes', [])
-                    if _sel_gene not in _b:
-                        _b.append(_sel_gene)
-                        st.session_state['basket_genes'] = _b
-                    st.toast(f"{_sel_gene} 바스켓 추가 완료")
+                    _added = add_to_gene_basket(_sel_gene, source_page='hub')
+                    if _added:
+                        st.toast(f"{_sel_gene} 바스켓에 추가됐습니다")
+                    else:
+                        st.toast(f"{_sel_gene} 이미 바스켓에 있습니다")
 
 else:
     st.info("BISECT case data not found (`prism_app/data/demo/bisect_cases.json`). Run demo data setup first.")

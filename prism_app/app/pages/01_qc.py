@@ -141,15 +141,17 @@ st.caption(
     "S3(DTU- & GO+)는 조건 무관하게 새로운 기능을 하는 구성적(constitutive) 신규 기능 아이소폼입니다."
 )
 
-with st.spinner("Classifying isoforms…"):
-    annot = cfg.get('existing_annotations')
-    classified = classify_isoforms(
-        sm, ids, genes, go,
-        existing_annotations=annot,
-        dtu_df=dtu,
-        score_threshold=thr,
-    )
-    st.session_state['classified_df'] = classified   # share with other pages
+classified = st.session_state.get('classified_df')
+if classified is None:
+    with st.spinner("Classifying isoforms…"):
+        annot = cfg.get('existing_annotations')
+        classified = classify_isoforms(
+            sm, ids, genes, go,
+            existing_annotations=annot,
+            dtu_df=dtu,
+            score_threshold=thr,
+        )
+        st.session_state['classified_df'] = classified
 
 summ = scenario_summary(classified)
 
