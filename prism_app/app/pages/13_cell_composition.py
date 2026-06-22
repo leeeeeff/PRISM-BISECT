@@ -19,8 +19,9 @@ LAYER_TSV     = Path('/home/welcome1/sw1686/DIFFUSE/reports/layer_annotation/lay
 LAYER_MWU_TSV = Path('/home/welcome1/sw1686/DIFFUSE/reports/layer_annotation/layer_composition_mwu.tsv')
 LAYER_ADC_TSV = Path('/home/welcome1/sw1686/DIFFUSE/reports/layer_annotation/layer_composition_ad_ct.tsv')
 
-SIG_MARKS  = {'**': '★★', '*': '★', '†': '◆', 'ns': ''}
-SIG_COLORS = {'**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#555566'}
+SIG_MARKS  = {'***': '★★★', '**': '★★', '*': '★', '†': '◆', 'ns': ''}
+SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#555566'}
+SIG_CAPTION = "★★★ p<0.001 | ★★ p<0.01 | ★ p<0.05 | ◆ p<0.10 | 회색 ns"
 COHORT_PAL = {'PO': '#e67e22', 'SMC': '#3498db'}
 COND_PAL   = {'AD': '#e74c3c', 'Control': '#3498db', 'Active control': '#f39c12'}
 
@@ -48,6 +49,21 @@ if sub_df.empty:
 if not layer_df.empty:
     layer_map = dict(zip(layer_df['cluster'].astype(str), layer_df['layer_label']))
     sub_df['layer'] = sub_df['cluster'].astype(str).map(layer_map).fillna('')
+
+# ── 상단 핵심 지표 ─────────────────────────────────────────────────────────────
+n_total   = len(sub_df)
+n_sig     = int(sub_df['sig'].isin(['***', '**', '*']).sum())
+n_tend    = int((sub_df['sig'] == '†').sum())
+n_ad_up   = int((sub_df['sig'].isin(['***', '**', '*']) & (sub_df['delta'] > 0)).sum())
+n_ad_down = int((sub_df['sig'].isin(['***', '**', '*']) & (sub_df['delta'] < 0)).sum())
+
+m1, m2, m3, m4, m5 = st.columns(5)
+m1.metric("전체 클러스터", n_total)
+m2.metric("유의 클러스터", n_sig, f"★ {n_sig}/{n_total}")
+m3.metric("AD 증가", n_ad_up,   delta="↑ enriched", delta_color="inverse")
+m4.metric("AD 감소", n_ad_down, delta="↓ depleted", delta_color="normal")
+m5.metric("경향 (†)",  n_tend)
+st.divider()
 
 # ── 탭 구성 ────────────────────────────────────────────────────────────────────
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
@@ -108,7 +124,7 @@ with tab1:
         margin=dict(l=250, r=80, t=40, b=40),
     )
     st.plotly_chart(fig_bar, use_container_width=True)
-    st.caption("★★ p<0.01 | ★ p<0.05 | ◆ p<0.10 | 색상: 빨강=유의증가, 주황=유의감소, 노랑=경향, 회색=ns")
+    st.caption(SIG_CAPTION + " | 색상: 빨강=유의증가, 파랑=유의감소, 노랑=경향, 회색=ns")
 
     # ── 화산 플롯 ──────────────────────────────────────────────────────────────
     st.divider()
@@ -121,7 +137,7 @@ with tab1:
     vdf['size']      = vdf['n'].apply(lambda n: max(6, min(20, n / 1000)))
 
     fig_vol = go.Figure()
-    for sig_level in ['**', '*', '†', 'ns']:
+    for sig_level in ['***', '**', '*', '†', 'ns']:
         grp = vdf[vdf['sig'] == sig_level]
         if grp.empty:
             continue
@@ -448,3 +464,11 @@ with tab5:
         )
         st.plotly_chart(fig_br, use_container_width=True)
         st.caption("AD 샘플만 표시. Braak B와 층별 클러스터 비율의 상관 관계.")
+
+# ── 페이지 간 이동 ─────────────────────────────────────────────────────────────
+st.divider()
+st.markdown("#### 관련 페이지")
+col_nav1, col_nav2, col_nav3 = st.columns(3)
+col_nav1.page_link("pages/12_brain3d.py",        label="🧠 뇌 3D 세포 지도",  help="3D 해부학적 지도 + UMAP 공간")
+col_nav2.page_link("pages/14_bisect_context.py",  label="🔬 BISECT 세포 맥락", help="세포 타입별 아이소폼 스위치")
+col_nav3.page_link("pages/07_bisect.py",          label="🧫 BISECT Cases",     help="개별 케이스 상세 분석")

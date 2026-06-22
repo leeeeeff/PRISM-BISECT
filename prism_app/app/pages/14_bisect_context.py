@@ -54,6 +54,22 @@ def load_lamp5():
     return sub, donor
 
 
+# ── 상단 핵심 지표 ─────────────────────────────────────────────────────────────
+_ct_df_m    = load_celltype()
+_braak_df_m = load_braak()
+_n_genes   = int(_ct_df_m['gene'].nunique()) if not _ct_df_m.empty else 0
+_n_sig_sw  = int(_ct_df_m['sig'].isin(['***', '**', '*']).sum()) if not _ct_df_m.empty else 0
+_n_braak   = (int(_braak_df_m['sig'].isin(['**', '*']).sum())
+              if not _braak_df_m.empty and 'sig' in _braak_df_m.columns else 0)
+_n_novel   = 2  # LAMP5/KIT + C18 (hard-coded novel findings)
+
+_mb1, _mb2, _mb3, _mb4 = st.columns(4)
+_mb1.metric("분석 유전자",         _n_genes)
+_mb2.metric("유의 스위치",         _n_sig_sw, f"cell × gene")
+_mb3.metric("Braak 상관 유전자",   _n_braak,  "p<0.05 Bonf")
+_mb4.metric("Novel AD 세포 발견", _n_novel,  "C15 · C18")
+st.divider()
+
 tab1, tab2, tab3, tab4 = st.tabs([
     "🧬 세포 타입별 Switch",
     "📈 Braak 상관",
@@ -182,7 +198,7 @@ with tab2:
 
         # ── 버블 차트 ──────────────────────────────────────────────────────────
         fig_bub = go.Figure()
-        for sig_lv in ['**', '*', '†', 'ns']:
+        for sig_lv in ['***', '**', '*', '†', 'ns']:
             grp = braak_df[braak_df['sig'] == sig_lv]
             if grp.empty:
                 continue
@@ -474,3 +490,11 @@ with tab4:
 - **PRSS12 공동발현**: C18(L4 atypical)과 분자적 연결점 → 별도 손상 경로?
 - **논문 서술**: "Novel AD-enriched LAMP5/KIT interneuron, distinct from LAMP5/NDNF neurogliaform cells"
 """)
+
+# ── 페이지 간 이동 ─────────────────────────────────────────────────────────────
+st.divider()
+st.markdown("#### 관련 페이지")
+_cnav1, _cnav2, _cnav3 = st.columns(3)
+_cnav1.page_link("pages/12_brain3d.py",          label="🧠 뇌 3D 세포 지도",  help="3D 해부학적 지도 + UMAP 공간")
+_cnav2.page_link("pages/13_cell_composition.py",  label="📊 세포 구성 AD/CT", help="AD vs Control 세포 구성 비율")
+_cnav3.page_link("pages/07_bisect.py",            label="🧫 BISECT Cases",    help="개별 케이스 상세 분석")

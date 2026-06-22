@@ -41,7 +41,7 @@ CELL_TYPE_COLORS = {
     'Vascular cell': '#e67e22', 'Lymphocyte': '#95a5a6',
 }
 CONDITION_COLORS = {'AD': '#e74c3c', 'Control': '#3498db', 'Active control': '#f39c12'}
-SIG_MARKS = {'**': '★★', '*': '★', '†': '◆', 'ns': ''}
+SIG_MARKS = {'***': '★★★', '**': '★★', '*': '★', '†': '◆', 'ns': ''}
 
 REGION_META = {
     'lh_cerebrum': {'color': '#5577cc', 'opacity': 0.10, 'label': '대뇌 좌반구'},
@@ -1218,3 +1218,11 @@ with st.expander("층 깊이 참고 기준 (Allen Human Brain Atlas + FreeSurfer
     **소뇌/뇌간**: 해부학적 위치 기반 절차 메시 (MNI 근사)
     **주의**: 세포 XY 위치는 MNI 타원체 공간 (무작위 배치), Z = 층 깊이만 해부학적 의미
     """)
+
+# ── 페이지 간 이동 ─────────────────────────────────────────────────────────────
+st.divider()
+st.markdown("#### 관련 페이지")
+_b3d_n1, _b3d_n2, _b3d_n3 = st.columns(3)
+_b3d_n1.page_link("pages/13_cell_composition.py", label="📊 세포 구성 AD/CT",  help="AD vs Control 세포 구성 비율 변화")
+_b3d_n2.page_link("pages/14_bisect_context.py",   label="🔬 BISECT 세포 맥락", help="세포 타입별 아이소폼 스위치 분석")
+_b3d_n3.page_link("pages/07_bisect.py",           label="🧫 BISECT Cases",     help="개별 케이스 상세 분석")
