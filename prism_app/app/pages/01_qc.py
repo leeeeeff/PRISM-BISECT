@@ -299,7 +299,7 @@ else:
 
     # Fast path: brain_672 pre-computed AUPRC (avoids 30s recomputation)
     _tissue = cfg.get('tissue', '')
-    _precomp_path = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_full_672_meta.json')
+    _precomp_path = Path(__file__).parents[3] / 'reports' / 'brain_full_672_meta.json'
     if _tissue == 'brain_672' and _precomp_path.exists():
         from prism_app.reports.validation import ValidationReport
         with open(_precomp_path) as _f:

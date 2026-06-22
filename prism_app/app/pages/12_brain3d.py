@@ -230,9 +230,10 @@ def add_cut_plane_cap(fig, meshes, x_cut, opacity=0.22):
 
 
 # ── Phase A: PRISM score 로드/집계 ────────────────────────────────────────────
-ISO_TSV    = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_isoform_modules.tsv')
-SCORES_NPY = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_full_672_scores.npy')
-PRISM_META = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_full_672_meta.json')
+_REPORTS   = Path(__file__).parents[3] / 'reports'
+ISO_TSV    = _REPORTS / 'brain_isoform_modules.tsv'
+SCORES_NPY = _REPORTS / 'brain_full_672_scores.npy'   # 165MB — not in git; optional
+PRISM_META = _REPORTS / 'brain_full_672_meta.json'
 
 
 @st.cache_data(show_spinner=False)
