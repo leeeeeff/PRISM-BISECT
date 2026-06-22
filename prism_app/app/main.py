@@ -226,6 +226,11 @@ pg = st.navigation(
             st.Page("pages/main_home.py", title="PRISM+BISECT",  icon="🧬", default=True),
             st.Page("pages/00_hub.py",    title="Analysis Hub",  icon="🏠"),
         ],
+        "세포 아틀라스": [
+            st.Page("pages/12_brain3d.py",          title="뇌 3D 세포 지도",   icon="🧠"),
+            st.Page("pages/13_cell_composition.py", title="세포 구성 AD/CT",   icon="📊"),
+            st.Page("pages/14_bisect_context.py",   title="BISECT 세포 맥락",  icon="🔬"),
+        ],
         "데이터셋 분석": [
             st.Page("pages/01_qc.py",        title="QC & Overview",       icon="📊"),
             st.Page("pages/02_landscape.py",  title="Module Landscape",    icon="🗺️"),
