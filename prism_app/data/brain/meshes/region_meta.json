@@ -1,0 +1,39 @@
+{
+  "lh_cerebrum": {
+    "color": "#5577cc",
+    "opacity": 0.12,
+    "label": "대뇌 좌반구"
+  },
+  "rh_cerebrum": {
+    "color": "#4466bb",
+    "opacity": 0.12,
+    "label": "대뇌 우반구"
+  },
+  "cerebellum": {
+    "color": "#ee8833",
+    "opacity": 0.25,
+    "label": "소뇌"
+  },
+  "midbrain": {
+    "color": "#44cc88",
+    "opacity": 0.4,
+    "label": "중뇌"
+  },
+  "pons": {
+    "color": "#33bb77",
+    "opacity": 0.4,
+    "label": "교뇌"
+  },
+  "medulla": {
+    "color": "#22aa66",
+    "opacity": 0.4,
+    "label": "연수"
+  },
+  "lobe_colors": {
+    "Frontal": "#4488dd",
+    "Parietal": "#dd6633",
+    "Temporal": "#33cc77",
+    "Occipital": "#cc44cc",
+    "Other": "#888888"
+  }
+}

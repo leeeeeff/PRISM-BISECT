@@ -45,6 +45,11 @@ hMuscle/saved_models/
 !prism_app/data/demo/*.json
 !prism_app/data/demo/*.tsv
 !prism_app/data/annotations/
+# brain mesh files for 3D cell atlas pages
+!prism_app/data/brain/*.npz
+!prism_app/data/brain/*.npy
+!prism_app/data/brain/meshes/*.npz
+!prism_app/data/brain/meshes/*.npy
 # brain_672 dataset exceeds GitHub 100MB limit — hosted on Hugging Face Hub
 prism_app/data/demo/brain_full_672_scores.npy
 prism_app/data/demo/brain_full_672_ids.npy

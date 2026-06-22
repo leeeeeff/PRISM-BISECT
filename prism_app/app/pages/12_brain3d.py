@@ -24,7 +24,7 @@ _CELL_DATA   = Path(__file__).parents[2] / 'data' / 'cell_atlas'
 ANAT_CSV    = _BRAIN_DATA / 'brain_3d_anatomical_coords.csv'
 UMAP_CSV    = _BRAIN_DATA / 'brain_3d_coords.csv'
 SUBTYPE_TSV = _CELL_DATA  / 'final_subtype_classification.tsv'
-MESH_DIR    = Path('/home/welcome1/sw1686/DIFFUSE/reports/brain_meshes')
+MESH_DIR    = _BRAIN_DATA / 'meshes'
 
 # ── 색상 팔레트 ───────────────────────────────────────────────────────────────
 LAYER_COLORS = {
