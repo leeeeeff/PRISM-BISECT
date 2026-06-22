@@ -41,10 +41,13 @@ def load_data():
 st.title("🧬 세포 구성 분석 — AD vs Control")
 st.caption("30개 Leiden 클러스터 서브타입별 AD/CT 비율 변화 | PO+SMC 코호트 배치 효과 검증 포함")
 
+with st.expander("🔧 경로 진단 (DEBUG)", expanded=False):
+    st.code(f"SUBTYPE_TSV = {SUBTYPE_TSV}\nexists = {SUBTYPE_TSV.exists()}\nCOHORT_TSV = {COHORT_TSV}\nexists = {COHORT_TSV.exists()}")
+
 sub_df, cohort_df, donor_df, layer_df, mwu_df, adc_df = load_data()
 
 if sub_df.empty:
-    st.error("final_subtype_classification.tsv 파일이 없습니다.")
+    st.error(f"final_subtype_classification.tsv 파일이 없습니다. 경로: {SUBTYPE_TSV}")
     st.stop()
 
 if not layer_df.empty:
