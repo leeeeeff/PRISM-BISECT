@@ -1,0 +1,273 @@
+cell_type	gene	donor	cohort	condition	ratio	total	ct_count	ad_count
+Astrocyte	KIF21B	SMC043	SMC	AD		33.0	0.0	0.0
+Astrocyte	NDUFS4	SMC029	SMC	AD	1.0	3.0	3.0	0.0
+Astrocyte	NDUFS7	PO05	PO	AD	1.0	5.0	5.0	0.0
+Astrocyte	NDUFS7	PO15	PO	Control	1.0	5.0	5.0	0.0
+Astrocyte	NDUFS7	PO23	PO	Control	1.0	7.0	7.0	0.0
+Astrocyte	NDUFS7	PO28	PO	AD	1.0	10.0	10.0	0.0
+Astrocyte	NDUFS7	PO41	PO	AD	1.0	5.0	3.0	0.0
+Astrocyte	NDUFS7	PO42	PO	AD	1.0	10.0	9.0	0.0
+Astrocyte	NDUFS7	SMC027	SMC	Control	0.9941520467836257	194.0	170.0	1.0
+Astrocyte	NDUFS7	SMC029	SMC	AD	1.0	7.0	6.0	0.0
+Astrocyte	NDUFS7	SMC030	SMC	Control	1.0	10.0	10.0	0.0
+Astrocyte	NDUFS7	SMC031	SMC	Active control	0.989010989010989	186.0	180.0	2.0
+Astrocyte	NDUFS7	SMC032	SMC	AD	1.0	10.0	10.0	0.0
+Astrocyte	NDUFS7	SMC033	SMC	Control	1.0	58.0	54.0	0.0
+Astrocyte	NDUFS7	SMC035	SMC	Active control	1.0	49.0	49.0	0.0
+Astrocyte	NDUFS7	SMC038	SMC	AD	1.0	53.0	53.0	0.0
+Astrocyte	NDUFS7	SMC039	SMC	AD	0.125	8.0	1.0	7.0
+Astrocyte	NDUFS7	SMC053	SMC	Active control	1.0	14.0	14.0	0.0
+Astrocyte	NDUFS8	SMC027	SMC	Control	1.0	42.0	40.0	0.0
+Astrocyte	NDUFS8	SMC029	SMC	AD		3.0	0.0	0.0
+Astrocyte	NDUFS8	SMC031	SMC	Active control	1.0	178.0	148.0	0.0
+Astrocyte	NDUFS8	SMC033	SMC	Control		5.0	0.0	0.0
+Astrocyte	NDUFS8	SMC035	SMC	Active control	1.0	34.0	5.0	0.0
+Astrocyte	NDUFS8	SMC049	SMC	AD	0.0	3.0	0.0	3.0
+Astrocyte	DLG1	PO15	PO	Control		7.0	0.0	0.0
+Astrocyte	DLG1	PO42	PO	AD		5.0	0.0	0.0
+Excitatory_neuron	KIF21B	PO05	PO	AD	0.0	3.0	0.0	3.0
+Excitatory_neuron	KIF21B	PO11	PO	AD	0.0	6.0	0.0	6.0
+Excitatory_neuron	KIF21B	PO23	PO	Control	0.8666666666666667	24.0	13.0	2.0
+Excitatory_neuron	KIF21B	PO28	PO	AD	0.0	10.0	0.0	8.0
+Excitatory_neuron	KIF21B	PO41	PO	AD		3.0	0.0	0.0
+Excitatory_neuron	KIF21B	PO42	PO	AD		4.0	0.0	0.0
+Excitatory_neuron	KIF21B	SMC031	SMC	Active control		6.0	0.0	0.0
+Excitatory_neuron	KIF21B	SMC033	SMC	Control	0.0	8.0	0.0	8.0
+Excitatory_neuron	KIF21B	SMC037	SMC	Active control	0.0	3.0	0.0	3.0
+Excitatory_neuron	KIF21B	SMC038	SMC	AD		27.0	0.0	0.0
+Excitatory_neuron	KIF21B	SMC049	SMC	AD	0.0	23.0	0.0	11.0
+Excitatory_neuron	KIF21B	SMC053	SMC	Active control		3.0	0.0	0.0
+Excitatory_neuron	NDUFS4	PO05	PO	AD	0.0	20.0	0.0	0.0
+Excitatory_neuron	NDUFS4	PO11	PO	AD	0.3333333333333333	3.0	1.0	0.0
+Excitatory_neuron	NDUFS4	PO15	PO	Control	0.16666666666666666	6.0	1.0	0.0
+Excitatory_neuron	NDUFS4	PO20	PO	Control	0.0	5.0	0.0	0.0
+Excitatory_neuron	NDUFS4	PO41	PO	AD	0.0	6.0	0.0	0.0
+Excitatory_neuron	NDUFS4	SMC030	SMC	Control	0.5625	16.0	9.0	0.0
+Excitatory_neuron	NDUFS4	SMC033	SMC	Control	1.0	2.0	2.0	0.0
+Excitatory_neuron	NDUFS4	SMC037	SMC	Active control	0.5	2.0	1.0	0.0
+Excitatory_neuron	NDUFS4	SMC041	SMC	AD	0.5	2.0	1.0	0.0
+Excitatory_neuron	NDUFS4	SMC049	SMC	AD	0.1111111111111111	9.0	1.0	0.0
+Excitatory_neuron	NDUFS4	SMC052	SMC	Control	0.5	4.0	2.0	0.0
+Excitatory_neuron	NDUFS4	SMC053	SMC	Active control	0.0	3.0	0.0	0.0
+Excitatory_neuron	NDUFS7	PO05	PO	AD	1.0	22.0	22.0	0.0
+Excitatory_neuron	NDUFS7	PO13	PO	Control	1.0	10.0	9.0	0.0
+Excitatory_neuron	NDUFS7	PO15	PO	Control	1.0	22.0	19.0	0.0
+Excitatory_neuron	NDUFS7	PO20	PO	Control	1.0	18.0	18.0	0.0
+Excitatory_neuron	NDUFS7	PO23	PO	Control	1.0	108.0	86.0	0.0
+Excitatory_neuron	NDUFS7	PO28	PO	AD	0.9838709677419355	187.0	183.0	3.0
+Excitatory_neuron	NDUFS7	PO41	PO	AD	1.0	18.0	14.0	0.0
+Excitatory_neuron	NDUFS7	PO42	PO	AD	1.0	23.0	18.0	0.0
+Excitatory_neuron	NDUFS7	SMC027	SMC	Control	1.0	59.0	55.0	0.0
+Excitatory_neuron	NDUFS7	SMC030	SMC	Control	1.0	62.0	54.0	0.0
+Excitatory_neuron	NDUFS7	SMC031	SMC	Active control	1.0	53.0	51.0	0.0
+Excitatory_neuron	NDUFS7	SMC032	SMC	AD	1.0	41.0	39.0	0.0
+Excitatory_neuron	NDUFS7	SMC033	SMC	Control	1.0	534.0	488.0	0.0
+Excitatory_neuron	NDUFS7	SMC035	SMC	Active control	0.9958333333333333	494.0	478.0	2.0
+Excitatory_neuron	NDUFS7	SMC037	SMC	Active control	0.9615384615384616	27.0	25.0	1.0
+Excitatory_neuron	NDUFS7	SMC038	SMC	AD	0.6666666666666666	570.0	372.0	186.0
+Excitatory_neuron	NDUFS7	SMC039	SMC	AD	1.0	8.0	8.0	0.0
+Excitatory_neuron	NDUFS7	SMC041	SMC	AD	0.9619047619047619	122.0	101.0	4.0
+Excitatory_neuron	NDUFS7	SMC049	SMC	AD	0.924812030075188	148.0	123.0	10.0
+Excitatory_neuron	NDUFS7	SMC052	SMC	Control	1.0	39.0	21.0	0.0
+Excitatory_neuron	NDUFS7	SMC053	SMC	Active control	0.9949238578680203	218.0	196.0	1.0
+Excitatory_neuron	NDUFS8	PO05	PO	AD	0.3333333333333333	3.0	1.0	2.0
+Excitatory_neuron	NDUFS8	PO15	PO	Control	1.0	4.0	2.0	0.0
+Excitatory_neuron	NDUFS8	PO20	PO	Control	0.8333333333333334	9.0	5.0	1.0
+Excitatory_neuron	NDUFS8	PO23	PO	Control	1.0	32.0	24.0	0.0
+Excitatory_neuron	NDUFS8	PO28	PO	AD	0.9285714285714286	51.0	39.0	3.0
+Excitatory_neuron	NDUFS8	PO42	PO	AD	1.0	9.0	3.0	0.0
+Excitatory_neuron	NDUFS8	SMC029	SMC	AD		3.0	0.0	0.0
+Excitatory_neuron	NDUFS8	SMC030	SMC	Control	0.9230769230769231	25.0	12.0	1.0
+Excitatory_neuron	NDUFS8	SMC031	SMC	Active control	1.0	4.0	1.0	0.0
+Excitatory_neuron	NDUFS8	SMC032	SMC	AD	1.0	8.0	1.0	0.0
+Excitatory_neuron	NDUFS8	SMC033	SMC	Control	0.9647058823529412	166.0	82.0	3.0
+Excitatory_neuron	NDUFS8	SMC035	SMC	Active control	0.978494623655914	191.0	91.0	2.0
+Excitatory_neuron	NDUFS8	SMC037	SMC	Active control	1.0	12.0	1.0	0.0
+Excitatory_neuron	NDUFS8	SMC038	SMC	AD	0.9056603773584906	87.0	48.0	5.0
+Excitatory_neuron	NDUFS8	SMC041	SMC	AD	0.5	44.0	1.0	1.0
+Excitatory_neuron	NDUFS8	SMC049	SMC	AD	0.94	163.0	94.0	6.0
+Excitatory_neuron	NDUFS8	SMC052	SMC	Control	1.0	52.0	43.0	0.0
+Excitatory_neuron	NDUFS8	SMC053	SMC	Active control	0.967741935483871	84.0	60.0	2.0
+Excitatory_neuron	DLG1	PO05	PO	AD	1.0	19.0	2.0	0.0
+Excitatory_neuron	DLG1	PO11	PO	AD	0.5	21.0	2.0	2.0
+Excitatory_neuron	DLG1	PO13	PO	Control		19.0	0.0	0.0
+Excitatory_neuron	DLG1	PO15	PO	Control	1.0	35.0	12.0	0.0
+Excitatory_neuron	DLG1	PO20	PO	Control	0.4666666666666667	32.0	7.0	8.0
+Excitatory_neuron	DLG1	PO23	PO	Control	0.9230769230769231	27.0	12.0	1.0
+Excitatory_neuron	DLG1	PO28	PO	AD	0.9545454545454546	56.0	21.0	1.0
+Excitatory_neuron	DLG1	PO41	PO	AD	0.8666666666666667	33.0	13.0	2.0
+Excitatory_neuron	DLG1	PO42	PO	AD	0.6	12.0	3.0	2.0
+Excitatory_neuron	DLG1	SMC029	SMC	AD		5.0	0.0	0.0
+Excitatory_neuron	DLG1	SMC030	SMC	Control	0.8333333333333334	24.0	5.0	1.0
+Excitatory_neuron	DLG1	SMC033	SMC	Control	1.0	56.0	22.0	0.0
+Excitatory_neuron	DLG1	SMC035	SMC	Active control	1.0	40.0	9.0	0.0
+Excitatory_neuron	DLG1	SMC037	SMC	Active control	1.0	25.0	3.0	0.0
+Excitatory_neuron	DLG1	SMC038	SMC	AD	0.9444444444444444	36.0	17.0	1.0
+Excitatory_neuron	DLG1	SMC039	SMC	AD	0.0	19.0	0.0	9.0
+Excitatory_neuron	DLG1	SMC041	SMC	AD	0.0	21.0	0.0	6.0
+Excitatory_neuron	DLG1	SMC049	SMC	AD	0.3	74.0	6.0	14.0
+Excitatory_neuron	DLG1	SMC052	SMC	Control	0.6923076923076923	41.0	9.0	4.0
+Excitatory_neuron	DLG1	SMC053	SMC	Active control	0.38461538461538464	56.0	15.0	24.0
+Inhibitory_neuron	KIF21B	PO11	PO	AD	0.0	9.0	0.0	9.0
+Inhibitory_neuron	KIF21B	PO23	PO	Control	0.2857142857142857	25.0	4.0	10.0
+Inhibitory_neuron	KIF21B	PO41	PO	AD	0.0	15.0	0.0	14.0
+Inhibitory_neuron	KIF21B	SMC030	SMC	Control	0.0	11.0	0.0	9.0
+Inhibitory_neuron	KIF21B	SMC033	SMC	Control	0.0	3.0	0.0	3.0
+Inhibitory_neuron	KIF21B	SMC037	SMC	Active control	0.0	56.0	0.0	56.0
+Inhibitory_neuron	KIF21B	SMC049	SMC	AD		7.0	0.0	0.0
+Inhibitory_neuron	NDUFS4	PO11	PO	AD	0.0	2.0	0.0	0.0
+Inhibitory_neuron	NDUFS4	PO23	PO	Control	0.5	2.0	1.0	0.0
+Inhibitory_neuron	NDUFS4	SMC030	SMC	Control	0.6	5.0	3.0	0.0
+Inhibitory_neuron	NDUFS4	SMC032	SMC	AD	0.3333333333333333	6.0	2.0	0.0
+Inhibitory_neuron	NDUFS4	SMC037	SMC	Active control	0.0	4.0	0.0	0.0
+Inhibitory_neuron	NDUFS4	SMC038	SMC	AD	0.0	6.0	0.0	0.0
+Inhibitory_neuron	NDUFS4	SMC049	SMC	AD	0.0	2.0	0.0	0.0
+Inhibitory_neuron	NDUFS4	SMC052	SMC	Control	0.1111111111111111	9.0	1.0	0.0
+Inhibitory_neuron	NDUFS7	PO05	PO	AD	1.0	5.0	4.0	0.0
+Inhibitory_neuron	NDUFS7	PO15	PO	Control	1.0	19.0	19.0	0.0
+Inhibitory_neuron	NDUFS7	PO20	PO	Control	1.0	7.0	7.0	0.0
+Inhibitory_neuron	NDUFS7	PO23	PO	Control	1.0	24.0	18.0	0.0
+Inhibitory_neuron	NDUFS7	PO28	PO	AD	0.9428571428571428	37.0	33.0	2.0
+Inhibitory_neuron	NDUFS7	PO41	PO	AD	1.0	10.0	10.0	0.0
+Inhibitory_neuron	NDUFS7	PO42	PO	AD	1.0	7.0	5.0	0.0
+Inhibitory_neuron	NDUFS7	SMC027	SMC	Control	1.0	57.0	55.0	0.0
+Inhibitory_neuron	NDUFS7	SMC030	SMC	Control	0.96875	81.0	62.0	2.0
+Inhibitory_neuron	NDUFS7	SMC031	SMC	Active control	1.0	167.0	153.0	0.0
+Inhibitory_neuron	NDUFS7	SMC032	SMC	AD	1.0	39.0	32.0	0.0
+Inhibitory_neuron	NDUFS7	SMC033	SMC	Control	0.9939024390243902	341.0	326.0	2.0
+Inhibitory_neuron	NDUFS7	SMC035	SMC	Active control	0.990521327014218	221.0	209.0	2.0
+Inhibitory_neuron	NDUFS7	SMC037	SMC	Active control	1.0	31.0	29.0	0.0
+Inhibitory_neuron	NDUFS7	SMC038	SMC	AD	0.9702127659574468	257.0	228.0	7.0
+Inhibitory_neuron	NDUFS7	SMC039	SMC	AD	0.9921875	128.0	127.0	1.0
+Inhibitory_neuron	NDUFS7	SMC041	SMC	AD	1.0	59.0	47.0	0.0
+Inhibitory_neuron	NDUFS7	SMC049	SMC	AD	0.8979591836734694	52.0	44.0	5.0
+Inhibitory_neuron	NDUFS7	SMC052	SMC	Control	0.3333333333333333	7.0	1.0	2.0
+Inhibitory_neuron	NDUFS7	SMC053	SMC	Active control	0.9868421052631579	88.0	75.0	1.0
+Inhibitory_neuron	NDUFS8	PO05	PO	AD	0.25	4.0	1.0	3.0
+Inhibitory_neuron	NDUFS8	PO15	PO	Control	1.0	3.0	3.0	0.0
+Inhibitory_neuron	NDUFS8	PO41	PO	AD	0.75	4.0	3.0	1.0
+Inhibitory_neuron	NDUFS8	SMC027	SMC	Control	1.0	19.0	16.0	0.0
+Inhibitory_neuron	NDUFS8	SMC029	SMC	AD	1.0	10.0	7.0	0.0
+Inhibitory_neuron	NDUFS8	SMC030	SMC	Control	0.9473684210526315	35.0	18.0	1.0
+Inhibitory_neuron	NDUFS8	SMC031	SMC	Active control	1.0	4.0	1.0	0.0
+Inhibitory_neuron	NDUFS8	SMC032	SMC	AD	1.0	7.0	2.0	0.0
+Inhibitory_neuron	NDUFS8	SMC033	SMC	Control	1.0	120.0	61.0	0.0
+Inhibitory_neuron	NDUFS8	SMC035	SMC	Active control	1.0	171.0	79.0	0.0
+Inhibitory_neuron	NDUFS8	SMC037	SMC	Active control	1.0	29.0	13.0	0.0
+Inhibitory_neuron	NDUFS8	SMC038	SMC	AD	0.5116279069767442	57.0	22.0	21.0
+Inhibitory_neuron	NDUFS8	SMC041	SMC	AD	0.0	8.0	0.0	7.0
+Inhibitory_neuron	NDUFS8	SMC049	SMC	AD	0.8285714285714286	91.0	29.0	6.0
+Inhibitory_neuron	NDUFS8	SMC052	SMC	Control	1.0	10.0	7.0	0.0
+Inhibitory_neuron	NDUFS8	SMC053	SMC	Active control	0.5909090909090909	53.0	13.0	9.0
+Inhibitory_neuron	DLG1	PO05	PO	AD	1.0	11.0	10.0	0.0
+Inhibitory_neuron	DLG1	PO13	PO	Control	1.0	9.0	6.0	0.0
+Inhibitory_neuron	DLG1	PO15	PO	Control	1.0	8.0	5.0	0.0
+Inhibitory_neuron	DLG1	PO23	PO	Control		10.0	0.0	0.0
+Inhibitory_neuron	DLG1	PO42	PO	AD	0.0	5.0	0.0	1.0
+Inhibitory_neuron	DLG1	SMC030	SMC	Control	0.5	14.0	2.0	2.0
+Inhibitory_neuron	DLG1	SMC032	SMC	AD		21.0	0.0	0.0
+Inhibitory_neuron	DLG1	SMC033	SMC	Control		25.0	0.0	0.0
+Inhibitory_neuron	DLG1	SMC035	SMC	Active control		6.0	0.0	0.0
+Inhibitory_neuron	DLG1	SMC038	SMC	AD	0.3333333333333333	12.0	3.0	6.0
+Inhibitory_neuron	DLG1	SMC041	SMC	AD		19.0	0.0	0.0
+Inhibitory_neuron	DLG1	SMC049	SMC	AD	1.0	5.0	1.0	0.0
+Lymphocyte	NDUFS7	SMC033	SMC	Control	1.0	9.0	9.0	0.0
+Microglia	NDUFS4	SMC030	SMC	Control	0.0	18.0	0.0	0.0
+Microglia	NDUFS7	SMC030	SMC	Control	1.0	6.0	5.0	0.0
+Microglia	NDUFS7	SMC031	SMC	Active control	1.0	37.0	36.0	0.0
+Microglia	NDUFS7	SMC049	SMC	AD	1.0	7.0	7.0	0.0
+Microglia	NDUFS8	PO23	PO	Control		8.0	0.0	0.0
+Microglia	NDUFS8	PO28	PO	AD	1.0	3.0	3.0	0.0
+Microglia	NDUFS8	SMC029	SMC	AD	1.0	3.0	2.0	0.0
+OPC	NDUFS4	SMC030	SMC	Control	0.8	5.0	4.0	0.0
+OPC	NDUFS4	SMC031	SMC	Active control	0.25	4.0	1.0	0.0
+OPC	NDUFS4	SMC032	SMC	AD	0.125	8.0	1.0	0.0
+OPC	NDUFS7	PO13	PO	Control	0.8	7.0	4.0	1.0
+OPC	NDUFS7	PO20	PO	Control	1.0	6.0	5.0	0.0
+OPC	NDUFS7	PO41	PO	AD	1.0	18.0	18.0	0.0
+OPC	NDUFS7	PO42	PO	AD	0.9090909090909091	11.0	10.0	1.0
+OPC	NDUFS7	SMC027	SMC	Control	1.0	94.0	94.0	0.0
+OPC	NDUFS7	SMC029	SMC	AD	1.0	14.0	10.0	0.0
+OPC	NDUFS7	SMC030	SMC	Control	1.0	5.0	4.0	0.0
+OPC	NDUFS7	SMC031	SMC	Active control	0.9935897435897436	159.0	155.0	1.0
+OPC	NDUFS7	SMC032	SMC	AD	1.0	16.0	15.0	0.0
+OPC	NDUFS7	SMC033	SMC	Control	1.0	50.0	50.0	0.0
+OPC	NDUFS7	SMC035	SMC	Active control	1.0	39.0	36.0	0.0
+OPC	NDUFS7	SMC036	SMC	AD	1.0	26.0	25.0	0.0
+OPC	NDUFS7	SMC038	SMC	AD	1.0	30.0	29.0	0.0
+OPC	NDUFS7	SMC053	SMC	Active control	1.0	5.0	5.0	0.0
+OPC	NDUFS8	PO15	PO	Control	0.0	4.0	0.0	4.0
+OPC	NDUFS8	PO20	PO	Control	1.0	7.0	2.0	0.0
+OPC	NDUFS8	PO28	PO	AD	1.0	8.0	1.0	0.0
+OPC	NDUFS8	SMC027	SMC	Control	1.0	98.0	28.0	0.0
+OPC	NDUFS8	SMC029	SMC	AD		13.0	0.0	0.0
+OPC	NDUFS8	SMC030	SMC	Control	1.0	5.0	2.0	0.0
+OPC	NDUFS8	SMC031	SMC	Active control	1.0	70.0	68.0	0.0
+OPC	NDUFS8	SMC032	SMC	AD		8.0	0.0	0.0
+OPC	NDUFS8	SMC035	SMC	Active control	1.0	43.0	23.0	0.0
+OPC	NDUFS8	SMC038	SMC	AD	1.0	10.0	10.0	0.0
+OPC	NDUFS8	SMC039	SMC	AD	0.16666666666666666	7.0	1.0	5.0
+OPC	NDUFS8	SMC049	SMC	AD	1.0	6.0	4.0	0.0
+OPC	NDUFS8	SMC052	SMC	Control	1.0	5.0	5.0	0.0
+OPC	DLG1	PO11	PO	AD	0.0	16.0	0.0	5.0
+OPC	DLG1	PO13	PO	Control		34.0	0.0	0.0
+OPC	DLG1	SMC029	SMC	AD	0.0	9.0	0.0	1.0
+OPC	DLG1	SMC030	SMC	Control		6.0	0.0	0.0
+Oligodendrocyte	NDUFS4	PO11	PO	AD	0.05555555555555555	18.0	1.0	0.0
+Oligodendrocyte	NDUFS4	PO20	PO	Control	0.0	9.0	0.0	0.0
+Oligodendrocyte	NDUFS4	SMC027	SMC	Control	0.0	2.0	0.0	0.0
+Oligodendrocyte	NDUFS4	SMC029	SMC	AD	0.5	8.0	4.0	0.0
+Oligodendrocyte	NDUFS4	SMC030	SMC	Control	0.47058823529411764	17.0	8.0	0.0
+Oligodendrocyte	NDUFS4	SMC031	SMC	Active control	0.5	2.0	1.0	0.0
+Oligodendrocyte	NDUFS4	SMC032	SMC	AD	0.2	5.0	1.0	0.0
+Oligodendrocyte	NDUFS4	SMC037	SMC	Active control	0.0	3.0	0.0	0.0
+Oligodendrocyte	NDUFS7	PO05	PO	AD	1.0	29.0	23.0	0.0
+Oligodendrocyte	NDUFS7	PO11	PO	AD	1.0	13.0	13.0	0.0
+Oligodendrocyte	NDUFS7	PO13	PO	Control	1.0	15.0	13.0	0.0
+Oligodendrocyte	NDUFS7	PO20	PO	Control	1.0	57.0	51.0	0.0
+Oligodendrocyte	NDUFS7	PO23	PO	Control	1.0	5.0	5.0	0.0
+Oligodendrocyte	NDUFS7	PO28	PO	AD	1.0	40.0	40.0	0.0
+Oligodendrocyte	NDUFS7	PO41	PO	AD	1.0	7.0	7.0	0.0
+Oligodendrocyte	NDUFS7	PO42	PO	AD	1.0	7.0	7.0	0.0
+Oligodendrocyte	NDUFS7	SMC027	SMC	Control	1.0	545.0	475.0	0.0
+Oligodendrocyte	NDUFS7	SMC029	SMC	AD	1.0	250.0	197.0	0.0
+Oligodendrocyte	NDUFS7	SMC030	SMC	Control	1.0	75.0	48.0	0.0
+Oligodendrocyte	NDUFS7	SMC031	SMC	Active control	0.9940029985007496	758.0	663.0	4.0
+Oligodendrocyte	NDUFS7	SMC032	SMC	AD	1.0	70.0	60.0	0.0
+Oligodendrocyte	NDUFS7	SMC033	SMC	Control	0.9965397923875432	317.0	288.0	1.0
+Oligodendrocyte	NDUFS7	SMC035	SMC	Active control	0.9895470383275261	292.0	284.0	3.0
+Oligodendrocyte	NDUFS7	SMC036	SMC	AD	1.0	7.0	1.0	0.0
+Oligodendrocyte	NDUFS7	SMC037	SMC	Active control	1.0	30.0	23.0	0.0
+Oligodendrocyte	NDUFS7	SMC039	SMC	AD	1.0	204.0	194.0	0.0
+Oligodendrocyte	NDUFS7	SMC041	SMC	AD	1.0	230.0	218.0	0.0
+Oligodendrocyte	NDUFS8	SMC029	SMC	AD		26.0	0.0	0.0
+Oligodendrocyte	NDUFS8	SMC030	SMC	Control	0.0	12.0	0.0	1.0
+Oligodendrocyte	NDUFS8	SMC031	SMC	Active control	1.0	28.0	26.0	0.0
+Oligodendrocyte	NDUFS8	SMC032	SMC	AD		9.0	0.0	0.0
+Oligodendrocyte	NDUFS8	SMC033	SMC	Control	0.7272727272727273	12.0	8.0	3.0
+Oligodendrocyte	NDUFS8	SMC035	SMC	Active control	1.0	10.0	1.0	0.0
+Oligodendrocyte	NDUFS8	SMC037	SMC	Active control		7.0	0.0	0.0
+Oligodendrocyte	NDUFS8	SMC039	SMC	AD		5.0	0.0	0.0
+Oligodendrocyte	DLG1	PO05	PO	AD	0.0	125.0	0.0	6.0
+Oligodendrocyte	DLG1	PO11	PO	AD	0.0	179.0	0.0	4.0
+Oligodendrocyte	DLG1	PO13	PO	Control	0.0	67.0	0.0	1.0
+Oligodendrocyte	DLG1	PO15	PO	Control		41.0	0.0	0.0
+Oligodendrocyte	DLG1	PO20	PO	Control	0.0	214.0	0.0	1.0
+Oligodendrocyte	DLG1	PO23	PO	Control		12.0	0.0	0.0
+Oligodendrocyte	DLG1	PO28	PO	AD	0.08333333333333333	49.0	1.0	11.0
+Oligodendrocyte	DLG1	PO41	PO	AD		69.0	0.0	0.0
+Oligodendrocyte	DLG1	PO42	PO	AD	0.0	20.0	0.0	3.0
+Oligodendrocyte	DLG1	SMC027	SMC	Control		163.0	0.0	0.0
+Oligodendrocyte	DLG1	SMC029	SMC	AD	0.0	681.0	0.0	21.0
+Oligodendrocyte	DLG1	SMC030	SMC	Control		237.0	0.0	0.0
+Oligodendrocyte	DLG1	SMC031	SMC	Active control	0.0	62.0	0.0	39.0
+Oligodendrocyte	DLG1	SMC032	SMC	AD		198.0	0.0	0.0
+Oligodendrocyte	DLG1	SMC033	SMC	Control	1.0	76.0	3.0	0.0
+Oligodendrocyte	DLG1	SMC035	SMC	Active control		179.0	0.0	0.0
+Oligodendrocyte	DLG1	SMC036	SMC	AD		7.0	0.0	0.0
+Oligodendrocyte	DLG1	SMC037	SMC	Active control	0.0	107.0	0.0	16.0
+Oligodendrocyte	DLG1	SMC039	SMC	AD	0.0	20.0	0.0	1.0
+Oligodendrocyte	DLG1	SMC041	SMC	AD		7.0	0.0	0.0
+Oligodendrocyte	DLG1	SMC043	SMC	AD		9.0	0.0	0.0
+Vascular_cell	NDUFS7	PO41	PO	AD	1.0	6.0	6.0	0.0
+Vascular_cell	NDUFS7	SMC027	SMC	Control	1.0	139.0	139.0	0.0

@@ -1,0 +1,64 @@
+cell_type	gene	isoform_label	direction	total_reads	n_AD_pos	n_CT_pos	top_donor_pct	top_donor_cond	canon_coexist	tier	n_AD_mwu	n_CT_mwu	AD_ratio	CT_ratio	delta	p_val	sig
+Excitatory_neuron	KIF21B	CT_NIC	CT→	13	0	1	100.0	Control	True	C	4	2	0.0	0.4333	-0.4333	0.28884	ns
+Excitatory_neuron	NDUFS4	CT_canon	CT→	19	3	5	47.4	Control	—	A	5	5	0.1889	0.4458	-0.2569	0.24332	ns
+Excitatory_neuron	NDUFS7	CT_canon	CT→	2381	10	8	20.5	Control	—	A	9	8	0.9486	1.0	-0.0514	0.04507	*
+Excitatory_neuron	NDUFS8	CT_NIC	CT→	509	8	6	18.5	AD	—	A	7	6	0.8011	0.9535	-0.1524	0.33948	ns
+Excitatory_neuron	DLG1	CT_long	CT→	158	7	6	13.9	Control	—	A	9	6	0.574	0.8192	-0.2453	0.3143	ns
+Excitatory_neuron	KIF21B	AD_NNIC	AD→	27	1	0	100.0	AD	False	D	7	2	0.1429	0.0	0.1429	0.78927	ns
+Excitatory_neuron	KIF21B	AD_203	AD→	42	4	3	26.2	AD	—	A	7	2	0.4683	0.5417	-0.0733	0.64942	ns
+Excitatory_neuron	NDUFS7	AD_210	AD→	207	4	0	89.9	AD	—	A	9	8	0.0514	0.0	0.0514	0.04507	*
+Excitatory_neuron	NDUFS8	AD_NIC	AD→	26	5	3	23.1	AD	—	A	7	6	0.1989	0.0465	0.1524	0.33948	ns
+Inhibitory_neuron	KIF21B	CT_NIC	CT→	4	0	1	100.0	Control	True	C	2	3	0.0	0.0952	-0.0952	0.68309	ns
+Inhibitory_neuron	NDUFS4	CT_canon	CT→	10	3	3	30.0	Control	—	A	4	3	0.0833	0.4037	-0.3204	0.09873	†
+Inhibitory_neuron	NDUFS7	CT_canon	CT→	1486	11	7	21.9	Control	—	A	9	7	0.9781	0.8994	0.0787	1.0	ns
+Inhibitory_neuron	NDUFS8	CT_NIC	CT→	275	6	5	28.7	Active control	—	A	7	5	0.62	0.9895	-0.3694	0.05654	†
+Inhibitory_neuron	DLG1	CT_long	CT→	28	4	3	35.7	AD	—	A	4	3	0.5833	0.8333	-0.25	0.55845	ns
+Inhibitory_neuron	KIF21B	AD_NNIC	AD→	2	1	0	100.0	AD	False	D	3	3	0.0	0.0	0.0	1.0	ns
+Inhibitory_neuron	KIF21B	AD_203	AD→	102	3	3	54.9	Active control	—	A	3	3	0.6444	0.7394	-0.0949	1.0	ns
+Inhibitory_neuron	NDUFS7	AD_210	AD→	24	4	3	29.2	AD	—	A	9	7	0.0219	0.1006	-0.0787	1.0	ns
+Inhibitory_neuron	NDUFS8	AD_NIC	AD→	48	5	1	43.8	AD	—	A	7	5	0.38	0.0105	0.3694	0.05654	†
+Oligodendrocyte	KIF21B	CT_NIC	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Oligodendrocyte	NDUFS4	CT_canon	CT→	16	4	1	50.0	Control	—	A	3	3	0.2519	0.1569	0.095	0.37583	ns
+Oligodendrocyte	NDUFS7	CT_canon	CT→	2613	10	7	25.4	Active control	—	A	10	6	1.0	0.9994	0.0006	0.24528	ns
+Oligodendrocyte	NDUFS8	CT_NIC	CT→	40	3	1	65.0	Active control	—	A	0	2					—
+Oligodendrocyte	DLG1	CT_long	CT→	4	1	1	75.0	Control	—	B	6	3	0.0139	0.3333	-0.3194	0.59588	ns
+Oligodendrocyte	KIF21B	AD_NNIC	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+Oligodendrocyte	KIF21B	AD_203	AD→	2	0	0	100.0	Active control	—	no_reads	0	0					—
+Oligodendrocyte	NDUFS7	AD_210	AD→	8	0	1	50.0	Active control	True	C	10	6	0.0	0.0006	-0.0006	0.24528	ns
+Oligodendrocyte	NDUFS8	AD_NIC	AD→	5	1	2	60.0	Control	—	A	0	2					—
+OPC	KIF21B	CT_NIC	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+OPC	NDUFS4	CT_canon	CT→	6	1	1	66.7	Control	—	A	1	1					—
+OPC	NDUFS7	CT_canon	CT→	482	12	6	32.2	Active control	—	A	6	5	0.9848	0.96	0.0248	0.8923	ns
+OPC	NDUFS8	CT_NIC	CT→	149	5	5	45.6	Active control	—	A	4	5	0.7917	0.8	-0.0083	1.0	ns
+OPC	DLG1	CT_long	CT→	0	0	0	0.0	?	—	no_reads	2	0					—
+OPC	KIF21B	AD_NNIC	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+OPC	KIF21B	AD_203	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+OPC	NDUFS7	AD_210	AD→	3	1	1	33.3	Control	—	A	6	5	0.0152	0.04	-0.0248	0.8923	ns
+OPC	NDUFS8	AD_NIC	AD→	12	3	1	41.7	AD	—	A	4	5	0.2083	0.2	0.0083	1.0	ns
+Astrocyte	KIF21B	CT_NIC	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Astrocyte	NDUFS4	CT_canon	CT→	6	2	1	50.0	AD	—	A	1	0					—
+Astrocyte	NDUFS7	CT_canon	CT→	587	9	5	30.7	Active control	—	A	8	5	0.8906	0.9988	-0.1082	0.90736	ns
+Astrocyte	NDUFS8	CT_NIC	CT→	196	2	1	75.5	Active control	—	B	1	1					—
+Astrocyte	DLG1	CT_long	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Astrocyte	KIF21B	AD_NNIC	AD→	1	1	0	100.0	AD	False	D	1	0					—
+Astrocyte	KIF21B	AD_203	AD→	1	0	0	100.0	Active control	—	no_reads	1	0					—
+Astrocyte	NDUFS7	AD_210	AD→	10	1	1	70.0	AD	—	B	8	5	0.1094	0.0012	0.1082	0.90736	ns
+Astrocyte	NDUFS8	AD_NIC	AD→	3	1	0	100.0	AD	False	D	1	1					—
+Microglia	KIF21B	CT_NIC	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Microglia	NDUFS4	CT_canon	CT→	1	0	1	100.0	Control	False	D	0	1					—
+Microglia	NDUFS7	CT_canon	CT→	57	5	1	63.2	Active control	—	A	1	1					—
+Microglia	NDUFS8	CT_NIC	CT→	7	3	1	42.9	AD	—	A	2	0					—
+Microglia	DLG1	CT_long	CT→	1	1	0	100.0	AD	False	D	0	0					—
+Microglia	KIF21B	AD_NNIC	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+Microglia	KIF21B	AD_203	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+Microglia	NDUFS7	AD_210	AD→	0	0	0	0.0	?	—	no_reads	1	1					—
+Microglia	NDUFS8	AD_NIC	AD→	0	0	0	0.0	?	—	no_reads	2	0					—
+Vascular_cell	KIF21B	CT_NIC	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Vascular_cell	NDUFS4	CT_canon	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Vascular_cell	NDUFS7	CT_canon	CT→	157	3	3	88.5	Control	—	A	1	1					—
+Vascular_cell	NDUFS8	CT_NIC	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Vascular_cell	DLG1	CT_long	CT→	0	0	0	0.0	?	—	no_reads	0	0					—
+Vascular_cell	KIF21B	AD_NNIC	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+Vascular_cell	KIF21B	AD_203	AD→	0	0	0	0.0	?	—	no_reads	0	0					—
+Vascular_cell	NDUFS7	AD_210	AD→	0	0	0	0.0	?	—	no_reads	1	1					—
+Vascular_cell	NDUFS8	AD_NIC	AD→	0	0	0	0.0	?	—	no_reads	0	0					—

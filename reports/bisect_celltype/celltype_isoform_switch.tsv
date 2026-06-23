@@ -1,0 +1,5 @@
+cell_type	gene	n_AD	n_CT	AD_ratio	CT_ratio	delta	p	sig
+Inhibitory_neuron	KIF21B	4	3	0.0	0.0	0.0	1.0	ns
+Inhibitory_neuron	NDUFS4	3	3	1.0	1.0	0.0	1.0	ns
+Excitatory_neuron	KIF21B	6	6	0.0	0.0	0.0	1.0	ns
+Excitatory_neuron	NDUFS4	3	5	1.0	1.0	0.0	1.0	ns
