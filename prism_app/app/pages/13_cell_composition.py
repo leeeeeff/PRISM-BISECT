@@ -21,7 +21,7 @@ LAYER_MWU_TSV = _DATA / 'layer_composition_mwu.tsv'
 LAYER_ADC_TSV = _DATA / 'layer_composition_ad_ct.tsv'
 
 SIG_MARKS  = {'***': '★★★', '**': '★★', '*': '★', '†': '◆', 'ns': ''}
-SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#555566'}
+SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#7777aa'}
 SIG_CAPTION = "★★★ p<0.001 | ★★ p<0.01 | ★ p<0.05 | ◆ p<0.10 | 회색 ns"
 COHORT_PAL = {'PO': '#e67e22', 'SMC': '#3498db'}
 COND_PAL   = {'AD': '#e74c3c', 'Control': '#3498db', 'Active control': '#f39c12'}
@@ -122,10 +122,12 @@ with tab1:
         barmode='relative',
         xaxis_title='Δ% (AD − Control)',
         yaxis_title='',
-        plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-        font=dict(color='white', size=10),
-        legend=dict(orientation='h', yanchor='bottom', y=1.01),
+        plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+        font=dict(color='#f0f0f0', size=10),
+        legend=dict(orientation='h', yanchor='bottom', y=1.01, font=dict(color='#f0f0f0')),
         margin=dict(l=250, r=80, t=40, b=40),
+        xaxis=dict(gridcolor='rgba(255,255,255,0.08)', zerolinecolor='rgba(255,255,255,0.3)'),
+        yaxis=dict(gridcolor='rgba(255,255,255,0.05)'),
     )
     st.plotly_chart(fig_bar, use_container_width=True)
     st.caption(SIG_CAPTION + " | 색상: 빨강=유의증가, 파랑=유의감소, 노랑=경향, 회색=ns")
@@ -179,10 +181,12 @@ with tab1:
         height=480,
         xaxis_title='Δ% (AD − Control)',
         yaxis_title='−log₁₀(p)',
-        plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-        font=dict(color='white', size=11),
-        legend=dict(orientation='h', yanchor='bottom', y=1.01),
+        plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+        font=dict(color='#f0f0f0', size=11),
+        legend=dict(orientation='h', yanchor='bottom', y=1.01, font=dict(color='#f0f0f0')),
         margin=dict(l=60, r=60, t=20, b=50),
+        xaxis=dict(gridcolor='rgba(255,255,255,0.08)', zerolinecolor='rgba(255,255,255,0.3)'),
+        yaxis=dict(gridcolor='rgba(255,255,255,0.08)'),
     )
     st.plotly_chart(fig_vol, use_container_width=True)
     st.caption("점 크기: 세포 수 비례 | 점선: 유의 임계값")
@@ -197,15 +201,16 @@ with tab2:
         color = "#e74c3c" if r['delta'] > 0 else "#3498db"
         layer_txt = r.get('layer', '') or '-'
         st.markdown(f"""
-<div style="border-left:4px solid {color};padding:10px;margin:8px 0;
-     background:#1a1a2e;border-radius:4px;">
-<b>C{r['cluster']} {r['subtype']}</b> &nbsp; {SIG_MARKS.get(r['sig'],'')} &nbsp;
-<span style="color:{color}">{direction}</span><br>
-<small>
+<div style="border-left:5px solid {color};padding:12px 14px;margin:8px 0;
+     background:#1e2040;border-radius:6px;color:#e0e0e0;">
+<b style="color:#ffffff;font-size:1.05em;">C{r['cluster']} {r['subtype']}</b>
+&nbsp;<span style="color:gold;font-size:1.1em;">{SIG_MARKS.get(r['sig'],'')}</span>&nbsp;
+<span style="color:{color};font-weight:700;">{direction}</span><br>
+<span style="color:#c8c8d8;font-size:0.92em;">
 Δ{r['delta']:+.2f}% &nbsp;|&nbsp; p={r['p']:.4f} &nbsp;|&nbsp;
 AD={r['AD_pct']:.1f}% vs CT={r['CT_pct']:.1f}%<br>
 세포 타입: {r['cell_type']} &nbsp;|&nbsp; Layer: {layer_txt} &nbsp;|&nbsp; 마커: {r['markers']}<br>
-{r.get('note','')}</small></div>
+{r.get('note','')}</span></div>
 """, unsafe_allow_html=True)
 
     st.divider()
@@ -297,12 +302,14 @@ with tab3:
 
                     fig_d.update_layout(
                         height=280,
-                        title=f"C{cl} 도너별 구성 비율",
+                        title=dict(text=f"C{cl} 도너별 구성 비율", font=dict(color='#f0f0f0')),
                         yaxis_title="구성 비율 (%)",
-                        plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-                        font=dict(color='white', size=10),
+                        plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+                        font=dict(color='#f0f0f0', size=10),
                         showlegend=False,
                         margin=dict(l=50, r=20, t=40, b=40),
+                        xaxis=dict(tickfont=dict(color='#f0f0f0')),
+                        yaxis=dict(tickfont=dict(color='#f0f0f0'), gridcolor='rgba(255,255,255,0.1)'),
                     )
                     st.plotly_chart(fig_d, use_container_width=True)
 
@@ -323,8 +330,8 @@ with tab4:
 
     def _row_style(row):
         color = (
-            'rgba(231,76,60,0.15)' if row.get('sig') in ['**', '*']
-            else 'rgba(243,156,18,0.10)' if row.get('sig') == '†'
+            'rgba(231,76,60,0.30)' if row.get('sig') in ['**', '*']
+            else 'rgba(243,156,18,0.22)' if row.get('sig') == '†'
             else ''
         )
         return [f'background-color:{color}' if color else '' for _ in row]
@@ -382,9 +389,12 @@ with tab5:
         height=max(300, len(mwu) * 30),
         xaxis_title='Δ% AD − Control (흥분성 뉴런 내 비율)',
         yaxis_title='',
-        plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-        font=dict(color='white', size=11),
+        plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+        font=dict(color='#f0f0f0', size=11),
         margin=dict(l=160, r=80, t=20, b=40),
+        xaxis=dict(gridcolor='rgba(255,255,255,0.08)', zerolinecolor='rgba(255,255,255,0.3)',
+                   tickfont=dict(color='#f0f0f0')),
+        yaxis=dict(tickfont=dict(color='#f0f0f0', size=10)),
     )
     st.plotly_chart(fig_mwu, use_container_width=True)
 
@@ -431,11 +441,13 @@ with tab5:
     col_label = selected_col.replace('_pct', '').replace('_', ' ')
     fig_sc.update_layout(
         height=380,
-        title=f"{col_label} — AD vs Control 분포",
+        title=dict(text=f"{col_label} — AD vs Control 분포", font=dict(color='#f0f0f0')),
         yaxis_title="흥분성 뉴런 내 비율 (%)",
-        plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-        font=dict(color='white', size=11),
+        plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+        font=dict(color='#f0f0f0', size=11),
         margin=dict(l=60, r=40, t=50, b=50),
+        xaxis=dict(tickfont=dict(color='#f0f0f0')),
+        yaxis=dict(tickfont=dict(color='#f0f0f0'), gridcolor='rgba(255,255,255,0.1)'),
     )
     st.plotly_chart(fig_sc, use_container_width=True)
 
@@ -462,9 +474,12 @@ with tab5:
             height=340,
             xaxis_title='Braak B stage',
             yaxis_title=f'{col_label} (%)',
-            plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-            font=dict(color='white', size=11),
+            plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+            font=dict(color='#f0f0f0', size=11),
             margin=dict(l=60, r=40, t=20, b=50),
+            xaxis=dict(tickfont=dict(color='#f0f0f0'), gridcolor='rgba(255,255,255,0.08)'),
+            yaxis=dict(tickfont=dict(color='#f0f0f0'), gridcolor='rgba(255,255,255,0.08)'),
+            legend=dict(font=dict(color='#f0f0f0')),
         )
         st.plotly_chart(fig_br, use_container_width=True)
         st.caption("AD 샘플만 표시. Braak B와 층별 클러스터 비율의 상관 관계.")

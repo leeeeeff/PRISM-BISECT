@@ -1077,12 +1077,12 @@ elif view_mode == "🔵 세포 스캐터 (UMAP)":
         scene=dict(
             xaxis_title='UMAP-1', yaxis_title='UMAP-2', zaxis_title='UMAP-3',
             bgcolor='#0e1117',
-            xaxis=dict(showgrid=False, zeroline=False),
-            yaxis=dict(showgrid=False, zeroline=False),
-            zaxis=dict(showgrid=False, zeroline=False),
+            xaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color='#e0e0e0')),
+            yaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color='#e0e0e0')),
+            zaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color='#e0e0e0')),
         ),
-        paper_bgcolor='#0e1117', font=dict(color='white'),
-        legend=dict(itemsizing='constant', font=dict(size=10)),
+        paper_bgcolor='#0e1117', font=dict(color='#f0f0f0'),
+        legend=dict(itemsizing='constant', font=dict(size=10, color='#f0f0f0')),
         margin=dict(l=0, r=0, t=30, b=0),
     )
     st.plotly_chart(fig, use_container_width=True)
@@ -1198,8 +1198,8 @@ else:
 
     fig.update_layout(
         height=750, scene=scene_kw,
-        paper_bgcolor='#0e1117', font=dict(color='white'),
-        legend=dict(itemsizing='constant', font=dict(size=10)),
+        paper_bgcolor='#0e1117', font=dict(color='#f0f0f0'),
+        legend=dict(itemsizing='constant', font=dict(size=10, color='#f0f0f0')),
         margin=dict(l=0, r=0, t=30, b=0),
     )
     st.plotly_chart(fig, use_container_width=True)

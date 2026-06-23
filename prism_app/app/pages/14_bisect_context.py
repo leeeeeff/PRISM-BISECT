@@ -19,7 +19,7 @@ LAMP5_TSV    = _DATA / 'lamp5_subtypes_comparison.tsv'
 LAMP5_DONOR  = _DATA / 'c15_per_donor_expression.tsv'
 
 SIG_MARKS  = {'***': '★★★', '**': '★★', '*': '★', '†': '◆', 'ns': ''}
-SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#555566'}
+SIG_COLORS = {'***': '#c0392b', '**': '#e74c3c', '*': '#e67e22', '†': '#f39c12', 'ns': '#7777aa'}
 COND_PAL   = {'AD': '#e74c3c', 'Control': '#3498db', 'Active control': '#f39c12'}
 CT_ORDER   = [
     'Excitatory_neuron', 'Inhibitory_neuron', 'Oligodendrocyte',
@@ -121,10 +121,11 @@ with tab1:
         ))
         fig_hm.update_layout(
             height=380,
-            plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-            font=dict(color='white', size=11),
+            plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+            font=dict(color='#f0f0f0', size=11),
             margin=dict(t=30, b=60, l=160, r=40),
-            xaxis=dict(side='top'),
+            xaxis=dict(side='top', tickfont=dict(color='#f0f0f0', size=12)),
+            yaxis=dict(tickfont=dict(color='#f0f0f0', size=11)),
         )
         st.plotly_chart(fig_hm, use_container_width=True)
         st.caption("★★★ p<0.001 | ★★ p<0.01 | ★ p<0.05 | ◆ p<0.10 | 흰칸=검출 없음")
@@ -166,10 +167,12 @@ with tab1:
         fig_bar.update_layout(
             height=340, barmode='group',
             xaxis_title='', yaxis_title='Isoform usage ratio',
-            plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-            font=dict(color='white', size=11),
-            legend=dict(orientation='h', yanchor='bottom', y=1.01),
+            plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+            font=dict(color='#f0f0f0', size=11),
+            legend=dict(orientation='h', yanchor='bottom', y=1.01, font=dict(color='#f0f0f0')),
             margin=dict(t=40, b=60, l=60, r=40),
+            xaxis=dict(gridcolor='rgba(255,255,255,0.06)', tickfont=dict(color='#f0f0f0')),
+            yaxis=dict(gridcolor='rgba(255,255,255,0.08)'),
         )
         st.plotly_chart(fig_bar, use_container_width=True)
 
@@ -215,7 +218,7 @@ with tab2:
                 ),
                 text=grp['ct_isoform'].str[:15],
                 textposition='top center',
-                textfont=dict(size=8, color='#aaaaaa'),
+                textfont=dict(size=8, color='#d0d0e0'),
                 customdata=grp[['ct_isoform', 'n_donors', 'p_value', 'p_bonferroni', 'description']].values,
                 hovertemplate=(
                     '<b>%{x}</b><br>'
@@ -233,11 +236,12 @@ with tab2:
         fig_bub.update_layout(
             height=400,
             xaxis_title='유전자', yaxis_title='Spearman r (isoform ratio vs Braak B)',
-            yaxis=dict(range=[-1, 1]),
-            plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-            font=dict(color='white', size=11),
-            legend=dict(orientation='h', yanchor='bottom', y=1.01),
+            yaxis=dict(range=[-1, 1], gridcolor='rgba(255,255,255,0.1)', zerolinecolor='rgba(255,255,255,0.4)'),
+            plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+            font=dict(color='#f0f0f0', size=11),
+            legend=dict(orientation='h', yanchor='bottom', y=1.01, font=dict(color='#f0f0f0')),
             margin=dict(t=30, b=60, l=70, r=80),
+            xaxis=dict(gridcolor='rgba(255,255,255,0.06)', tickfont=dict(color='#f0f0f0', size=11)),
         )
         st.plotly_chart(fig_bub, use_container_width=True)
         st.caption("버블 크기 = 도너 수 비례 | 점선: |r|=0.5 기준")
@@ -269,10 +273,13 @@ with tab2:
             fig_ci.add_vline(x=0, line_width=1, line_color='white', opacity=0.4)
             fig_ci.update_layout(
                 height=max(200, len(ci_df) * 55),
-                xaxis_title='Spearman r', xaxis=dict(range=[-1, 1]),
+                xaxis_title='Spearman r',
+                xaxis=dict(range=[-1, 1], gridcolor='rgba(255,255,255,0.08)',
+                           zerolinecolor='rgba(255,255,255,0.3)', tickfont=dict(color='#f0f0f0')),
                 yaxis_title='',
-                plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-                font=dict(color='white', size=11),
+                yaxis=dict(tickfont=dict(color='#f0f0f0', size=11)),
+                plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+                font=dict(color='#f0f0f0', size=11),
                 margin=dict(t=20, b=50, l=100, r=40),
             )
             st.plotly_chart(fig_ci, use_container_width=True)
@@ -330,9 +337,12 @@ with tab3:
             height=max(350, len(plot_df) * 22),
             xaxis_title='log₂FC  C18 vs L4 IT (C10+C11 평균)',
             yaxis_title='',
-            plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-            font=dict(color='white', size=10),
+            plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+            font=dict(color='#f0f0f0', size=10),
             margin=dict(l=100, r=60, t=20, b=50),
+            xaxis=dict(gridcolor='rgba(255,255,255,0.08)', zerolinecolor='rgba(255,255,255,0.3)',
+                       tickfont=dict(color='#f0f0f0')),
+            yaxis=dict(tickfont=dict(color='#f0f0f0', size=10)),
         )
         st.plotly_chart(fig_c18, use_container_width=True)
         st.caption("빨강: C18 과발현 | 파랑: L4 IT 평균 과발현 | 점선: |log₂FC|=1")
@@ -375,9 +385,11 @@ with tab3:
             height=440,
             xaxis_title='L4 IT 평균 발현 (C10+C11)',
             yaxis_title='C18 발현',
-            plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-            font=dict(color='white', size=11),
+            plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+            font=dict(color='#f0f0f0', size=11),
             margin=dict(l=70, r=40, t=20, b=60),
+            xaxis=dict(gridcolor='rgba(255,255,255,0.08)', tickfont=dict(color='#f0f0f0')),
+            yaxis=dict(gridcolor='rgba(255,255,255,0.08)', tickfont=dict(color='#f0f0f0')),
         )
         st.plotly_chart(fig_sc, use_container_width=True)
         st.caption("대각선 위 = C18 과발현 | 색상: 빨강=C18 특이, 파랑=L4 IT 일반")
@@ -428,11 +440,13 @@ with tab4:
                     ))
                 fig_box.update_layout(
                     height=340,
-                    title=f"C15 {sel_marker} per-donor",
+                    title=dict(text=f"C15 {sel_marker} per-donor", font=dict(color='#f0f0f0')),
                     yaxis_title=f'Mean {sel_marker} expression',
-                    plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
-                    font=dict(color='white', size=11),
+                    plot_bgcolor='#111320', paper_bgcolor='#0e1117',
+                    font=dict(color='#f0f0f0', size=11),
                     margin=dict(l=60, r=20, t=50, b=40),
+                    xaxis=dict(tickfont=dict(color='#f0f0f0')),
+                    yaxis=dict(tickfont=dict(color='#f0f0f0'), gridcolor='rgba(255,255,255,0.1)'),
                 )
                 st.plotly_chart(fig_box, use_container_width=True)
                 st.caption("KIT 발현 수준 자체는 AD≈CT (p=0.645) → **세포 수 비율**이 증가한 것.")
@@ -462,17 +476,25 @@ with tab4:
                     ))
                 fig_rad.update_layout(
                     polar=dict(
-                        radialaxis=dict(visible=True, range=[0, 1],
-                                        tickfont=dict(color='#888', size=8)),
-                        angularaxis=dict(tickfont=dict(color='white', size=10)),
-                        bgcolor='#0e1117',
+                        radialaxis=dict(
+                            visible=True, range=[0, 1],
+                            tickfont=dict(color='#bbbbcc', size=9),
+                            gridcolor='rgba(255,255,255,0.15)',
+                            linecolor='rgba(255,255,255,0.2)',
+                        ),
+                        angularaxis=dict(
+                            tickfont=dict(color='#e8e8f0', size=11),
+                            gridcolor='rgba(255,255,255,0.12)',
+                            linecolor='rgba(255,255,255,0.15)',
+                        ),
+                        bgcolor='#111320',
                     ),
                     height=340,
                     paper_bgcolor='#0e1117',
-                    font=dict(color='white', size=10),
-                    legend=dict(x=0.8, y=1.1),
+                    font=dict(color='#f0f0f0', size=10),
+                    legend=dict(x=0.8, y=1.1, font=dict(color='#f0f0f0')),
                     margin=dict(t=50, b=20, l=20, r=20),
-                    title=dict(text='LAMP5 서브타입 마커 프로파일', font=dict(color='white', size=12)),
+                    title=dict(text='LAMP5 서브타입 마커 프로파일', font=dict(color='#f0f0f0', size=12)),
                 )
                 st.plotly_chart(fig_rad, use_container_width=True)
 
