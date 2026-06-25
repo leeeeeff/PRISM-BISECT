@@ -9,6 +9,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import plotly.graph_objects as _go_fig
+from collections import defaultdict, Counter
 
 from prism_app.reports.coverage import generate_coverage_report
 from prism_app.reports.novel_summary import generate_novel_summary
@@ -21,6 +23,133 @@ from prism_app.app.components.interpretation import (
     render_novel_interpretation,
     render_auprc_interpretation,
 )
+
+
+# ── Discovery stats helper (cached) ──────────────────────────────────────────
+@st.cache_data(show_spinner=False)
+def _compute_discovery_stats(sm_bytes, sm_shape, genes_tuple, types_tuple, go_tuple, thr):
+    """
+    Isoform Case Taxonomy + intra-gene divergence + score distribution.
+    Requires annotation file at <root>/hMuscle/data/raw_data/data/annotations/.
+    Returns dict; gracefully returns partial results if annotation file missing.
+    """
+    sm     = np.frombuffer(sm_bytes, dtype=np.float32).reshape(sm_shape)
+    genes  = list(genes_tuple)
+    types  = list(types_tuple)
+    go_ids = list(go_tuple)
+    N_TE   = sm.shape[0]
+    N_GO   = sm.shape[1]
+
+    # ── gene-level grouping ───────────────────────────────────────────────
+    gene_idx = defaultdict(list)
+    for i, sym in enumerate(genes):
+        gene_idx[sym].append(i)
+
+    unique_genes     = len(gene_idx)
+    single_iso       = sum(1 for v in gene_idx.values() if len(v) == 1)
+    multi_iso_genes  = unique_genes - single_iso
+    mean_iso_per_gene = N_TE / max(1, unique_genes)
+
+    # ── isoform type stats ───────────────────────────────────────────────
+    known_count = sum(1 for t in types if t == 'known')
+    novel_count = sum(1 for t in types if t in ('nic', 'nnic', 'novel'))
+
+    # ── score distribution ───────────────────────────────────────────────
+    max_scores = sm.max(axis=1)
+    mean_max   = float(np.mean(max_scores))
+    n_high     = int((max_scores >= thr).sum())
+    n_high_novel = int(sum(1 for i, sc in enumerate(max_scores)
+                           if sc >= thr and types[i] in ('nic', 'nnic', 'novel')))
+
+    # ── intra-gene divergence ────────────────────────────────────────────
+    div_cnt = mod_cnt = con_cnt = 0
+    div_by_niso = defaultdict(lambda: {'total': 0, 'div': 0})
+    for sym, idxs in gene_idx.items():
+        if len(idxs) < 2:
+            continue
+        arr  = sm[idxs]
+        md   = float((arr.max(axis=0) - arr.min(axis=0)).max())
+        nbin = min(len(idxs), 11)  # cap at ">10" bucket
+        div_by_niso[nbin]['total'] += 1
+        if md > 0.3:
+            div_cnt += 1
+            div_by_niso[nbin]['div'] += 1
+        elif md > 0.1:
+            mod_cnt += 1
+        else:
+            con_cnt += 1
+
+    # ── GO annotation-based taxonomy (requires annotation file) ──────────
+    ann_file = Path(_root) / 'hMuscle/data/raw_data/data/annotations/human_annotations_unified_bp.txt'
+    taxonomy = None
+    n_no_annot_high = 0
+    n_novel_go_expansion = 0
+    n_diff_go = 0
+
+    if ann_file.exists():
+        gene_go = defaultdict(set)
+        with open(ann_file) as f:
+            for line in f:
+                parts = line.strip().split('\t')
+                if len(parts) >= 2:
+                    for g in parts[1:]:
+                        if g.startswith('GO:'):
+                            gene_go[parts[0]].add(g)
+
+        annot = np.zeros((N_TE, N_GO), dtype=bool)
+        for gi, go_term in enumerate(go_ids):
+            annot[:, gi] = np.array([go_term in gene_go.get(sym, set()) for sym in genes])
+
+        cases = []
+        for i in range(N_TE):
+            n_ann        = int(annot[i].sum())
+            max_sc       = float(sm[i].max())
+            any_high_ann = bool(((sm[i] >= thr) & annot[i]).any())
+            any_high_nov = bool(((sm[i] >= thr) & ~annot[i]).any())
+            if n_ann == 0:
+                if max_sc >= thr:
+                    tag = 1
+                elif max_sc >= 0.3:
+                    tag = 2
+                else:
+                    tag = 3
+            else:
+                if any_high_ann and any_high_nov:
+                    tag = 4
+                elif any_high_ann and not any_high_nov:
+                    tag = 5
+                elif not any_high_ann and any_high_nov:
+                    tag = 6
+                else:
+                    tag = 7
+            cases.append(tag)
+
+        taxonomy = dict(Counter(cases))
+        n_no_annot_high     = taxonomy.get(1, 0)
+        n_novel_go_expansion = taxonomy.get(4, 0)
+        n_diff_go           = taxonomy.get(6, 0)
+
+    return {
+        'unique_genes':      unique_genes,
+        'single_iso':        single_iso,
+        'multi_iso_genes':   multi_iso_genes,
+        'mean_iso_per_gene': mean_iso_per_gene,
+        'known_count':       known_count,
+        'novel_count':       novel_count,
+        'mean_max_score':    mean_max,
+        'n_high':            n_high,
+        'n_high_novel':      n_high_novel,
+        'max_scores':        max_scores.tolist(),
+        'div_cnt':           div_cnt,
+        'mod_cnt':           mod_cnt,
+        'con_cnt':           con_cnt,
+        'div_by_niso':       {k: dict(v) for k, v in div_by_niso.items()},
+        'taxonomy':          taxonomy,
+        'n_no_annot_high':   n_no_annot_high,
+        'n_novel_go_expansion': n_novel_go_expansion,
+        'n_diff_go':         n_diff_go,
+        'annotation_available': ann_file.exists(),
+    }
 
 st.set_page_config(page_title="QC & Overview — PRISM", layout="wide")
 st.title("📊 QC & Overview")
@@ -128,6 +257,406 @@ with col_b:
     )
 
 render_coverage_interpretation(rep, thr, types is not None)
+
+st.divider()
+
+# ── A0 · 데이터 기본 현황 ────────────────────────────────────────────────────
+st.subheader("A0 · 데이터 기본 현황")
+st.caption(
+    "현재 로드된 score matrix에 포함된 이소폼들의 구성 통계입니다. "
+    "**Known** = Ensembl 데이터베이스에 등재된 이소폼 · "
+    "**NIC(Novel In Catalog)** = Ensembl에 등재된 splice site 조합이지만 해당 전사체는 신규 · "
+    "**NNIC(Novel Not In Catalog)** = Ensembl에 없는 완전 신규 splice site를 포함한 전사체."
+)
+
+_N = sm.shape[0]
+_gene_ctr   = Counter(np.asarray(genes if genes is not None else ids, dtype=str))
+_n_genes    = len(_gene_ctr)
+_multi_iso  = sum(1 for c in _gene_ctr.values() if c > 1)
+_mean_iso   = _N / max(1, _n_genes)
+_max_iso    = max(_gene_ctr.values()) if _gene_ctr else 0
+_max_gene   = max(_gene_ctr, key=_gene_ctr.get) if _gene_ctr else '—'
+_novel_cnt  = int(np.isin(np.asarray(types if types is not None else [], dtype=str),
+                          ['nic', 'nnic', 'novel']).sum()) if types is not None else 0
+_n_go_eval  = sm.shape[1]
+
+a0_c1, a0_c2, a0_c3, a0_c4, a0_c5, a0_c6 = st.columns(6)
+a0_c1.metric(
+    "유니크 유전자 수",
+    f"{_n_genes:,}",
+    help="score matrix에 이소폼이 1개 이상 포함된 유전자(gene symbol 기준) 총 수"
+)
+a0_c2.metric(
+    "멀티-이소폼 유전자",
+    f"{_multi_iso:,}",
+    f"{_multi_iso/_n_genes*100:.1f}% of genes",
+    help="이 데이터셋에 이소폼이 2개 이상 포함된 유전자 수 — PRISM이 같은 유전자 내 이소폼을 비교할 수 있는 유전자"
+)
+a0_c3.metric(
+    "평균 이소폼 수/유전자",
+    f"{_mean_iso:.1f}",
+    help=f"전체 이소폼 수({_N:,}) ÷ 유니크 유전자 수({_n_genes:,})"
+)
+a0_c4.metric(
+    "최다 이소폼 유전자",
+    f"{_max_gene}",
+    f"{_max_iso}개 이소폼",
+    help="이 데이터셋에서 가장 많은 이소폼이 포함된 유전자"
+)
+a0_c5.metric(
+    "Novel 이소폼 (NIC + NNIC)",
+    f"{_novel_cnt:,}",
+    f"{_novel_cnt/_N*100:.1f}% of total" if _N else "—",
+    help="Ensembl 데이터베이스에 등재되지 않은 신규 이소폼 수 (NIC + NNIC 합계). "
+         "이 이소폼들은 GO annotation이 원천적으로 없으며, PRISM이 서열만으로 기능을 예측합니다."
+)
+a0_c6.metric(
+    "PRISM 예측 GO term 수",
+    f"{_n_go_eval}",
+    help="현재 score matrix가 예측하는 GO term(생물학적 과정) 수. "
+         "각 이소폼은 이 GO term들 각각에 대해 0–1 점수를 부여받습니다."
+)
+
+# Isoform count distribution per gene (histogram)
+_iso_counts = list(_gene_ctr.values())
+_iso_bins   = [1, 2, 3, 4, 5, 6, 10, 999]
+_iso_labels = ['1', '2', '3', '4', '5', '6–10', '>10']
+_iso_bar    = []
+for lo, hi, lbl in zip(_iso_bins[:-1], _iso_bins[1:], _iso_labels):
+    _iso_bar.append({'bin': lbl, 'n_genes': sum(1 for c in _iso_counts if lo <= c < hi)})
+_iso_bar_df = pd.DataFrame(_iso_bar)
+
+with st.expander("📊 유전자당 이소폼 수 분포", expanded=False):
+    _fig_iso = px.bar(_iso_bar_df, x='bin', y='n_genes',
+                      labels={'bin': '유전자당 이소폼 수 (이 데이터셋 기준)', 'n_genes': '유전자 수'},
+                      title='유전자당 이소폼 수 분포 — 이 데이터셋에 포함된 이소폼 기준',
+                      color_discrete_sequence=['#4c72b0'])
+    _fig_iso.update_layout(height=300, plot_bgcolor='white', paper_bgcolor='white')
+    st.plotly_chart(_fig_iso, use_container_width=True)
+    st.caption(
+        "X축: 이 데이터셋에 해당 유전자의 이소폼이 몇 개 포함됐는지 · "
+        "Y축: 그 구간에 해당하는 유전자 수 · "
+        "이소폼 수가 많은 유전자(오른쪽)일수록 PRISM이 동일 유전자 내에서 이소폼별로 다른 기능을 예측하는지 검증 가능합니다."
+    )
+
+st.divider()
+
+# ── A1b · PRISM 발견 통계 ────────────────────────────────────────────────────
+st.subheader("A1b · PRISM 발견 통계 — 기능 예측 심층 분석")
+st.caption(
+    f"PRISM이 {len(go)}개 GO term 각각에 대해 0–1 점수를 예측한 결과를 분석합니다. "
+    "GO annotation 출처: **human_annotations_unified_bp.txt** (UniProtKB/SwissProt, 유전자 symbol 단위) — "
+    "여기에 없는 유전자/이소폼은 'annotation 없음'으로 처리됩니다. "
+    "분석 항목: ① PRISM이 annotation 없이 새로 예측한 기능 후보(Discovery candidates) · "
+    "② 같은 유전자 내 이소폼 간 예측 점수 차이(Intra-gene divergence) · "
+    "③ 전체 PRISM 점수 분포."
+)
+
+# Compute discovery stats (cached)
+_ds_key = 'discovery_stats'
+if _ds_key not in st.session_state or st.session_state.get('_ds_thr') != thr:
+    with st.spinner("발견 통계 계산 중…"):
+        _ds = _compute_discovery_stats(
+            sm.astype(np.float32).tobytes(), sm.shape,
+            tuple(np.asarray(genes if genes is not None else ids, dtype=str)),
+            tuple(np.asarray(types if types is not None else ['known'] * _N, dtype=str)),
+            tuple(go), thr,
+        )
+        st.session_state[_ds_key]   = _ds
+        st.session_state['_ds_thr'] = thr
+else:
+    _ds = st.session_state[_ds_key]
+
+# ── Metric cards row 1: discovery ────────────────────────────────────────────
+_taxonomy   = _ds.get('taxonomy') or {}
+_t1 = _taxonomy.get(1, 0)
+_t4 = _taxonomy.get(4, 0)
+_t6 = _taxonomy.get(6, 0)
+_t5 = _taxonomy.get(5, 0)
+_disc_total = _t1 + _t4 + _t6
+_disc_pct   = _disc_total / _N * 100 if _N else 0
+
+if _ds['annotation_available']:
+    d_c1, d_c2, d_c3, d_c4 = st.columns(4)
+    d_c1.metric(
+        "발견 후보 이소폼 총계",
+        f"{_disc_total:,}",
+        f"전체 이소폼의 {_disc_pct:.1f}%",
+        help=(
+            "TYPE 1 + TYPE 4 + TYPE 6 이소폼 합계.\n"
+            "• TYPE 1: 유전자 자체에 SwissProt GO annotation이 전혀 없는데 "
+            f"PRISM이 score > {thr}를 예측 (완전 신규)\n"
+            "• TYPE 4: 유전자에 SwissProt GO annotation이 있고, PRISM이 기존 "
+            f"annotation GO term들과 완전히 다른 새 GO term을 score > {thr}로 추가 예측\n"
+            "• TYPE 6: 유전자에 SwissProt GO annotation이 있지만, PRISM이 "
+            f"기존 annotation GO term을 score < {thr}로 예측하지 않고 "
+            f"대신 전혀 다른 GO term을 score > {thr}로 예측 (기능 전환)\n"
+            "※ GO annotation 출처: human_annotations_unified_bp.txt (UniProtKB/SwissProt 기반, 유전자 symbol 단위)"
+        )
+    )
+    d_c2.metric(
+        "완전 신규 예측 이소폼 (TYPE 1)",
+        f"{_t1:,}",
+        f"score > {thr}, GO annotation 전무",
+        help=(
+            "해당 이소폼이 속한 유전자(gene symbol)가 "
+            "human_annotations_unified_bp.txt에 단 하나의 GO term도 등재되지 않았음에도, "
+            f"PRISM이 {len(go)}개 GO term 중 최소 1개에서 score > {thr}를 예측한 이소폼.\n"
+            "NIC/NNIC 신규 이소폼뿐 아니라 Known 이소폼도 포함됩니다 — "
+            "유전자 자체가 SwissProt에서 GO 미주석된 경우."
+        )
+    )
+    d_c3.metric(
+        "GO term 확장 예측 이소폼 (TYPE 4)",
+        f"{_t4:,}",
+        "기존 annotation GO + 새 GO term 동시 예측",
+        help=(
+            "해당 이소폼의 유전자가 SwissProt에 GO annotation을 보유하고, "
+            f"PRISM이 그 기존 GO term들 중 최소 1개를 score > {thr}로 확인하면서, "
+            f"동시에 기존 annotation에 없는 새로운 GO term도 score > {thr}로 예측한 이소폼.\n"
+            "기존 기능을 유지하면서 새 기능을 추가로 수행할 가능성이 있는 케이스."
+        )
+    )
+    d_c4.metric(
+        "기존 GO annotation 확인 이소폼 (TYPE 5)",
+        f"{_t5:,}",
+        "PRISM이 SwissProt annotation과 일치하는 예측",
+        help=(
+            "해당 이소폼의 유전자가 SwissProt에 GO annotation을 보유하고, "
+            f"PRISM이 그 기존 GO term들 중 최소 1개를 score > {thr}로 예측했으며, "
+            "기존 annotation에 없는 새로운 GO term은 예측하지 않은 이소폼.\n"
+            "PRISM 예측이 기존 데이터베이스 annotation과 일치하는 검증(validation) 케이스."
+        )
+    )
+else:
+    st.info(
+        "GO annotation 파일 없음 — Taxonomy 통계(TYPE 1-7) 비활성화. "
+        "annotation 파일을 data/raw_data/data/annotations/에 위치시키면 활성화됩니다.",
+        icon="ℹ️"
+    )
+
+# ── Metric cards row 2: score & divergence ───────────────────────────────────
+d2_c1, d2_c2, d2_c3, d2_c4 = st.columns(4)
+d2_c1.metric(
+    "이소폼별 최대 PRISM 점수 평균",
+    f"{_ds['mean_max_score']:.4f}",
+    help=(
+        f"각 이소폼에 대해 {len(go)}개 GO term 중 가장 높은 PRISM 예측 score를 구한 뒤, "
+        "모든 이소폼에 걸쳐 평균한 값. "
+        "이 값이 높을수록 데이터셋 전반적으로 PRISM이 기능적 활성을 예측하는 경향이 강합니다."
+    )
+)
+d2_c2.metric(
+    f"고득점 이소폼 수 (score > {thr})",
+    f"{_ds['n_high']:,}",
+    f"전체의 {_ds['n_high']/_N*100:.1f}% · 신규(NIC+NNIC): {_ds['n_high_novel']:,}개",
+    help=(
+        f"{len(go)}개 GO term 중 최소 1개에서 PRISM score > {thr}를 받은 이소폼 수. "
+        f"임계값 {thr}는 사이드바에서 조정 가능합니다. "
+        "신규(NIC+NNIC) 이소폼 중 고득점을 받은 수는 Ensembl annotation이 없는 이소폼 중 "
+        "PRISM이 기능을 예측한 케이스입니다."
+    )
+)
+d2_c3.metric(
+    "기능 분화 유전자 수 (Divergent)",
+    f"{_ds['div_cnt']:,}",
+    f"멀티-이소폼 유전자의 {_ds['div_cnt']/_ds['multi_iso_genes']*100:.1f}%" if _ds['multi_iso_genes'] else "—",
+    help=(
+        "이 데이터셋에 이소폼이 2개 이상 포함된 유전자 중, "
+        f"같은 유전자 내 이소폼들 사이에서 임의의 GO term에 대해 "
+        "max(PRISM score) − min(PRISM score) > 0.3인 경우가 한 번이라도 존재하는 유전자 수. "
+        "PRISM이 유전자 수준이 아닌 이소폼 수준에서 기능 차이를 감지하고 있음을 의미합니다."
+    )
+)
+d2_c4.metric(
+    "멀티-이소폼 유전자 수",
+    f"{_ds['multi_iso_genes']:,}",
+    f"단일 이소폼 유전자: {_ds['single_iso']:,}개",
+    help=(
+        "이 데이터셋에 이소폼이 2개 이상 포함된 유전자 수. "
+        "Intra-gene divergence 분석은 이 유전자들에 대해서만 수행됩니다. "
+        "데이터셋에 1개 이소폼만 포함된 유전자는 이소폼 간 비교가 불가능하므로 제외됩니다."
+    )
+)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# ── Charts row: score distribution + taxonomy ─────────────────────────────────
+_chart_c1, _chart_c2 = st.columns([3, 2])
+
+with _chart_c1:
+    _max_scores_arr = np.array(_ds['max_scores'])
+    _score_bins  = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.001]
+    _score_lbls  = ['0–0.1','0.1–0.2','0.2–0.3','0.3–0.4','0.4–0.5',
+                    '0.5–0.6','0.6–0.7','0.7–0.8','0.8–0.9','0.9–1.0']
+    _types_arr   = np.asarray(types if types is not None else ['known'] * _N, dtype=str)
+    _score_rows  = []
+    for lo, hi, lbl in zip(_score_bins[:-1], _score_bins[1:], _score_lbls):
+        mask = (_max_scores_arr >= lo) & (_max_scores_arr < hi)
+        _score_rows.append({
+            'bin': lbl,
+            'Known':    int((mask & (_types_arr == 'known')).sum()),
+            'NIC':      int((mask & (_types_arr == 'nic')).sum()),
+            'NNIC':     int((mask & (_types_arr == 'nnic')).sum()),
+        })
+    _score_df = pd.DataFrame(_score_rows)
+    _fig_score = _go_fig.Figure()
+    for col, color in [('Known','#4c72b0'),('NIC','#55a868'),('NNIC','#c44e52')]:
+        if _score_df[col].sum() > 0:
+            _fig_score.add_trace(_go_fig.Bar(
+                x=_score_df['bin'], y=_score_df[col],
+                name=col, marker_color=color,
+            ))
+    # vline at the bin label containing the threshold
+    _thr_lbl = next(
+        (l for l in _score_lbls
+         if float(l.split('–')[0]) <= thr < float(l.split('–')[1])),
+        _score_lbls[4]
+    )
+    _fig_score.add_vline(
+        x=_thr_lbl, line_dash='dash', line_color='#ef4444',
+        annotation_text=f'임계값 {thr}', annotation_font_size=10,
+    )
+    _fig_score.update_layout(
+        barmode='stack', title='이소폼별 최대 PRISM 점수 분포 (stacked by type)',
+        xaxis_title='Max PRISM Score 구간', yaxis_title='이소폼 수',
+        height=320, plot_bgcolor='white', paper_bgcolor='white',
+        legend=dict(orientation='h', yanchor='bottom', y=1.02),
+    )
+    st.plotly_chart(_fig_score, use_container_width=True)
+    st.caption(
+        f"**X축**: 각 이소폼에서 {len(go)}개 GO term 중 PRISM이 가장 높게 예측한 점수의 구간 · "
+        "**Y축**: 해당 구간에 속하는 이소폼 수 (Known / NIC / NNIC 누적) · "
+        f"**빨간 점선** = 현재 임계값 {thr} — 이 점선 **오른쪽** 이소폼은 "
+        f"최소 1개 GO term에서 score > {thr}를 기록하여 '기능 예측 성공'으로 간주됩니다."
+    )
+
+with _chart_c2:
+    if _taxonomy:
+        _type_meta = {
+            1: ('TYPE_1', f'유전자 GO annotation 없음 + score>{thr} (신규 예측)', '#e63946'),
+            2: ('TYPE_2', f'유전자 GO annotation 없음 + 0.3≤score≤{thr} (저신뢰)', '#f4a261'),
+            3: ('TYPE_3', 'GO annotation 없음 + score<0.3 (기능 미예측)', '#adb5bd'),
+            4: ('TYPE_4', f'GO annotation 있음 + 기존 GO 확인 + 새 GO score>{thr} (확장)', '#2a9d8f'),
+            5: ('TYPE_5', f'GO annotation 있음 + 기존 GO score>{thr} + 새 GO 없음 (검증)', '#4c72b0'),
+            6: ('TYPE_6', f'GO annotation 있음 + 기존 GO score<{thr} + 다른 GO score>{thr} (전환)', '#9b59b6'),
+            7: ('TYPE_7', f'GO annotation 있음 + 모든 GO score<{thr} (기능 미예측)', '#dfe6e9'),
+        }
+        _tax_rows = [
+            {'type': _type_meta[t][0], 'label': _type_meta[t][1],
+             'count': _taxonomy.get(t, 0), 'color': _type_meta[t][2]}
+            for t in sorted(_type_meta)
+        ]
+        _tax_df = pd.DataFrame(_tax_rows)
+        _fig_tax = _go_fig.Figure(_go_fig.Bar(
+            x=_tax_df['count'], y=_tax_df['type'],
+            orientation='h',
+            marker_color=_tax_df['color'],
+            text=_tax_df['count'].map(lambda v: f"{v:,}"),
+            textposition='outside',
+            hovertext=_tax_df['label'],
+            hovertemplate='%{hovertext}<br>이소폼 수: %{x:,}<extra></extra>',
+        ))
+        _fig_tax.update_layout(
+            title=f'이소폼 케이스 분류 (TYPE 1–7) — 임계값 {thr} 기준',
+            height=360, plot_bgcolor='white', paper_bgcolor='white',
+            xaxis_title='이소폼 수', yaxis=dict(autorange='reversed'),
+            margin=dict(l=80, r=80),
+        )
+        st.plotly_chart(_fig_tax, use_container_width=True)
+        st.caption(
+            f"**GO annotation** = human_annotations_unified_bp.txt (UniProtKB/SwissProt, 유전자 symbol 단위). "
+            f"**TYPE 1·4·6** (빨강·청록·보라) = 발견 후보 — PRISM이 SwissProt에 없는 새 기능을 예측. "
+            f"**TYPE 5** (파랑) = PRISM 예측이 기존 SwissProt annotation과 일치하는 검증 케이스. "
+            "막대에 마우스를 올리면 각 TYPE의 정의를 확인할 수 있습니다."
+        )
+    else:
+        st.info("annotation 파일 필요", icon="ℹ️")
+
+# ── Intra-gene divergence detail ─────────────────────────────────────────────
+with st.expander("🔬 Intra-gene 이소폼 기능 분화 상세 (이소폼 2개 이상 유전자 대상)", expanded=False):
+    st.caption(
+        f"**분석 대상**: 이 데이터셋에 이소폼이 2개 이상 포함된 유전자 ({_ds['multi_iso_genes']:,}개). "
+        f"**점수 차이 정의**: 같은 유전자 내 이소폼들 사이에서, {len(go)}개 GO term 중 "
+        "임의의 GO term에 대해 max(PRISM score) − min(PRISM score)를 계산하고 "
+        "그 최댓값을 해당 유전자의 '이소폼 간 최대 점수 차이'로 정의합니다. "
+        "이 값이 클수록 PRISM이 같은 유전자라도 이소폼마다 **다른 기능적 역할**을 예측하고 있음을 의미합니다."
+    )
+    _div_c1, _div_c2, _div_c3 = st.columns(3)
+    _total_multi = _ds['multi_iso_genes']
+    _div_c1.metric(
+        "기능 분화 유전자 (Divergent)",
+        f"{_ds['div_cnt']:,}",
+        f"멀티-이소폼 유전자의 {_ds['div_cnt']/_total_multi*100:.1f}%" if _total_multi else "—",
+        help=(
+            "같은 유전자 내 이소폼 간 최대 PRISM score 차이 > 0.3인 유전자. "
+            "PRISM이 이 유전자의 이소폼들을 서로 다른 기능을 수행하는 분자로 예측합니다."
+        )
+    )
+    _div_c2.metric(
+        "중간 분화 유전자 (Moderate)",
+        f"{_ds['mod_cnt']:,}",
+        f"멀티-이소폼 유전자의 {_ds['mod_cnt']/_total_multi*100:.1f}%" if _total_multi else "—",
+        help=(
+            "같은 유전자 내 이소폼 간 최대 PRISM score 차이가 0.1 초과 0.3 이하인 유전자. "
+            "기능 차이가 미미하게 포착되는 케이스."
+        )
+    )
+    _div_c3.metric(
+        "기능 일치 유전자 (Concordant)",
+        f"{_ds['con_cnt']:,}",
+        f"멀티-이소폼 유전자의 {_ds['con_cnt']/_total_multi*100:.1f}%" if _total_multi else "—",
+        help=(
+            "같은 유전자 내 이소폼 간 최대 PRISM score 차이 ≤ 0.1인 유전자. "
+            "PRISM이 이소폼들에 대해 사실상 동일한 기능을 예측합니다."
+        )
+    )
+
+    # Bar chart: divergence rate by n_iso
+    _div_bins = {2:'2', 3:'3', 4:'4–5', 5:'4–5', 6:'6–10', 7:'6–10', 8:'6–10',
+                 9:'6–10', 10:'6–10', 11:'>10'}
+    _by_niso = defaultdict(lambda: {'total':0,'div':0})
+    for nbin, vals in _ds['div_by_niso'].items():
+        lbl = _div_bins.get(int(nbin), '>10')
+        _by_niso[lbl]['total'] += vals.get('total', 0)
+        _by_niso[lbl]['div']   += vals.get('div', 0)
+
+    _div_order = ['2','3','4–5','6–10','>10']
+    _div_plot  = [{'n_iso': lbl,
+                   '전체': _by_niso[lbl]['total'],
+                   'Divergent': _by_niso[lbl]['div'],
+                   '비율(%)': round(_by_niso[lbl]['div']/_by_niso[lbl]['total']*100, 1)
+                             if _by_niso[lbl]['total'] else 0}
+                  for lbl in _div_order if _by_niso[lbl]['total'] > 0]
+    if _div_plot:
+        _div_df = pd.DataFrame(_div_plot)
+        _fig_div = _go_fig.Figure()
+        _fig_div.add_trace(_go_fig.Bar(
+            x=_div_df['n_iso'], y=_div_df['전체'],
+            name='전체 유전자', marker_color='#d1d5db',
+        ))
+        _fig_div.add_trace(_go_fig.Bar(
+            x=_div_df['n_iso'], y=_div_df['Divergent'],
+            name='Divergent (>0.3)', marker_color='#e63946',
+            text=_div_df['비율(%)'].map(lambda v: f"{v:.0f}%"),
+            textposition='outside',
+        ))
+        _fig_div.update_layout(
+            barmode='overlay',
+            title='이소폼 수별 기능 분화(Divergent) 유전자 비율 — max(PRISM score) − min(PRISM score) > 0.3 기준',
+            xaxis_title='유전자당 이소폼 수 (이 데이터셋 기준)',
+            yaxis_title='유전자 수',
+            height=300, plot_bgcolor='white', paper_bgcolor='white',
+            legend=dict(orientation='h', yanchor='bottom', y=1.02),
+        )
+        st.plotly_chart(_fig_div, use_container_width=True)
+        st.caption(
+            "**회색 막대**: 각 이소폼 수 구간의 전체 유전자 수 · "
+            "**빨간 막대**: 그 중 기능 분화(Divergent, 이소폼 간 최대 PRISM 점수 차이 > 0.3) 유전자 수 · "
+            "빨간 막대 위 숫자 = Divergent 비율(%). "
+            "이소폼 수가 많을수록 Divergent 비율이 높아지는 경향은 "
+            "PRISM이 이소폼 다양성이 높은 유전자에서 이소폼 수준 기능 차이를 더 풍부하게 포착함을 시사합니다."
+        )
 
 st.divider()
 
