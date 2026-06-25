@@ -665,22 +665,37 @@ st.subheader("D1 · 4-Scenario Classification — DTU × GO 기능 예측으로 
 st.caption(
     f"각 아이소폼을 두 축으로 분류합니다: "
     "① **DTU(Differential Transcript Usage)** — 조건 간 사용 비율이 유의미하게 변했는가 (DTU 파일 필요) · "
-    f"② **신규 GO 예측** — PRISM 스코어 > {thr}인 GO term이 있는가 · "
-    "S1(DTU+ & GO+)이 질병 메커니즘과 가장 직접 관련된 최우선 후보이며, "
-    "S3(DTU- & GO+)는 조건 무관하게 새로운 기능을 하는 구성적(constitutive) 신규 기능 아이소폼입니다."
+    f"② **신규 GO 예측** — score > {thr}인 GO term 중 SwissProt annotation에 없는 GO term이 1개 이상 존재하는가 "
+    f"(annotation 파일 미로드 시 score > {thr}인 모든 GO term을 신규로 간주) · "
+    "S1(DTU+ & 신규GO+)이 최우선 후보, S3(DTU- & 신규GO+)는 조건 무관 구성적 신규 기능 아이소폼."
 )
 
+# annotation 로드 (A1b와 동일한 파일 — cached via _ds if already computed)
+_ann_file = Path(_root) / 'hMuscle/data/raw_data/data/annotations/human_annotations_unified_bp.txt'
+_swissport_ann = None
+if _ann_file.exists():
+    _swissport_ann = defaultdict(list)
+    with open(_ann_file) as _af:
+        for _line in _af:
+            _parts = _line.strip().split('\t')
+            if len(_parts) >= 2:
+                for _g in _parts[1:]:
+                    if _g.startswith('GO:'):
+                        _swissport_ann[_parts[0]].append(_g)
+
+# thr 변경 시 재분류 필요 — thr를 캐시 키로 사용
+_classified_thr = st.session_state.get('_classified_thr')
 classified = st.session_state.get('classified_df')
-if classified is None:
+if classified is None or _classified_thr != thr:
     with st.spinner("Classifying isoforms…"):
-        annot = cfg.get('existing_annotations')
         classified = classify_isoforms(
             sm, ids, genes, go,
-            existing_annotations=annot,
+            existing_annotations=dict(_swissport_ann) if _swissport_ann else cfg.get('existing_annotations'),
             dtu_df=dtu,
             score_threshold=thr,
         )
-        st.session_state['classified_df'] = classified
+        st.session_state['classified_df']  = classified
+        st.session_state['_classified_thr'] = thr
 
 summ = scenario_summary(classified)
 
