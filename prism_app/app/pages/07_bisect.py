@@ -1074,7 +1074,7 @@ if _drimseq_df is not None and not _drimseq_df.empty:
 - **ZNF736** (Exc, stageR p=2.7×10⁻²⁴) — 패널 최강 신호. KRAB+C2H2 완전 도메인 소실 → transcriptional derepression
 - **ZNF582** (Exc, stageR p=7.2×10⁻¹¹) — Alternative TSS, C-terminal 100% 동일, +31 aa N-terminal extension
 - **NDUFAF5** (Exc, stageR p=1.4×10⁻⁴) — Complex I N-module assembly factor. NMD-target 누적 → NDUFS4 integration 불가 (Leigh syndrome 유전자)
-- **DOCK10** (Microglia, stageR p=1.2×10⁻³) — per-donor MWU p=0.005, Δ=−0.573. DOCK-family GEF (mechanistic detail pending)
+- **DOCK10** (Microglia, stageR p=1.2×10⁻³) — per-donor MWU p=0.005, Δ=−0.573. DOCK-family Rac1/Cdc42 GEF; 6-aa minor exon; all 7 DOCK domains preserved; pan-cellular GEF axis with DOCK11
 - **SAMHD1** (Inh, stageR p=7.7×10⁻³) — NMD switch + tetramerization domain 소실. LINE-1 restriction 기능 손상
         """)
 
@@ -1095,8 +1095,7 @@ _donor_df = _load_donor_stats(str(_DONOR_STATS_PATH))
 if _donor_df is not None and not _donor_df.empty:
     with st.expander("🎯 Tier A-BP — BISECT-Permutation 검증 케이스", expanded=True):
         st.markdown("""
-BISECT83 Complex I / GEF 후보에 **도너-label permutation test** (n=10,000회)를 적용한 **2차 표적 검증** 결과입니다.
-DRIMSeq으로 검출 불가한 케이스(read sparsity)를 사전 지정 후보 내에서 추가 발굴합니다.
+DRIMSeq+stageR로 검출 불가한 케이스(cell type별 read sparsity)를 사전 지정 Complex I / GEF 후보군 내에서 **도너-label permutation test** (n=10,000회)로 추가 발굴합니다.
 
 > perm p ≤ 0.05 + 양 배치 방향 일치 (PO & SMC 모두) · KIF21B(Tier B)·DLG1(Tier D)은 비교 참고용 포함
         """)
@@ -1165,7 +1164,7 @@ DRIMSeq으로 검출 불가한 케이스(read sparsity)를 사전 지정 후보 
         # Key findings summary
         st.markdown("""
 **핵심 발견 요약:**
-- **DOCK11** (Inh, perm p=0.0008) — BISECT83 Tier3에서 패널 최고 통계 유의성으로 승격. Cdc42-GEF 도메인 소실
+- **DOCK11** (Inh, perm p=0.0008) — 패널 최고 통계 유의성. 53 exon CT → 3 exon AD; DHR-2 Lobe A/B/C + PH 도메인 전부 소실; phyloP=3.25
 - **NDUFS8** (Inh, perm p=0.004) — 신규 케이스. Complex I Q-module TYKY subunit, 37% 효과크기
 - **NDUFS4** (Inh+Exc, perm p=0.024/0.041) — 억제·흥분성 뉴런 모두에서 N-module 배치독립 재현
 - **NDUFS7** (Exc, perm p=0.048) — 신규 케이스. Q-module PSST subunit; 근육 SRA 데이터와 교차 재현
@@ -1178,7 +1177,7 @@ st.subheader("🔬 BISECT 생물학적 심층 해석 브라우저")
 st.markdown(
     "**BISECT** (Biological Isoform-Switch Evidence Characterization Tool) — "
     "15개 독립 모듈(도메인 구조·STRING PPI·AlphaFold·계통보존·NMD·규제인자 등)로 "
-    "기능 스위치를 다층 검증한 **84개 PASS 케이스**. "
+    "기능 스위치를 다층 검증한 **101개 PASS 케이스** (Tier A-DR 14 · A-BP 5 · B 1 · C 80 · D 1). "
     "Tier A-DR/A-BP 케이스의 생물학적 해석 근거가 이 브라우저에 포함됩니다. "
     "유전자명을 검색하면 Volcano · 도메인 구조 · GO 비교 · 종합 리포트가 펼쳐집니다."
 )
@@ -1321,7 +1320,7 @@ st.divider()
 # ── Global TF / ASF / Epigenetic violin plot ──────────────────────────────
 with st.expander("📊 전체 케이스 — 조절 인자 활성 변화 분석 (Volcano + Violin)", expanded=False):
     st.markdown("""
-**이 섹션은 BISECT 파이프라인이 84개 케이스에서 감지한 TF·ASF·후성유전 조절 인자들이
+**이 섹션은 BISECT 파이프라인이 101개 케이스에서 감지한 TF·ASF·후성유전 조절 인자들이
 AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니다.**
 
 - **Volcano Plot** (위): X축 = 발현 변화 크기(logFC), Y축 = 통계적 유의성(-log₁₀ p-adj).
@@ -1387,7 +1386,7 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
             )
             _vol_title = 'Volcano Plot — TF/ASF Activity (AD vs CT) · 26 Cases · 전체 Significant Regulators'
             if _using_fallback_volcano:
-                _vol_title = 'Volcano Plot — TF/ASF Activity (AD vs CT) · 84 Cases · Top Regulators (Fallback)'
+                _vol_title = 'Volcano Plot — TF/ASF Activity (AD vs CT) · 101 Cases · Top Regulators (Fallback)'
 
             _fig_gvol = px.scatter(
                 _gvdf,
@@ -1426,7 +1425,7 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
             st.plotly_chart(_fig_gvol, use_container_width=True, key='glob_volcano')
             if _using_fallback_volcano:
                 st.caption(
-                    f"Volcano (Fallback): 84개 케이스의 top_regulators 데이터 기반. "
+                    f"Volcano (Fallback): 101개 케이스의 top_regulators 데이터 기반."
                     f"({len(_gvdf)}개 관측). X=logFC, Y=-log₁₀(p-adj). "
                     "점선: |logFC|=0.1, -log₁₀p=2. ● = 기존 AD 연관, ◆ = 새로 발견. "
                     "레이블 = -log₁₀p > 10인 Known 인자."
@@ -1463,7 +1462,7 @@ AD vs. CT 조건에서 어떻게 달라졌는지를 전체적으로 조망합니
                     'Direction': ['Up', 'Down'],
                 },
                 hover_data=['Case', 'CellType', 'Category', 'Knowledge', '-log10(padj)'],
-                title='TF / ASF / Epigenetic logFC Distribution (AD vs CT) — 84 BISECT Cases',
+                title='TF / ASF / Epigenetic logFC Distribution (AD vs CT) — 101 BISECT Cases',
                 labels={'logFC': 'logFC (AD vs CT)', 'Regulator': ''},
                 height=380,
             )

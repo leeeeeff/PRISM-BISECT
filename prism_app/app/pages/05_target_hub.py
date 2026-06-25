@@ -1271,7 +1271,7 @@ with _nd1:
     <div style='font-size:1.6rem'>📋</div>
     <b style='color:#991b1b'>시나리오 분류 & BISECT</b><br>
     <span style='font-size:0.8rem;color:#64748b'>
-    S1~S4 시나리오별 아이소폼 테이블 · BISECT 84 케이스 심층 분석
+    S1~S4 시나리오별 아이소폼 테이블 · BISECT 101 케이스 심층 분석
     </span></div>""", unsafe_allow_html=True)
     if st.button("▶ 시나리오 & BISECT", key='nav_scenarios', use_container_width=True):
         st.switch_page("pages/05_targets.py")

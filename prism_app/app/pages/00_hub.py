@@ -309,7 +309,7 @@ font-size:0.75rem;font-weight:600;letter-spacing:0.05em'>PAPER DEMO DATA</span>
 """, unsafe_allow_html=True)
 st.caption(
     "이것은 **논문 사전 계산 결과**입니다 — 내 데이터 분석 결과가 아닙니다. "
-    "AD vs CT 조건에서 isoform 기능 전환이 검증된 84개 케이스 (BISECT PASS). "
+    "AD vs CT 조건에서 isoform 기능 전환이 검증된 101개 케이스 (BISECT PASS; A-DR 14 · A-BP 5 · B 1 · C 80 · D 1). "
     "유전자 클릭 → Target Analysis 페이지 자동 이동 + 검색 실행."
 )
 
@@ -344,7 +344,7 @@ _bisect_df = _load_bisect_cases()
 if _bisect_df is not None:
     # ── Summary metrics ───────────────────────────────────────────────────
     mc1, mc2, mc3, mc4 = st.columns(4)
-    mc1.metric("BISECT PASS", "84")
+    mc1.metric("BISECT PASS", "101")
     mc2.metric("Genes", str(_bisect_df['gene'].nunique()))
     mc3.metric("Cell types", str(_bisect_df['cell_type'].nunique()))
     mc4.metric("PPI supported", str((_bisect_df['ppi_verdict'] == 'SUPPORTED').sum()))
@@ -430,7 +430,7 @@ padding:12px 14px;height:160px;overflow:hidden'>
                 st.toast(f"{lm['gene']} → Target Analysis 페이지에서 자동 검색됩니다. 왼쪽 사이드바에서 'Targets'를 클릭하세요.")
 
     # ── Full case browser ─────────────────────────────────────────────────
-    with st.expander("📋 전체 84 케이스 브라우저", expanded=False):
+    with st.expander("📋 전체 101 케이스 브라우저", expanded=False):
         col_f1, col_f2 = st.columns([2, 1])
         with col_f1:
             _search = st.text_input("유전자명 검색", placeholder="FANCA, DMD ...", key='bisect_search')
