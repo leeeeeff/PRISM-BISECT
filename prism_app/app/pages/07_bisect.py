@@ -1,5 +1,5 @@
-"""Page 07 — BISECT Cases standalone browser.
-Extracted from 05_targets.py (BISECT Cases tab). Works with or without session state.
+"""Page 07 — 핵심 케이스 스터디 (BISECT Cases browser).
+4-tab layout: 통계 & 티어 배정 / 케이스 목록 / BISECT 심층 분석 / 복합 프로세스 그룹.
 """
 import sys
 import json
@@ -2943,7 +2943,7 @@ with tab3:
     <b>관련 분석 페이지:</b><br>
     <span style='color:#374151;font-size:0.9rem'>
     🎯 <b>Target Analysis</b>: 유전자 Quick Card + DTU ΔIF 차트 + 바스켓 비교<br>
-    🔬 <b>시나리오 & 분석</b> → BISECT Cases 탭: S1 교차 분석, 전체 이소폼 DTU 차트 포함
+    🔬 <b>시나리오 & 분석</b> → 핵심 케이스 스터디 탭: S1 교차 분석, 전체 이소폼 DTU 차트 포함
     </span>
     </div>
     """, unsafe_allow_html=True)

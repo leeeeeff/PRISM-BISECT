@@ -87,7 +87,7 @@ microtubule-based movement: <b>0.105</b><br><br>
 
 <div style='background:#f0fdf4;border-left:4px solid #22c55e;
 padding:10px 16px;border-radius:6px;font-size:0.86rem;color:#14532d;line-height:1.6'>
-<b>Tip</b>: BISECT Cases 페이지의
+<b>Tip</b>: 핵심 케이스 스터디 페이지의
 <code>prism_ct_max_score</code> /
 <code>prism_ad_max_score</code> 컬럼에서
 각 아이소폼의 최고 점수를 확인할 수 있습니다.
@@ -249,7 +249,7 @@ AD vs. CT 비교 결론 도출 시 주의가 필요합니다.
 <br>
 <div style='background:#f0fdf4;border-left:4px solid #22c55e;
 padding:10px 16px;border-radius:6px;font-size:0.86rem;color:#14532d;line-height:1.6'>
-<b>Tip</b>: BISECT Cases 페이지 상단 필터에서 <b>"DTU 검증 포함만"</b> 옵션을 켜면
+<b>Tip</b>: 핵심 케이스 스터디 페이지 상단 필터에서 <b>"DTU 검증 포함만"</b> 옵션을 켜면
 뇌 조직 26개 케이스만 표시됩니다. 논문 재현 결과를 확인할 때 권장합니다.
 </div>
         """,
@@ -390,7 +390,7 @@ np.savez('my_scores.npz',
             """
 #### BISECT 아이소폼 쌍 CSV
 
-BISECT Cases 페이지 및 Condition Analysis 페이지에서 아이소폼 간 비교를 실행하려면
+핵심 케이스 스터디 페이지 및 Condition Analysis 페이지에서 아이소폼 간 비교를 실행하려면
 아이소폼 쌍 정보가 필요합니다.
 
 **필수 컬럼:**
@@ -564,7 +564,7 @@ with st.expander("핵심 수치 및 기준값 요약"):
 |------|----|
 | 뇌 조직 케이스 (DTU) | 26개 |
 | SRA 단일조건 케이스 | 57개 |
-| 전체 BISECT PASS | 83개 |
+| 전체 BISECT PASS | 101개 |
 | Complex I 수렴 케이스 | NDUFS4 / NDUFS7 / NDUFS8 |
 | 예시 DLG1 delta | 5× gain (Chemical synaptic) |
 | 예시 KIF21B delta | −0.870 (Motor function loss) |

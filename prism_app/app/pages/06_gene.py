@@ -207,7 +207,7 @@ with _bisect_btn_col:
     if _bisect_ok:
         st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
         if st.button("🧫 BISECT\nCases →", key='gene_goto_bisect', use_container_width=True,
-                     help="BISECT Cases 페이지에서 이 유전자의 증거 패키지 보기"):
+                     help="핵심 케이스 스터디 페이지에서 이 유전자의 증거 패키지 보기"):
             st.session_state['bisect_filter_gene'] = _gene_name
             st.switch_page("pages/07_bisect.py")
 

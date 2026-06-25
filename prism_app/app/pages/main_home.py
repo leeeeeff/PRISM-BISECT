@@ -359,9 +359,9 @@ st.markdown("""
     </div>
     <div style='width:1px;background:rgba(255,255,255,0.12)'></div>
     <div>
-      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>83</div>
+      <div style='font-size:2.6rem;font-weight:800;color:#2dd4bf;line-height:1'>101</div>
       <div style='font-size:0.8rem;color:rgba(255,255,255,0.55);margin-top:5px'>
-        BISECT 케이스<br><span style='color:#86efac'>26 DTU검증 + 57 SRA단일조건</span>
+        BISECT 케이스<br><span style='color:#86efac'>14 A-DR · 5 A-BP · 80 탐색적</span>
       </div>
     </div>
   </div>

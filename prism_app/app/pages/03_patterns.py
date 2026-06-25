@@ -85,6 +85,7 @@ with tab_umap:
                                       help="KMeans로 기능 클러스터를 감지해 각 군집에 대표 GO 기능명을 표시합니다.")
 
     _MAX_UMAP = 15_000   # cap for reasonable render speed
+    n_total = sm.shape[0]   # always defined before precomp branch
 
     _precomp = st.session_state.get('_precomp_umap')
     if _precomp is not None:

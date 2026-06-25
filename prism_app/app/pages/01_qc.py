@@ -507,15 +507,20 @@ with _chart_c1:
                 x=_score_df['bin'], y=_score_df[col],
                 name=col, marker_color=color,
             ))
-    # vline at the bin label containing the threshold
-    _thr_lbl = next(
-        (l for l in _score_lbls
+    # vline at the numeric index of the threshold bin (add_vline with string x breaks on newer plotly)
+    _thr_idx = next(
+        (i for i, l in enumerate(_score_lbls)
          if float(l.split('–')[0]) <= thr < float(l.split('–')[1])),
-        _score_lbls[4]
+        4
     )
-    _fig_score.add_vline(
-        x=_thr_lbl, line_dash='dash', line_color='#ef4444',
-        annotation_text=f'임계값 {thr}', annotation_font_size=10,
+    _fig_score.add_shape(
+        type='line', x0=_thr_idx - 0.5, x1=_thr_idx - 0.5, y0=0, y1=1, yref='paper',
+        line=dict(dash='dash', color='#ef4444', width=2),
+    )
+    _fig_score.add_annotation(
+        x=_thr_idx - 0.5, y=0.96, yref='paper',
+        text=f'임계값 {thr}', font=dict(size=10, color='#ef4444'),
+        showarrow=False, xanchor='left',
     )
     _fig_score.update_layout(
         barmode='stack', title='이소폼별 최대 PRISM 점수 분포 (stacked by type)',
