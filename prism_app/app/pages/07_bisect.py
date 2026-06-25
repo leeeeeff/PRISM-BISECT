@@ -1323,6 +1323,117 @@ with tab1:
 
     st.divider()
 
+    # ── PRISM 기능 분류 (T1/T2/T3) × 증거 Tier 교차 분석 ─────────────────────────
+    st.markdown("### PRISM 기능 분류 (T1 스위치 / T2 소실 / T3 구조) × 통계 Tier")
+
+    with st.expander("📌 T1/T2/T3 분류 근거 및 한계 설명", expanded=True):
+        st.markdown("""
+**T1/T2/T3 분류는 AlphaFold2 구조 신뢰도 기반입니다** — PRISM GO 예측 점수와는 별도.
+
+| 분류 | 기준 | 결정 필드 | 의미 |
+|------|------|-----------|------|
+| **T1 기능 스위치** | AD 이소폼에서 AlphaFold pLDDT≥70 구조 *신규 획득* | `af_gained_confident` | AD 이소폼이 CT에 없는 단백질 도메인/접힘을 확보 → 기능 변화 |
+| **T2 기능 소실** | CT 이소폼 구조가 AD에서 *소실* | `af_lost_confident` | 기존 기능 담당 구조가 사라짐 → 기능 손실 |
+| **T2 Complex I 붕괴** | NDUFS4/7/8 (Complex I 필수 subunit) | 유전자 정보 | 미토콘드리아 전자전달계 직접 손상 |
+| **T2 부분 변화** | Pfam 도메인 획득/소실만 존재 (AF 신뢰도 없음) | `domains_gained/lost` | 도메인 어노테이션 변화; AF 미확인 |
+| **T3 구조 증거** | TSS/APA/exon 변화; AF 구조 변화 없음 | 나머지 | RNA 레벨 메커니즘(NMD, localization) 주도 가능 |
+
+**PRISM GO 점수 해석 주의사항:**
+- `prism_match = exact`: 전사체 수준 예측 (신뢰도 ✓)
+- `prism_match = gene_median`: 유전자 중앙값 fallback (신뢰도 ✗ — CT/AD 점수 인위적으로 유사)
+- A-DR 14개: 모두 exact match, delta_max mean=**0.054** (소) → 단백질 기능 변화 작음
+  → **RNA 레벨 메커니즘이 주도**: NMD에 의한 전사체 소실, 핵/세포질 localization 전환, 번역 효율 변화
+        """)
+
+    # Compute tier distribution
+    _COMPLEX1 = {'NDUFS4', 'NDUFS7', 'NDUFS8'}
+    _PRISM_TIER_LABEL = {
+        'T1 기능 스위치':   ('T1 스위치', '#4f46e5'),
+        'T2 기능 소실':     ('T2 소실',   '#dc2626'),
+        'T2 Complex I 붕괴':('T2 Complex I', '#7f1d1d'),
+        'T2 부분 변화':     ('T2 부분',   '#f97316'),
+        'T3 구조 증거':     ('T3 구조',   '#94a3b8'),
+    }
+
+    def _infer_prism_tier_label(row: dict) -> str:
+        gene  = str(row.get('gene', '') or '').upper()
+        af_g  = str(row.get('af_gained_confident', '') or '').strip()
+        af_l  = str(row.get('af_lost_confident',  '') or '').strip()
+        dom_g = str(row.get('domains_gained',     '') or '').strip()
+        dom_l = str(row.get('domains_lost',       '') or '').strip()
+        if gene in _COMPLEX1:                return 'T2 Complex I 붕괴'
+        if af_g:                             return 'T1 기능 스위치'
+        if af_l:                             return 'T2 기능 소실'
+        if dom_g or dom_l:                   return 'T2 부분 변화'
+        return 'T3 구조 증거'
+
+    _bdf_pt = _bdf.copy()
+    _bdf_pt['_prism_label'] = _bdf_pt.apply(_infer_prism_tier_label, axis=1)
+    _bdf_pt['_prism_delta'] = _bdf_pt.get('prism_delta_max', pd.Series(dtype=float))
+
+    # Cross-tab: evidence tier × prism tier
+    _ETIERS = ['A-DR', 'A-BP', 'B', 'C', 'D']
+    _PTIERS = ['T1 기능 스위치', 'T2 기능 소실', 'T2 Complex I 붕괴', 'T2 부분 변화', 'T3 구조 증거']
+
+    _cross_data = []
+    for _et in _ETIERS:
+        _edf = _bdf_pt[_bdf_pt.get('bisect_tier', pd.Series(dtype=str)) == _et] if 'bisect_tier' in _bdf_pt.columns else pd.DataFrame()
+        for _pt in _PTIERS:
+            _n = (_edf['_prism_label'] == _pt).sum() if not _edf.empty else 0
+            _short, _color = _PRISM_TIER_LABEL[_pt]
+            _cross_data.append({'증거Tier': _et, 'PRISM분류': _short, 'n': int(_n), 'color': _color})
+
+    _cross_df = pd.DataFrame(_cross_data)
+    _cross_df = _cross_df[_cross_df['n'] > 0]
+
+    _pt_colors = {v[0]: v[1] for v in _PRISM_TIER_LABEL.values()}
+
+    _tc1, _tc2 = st.columns([3, 2])
+    with _tc1:
+        if not _cross_df.empty:
+            _pt_fig = px.bar(
+                _cross_df, x='증거Tier', y='n', color='PRISM분류',
+                color_discrete_map=_pt_colors,
+                barmode='stack',
+                title='증거 Tier별 PRISM 기능 분류 분포',
+                labels={'n': '케이스 수', '증거Tier': '통계 증거 Tier', 'PRISM분류': 'PRISM 분류'},
+                height=340,
+                category_orders={'증거Tier': _ETIERS},
+            )
+            _pt_fig.update_layout(margin=dict(t=40, b=10, l=10, r=10), legend=dict(orientation='h', yanchor='bottom', y=-0.45))
+            st.plotly_chart(_pt_fig, use_container_width=True, key='prism_tier_stacked_bar')
+    with _tc2:
+        # PRISM delta heatmap by tier
+        _delta_rows = []
+        for _et in _ETIERS:
+            _edf = _bdf_pt[_bdf_pt.get('bisect_tier', pd.Series(dtype=str)) == _et] if 'bisect_tier' in _bdf_pt.columns else pd.DataFrame()
+            if _edf.empty: continue
+            _deltas = _edf['prism_delta_max'].dropna() if 'prism_delta_max' in _edf.columns else pd.Series()
+            _match_exact = (_edf['prism_match_ct'] == 'exact').sum() if 'prism_match_ct' in _edf.columns else 0
+            _delta_rows.append({
+                '통계Tier': _et,
+                'PRISM Δmax 평균': round(float(_deltas.mean()), 3) if len(_deltas) > 0 else None,
+                'PRISM Δmax 최대': round(float(_deltas.max()), 3) if len(_deltas) > 0 else None,
+                'exact match 수': int(_match_exact),
+                '전체': int(len(_edf)),
+            })
+        _delta_df = pd.DataFrame(_delta_rows)
+        if not _delta_df.empty:
+            st.markdown("**PRISM Δmax (기능 점수 차이) & 데이터 품질**")
+            st.dataframe(
+                _delta_df.style.background_gradient(subset=['PRISM Δmax 평균'], cmap='YlOrRd'),
+                use_container_width=True, height=240,
+            )
+            st.caption("PRISM Δmax: CT→AD 기능 예측 점수 최대 변화량. exact match=전사체 수준 예측(신뢰).")
+
+    st.markdown("""
+**A-DR 케이스 해석**: 14개 중 10개가 T3(구조 증거) — 단백질 구조 변화 없이 RNA 수준 메커니즘이 주도.
+delta_max 평균 0.054는 작지만 **prism_match 전원 exact**(신뢰 가능); 기능 변화는 NMD 의존성 전사체 분해,
+핵↔세포질 localization 전환, 번역 개시 효율 변화를 통해 단백질 발현량 자체를 조절하는 방식으로 작동.
+    """)
+
+    st.divider()
+
 with tab2:
     # ── Summary metrics ───────────────────────────────────────────────────────
     _mc1, _mc2, _mc3, _mc4, _mc5 = st.columns(5)
@@ -2854,6 +2965,35 @@ with tab4:
                            "L4 excitatory 뉴런(C18 AD-enriched p=0.009)에서 NDUFS7 co-enrichment 확인."),
             "genes": ["NDUFAF5", "NDUFS4", "NDUFS7", "NDUFS8"],
             "color": "#dcfce7", "border": "#059669",
+            "mechanism_report": """
+**예측 메커니즘: Complex I Q-module 이중 결함 → 전자전달계 붕괴 → 미토콘드리아 기능 손상**
+
+**① 기능 소실: 무엇이 사라지는가**
+- **NDUFAF5** (N-module chaperone, Oligodendrocyte): CT 이소폼(-202)이 AD(-201)로 전환. NDUFAF5는 NDUFS2·NDUFS3 가이드 단백질 — AD 이소폼에서 어셈블리 chaperone 활성 감소 → N-module 불완전 조립
+- **NDUFS4** (N-module structural, Exc+Inh): CT(-201)→NIC transcript. NDUFS4는 N-module의 최종 삽입 subunit; 돌연변이 시 Complex I 활성 20~50% 감소 (Budde 2010). AD 이소폼에서 C-terminal 변화 → N-module 안정성 저하
+- **NDUFS7** (Q-module PSST subunit, Excitatory): CT(-202)→AD(-210). PSST는 NDUFA7/NDUFS7 계면의 FMN→Q 전자 전달 경로에 위치. Δ delta=−0.051이지만 분자 수준에서 Q-site 기하 변화 가능
+- **NDUFS8** (Q-module TYKY subunit, Inhibitory): CT(NIC)→AD(NIC2). TYKY에는 2개의 [4Fe-4S] cluster(N6a, N6b)가 포함; AD 이소폼에서 Fe-S cluster 결합 잔기 변화 → electron tunneling 효율 감소
+
+**② 수렴 모델**
+```
+N-module:  NDUFAF5↓ + NDUFS4↓  →  N-module 불완전 조립  →  Matrix arm destabilized
+Q-module:  NDUFS7↓ + NDUFS8↓  →  Q-site 전자 전달 저하  →  CoQ reduction 장애
+           └──────────────────────────────────────┘
+                    Complex I 전체 활성 감소
+                    ROS 생성 증가 + ATP 합성 저하
+                    L4 excitatory 뉴런 에너지 결핍
+```
+
+**③ 세포 유형 특이성**
+- A-DR(DRIMSeq): NDUFAF5/Oligodendrocyte — 수초화 에너지 대사 손상
+- A-BP(permutation): NDUFS4·NDUFS7·NDUFS8 / Exc+Inh — 주요 피질 회로 에너지 공급 차단
+- C18 L4 atypical(AD-enriched): NDUFS7/8 co-enrichment → L4→L5 long-range projection에서 선택적 취약
+
+**④ 검증 가능한 예측**
+- Complex I 효소 활성: AD vs CT 해마 균질액에서 NADH oxidoreductase 활성 감소 예상
+- Seahorse assay (iPSC-Exc neuron): OCR(산소소비율) 감소, ECAR 증가
+- NDUFS8 면역침강: AD 뇌 조직에서 NDUFS8·Q-module complex 결합 약화
+            """,
         },
         {
             "name": "🧬 RNA 대사 축",
@@ -2862,6 +3002,30 @@ with tab4:
                            "RNA 대사 전 과정 5개 유전자 수렴."),
             "genes": ["DDX19A", "DIS3", "CNOT11", "NOL8", "ZCCHC17"],
             "color": "#ede9fe", "border": "#7c3aed",
+            "mechanism_report": """
+**예측 메커니즘: mRNA 수명주기 전 단계 연쇄 손상 → 단백질 발현 패턴 광범위 교란**
+
+**① 기능 소실: 무엇이 사라지는가**
+- **DDX19A** (mRNA export helicase, Inhibitory): M15 분석 → NMD switch. CT 이소폼(-201)은 DEAD-box 구조 온전; AD 이소폼(-209)에서 NMD 유도 → DDX19A 단백질 감소. Nuclear pore를 통한 mRNA 수출 저해. **소실: 핵-세포질 mRNA 수송 능력**
+- **DIS3** (nuclear exosome core, Oligodendrocyte): CT(-201)→AD(-202). RNB 분해효소 + PIN 엔도뉴클레아제 도메인 변화. 비정상 전사체 소화 능력 저하. **소실: 비정상 mRNA 품질 관리**
+- **CNOT11** (CCR4-NOT deadenylase complex, Oligodendrocyte): CT(-201)→NIC. NIC 이소폼은 C-terminal CNOT1 결합 motif 변화 가능 → CCR4-NOT complex 안정성 저하. **소실: poly-A tail 단축 → mRNA 분해 지연**
+- **NOL8** (nucleolar protein, Microglia): CT(-205)→AD(-208). AD 이소폼에 +198aa C-terminal 삽입 — gain-of-structure 가능성. 핵소체 rRNA 가공에 영향. **신규 획득: 비기능성 C-terminal 도메인; 소실: 정상 핵소체 기능**
+- **ZCCHC17** (RNA-binding, multiple cell types): CT 이소폼에서 S1 RNA-binding domain 소실(af_lost_confident). **소실: RNA 인식 및 결합 능력**
+
+**② 수렴 모델**
+```
+핵  ─ DDX19A↓  →  mRNA 수출 장애  →  핵 내 mRNA 축적
+    ─ DIS3↓    →  이상 전사체 누적  →  비정상 단백질 번역
+    ─ NOL8↑?   →  rRNA 가공 장애   →  리보솜 바이오제네시스 손상
+세포질 ─ CNOT11↓ →  mRNA t1/2 연장  →  노화된 mRNA 단백질 번역
+       ─ ZCCHC17↓→  RNA 국소화 오류  →  시냅스 단백질 합성 저하
+```
+
+**③ 검증 가능한 예측**
+- FISH+immunostaining: DDX19A 기능 저하 시 mRNA nuclear retention 증가
+- RNA-seq half-life 분석: CNOT11 기능 저하 → 표적 mRNA 반감기 연장
+- rRNA mature form ratio: NOL8 gain-isoform → 28S/18S rRNA 비율 변화
+            """,
         },
         {
             "name": "🔧 DNA 복구 축",
@@ -2871,6 +3035,35 @@ with tab4:
                            "FA pathway + NER 3개 세포유형 동시 수렴."),
             "genes": ["ERCC6L2", "USP1", "RPS3", "FANCA"],
             "color": "#fce7f3", "border": "#be185d",
+            "mechanism_report": """
+**예측 메커니즘: Fanconi anemia pathway + NER 동시 손상 → DNA 손상 복구 불능 → 신경세포 게놈 불안정**
+
+**① 기능 소실: 무엇이 사라지는가**
+- **ERCC6L2** (SWI-SNF helicase, Astrocyte): CT(-201, 43exon)→AD(-210, ALE). 6개 SF2/SWI-SNF helicase 도메인 전부 소실. ERCC6L2는 ICL(inter-strand crosslink) 복구에 필수. **소실: ICL 복구 helicase 전 기능**
+- **FANCA** (Fanconi anemia FA core complex, Excitatory): CT(43exon)→AD(11exon). Fanconi_A 도메인 소실. FA core complex의 E3 ubiquitin ligase(FANCL·FANCM) 활성화 불가. FANCD2·FANCI monoubiquitylation 중단. **소실: ICL 감지 및 translesion synthesis 개시 능력**
+- **USP1** (FANCD2/FANCI deubiquitylase, Oligodendrocyte): CT(−201)→AD(−202). alt-TSS +745bp upstream → N-terminal 연장(+35aa). USP1은 FANCD2-Ub를 제거하여 repair cycle을 완결; AD 이소폼에서 UAF1 결합 도메인 영향 가능. **변화: cycle termination 효율 저하**
+- **RPS3** (ribosomal protein S3; also 8-oxoG endonuclease, Excitatory): CT(-217)→AD(-209). RPS3의 N-terminal은 8-oxoguanine glycosylase 활성 보조. UTR 변이 → 번역 효율 변화. **소실: 리보솜 외 DNA 복구 보조 기능**
+
+**② 수렴 모델**
+```
+ERCC6L2↓ + FANCA↓  →  FA core complex 기능 저하
+                         ↓
+               FANCD2·FANCI monoubiquitylation 실패
+                         ↓
+    USP1 이상  →  deubiquitylation cycle 불균형
+                         ↓
+              ICL 복구 불능 + NER 저하
+                         ↓
+  RPS3↓  →  8-oxoG 축적 → 산화적 DNA 손상 가중
+                         ↓
+     AD 뇌 뉴런/성상세포에서 DNA 손상 누적 → 신경사멸
+```
+
+**③ 검증 가능한 예측**
+- γH2AX foci: AD 뇌 조직에서 성상세포(ERCC6L2 발현) + 흥분성 뉴런(FANCA) 특이적 DSB 증가
+- Comet assay: AD iPSC-derived astrocyte에서 mitomycin C 처리 후 tail moment 증가
+- FANCD2 western: AD 뇌 추출물에서 FANCD2-Ub/total FANCD2 비율 감소
+            """,
         },
         {
             "name": "🔄 DOCK-family GEF 축",
@@ -2879,6 +3072,32 @@ with tab4:
                            "pan-cellular GEF signaling 수렴."),
             "genes": ["DOCK10", "DOCK11"],
             "color": "#fff7ed", "border": "#d97706",
+            "mechanism_report": """
+**예측 메커니즘: Cdc42/Rac1 GEF 이중 소실 → actin 중합 저해 → 시냅스 형태 유지 불능**
+
+**① 기능 소실: 무엇이 사라지는가**
+- **DOCK10** (Rac1/Cdc42-GEF; Microglia, A-DR stageR p=1.2×10⁻³): CT(-201)→AD(-202). 6aa minor exon 삽입/결실. DHR-2 domain(GEF catalytic core)의 Cdc42/Rac1 결합 계면 미세 변화 → GEF 효율 감소. Microglia 이동·식세포 기능 저하. **소실: Microglia Rac1/Cdc42 활성화 능력**
+- **DOCK11** (Cdc42-GEF; Inhibitory neuron, A-BP perm_p=0.0008): CT(-201, 53exon)→AD(-202, 3exon). ALE — 거의 모든 exon 소실. DHR-2 Lobe A+B+C + PH domain 전부 소실. 가장 강력한 BISECT 증거 케이스(phyloP=3.25 강진화 보존). **소실: DHR-2 GEF 기능 전체 + 막 결합(PH) 능력**
+
+**② 수렴 모델**
+```
+DOCK10↓ (Microglia)  →  Rac1 활성↓  →  lamellipodia 형성↓  →  synapse pruning 장애
+DOCK11↓ (Inhibitory) →  Cdc42 활성↓ →  filopodia 형성↓   →  inhibitory synapse 유지 불능
+         │
+         └──→ GABAergic inhibitory circuit 구조 손상
+                    ↓
+         E/I (흥분/억제) 균형 파괴 → 과흥분성 → AD 인지 저하 가속
+```
+
+**③ 세포 유형 특이성**
+- DOCK10 (Microglia): AD에서 Microglia synaptic pruning 과잉 알려짐 (Hong 2016). DOCK10 GEF 소실 → 반대로 pruning 저하? 또는 non-pruning actin 기능 저하
+- DOCK11 (Inhibitory): PV interneuron의 GABAergic synapse 형성/유지에 Cdc42 필수
+
+**④ 검증 가능한 예측**
+- Cdc42-GTP pulldown: AD 해마 inhibitory neuron에서 Cdc42·Rac1 활성형 감소
+- Synapse density: AD DOCK11↓ interneuron 주변 GABAergic synapse 수 감소
+- Spine morphology: DOCK10 KD microglia 공배양 시 dendritic spine 형태 변화
+            """,
         },
         {
             "name": "🔐 KRAB-ZFP 전사억제 축",
@@ -2888,6 +3107,35 @@ with tab4:
                            "KAP1/H3K9me3 전사억제 경로 수렴."),
             "genes": ["ZNF736", "ZNF582", "ZNF268"],
             "color": "#f0fdf4", "border": "#166534",
+            "mechanism_report": """
+**예측 메커니즘: KRAB-ZFP 전사억제 소실 → LINE-1/SINE 탈억제 → TE 이동 및 신경염증 유발**
+
+**① 기능 소실: 무엇이 사라지는가**
+- **ZNF736** (KRAB-ZFP; Excitatory, stageR p=2.67×10⁻²⁴ — 패널 최고 유의성): CT(-202)→AD(NNIC). ALE — CT 이소폼에는 KRAB domain + 8개 C2H2 zinc finger; AD 이소폼은 NIC로 단 3exon. **소실: KRAB-mediated KAP1 모집 능력 전체 + TE 표적 zinc finger DNA 인식**
+- **ZNF582** (KRAB-ZFP; Excitatory, stageR p=7.21×10⁻¹¹): CT(NIC novel, +31aa)→AD(-202). Alt-TSS에 의해 CT에서 N-terminal 31aa 확장; AD 이소폼은 ENSEMBL canonical(-202). CT isoform extended N-terminal may modulate KRAB-KAP1 interaction. **기능 전환: N-terminal 조절 영역 소실 → KAP1 결합 강도 변화**
+- **ZNF268** (KRAB-ZFP; multiple types, Tier C): KRAB domain 변화 → KAP1(TRIM28) 모집 능력 부분 손상
+
+**② 수렴 모델**
+```
+ZNF736 KRAB 소실 ┐
+ZNF582 TSS 전환  ├→  KAP1(TRIM28) 모집↓
+ZNF268 KRAB 변화 ┘        ↓
+                    H3K9me3 확산↓ (특히 TE 영역)
+                         ↓
+               LINE-1 / Alu SINE 탈억제
+                         ↓
+    ┌─ LINE-1 역전사: 게놈 삽입 → DSB 유발
+    └─ dsRNA 생성 → MDA5/MAVS → 신경염증 → NFκB 활성화
+         ↓
+    AD 특유의 신경염증 + 게놈 불안정 → 시냅스 손실
+```
+
+**③ 검증 가능한 예측**
+- ChIP-seq H3K9me3: AD 흥분성 뉴런에서 ZNF736 표적 TE 부위 H3K9me3 감소
+- LINE-1 expression: AD 뇌 흥분성 뉴런 RNA-seq에서 LINE-1 전사체 증가
+- cGAS-STING: LINE-1 역전사 결과 cytoplasmic DNA 증가 → AD 뇌 STING 활성화
+- ZNF736 ChIP: CT 이소폼 ZNF736 표적 유전자 목록 작성 → AD에서 탈억제 확인
+            """,
         },
         {
             "name": "🔩 유비퀴틴-프로테아좀 축",
@@ -2896,6 +3144,31 @@ with tab4:
                            "Ub 경로 제거-기질인식-제한인자 3단계 동시 수렴."),
             "genes": ["USP1", "SAMHD1", "DCAF5"],
             "color": "#f8fafc", "border": "#64748b",
+            "mechanism_report": """
+**예측 메커니즘: 유비퀴틴-프로테아좀 균형 교란 → DNA 복구 cycle 중단 + LINE-1 활성화 + 기질 인식 오류**
+
+**① 기능 소실/획득: 무엇이 변하는가**
+- **USP1** (FANCD2/FANCI deubiquitylase; Oligodendrocyte, A-DR stageR p=7.7×10⁻⁵): CT(-201)→AD(-202). Alt-TSS, N-terminal +35aa. USP1의 N-terminal 영역은 UAF1(WD40 activator) 결합에 관여. AD 이소폼에서 UAF1 결합 친화성 변화 → FANCD2-Ub 제거 활성 조절 이상. **변화: DNA 복구 cycle termination 타이밍 교란**
+- **SAMHD1** (dNTPase + LINE-1 restriction; Inhibitory, A-DR stageR p=7.7×10⁻³): CT(-221)→AD(-225). M15 NMD switch → AD 이소폼 NMD 분해. SAMHD1은 ① dNTP pool 조절(HIV 제한), ② LINE-1 역전사 억제. **소실: LINE-1 제한 능력 + dNTP 항상성**
+- **DCAF5** (CRL4-DDB1 E3 ligase adaptor; Excitatory, A-DR stageR p=4.2×10⁻²): CT(-201)→AD(-209). WD40 기질인식 도메인 변화. AD 이소폼이 새 기질을 인식하거나 기존 기질(히스톤 H2A, UV 손상 부위 단백질) 인식 불능. **기능 전환: E3 ligase 기질 특이성 변화 — 비정상 단백질 ubiquitylation**
+
+**② 수렴 모델**
+```
+USP1↑(기능이상)  →  FANCD2-Ub 주기 교란  →  DNA 복구 불완전 (FA pathway와 연계)
+SAMHD1↓(NMD)   →  LINE-1 활성화 + dNTP 불균형
+                        ↓
+         cGAS-STING 경로 활성화 (KRAB-ZFP 축과 수렴)
+DCAF5↑(기질변화) →  히스톤 ubiquitylation 오류  →  크로마틴 구조 교란
+                        ↓
+              비정상 단백질 축적(tau, Aβ 처리 경로와 교차 가능)
+```
+
+**③ 검증 가능한 예측**
+- SAMHD1 단백질 발현: AD Inhibitory 뉴런에서 SAMHD1 단백질 감소(NMD에 의한)
+- LINE-1 ORF2p 활성: SAMHD1 NMD 효과 → LINE-1 역전사효소 활성 증가
+- DCAF5 immunoprecipitation: AD 이소폼(-209)의 기질 결합 프로파일 변화 확인
+- USP1 activity assay: AD 뇌 균질액에서 FANCD2-Ub 수준 정량
+            """,
         },
     ]
 
@@ -2923,6 +3196,10 @@ with tab4:
                     _pg_show["세포유형"] = _pg_show["세포유형"].str.replace("_neuron","").str.replace("_"," ")
                 st.dataframe(_pg_show, use_container_width=True,
                              height=min(50 + 38 * len(_pg_show), 350), key=f"pg_{_pg['name'][:8]}")
+            # Mechanism report
+            if _pg.get("mechanism_report"):
+                with st.expander("📋 예측 메커니즘 레포트", expanded=False):
+                    st.markdown(_pg["mechanism_report"])
 
     # ── C18 Layer Context ──────────────────────────────────────────────────────
     st.divider()
@@ -2968,6 +3245,20 @@ with tab4:
                 f"</div>",
                 unsafe_allow_html=True,
             )
+        # MWU 검정 결과 및 통계적 한계
+        st.markdown(
+            "<div style='background:#fef9c3;border-left:4px solid #ca8a04;border-radius:6px;"
+            "padding:10px 14px;margin-top:8px'>"
+            "<b>⚠️ 통계 검증 결과 및 한계</b><br>"
+            "• <b>NDUFS8 C18 MWU 검정</b>: AD(n=2) vs Control(n=2) → p=0.31 (비유의). "
+            "C18 내 도너 수 부족으로 검정력 미달. 방향성은 명확하나(AD=0.50 vs CT=0.00) 확증 불가.<br>"
+            "• <b>DCAF5</b>: canonical L4에서 유의 (C10 p=0.016, C11 p=0.038 MWU one-sided). "
+            "C18 내 AD 도너 1명으로 검정 불가.<br>"
+            "• <b>결론</b>: C18 특이적 NDUFS8 효과는 탐색적 가설 수준. "
+            "독립 코호트(PO 배치 단독 또는 SMC 배치 단독) 또는 bulk RNA-seq 검증 필요."
+            "</div>",
+            unsafe_allow_html=True,
+        )
     else:
         st.info("C18 이소폼 비율 데이터 없음. `hMuscle/preprocessing/compute_c18_isoform_ratios.py` 실행 필요.")
 
