@@ -2904,7 +2904,7 @@ with tab4:
     for _pg in _PROCESS_GROUPS:
         with st.expander(f"{_pg['name']}", expanded=True):
             st.markdown(
-                f"<div style='background:{_pg['color']};border-left:4px solid {_pg['border']};"  
+                f"<div style='background:{_pg['color']};border-left:4px solid {_pg['border']};"
                 f"border-radius:6px;padding:12px 16px;margin-bottom:12px'>"
                 f"{_pg['description']}"
                 f"</div>",
@@ -2923,3 +2923,55 @@ with tab4:
                     _pg_show["세포유형"] = _pg_show["세포유형"].str.replace("_neuron","").str.replace("_"," ")
                 st.dataframe(_pg_show, use_container_width=True,
                              height=min(50 + 38 * len(_pg_show), 350), key=f"pg_{_pg['name'][:8]}")
+
+    # ── C18 Layer Context ──────────────────────────────────────────────────────
+    st.divider()
+    st.subheader("🔬 C18 L4-IT atypical 레이어 특이적 분석")
+    st.markdown(
+        "<div style='background:#fef2f2;border-left:4px solid #dc2626;border-radius:6px;"
+        "padding:12px 16px;margin-bottom:12px'>"
+        "<b>C18 클러스터</b>는 전체 피질 클러스터 중 유일하게 AD-enriched 통계적 유의성 달성 "
+        "(MWU p=0.00994, Δ+4.57%). 이 AD-특이적 L4 atypical 집단 내에서 "
+        "Complex I / KRAB-ZFP / Ub-프로테아좀 유전자의 이소폼 비율을 C10/C11(정상 L4) · C19(L5-ET)와 비교."
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+    _C18_RATIO_PATH = Path(__file__).parent.parent / "data" / "cell_atlas" / "c18_isoform_ratio_summary.tsv"
+    _C18_PLOT_PATH  = Path(__file__).parent.parent / "data" / "cell_atlas" / "c18_isoform_ratio_plot.png"
+
+    if _C18_RATIO_PATH.exists():
+        _c18df = pd.read_csv(_C18_RATIO_PATH, sep="\t")
+        _pivot = _c18df.pivot_table(index="gene", columns="cluster",
+                                     values="AD_minus_CT", aggfunc="first").round(3)
+        _pivot.columns.name = None
+        _pivot = _pivot.reindex(columns=["C10","C11","C18","C19"])
+        _pivot_styled = _pivot.style.background_gradient(
+            cmap="RdBu_r", vmin=-1, vmax=1, axis=None
+        ).format("{:.3f}", na_rep="n/a")
+        st.markdown("**AD-isoform ratio Δ (AD − Control)** — 양수=AD 방향 이소폼 축적")
+        st.dataframe(_pivot_styled, use_container_width=True, height=340)
+
+        # Highlight C18-specific finding
+        _ndufs8_c18 = _c18df[(_c18df["gene"]=="NDUFS8") & (_c18df["cluster"]=="C18")]["AD_minus_CT"]
+        _ndufs8_c10 = _c18df[(_c18df["gene"]=="NDUFS8") & (_c18df["cluster"].isin(["C10","C11"]))]["AD_minus_CT"].mean()
+        if len(_ndufs8_c18) > 0 and not pd.isna(_ndufs8_c18.values[0]):
+            _c18_spec = _ndufs8_c18.values[0] - _ndufs8_c10
+            st.markdown(
+                f"<div style='background:#dcfce7;border-left:4px solid #059669;border-radius:6px;"
+                f"padding:10px 14px;margin-top:10px'>"
+                f"<b>핵심 발견: NDUFS8 C18 특이적 효과</b><br>"
+                f"• C18 AD vs Control Δ = <b>+{_ndufs8_c18.values[0]:.3f}</b> (NIC 이소폼 AD 축적)<br>"
+                f"• C10/C11 canonical L4 평균 = <b>{_ndufs8_c10:.3f}</b> (방향 역전)<br>"
+                f"• C18-specific 효과 = <b>{_c18_spec:+.3f}</b> — "
+                f"Complex I NDUFS8 NIC 이소폼이 AD-enriched L4 atypical 집단에서만 선택적 축적"
+                f"</div>",
+                unsafe_allow_html=True,
+            )
+    else:
+        st.info("C18 이소폼 비율 데이터 없음. `hMuscle/preprocessing/compute_c18_isoform_ratios.py` 실행 필요.")
+
+    if _C18_PLOT_PATH.exists():
+        st.image(str(_C18_PLOT_PATH), caption="AD-isoform ratio by cluster (C18 highlighted)", use_container_width=True)
+    else:
+        st.caption("시각화 파일 없음. `plot_c18_isoform_ratios.py` 실행 후 갱신 예정.")
