@@ -1,0 +1,18 @@
+gene_name,ct_transcript_id,ad_transcript_id,cell_type,diffuse_delta,dtu_pvalue,direction,priority,note,stager_p,perm_p,bisect_tier
+ZNF736,ZNF736-202,transcript76787.chr7.nnic,Excitatory,-0.786,1.0,CT_high,1,KRAB+C2H2 domain loss,2.67e-24,,A-DR
+ZNF582,transcript145765.chr19.nnic,ZNF582-202,Excitatory,-0.31,1.0,CT_high,2,Alt-TSS +31aa N-terminal,7.21e-11,,A-DR
+NDUFAF5,NDUFAF5-202,NDUFAF5-201,Excitatory,-0.45,1.0,CT_high,3,NMD+Complex I C-term loss,1.43e-04,,A-DR
+DOCK10,DOCK10-201,DOCK10-202,Microglia,-0.573,1.0,CT_high,4,Minor exon 6aa linker,1.15e-03,,A-DR
+SAMHD1,SAMHD1-221,SAMHD1-225,Inhibitory,0.0,1.0,CT_high,5,NMD+tetramer domain loss,7.68e-03,,A-DR
+NDUFS8,transcript100761.chr11.nic,transcript100759.chr11.nic,Inhibitory,-0.370,1.0,CT_high,6,NIC localization switch,,4.40e-03,A-BP
+NDUFS7,NDUFS7-202,NDUFS7-210,Excitatory,-0.051,1.0,CT_high,7,Complex I Q-module perm,,4.82e-02,A-BP
+NDUFS4,NDUFS4-201,transcript73243.chr5.nnic,Inhibitory,-0.320,1.0,CT_high,8,Complex I N-module perm,,2.36e-02,A-BP
+USP1,USP1-201,USP1-202,Oligodendrocyte,0.0,1.0,CT_high,9,DUB FANCD2/PCNA regulation,7.66e-05,,A-DR
+DDX19A,DDX19A-201,DDX19A-209,Inhibitory,0.0,1.0,CT_high,10,DEAD-box mRNA export,7.68e-03,,A-DR
+DIS3,DIS3-201,DIS3-202,Oligodendrocyte,0.0,1.0,CT_high,11,RNA exosome catalytic,4.93e-02,,A-DR
+DCAF5,DCAF5-201,DCAF5-209,Excitatory,0.0,1.0,CT_high,12,CRL4 ubiquitin ligase,4.24e-02,,A-DR
+RPS3,RPS3-209,RPS3-217,Excitatory,0.0,1.0,CT_high,13,40S ribosomal BER endonuclease,4.77e-02,,A-DR
+AZIN1,AZIN1-201,AZIN1-216,Inhibitory,0.0,1.0,CT_high,14,Antizyme inhibitor polyamine,4.36e-02,,A-DR
+NOL8,NOL8-205,NOL8-208,Microglia,0.0,1.0,CT_high,15,rRNA processing nucleolar,3.85e-02,,A-DR
+CNOT11,CNOT11-201,transcript223081.chr2.nic,Oligodendrocyte,0.0,1.0,CT_high,16,CCR4-NOT mRNA decay,3.48e-02,,A-DR
+ERCC6L2,ERCC6L2-201,ERCC6L2-211,Astrocyte,0.0,1.0,CT_high,17,SWI/SNF helicase genome stability,1.11e-02,,A-DR

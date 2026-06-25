@@ -1,0 +1,41 @@
+cell_type	gene	ct_iso	ad_iso	total_ct_reads	n_donors_ct_iso	top_donor_pct	canonical_coexist	n_mwu_AD	n_mwu_CT	AD_mean	CT_mean	delta	p_val	sig	tier
+Excitatory_neuron	KIF21B	transcript293004.chr1.nic	KIF21B-203	13	1	100.0	True	4	2	0.0	0.4333	-0.4333	0.28884	ns	C
+Excitatory_neuron	NDUFS4	NDUFS4-201	(total)	19	9	47.4	—	5	5	0.1889	0.4458	-0.2569	0.24332	ns	A
+Excitatory_neuron	NDUFS7	NDUFS7-202	NDUFS7-210	2381	22	20.5	—	9	8	0.9486	1.0	-0.0514	0.04507	*	A
+Excitatory_neuron	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	509	18	18.5	—	7	6	0.8011	0.9535	-0.1524	0.33948	ns	A
+Excitatory_neuron	DLG1	DLG1-213	DLG1-223	158	16	13.9	—	9	6	0.574	0.8192	-0.2453	0.3143	ns	A
+Inhibitory_neuron	KIF21B	transcript293004.chr1.nic	KIF21B-203	4	1	100.0	True	2	3	0.0	0.0952	-0.0952	0.68309	ns	C
+Inhibitory_neuron	NDUFS4	NDUFS4-201	(total)	10	7	30.0	—	4	3	0.0833	0.4037	-0.3204	0.09873	†	A
+Inhibitory_neuron	NDUFS7	NDUFS7-202	NDUFS7-210	1486	22	21.9	—	9	7	0.9781	0.8994	0.0787	1.0	ns	A
+Inhibitory_neuron	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	275	15	28.7	—	7	5	0.62	0.9895	-0.3694	0.05654	†	A
+Inhibitory_neuron	DLG1	DLG1-213	DLG1-223	28	7	35.7	—	4	3	0.5833	0.8333	-0.25	0.55845	ns	A
+Oligodendrocyte	KIF21B	transcript293004.chr1.nic	KIF21B-203	0	0	0.0	—	0	0					nd	no_reads
+Oligodendrocyte	NDUFS4	NDUFS4-201	(total)	16	6	50.0	—	3	3	0.2519	0.1569	0.095	0.37583	ns	A
+Oligodendrocyte	NDUFS7	NDUFS7-202	NDUFS7-210	2613	20	25.4	—	10	6	1.0	0.9994	0.0006	0.24528	ns	A
+Oligodendrocyte	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	40	7	65.0	—	0	2					nd	A
+Oligodendrocyte	DLG1	DLG1-213	DLG1-223	4	2	75.0	—	6	3	0.0139	0.3333	-0.3194	0.59588	ns	B
+OPC	KIF21B	transcript293004.chr1.nic	KIF21B-203	0	0	0.0	—	0	0					nd	no_reads
+OPC	NDUFS4	NDUFS4-201	(total)	6	3	66.7	—	1	1					nd	A
+OPC	NDUFS7	NDUFS7-202	NDUFS7-210	482	22	32.2	—	6	5	0.9848	0.96	0.0248	0.8923	ns	A
+OPC	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	149	13	45.6	—	4	5	0.7917	0.8	-0.0083	1.0	ns	A
+OPC	DLG1	DLG1-213	DLG1-223	0	0	0.0	—	2	0					nd	no_reads
+Astrocyte	KIF21B	transcript293004.chr1.nic	KIF21B-203	0	0	0.0	—	0	0					nd	no_reads
+Astrocyte	NDUFS4	NDUFS4-201	(total)	6	4	50.0	—	1	0					nd	A
+Astrocyte	NDUFS7	NDUFS7-202	NDUFS7-210	587	17	30.7	—	8	5	0.8906	0.9988	-0.1082	0.90736	ns	A
+Astrocyte	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	196	5	75.5	—	1	1					nd	B
+Astrocyte	DLG1	DLG1-213	DLG1-223	0	0	0.0	—	0	0					nd	no_reads
+Microglia	KIF21B	transcript293004.chr1.nic	KIF21B-203	0	0	0.0	—	0	0					nd	no_reads
+Microglia	NDUFS4	NDUFS4-201	(total)	1	1	100.0	True	0	1					nd	C
+Microglia	NDUFS7	NDUFS7-202	NDUFS7-210	57	8	63.2	—	1	1					nd	A
+Microglia	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	7	4	42.9	—	2	0					nd	A
+Microglia	DLG1	DLG1-213	DLG1-223	1	1	100.0	True	0	0					nd	C
+Vascular_cell	KIF21B	transcript293004.chr1.nic	KIF21B-203	0	0	0.0	—	0	0					nd	no_reads
+Vascular_cell	NDUFS4	NDUFS4-201	(total)	0	0	0.0	—	0	0					nd	no_reads
+Vascular_cell	NDUFS7	NDUFS7-202	NDUFS7-210	157	7	88.5	—	1	1					nd	B
+Vascular_cell	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	0	0	0.0	—	0	0					nd	no_reads
+Vascular_cell	DLG1	DLG1-213	DLG1-223	0	0	0.0	—	0	0					nd	no_reads
+Lymphocyte	KIF21B	transcript293004.chr1.nic	KIF21B-203	0	0	0.0	—	0	0					nd	no_reads
+Lymphocyte	NDUFS4	NDUFS4-201	(total)	0	0	0.0	—	0	0					nd	no_reads
+Lymphocyte	NDUFS7	NDUFS7-202	NDUFS7-210	9	1	100.0	True	0	1					nd	C
+Lymphocyte	NDUFS8	transcript100761.chr11.nic	transcript100759.chr11.nic	0	0	0.0	—	0	0					nd	no_reads
+Lymphocyte	DLG1	DLG1-213	DLG1-223	0	0	0.0	—	0	0					nd	no_reads

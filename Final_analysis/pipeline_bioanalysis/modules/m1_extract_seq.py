@@ -47,10 +47,10 @@ def extract_sequences(transcript_ids: list[str], config: dict) -> dict[str, dict
                     buffer = []
                     raw_id = line[1:].split()[0]
                     current_header = line.strip()
-                    # Match against targets
+                    # Match against targets (exact match first, then full_tid-in-raw_id for annotated headers)
                     current_id = None
                     for full_tid in transcript_ids:
-                        if full_tid in raw_id or raw_id in full_tid:
+                        if raw_id == full_tid or full_tid in raw_id:
                             current_id = full_tid
                             break
                 elif current_id:

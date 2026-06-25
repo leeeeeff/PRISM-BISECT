@@ -154,15 +154,35 @@ def _build_module_grid_html(brow: dict) -> str:
                 return True
         return False
 
+    _bisect_tier = str(brow.get('bisect_tier') or '').strip()
+    _stager_p    = brow.get('stager_p')
+    _perm_p      = brow.get('perm_p')
+    _tier_pass   = _bisect_tier in ('A-DR', 'A-BP')
+
+    if _bisect_tier == 'A-DR' and _stager_p:
+        _dtu_label  = f"stageR p={float(_stager_p):.1e}"
+        _dtu_badge  = "DRIMSeq PASS"
+        _dtu_color  = "#1d4ed8"
+    elif _bisect_tier == 'A-BP' and _perm_p:
+        _dtu_label  = f"perm p={float(_perm_p):.4f}"
+        _dtu_badge  = "Perm PASS"
+        _dtu_color  = "#0f766e"
+    elif delta and abs(float(delta)) > 0.1 and dtu_p and float(dtu_p) < 0.05:
+        _dtu_label  = f"Δ={float(delta):+.3f}, p={float(dtu_p):.1e}"
+        _dtu_badge  = "PASS"
+        _dtu_color  = "#15803d"
+    elif dtu_p is None and brow.get('dtu_note') == 'single_condition_no_comparison':
+        _dtu_label  = "단일조건 데이터 — AD/CT 비교군 없음"
+        _dtu_badge  = "단일조건"
+        _dtu_color  = "#78716c"
+    else:
+        _dtu_label  = f"Δ={float(delta):+.3f}" if delta else "—"
+        _dtu_badge  = "Δ<0.1" if delta else "—"
+        _dtu_color  = "#94a3b8"
+
     modules = [
         # (label, badge_text, color, detail)
-        ("DTU (Stage 1)",
-         "PASS" if (delta and abs(float(delta)) > 0.1 and dtu_p and float(dtu_p) < 0.05)
-         else ("단일조건" if (dtu_p is None and brow.get('dtu_note') == 'single_condition_no_comparison') else ("Δ<0.1" if delta else "—")),
-         "#15803d" if (delta and abs(float(delta)) > 0.1 and dtu_p and float(dtu_p) < 0.05)
-         else ("#78716c" if (dtu_p is None and brow.get('dtu_note') == 'single_condition_no_comparison') else "#94a3b8"),
-         f"Δ={float(delta):+.3f}, p={float(dtu_p):.1e}" if (delta and dtu_p) else
-         ("단일조건 데이터 — AD/CT 비교군 없음" if brow.get('dtu_note') == 'single_condition_no_comparison' else "—")),
+        ("DTU (Stage 1)", _dtu_badge, _dtu_color, _dtu_label),
 
         ("M1 AlphaFold",
          "PASS" if (af_gain or af_lost or (af_d and abs(float(af_d)) > 5))
@@ -552,8 +572,10 @@ def _build_bio_report_html(
         lost_go   = [(g, n, s) for g, n, s in ct_top if g not in ad_go_ids_set] if not _gene_median_both else []
 
     # ── Confidence score (module-informed) ───────────────────────────────────
+    _bisect_tier_cv = str(brow.get('bisect_tier') or '').strip()
+    _tier_pass_cv   = _bisect_tier_cv in ('A-DR', 'A-BP')
     _module_pass = sum([
-        bool(delta and abs(float(delta)) > 0.1 and dtu_p and float(dtu_p) < 0.05),
+        bool(_tier_pass_cv or (delta and abs(float(delta)) > 0.1 and dtu_p and float(dtu_p) < 0.05)),
         bool(str(brow.get('af_gained_confident') or '').strip() or
              str(brow.get('af_lost_confident') or '').strip() or
              (brow.get('af_delta_plddt') and abs(float(brow.get('af_delta_plddt'))) > 5)),
@@ -969,29 +991,196 @@ def _build_bio_report_html(
     )
 
 
-st.title("🧫 BISECT Cases")
+st.title("🧫 AD 아이소폼 전환 케이스")
 st.caption(
-    "**BISECT** (Biological Isoform-Switch Evidence Characterization Tool) — "
-    "15개 독립 모듈로 기능 스위치를 다층 검증한 84개 PASS 케이스. "
-    "유전자명을 검색하면 Volcano · 도메인 구조 · GO 비교 · 종합 리포트가 펼쳐집니다."
+    "Samsung 뇌 AD 코호트(13 AD · 8 CT · 8 세포유형)의 아이소폼 전환 케이스를 "
+    "두 독립 프레임워크로 분류합니다. "
+    "**Tier A-DR**: DRIMSeq+stageR 전장유전체 1차 발견 (14 genes) · "
+    "**Tier A-BP**: BISECT-targeted 도너 permutation 검증 (5 cases) · "
+    "아래 BISECT 브라우저에서 각 케이스의 도메인·PPI·GO 심층 해석을 확인할 수 있습니다."
 )
 
 import json
 from pathlib import Path
 
 _BISECT_PATH = Path(__file__).parents[3] / 'prism_app' / 'data' / 'demo' / 'bisect_cases.json'
+_DRIMSEQ_PATH = Path(__file__).parents[3] / 'prism_app/data/cell_atlas/drimseq_primary_cases.tsv'
 
-st.subheader("🧫 BISECT PASS Cases — 84개 기능 스위치 검증 케이스")
+# ── Tier A-DR: DRIMSeq Primary Discovery ─────────────────────────────────────
+@st.cache_data(show_spinner=False)
+def _load_drimseq(p: str):
+    try:
+        return pd.read_csv(p, sep='\t')
+    except Exception:
+        return None
+
+_drimseq_df = _load_drimseq(str(_DRIMSEQ_PATH))
+
+_MECH_COLOR = {
+    'Domain loss':       '#fce7f3',
+    'Alternative TSS':   '#ede9fe',
+    'NMD + C-term loss': '#dcfce7',
+    'NMD + tetramer loss':'#dcfce7',
+    'Minor exon':        '#fef9c3',
+    'Pending':           '#f8fafc',
+}
+
+if _drimseq_df is not None and not _drimseq_df.empty:
+    with st.expander("🔭 Tier A-DR — DRIMSeq+stageR Primary Discovery (14 genes)", expanded=True):
+        st.markdown("""
+**DRIMSeq+stageR** 준-Dirichlet-Multinomial 회귀를 Samsung 코호트 전장유전체에 적용한 **1차 통계 발견** 결과입니다.
+도너를 반복 단위로 사용해 pooled chi-square의 가성 반복 문제를 해결하고, stageR로 유전자·전사체 수준 OFDR을 함께 보정합니다.
+
+> 14개 유전자 × 6개 세포유형 · stageR OFDR < 5% · 14개 모두 DCF(도너 일관성 필터) PASS
+        """)
+
+        _dr_display = _drimseq_df[[
+            'gene', 'cell_type', 'stager_p', 'drimseq_p', 'mechanism_class', 'mechanism_detail'
+        ]].copy()
+        _dr_display.columns = ['유전자', '세포유형', 'stageR p', 'DRIMSeq p', '메커니즘', '상세']
+        _dr_display['세포유형'] = _dr_display['세포유형'].str.replace('_', ' ')
+        _dr_display['stageR p'] = _dr_display['stageR p'].apply(
+            lambda x: f"{float(x):.2e}" if str(x) not in ('—', 'nan', '') else '—'
+        )
+        _dr_display['DRIMSeq p'] = _dr_display['DRIMSeq p'].apply(
+            lambda x: f"{float(x):.2e}" if str(x) not in ('—', 'nan', '') else '—'
+        )
+
+        def _dr_highlight(row):
+            mech = row.get('메커니즘', 'Pending')
+            color = _MECH_COLOR.get(mech, '#f8fafc')
+            try:
+                p = float(str(row.get('stageR p', '1')).replace('—', '1'))
+                if p < 1e-10:
+                    return [f'background-color:{color};font-weight:700'] * len(row)
+            except Exception:
+                pass
+            return [f'background-color:{color}'] * len(row)
+
+        st.dataframe(
+            _dr_display.style.apply(_dr_highlight, axis=1),
+            use_container_width=True,
+            height=min(50 + 35 * len(_dr_display), 560),
+        )
+
+        _leg_c1, _leg_c2, _leg_c3, _leg_c4 = st.columns(4)
+        _leg_c1.markdown("🟣 **보라** = Alternative TSS")
+        _leg_c2.markdown("🟢 **초록** = NMD switch")
+        _leg_c3.markdown("🩷 **분홍** = Domain loss")
+        _leg_c4.markdown("🟡 **노란** = Minor exon / 미확정")
+
+        st.markdown("""
+**핵심 케이스 (메커니즘 확인 완료):**
+- **ZNF736** (Exc, stageR p=2.7×10⁻²⁴) — 패널 최강 신호. KRAB+C2H2 완전 도메인 소실 → transcriptional derepression
+- **ZNF582** (Exc, stageR p=7.2×10⁻¹¹) — Alternative TSS, C-terminal 100% 동일, +31 aa N-terminal extension
+- **NDUFAF5** (Exc, stageR p=1.4×10⁻⁴) — Complex I N-module assembly factor. NMD-target 누적 → NDUFS4 integration 불가 (Leigh syndrome 유전자)
+- **DOCK10** (Microglia, stageR p=1.2×10⁻³) — per-donor MWU p=0.005, Δ=−0.573. DOCK-family GEF (mechanistic detail pending)
+- **SAMHD1** (Inh, stageR p=7.7×10⁻³) — NMD switch + tetramerization domain 소실. LINE-1 restriction 기능 손상
+        """)
+
+st.divider()
+
+# ── Tier A-BP: BISECT-Permutation Validated ──────────────────────────────────
+_DONOR_STATS_PATH = Path(__file__).parents[3] / 'prism_app/data/cell_atlas/donor_level_isoform_switches.tsv'
+
+@st.cache_data(show_spinner=False)
+def _load_donor_stats(p: str) -> 'pd.DataFrame | None':
+    try:
+        return pd.read_csv(p, sep='\t')
+    except Exception:
+        return None
+
+_donor_df = _load_donor_stats(str(_DONOR_STATS_PATH))
+
+if _donor_df is not None and not _donor_df.empty:
+    with st.expander("🎯 Tier A-BP — BISECT-Permutation 검증 케이스", expanded=True):
+        st.markdown("""
+BISECT83 Complex I / GEF 후보에 **도너-label permutation test** (n=10,000회)를 적용한 **2차 표적 검증** 결과입니다.
+DRIMSeq으로 검출 불가한 케이스(read sparsity)를 사전 지정 후보 내에서 추가 발굴합니다.
+
+> perm p ≤ 0.05 + 양 배치 방향 일치 (PO & SMC 모두) · KIF21B(Tier B)·DLG1(Tier D)은 비교 참고용 포함
+        """)
+
+        # Prepare display table
+        _sig_cols = ['gene', 'cell_type', 'ct_iso_used', 'n_ad', 'n_ct', 'ad_mean', 'ct_mean',
+                     'delta', 'mwu_p', 'perm_p', 'po_delta', 'smc_delta', 'batch_ok', 'prism_tier']
+        _disp_cols = [c for c in _sig_cols if c in _donor_df.columns]
+        _disp_df = _donor_df[_disp_cols].copy()
+
+        # Rename for display
+        _col_renames = {
+            'gene': '유전자', 'cell_type': '세포유형',
+            'ct_iso_used': 'CT 아이소폼', 'n_ad': 'n(AD)', 'n_ct': 'n(CT)',
+            'ad_mean': 'AD 비율', 'ct_mean': 'CT 비율', 'delta': 'Δ',
+            'mwu_p': 'MWU p', 'perm_p': '도너 perm p',
+            'po_delta': 'PO Δ', 'smc_delta': 'SMC Δ',
+            'batch_ok': '배치일관성', 'prism_tier': '유형',
+        }
+        _disp_df = _disp_df.rename(columns={k: v for k, v in _col_renames.items() if k in _disp_df.columns})
+
+        # Format numeric columns
+        for _col in ['AD 비율', 'CT 비율', 'Δ', 'MWU p', '도너 perm p', 'PO Δ', 'SMC Δ']:
+            if _col in _disp_df.columns:
+                _disp_df[_col] = _disp_df[_col].apply(
+                    lambda x: f"{x:.4f}" if pd.notna(x) and x != '' else '—'
+                )
+
+        def _perm_highlight(row):
+            styles = [''] * len(row)
+            if '도너 perm p' in row.index:
+                try:
+                    _v = float(str(row['도너 perm p']).replace('—', 'nan'))
+                    if _v <= 0.01:
+                        return ['background-color: #d1fae5; font-weight: 600'] * len(row)
+                    elif _v <= 0.05:
+                        return ['background-color: #ecfdf5'] * len(row)
+                    elif _v <= 0.1:
+                        return ['background-color: #fef9c3'] * len(row)
+                except Exception:
+                    pass
+            if '배치일관성' in row.index and str(row.get('배치일관성', '')) in ('NO', 'False', 'nan', '—'):
+                return ['background-color: #f1f5f9; color: #94a3b8'] * len(row)
+            return styles
+
+        # Filter to show significant + reference cases
+        if '도너 perm p' in _disp_df.columns:
+            _ref_genes = {'KIF21B', 'DLG1'}
+            _donor_mask = _disp_df.apply(lambda r: True, axis=1)
+            _show_df = _disp_df.copy()
+        else:
+            _show_df = _disp_df.copy()
+
+        st.dataframe(
+            _show_df.style.apply(_perm_highlight, axis=1),
+            use_container_width=True,
+            height=min(50 + 35 * len(_show_df), 500),
+        )
+
+        # Legend
+        _leg1, _leg2, _leg3 = st.columns(3)
+        _leg1.markdown("🟢 **진초록** = perm p ≤ 0.01 (Primary)")
+        _leg2.markdown("🟩 **연초록** = perm p ≤ 0.05 (Significant)")
+        _leg3.markdown("🟡 **노란색** = perm p ≤ 0.10 (Trend)")
+
+        # Key findings summary
+        st.markdown("""
+**핵심 발견 요약:**
+- **DOCK11** (Inh, perm p=0.0008) — BISECT83 Tier3에서 패널 최고 통계 유의성으로 승격. Cdc42-GEF 도메인 소실
+- **NDUFS8** (Inh, perm p=0.004) — 신규 케이스. Complex I Q-module TYKY subunit, 37% 효과크기
+- **NDUFS4** (Inh+Exc, perm p=0.024/0.041) — 억제·흥분성 뉴런 모두에서 N-module 배치독립 재현
+- **NDUFS7** (Exc, perm p=0.048) — 신규 케이스. Q-module PSST subunit; 근육 SRA 데이터와 교차 재현
+- **Complex I 삼각수렴**: NDUFS4 (N-module) + NDUFS7 (Q-module PSST) + NDUFS8 (Q-module TYKY) → 3개 독립 subunit 동시 수렴
+        """)
+
+st.divider()
+
+st.subheader("🔬 BISECT 생물학적 심층 해석 브라우저")
 st.markdown(
-    """
-    **BISECT** (Biological Isoform-Switch Evidence Characterization Tool)는 15개의 독립 분석 모듈을 통해
-    각 유전자의 아이소폼 전환이 실제로 **생물학적 의미**를 가지는지 다층적으로 검증합니다.
-
-    아래 표는 두 단계 검증(stage1: 통계 + stage2: 생물학 증거)을 모두 통과한 **84개 케이스**입니다.
-    🟡 **노란색 행** = 도메인 구조 변화(단백질 기능 변화 직접 증거)가 확인된 고신뢰 케이스입니다.
-
-    > 유전자 이름을 검색창에 입력하면 도메인 구조 그림, 규제 인자 분석, 생물학 리포트가 펼쳐집니다.
-    """
+    "**BISECT** (Biological Isoform-Switch Evidence Characterization Tool) — "
+    "15개 독립 모듈(도메인 구조·STRING PPI·AlphaFold·계통보존·NMD·규제인자 등)로 "
+    "기능 스위치를 다층 검증한 **84개 PASS 케이스**. "
+    "Tier A-DR/A-BP 케이스의 생물학적 해석 근거가 이 브라우저에 포함됩니다. "
+    "유전자명을 검색하면 Volcano · 도메인 구조 · GO 비교 · 종합 리포트가 펼쳐집니다."
 )
 
 if not _BISECT_PATH.exists():
@@ -1465,6 +1654,7 @@ if _bisect_ct_lookup:
 
 _col_map = {
     'gene': 'Gene', 'cell_type': 'Cell Type',
+    'bisect_tier': '증거 등급',
     '_tier_label': 'PRISM Tier',
     '_prism_score': 'AD Score',
     'prism_ad_max_go': 'AD Top GO',
@@ -1475,7 +1665,7 @@ _col_map = {
     'ppi_verdict': 'PPI', 'af_ad_plddt_mean': 'pLDDT',
     'cons_ad_phylop': 'phyloP',
 }
-_show_cols_raw = ['gene', 'cell_type', '_tier_label', '_prism_score', 'prism_ad_max_go',
+_show_cols_raw = ['gene', 'cell_type', 'bisect_tier', '_tier_label', '_prism_score', 'prism_ad_max_go',
                   'delta', 'dtu_p', '_splice_div', '_ct_conc', 'domains_gained', 'domains_lost',
                   'ppi_verdict', 'af_ad_plddt_mean', 'cons_ad_phylop']
 _show_cols = [c for c in _show_cols_raw if c in _bdf_filt.columns]
@@ -1486,6 +1676,15 @@ if 'AD Top GO' in _bdf_show.columns:
         lambda x: str(x)[:28] if pd.notna(x) else '—')
 
 def _highlight_bisect_row(row):
+    btier = str(row.get('증거 등급', '') or '')
+    if btier == 'A-DR':
+        return ['background-color: #dbeafe'] * len(row)   # blue tint — DRIMSeq primary
+    if btier == 'A-BP':
+        return ['background-color: #d1fae5'] * len(row)   # green tint — BISECT-permutation
+    if btier == 'B':
+        return ['background-color: #fef9c3'] * len(row)   # yellow tint — independent replication
+    if btier == 'D':
+        return ['background-color: #fee2e2'] * len(row)   # red tint — no statistical support
     tier = str(row.get('PRISM Tier', '') or '')
     if 'T1' in tier:
         return ['background-color: #ede9fe'] * len(row)   # purple tint
@@ -1500,10 +1699,10 @@ def _highlight_bisect_row(row):
     return [''] * len(row)
 
 _caption_parts = [
-    "🟣 보라 = Tier 1 고신뢰 기능 스위치",
-    "🔴 빨강 = Tier 2 기능 소실",
-    "🩷 분홍 = Tier 2 Complex I 삼각 수렴",
-    "🟡 노랑 = 도메인 구조 변화 또는 Scenario 1",
+    "🔵 파랑 = A-DR (DRIMSeq+stageR 1차 발견)",
+    "🟢 초록 = A-BP (BISECT 도너 순열검증)",
+    "🟡 노랑 = B (독립 코호트 재현)",
+    "🔴 빨강 = D (통계 미지지) | 회색 = C (탐색적)",
 ]
 st.caption(" | ".join(_caption_parts))
 _fmt_dict = {
@@ -1526,6 +1725,7 @@ with st.expander("📋 표 컬럼 설명 — 약어가 낯설다면 펼쳐보세
     st.markdown("""
 | 컬럼 | 의미 | 해석 기준 |
 |------|------|-----------|
+| **증거 등급** | 통계 프레임워크 기반 근거 등급 (5-Tier) | A-DR=DRIMSeq+stageR 1차 발견, A-BP=도너순열 검증, B=독립코호트, C=탐색적, D=미지지 |
 | **PRISM Tier** | 41GO 확장 모델 기반 기능 변화 분류 | T1=고신뢰 기능 스위치, T2=기능 소실/변화/ComplexI, T3=구조 증거 |
 | **AD Score** | AD 아이소폼의 최대 GO term PRISM 예측 점수 | 41GO 모델 (macro AUPRC 0.672), ≥0.40 = 고신뢰 |
 | **AD Top GO** | AD 아이소폼에서 가장 높은 점수의 GO 생물 과정 | 해당 아이소폼의 주요 예측 기능 |
