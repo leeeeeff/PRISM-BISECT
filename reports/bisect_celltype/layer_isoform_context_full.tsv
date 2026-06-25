@@ -1,0 +1,286 @@
+gene	cell_type	tier	cluster_id	subtype	layer	delta	stager_p	perm_p	cluster_AD_delta	cluster_mwu_p	mechanism	co_enrichment_score
+ZNF736	Excitatory	A-DR	1	L2/3 IT	L2/3		2.6699999999999998e-24		-0.68	0.97177	Domain loss	
+ZNF736	Excitatory	A-DR	2	L2/3 IT	L2/3		2.6699999999999998e-24		-2.89	0.80444	Domain loss	
+ZNF736	Excitatory	A-DR	10	L4 IT	L4		2.6699999999999998e-24		3.37	0.12125	Domain loss	
+ZNF736	Excitatory	A-DR	11	L4 IT	L4		2.6699999999999998e-24		3.18	0.08905	Domain loss	
+ZNF736	Excitatory	A-DR	18	L4 IT atypical	L4		2.6699999999999998e-24		4.57	0.00994	Domain loss	
+ZNF736	Excitatory	A-DR	19	L5 ET	L5		2.6699999999999998e-24		-4.46	0.01265	Domain loss	
+ZNF736	Excitatory	A-DR	20	Unclassified	Mixed		2.6699999999999998e-24		-2.89	0.23196	Domain loss	
+ZNF736	Excitatory	A-DR	25	L6 CT	L6		2.6699999999999998e-24		0.18	0.7501	Domain loss	
+ZNF736	Excitatory	A-DR	26	L5 ET	L5		2.6699999999999998e-24		0.16	0.91553	Domain loss	
+ZNF736	Excitatory	A-DR	27	L2/3 IT	L2/3		2.6699999999999998e-24		-0.55	0.80444	Domain loss	
+ZNF582	Excitatory	A-DR	1	L2/3 IT	L2/3		7.21e-11		-0.68	0.97177	Alternative TSS	
+ZNF582	Excitatory	A-DR	2	L2/3 IT	L2/3		7.21e-11		-2.89	0.80444	Alternative TSS	
+ZNF582	Excitatory	A-DR	10	L4 IT	L4		7.21e-11		3.37	0.12125	Alternative TSS	
+ZNF582	Excitatory	A-DR	11	L4 IT	L4		7.21e-11		3.18	0.08905	Alternative TSS	
+ZNF582	Excitatory	A-DR	18	L4 IT atypical	L4		7.21e-11		4.57	0.00994	Alternative TSS	
+ZNF582	Excitatory	A-DR	19	L5 ET	L5		7.21e-11		-4.46	0.01265	Alternative TSS	
+ZNF582	Excitatory	A-DR	20	Unclassified	Mixed		7.21e-11		-2.89	0.23196	Alternative TSS	
+ZNF582	Excitatory	A-DR	25	L6 CT	L6		7.21e-11		0.18	0.7501	Alternative TSS	
+ZNF582	Excitatory	A-DR	26	L5 ET	L5		7.21e-11		0.16	0.91553	Alternative TSS	
+ZNF582	Excitatory	A-DR	27	L2/3 IT	L2/3		7.21e-11		-0.55	0.80444	Alternative TSS	
+NDUFAF5	Excitatory	A-DR	1	L2/3 IT	L2/3		0.000143		-0.68	0.97177	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	2	L2/3 IT	L2/3		0.000143		-2.89	0.80444	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	10	L4 IT	L4		0.000143		3.37	0.12125	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	11	L4 IT	L4		0.000143		3.18	0.08905	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	18	L4 IT atypical	L4		0.000143		4.57	0.00994	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	19	L5 ET	L5		0.000143		-4.46	0.01265	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	20	Unclassified	Mixed		0.000143		-2.89	0.23196	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	25	L6 CT	L6		0.000143		0.18	0.7501	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	26	L5 ET	L5		0.000143		0.16	0.91553	NMD + C-term loss	
+NDUFAF5	Excitatory	A-DR	27	L2/3 IT	L2/3		0.000143		-0.55	0.80444	NMD + C-term loss	
+DCAF5	Excitatory	A-DR	1	L2/3 IT	L2/3		0.0424		-0.68	0.97177	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	2	L2/3 IT	L2/3		0.0424		-2.89	0.80444	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	10	L4 IT	L4		0.0424		3.37	0.12125	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	11	L4 IT	L4		0.0424		3.18	0.08905	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	18	L4 IT atypical	L4		0.0424		4.57	0.00994	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	19	L5 ET	L5		0.0424		-4.46	0.01265	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	20	Unclassified	Mixed		0.0424		-2.89	0.23196	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	25	L6 CT	L6		0.0424		0.18	0.7501	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	26	L5 ET	L5		0.0424		0.16	0.91553	Domain gain (WD40)	
+DCAF5	Excitatory	A-DR	27	L2/3 IT	L2/3		0.0424		-0.55	0.80444	Domain gain (WD40)	
+RPS3	Excitatory	A-DR	1	L2/3 IT	L2/3		0.0477		-0.68	0.97177	Isoform switch	
+RPS3	Excitatory	A-DR	2	L2/3 IT	L2/3		0.0477		-2.89	0.80444	Isoform switch	
+RPS3	Excitatory	A-DR	10	L4 IT	L4		0.0477		3.37	0.12125	Isoform switch	
+RPS3	Excitatory	A-DR	11	L4 IT	L4		0.0477		3.18	0.08905	Isoform switch	
+RPS3	Excitatory	A-DR	18	L4 IT atypical	L4		0.0477		4.57	0.00994	Isoform switch	
+RPS3	Excitatory	A-DR	19	L5 ET	L5		0.0477		-4.46	0.01265	Isoform switch	
+RPS3	Excitatory	A-DR	20	Unclassified	Mixed		0.0477		-2.89	0.23196	Isoform switch	
+RPS3	Excitatory	A-DR	25	L6 CT	L6		0.0477		0.18	0.7501	Isoform switch	
+RPS3	Excitatory	A-DR	26	L5 ET	L5		0.0477		0.16	0.91553	Isoform switch	
+RPS3	Excitatory	A-DR	27	L2/3 IT	L2/3		0.0477		-0.55	0.80444	Isoform switch	
+USP1	Oligodendrocyte	A-DR	0	MOL1/2	WM/L6		7.66e-05		0.0	1.0	Isoform switch	
+USP1	Oligodendrocyte	A-DR	3	MOL2	WM/L6		7.66e-05		0.0	1.0	Isoform switch	
+USP1	Oligodendrocyte	A-DR	28	MOL5/6	WM		7.66e-05		0.0	1.0	Isoform switch	
+USP1	Oligodendrocyte	A-DR	32	MOL5/6	WM		7.66e-05		0.0	1.0	Isoform switch	
+SAMHD1	Inhibitory	A-DR	7	PV	L3-5		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	8	VIP	L1-3		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	9	SST	L3-5		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	13	LAMP5/NDNF	L1		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	15	LAMP5/KIT	L1-2		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	16	VIP	L1-3		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	21	PV	L3-5		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	22	LAMP5/LHX6	L2-3		0.00768		0.0	1.0	NMD + tetramer loss	
+SAMHD1	Inhibitory	A-DR	24	CGE-derived misc	L2-4		0.00768		0.0	1.0	NMD + tetramer loss	
+DDX19A	Inhibitory	A-DR	7	PV	L3-5		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	8	VIP	L1-3		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	9	SST	L3-5		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	13	LAMP5/NDNF	L1		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	15	LAMP5/KIT	L1-2		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	16	VIP	L1-3		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	21	PV	L3-5		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	22	LAMP5/LHX6	L2-3		0.00768		0.0	1.0	C-term truncation	
+DDX19A	Inhibitory	A-DR	24	CGE-derived misc	L2-4		0.00768		0.0	1.0	C-term truncation	
+AZIN1	Inhibitory	A-DR	7	PV	L3-5		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	8	VIP	L1-3		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	9	SST	L3-5		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	13	LAMP5/NDNF	L1		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	15	LAMP5/KIT	L1-2		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	16	VIP	L1-3		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	21	PV	L3-5		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	22	LAMP5/LHX6	L2-3		0.0436		0.0	1.0	Isoform switch	
+AZIN1	Inhibitory	A-DR	24	CGE-derived misc	L2-4		0.0436		0.0	1.0	Isoform switch	
+CNOT11	Oligodendrocyte	A-DR	0	MOL1/2	WM/L6		0.0348		0.0	1.0	Isoform switch (NIC)	
+CNOT11	Oligodendrocyte	A-DR	3	MOL2	WM/L6		0.0348		0.0	1.0	Isoform switch (NIC)	
+CNOT11	Oligodendrocyte	A-DR	28	MOL5/6	WM		0.0348		0.0	1.0	Isoform switch (NIC)	
+CNOT11	Oligodendrocyte	A-DR	32	MOL5/6	WM		0.0348		0.0	1.0	Isoform switch (NIC)	
+DIS3	Oligodendrocyte	A-DR	0	MOL1/2	WM/L6		0.0493		0.0	1.0	Domain loss	
+DIS3	Oligodendrocyte	A-DR	3	MOL2	WM/L6		0.0493		0.0	1.0	Domain loss	
+DIS3	Oligodendrocyte	A-DR	28	MOL5/6	WM		0.0493		0.0	1.0	Domain loss	
+DIS3	Oligodendrocyte	A-DR	32	MOL5/6	WM		0.0493		0.0	1.0	Domain loss	
+DOCK10	Microglia	A-DR	5	SPP1⁺ activated	Mixed		0.00115		0.0	1.0	Minor exon	
+ERCC6L2	Astrocyte	A-DR	4	Protoplasmic	Mixed		0.0111		0.0	1.0	Domain loss	
+NOL8	Microglia	A-DR	5	SPP1⁺ activated	Mixed		0.0385		0.0	1.0	Isoform switch	
+DOCK11	Inhibitory	A-BP	7	PV	L3-5	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	8	VIP	L1-3	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	9	SST	L3-5	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	13	LAMP5/NDNF	L1	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	15	LAMP5/KIT	L1-2	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	16	VIP	L1-3	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	21	PV	L3-5	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	22	LAMP5/LHX6	L2-3	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+DOCK11	Inhibitory	A-BP	24	CGE-derived misc	L2-4	-0.2431		0.0008	0.0	1.0	Complex I / GEF	0.0
+IFT122	Excitatory	A-BP	1	L2/3 IT	L2/3	-0.2172		0.007	-0.68	0.97177	Complex I / GEF	-0.14769600000000002
+IFT122	Excitatory	A-BP	2	L2/3 IT	L2/3	-0.2172		0.007	-2.89	0.80444	Complex I / GEF	-0.627708
+IFT122	Excitatory	A-BP	10	L4 IT	L4	-0.2172		0.007	3.37	0.12125	Complex I / GEF	0.7319640000000001
+IFT122	Excitatory	A-BP	11	L4 IT	L4	-0.2172		0.007	3.18	0.08905	Complex I / GEF	0.6906960000000001
+IFT122	Excitatory	A-BP	18	L4 IT atypical	L4	-0.2172		0.007	4.57	0.00994	Complex I / GEF	0.992604
+IFT122	Excitatory	A-BP	19	L5 ET	L5	-0.2172		0.007	-4.46	0.01265	Complex I / GEF	-0.968712
+IFT122	Excitatory	A-BP	20	Unclassified	Mixed	-0.2172		0.007	-2.89	0.23196	Complex I / GEF	-0.627708
+IFT122	Excitatory	A-BP	25	L6 CT	L6	-0.2172		0.007	0.18	0.7501	Complex I / GEF	0.039096
+IFT122	Excitatory	A-BP	26	L5 ET	L5	-0.2172		0.007	0.16	0.91553	Complex I / GEF	0.034752
+IFT122	Excitatory	A-BP	27	L2/3 IT	L2/3	-0.2172		0.007	-0.55	0.80444	Complex I / GEF	-0.11946000000000001
+NDUFS7	Excitatory	A-BP	1	L2/3 IT	L2/3	-0.0463		0.0482	-0.68	0.97177	Complex I / GEF	-0.031484000000000005
+NDUFS7	Excitatory	A-BP	2	L2/3 IT	L2/3	-0.0463		0.0482	-2.89	0.80444	Complex I / GEF	-0.133807
+NDUFS7	Excitatory	A-BP	10	L4 IT	L4	-0.0463		0.0482	3.37	0.12125	Complex I / GEF	0.156031
+NDUFS7	Excitatory	A-BP	11	L4 IT	L4	-0.0463		0.0482	3.18	0.08905	Complex I / GEF	0.147234
+NDUFS7	Excitatory	A-BP	18	L4 IT atypical	L4	-0.0463		0.0482	4.57	0.00994	Complex I / GEF	0.21159100000000003
+NDUFS7	Excitatory	A-BP	19	L5 ET	L5	-0.0463		0.0482	-4.46	0.01265	Complex I / GEF	-0.20649800000000001
+NDUFS7	Excitatory	A-BP	20	Unclassified	Mixed	-0.0463		0.0482	-2.89	0.23196	Complex I / GEF	-0.133807
+NDUFS7	Excitatory	A-BP	25	L6 CT	L6	-0.0463		0.0482	0.18	0.7501	Complex I / GEF	0.008334
+NDUFS7	Excitatory	A-BP	26	L5 ET	L5	-0.0463		0.0482	0.16	0.91553	Complex I / GEF	0.0074080000000000005
+NDUFS7	Excitatory	A-BP	27	L2/3 IT	L2/3	-0.0463		0.0482	-0.55	0.80444	Complex I / GEF	-0.025465
+NDUFS8	Inhibitory	A-BP	7	PV	L3-5	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	8	VIP	L1-3	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	9	SST	L3-5	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	13	LAMP5/NDNF	L1	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	15	LAMP5/KIT	L1-2	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	16	VIP	L1-3	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	21	PV	L3-5	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	22	LAMP5/LHX6	L2-3	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS8	Inhibitory	A-BP	24	CGE-derived misc	L2-4	-0.3694		0.0044	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	7	PV	L3-5	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	8	VIP	L1-3	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	9	SST	L3-5	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	13	LAMP5/NDNF	L1	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	15	LAMP5/KIT	L1-2	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	16	VIP	L1-3	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	21	PV	L3-5	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	22	LAMP5/LHX6	L2-3	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+NDUFS4	Inhibitory	A-BP	24	CGE-derived misc	L2-4	-0.3204		0.0236	0.0	1.0	Complex I / GEF	0.0
+DLG1	OPC	C	6	OPC	WM/L6	-0.4306		0.0561	0.0	1.0		0.0
+DLG1	OPC	C	31	Immature OL	WM/L6	-0.4306		0.0561	0.0	1.0		0.0
+NDUFS4	Excitatory	C	1	L2/3 IT	L2/3	-0.25		0.5023	-0.68	0.97177		-0.17
+NDUFS4	Excitatory	C	2	L2/3 IT	L2/3	-0.25		0.5023	-2.89	0.80444		-0.7225
+NDUFS4	Excitatory	C	10	L4 IT	L4	-0.25		0.5023	3.37	0.12125		0.8425
+NDUFS4	Excitatory	C	11	L4 IT	L4	-0.25		0.5023	3.18	0.08905		0.795
+NDUFS4	Excitatory	C	18	L4 IT atypical	L4	-0.25		0.5023	4.57	0.00994		1.1425
+NDUFS4	Excitatory	C	19	L5 ET	L5	-0.25		0.5023	-4.46	0.01265		-1.115
+NDUFS4	Excitatory	C	20	Unclassified	Mixed	-0.25		0.5023	-2.89	0.23196		-0.7225
+NDUFS4	Excitatory	C	25	L6 CT	L6	-0.25		0.5023	0.18	0.7501		0.045
+NDUFS4	Excitatory	C	26	L5 ET	L5	-0.25		0.5023	0.16	0.91553		0.04
+NDUFS4	Excitatory	C	27	L2/3 IT	L2/3	-0.25		0.5023	-0.55	0.80444		-0.1375
+KIF21B	Excitatory	C	1	L2/3 IT	L2/3	-0.4333		0.113	-0.68	0.97177		-0.294644
+KIF21B	Excitatory	C	2	L2/3 IT	L2/3	-0.4333		0.113	-2.89	0.80444		-1.252237
+KIF21B	Excitatory	C	10	L4 IT	L4	-0.4333		0.113	3.37	0.12125		1.4602210000000002
+KIF21B	Excitatory	C	11	L4 IT	L4	-0.4333		0.113	3.18	0.08905		1.3778940000000002
+KIF21B	Excitatory	C	18	L4 IT atypical	L4	-0.4333		0.113	4.57	0.00994		1.9801810000000002
+KIF21B	Excitatory	C	19	L5 ET	L5	-0.4333		0.113	-4.46	0.01265		-1.932518
+KIF21B	Excitatory	C	20	Unclassified	Mixed	-0.4333		0.113	-2.89	0.23196		-1.252237
+KIF21B	Excitatory	C	25	L6 CT	L6	-0.4333		0.113	0.18	0.7501		0.077994
+KIF21B	Excitatory	C	26	L5 ET	L5	-0.4333		0.113	0.16	0.91553		0.069328
+KIF21B	Excitatory	C	27	L2/3 IT	L2/3	-0.4333		0.113	-0.55	0.80444		-0.23831500000000003
+ADGRB2	Inhibitory	C	7	PV	L3-5	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	8	VIP	L1-3	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	9	SST	L3-5	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	13	LAMP5/NDNF	L1	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	15	LAMP5/KIT	L1-2	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	16	VIP	L1-3	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	21	PV	L3-5	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	22	LAMP5/LHX6	L2-3	-0.1291		0.1666	0.0	1.0		0.0
+ADGRB2	Inhibitory	C	24	CGE-derived misc	L2-4	-0.1291		0.1666	0.0	1.0		0.0
+ANKRD44	Oligodendrocyte	C	0	MOL1/2	WM/L6	0.1224		0.3556	0.0	1.0		-0.0
+ANKRD44	Oligodendrocyte	C	3	MOL2	WM/L6	0.1224		0.3556	0.0	1.0		-0.0
+ANKRD44	Oligodendrocyte	C	28	MOL5/6	WM	0.1224		0.3556	0.0	1.0		-0.0
+ANKRD44	Oligodendrocyte	C	32	MOL5/6	WM	0.1224		0.3556	0.0	1.0		-0.0
+ASXL3	Excitatory	C	1	L2/3 IT	L2/3	-0.1865		0.3112	-0.68	0.97177		-0.12682000000000002
+ASXL3	Excitatory	C	2	L2/3 IT	L2/3	-0.1865		0.3112	-2.89	0.80444		-0.538985
+ASXL3	Excitatory	C	10	L4 IT	L4	-0.1865		0.3112	3.37	0.12125		0.628505
+ASXL3	Excitatory	C	11	L4 IT	L4	-0.1865		0.3112	3.18	0.08905		0.59307
+ASXL3	Excitatory	C	18	L4 IT atypical	L4	-0.1865		0.3112	4.57	0.00994		0.8523050000000001
+ASXL3	Excitatory	C	19	L5 ET	L5	-0.1865		0.3112	-4.46	0.01265		-0.83179
+ASXL3	Excitatory	C	20	Unclassified	Mixed	-0.1865		0.3112	-2.89	0.23196		-0.538985
+ASXL3	Excitatory	C	25	L6 CT	L6	-0.1865		0.3112	0.18	0.7501		0.033569999999999996
+ASXL3	Excitatory	C	26	L5 ET	L5	-0.1865		0.3112	0.16	0.91553		0.029840000000000002
+ASXL3	Excitatory	C	27	L2/3 IT	L2/3	-0.1865		0.3112	-0.55	0.80444		-0.10257500000000001
+BSG	Oligodendrocyte	C	0	MOL1/2	WM/L6	0.0597		0.2152	0.0	1.0		-0.0
+BSG	Oligodendrocyte	C	3	MOL2	WM/L6	0.0597		0.2152	0.0	1.0		-0.0
+BSG	Oligodendrocyte	C	28	MOL5/6	WM	0.0597		0.2152	0.0	1.0		-0.0
+BSG	Oligodendrocyte	C	32	MOL5/6	WM	0.0597		0.2152	0.0	1.0		-0.0
+CCAR1	Inhibitory	C	7	PV	L3-5	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	8	VIP	L1-3	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	9	SST	L3-5	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	13	LAMP5/NDNF	L1	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	15	LAMP5/KIT	L1-2	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	16	VIP	L1-3	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	21	PV	L3-5	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	22	LAMP5/LHX6	L2-3	-0.188		0.1052	0.0	1.0		0.0
+CCAR1	Inhibitory	C	24	CGE-derived misc	L2-4	-0.188		0.1052	0.0	1.0		0.0
+DMD	Inhibitory	C	7	PV	L3-5	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	8	VIP	L1-3	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	9	SST	L3-5	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	13	LAMP5/NDNF	L1	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	15	LAMP5/KIT	L1-2	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	16	VIP	L1-3	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	21	PV	L3-5	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	22	LAMP5/LHX6	L2-3	-0.0132		0.448	0.0	1.0		0.0
+DMD	Inhibitory	C	24	CGE-derived misc	L2-4	-0.0132		0.448	0.0	1.0		0.0
+FANCA	Excitatory	C	1	L2/3 IT	L2/3	0.2		0.5037	-0.68	0.97177		0.136
+FANCA	Excitatory	C	2	L2/3 IT	L2/3	0.2		0.5037	-2.89	0.80444		0.5780000000000001
+FANCA	Excitatory	C	10	L4 IT	L4	0.2		0.5037	3.37	0.12125		-0.674
+FANCA	Excitatory	C	11	L4 IT	L4	0.2		0.5037	3.18	0.08905		-0.6360000000000001
+FANCA	Excitatory	C	18	L4 IT atypical	L4	0.2		0.5037	4.57	0.00994		-0.9140000000000001
+FANCA	Excitatory	C	19	L5 ET	L5	0.2		0.5037	-4.46	0.01265		0.892
+FANCA	Excitatory	C	20	Unclassified	Mixed	0.2		0.5037	-2.89	0.23196		0.5780000000000001
+FANCA	Excitatory	C	25	L6 CT	L6	0.2		0.5037	0.18	0.7501		-0.036
+FANCA	Excitatory	C	26	L5 ET	L5	0.2		0.5037	0.16	0.91553		-0.032
+FANCA	Excitatory	C	27	L2/3 IT	L2/3	0.2		0.5037	-0.55	0.80444		0.11000000000000001
+FRMD4A	Excitatory	C	1	L2/3 IT	L2/3	-0.1382		0.1615	-0.68	0.97177		-0.093976
+FRMD4A	Excitatory	C	2	L2/3 IT	L2/3	-0.1382		0.1615	-2.89	0.80444		-0.399398
+FRMD4A	Excitatory	C	10	L4 IT	L4	-0.1382		0.1615	3.37	0.12125		0.465734
+FRMD4A	Excitatory	C	11	L4 IT	L4	-0.1382		0.1615	3.18	0.08905		0.439476
+FRMD4A	Excitatory	C	18	L4 IT atypical	L4	-0.1382		0.1615	4.57	0.00994		0.631574
+FRMD4A	Excitatory	C	19	L5 ET	L5	-0.1382		0.1615	-4.46	0.01265		-0.6163719999999999
+FRMD4A	Excitatory	C	20	Unclassified	Mixed	-0.1382		0.1615	-2.89	0.23196		-0.399398
+FRMD4A	Excitatory	C	25	L6 CT	L6	-0.1382		0.1615	0.18	0.7501		0.024876
+FRMD4A	Excitatory	C	26	L5 ET	L5	-0.1382		0.1615	0.16	0.91553		0.022112
+FRMD4A	Excitatory	C	27	L2/3 IT	L2/3	-0.1382		0.1615	-0.55	0.80444		-0.07601
+GOLGB1	Astrocyte	C	4	Protoplasmic	Mixed	-0.0374		0.4268	0.0	1.0		0.0
+IFI16	Oligodendrocyte	C	0	MOL1/2	WM/L6	-0.0517		0.7041	0.0	1.0		0.0
+IFI16	Oligodendrocyte	C	3	MOL2	WM/L6	-0.0517		0.7041	0.0	1.0		0.0
+IFI16	Oligodendrocyte	C	28	MOL5/6	WM	-0.0517		0.7041	0.0	1.0		0.0
+IFI16	Oligodendrocyte	C	32	MOL5/6	WM	-0.0517		0.7041	0.0	1.0		0.0
+LRPPRC	Oligodendrocyte	C	0	MOL1/2	WM/L6	-0.0041		0.9754	0.0	1.0		0.0
+LRPPRC	Oligodendrocyte	C	3	MOL2	WM/L6	-0.0041		0.9754	0.0	1.0		0.0
+LRPPRC	Oligodendrocyte	C	28	MOL5/6	WM	-0.0041		0.9754	0.0	1.0		0.0
+LRPPRC	Oligodendrocyte	C	32	MOL5/6	WM	-0.0041		0.9754	0.0	1.0		0.0
+MTHFD1	OPC	C	6	OPC	WM/L6	0.0		1.0	0.0	1.0		-0.0
+MTHFD1	OPC	C	31	Immature OL	WM/L6	0.0		1.0	0.0	1.0		-0.0
+PML	Excitatory	C	1	L2/3 IT	L2/3	-0.1056		0.5286	-0.68	0.97177		-0.07180800000000001
+PML	Excitatory	C	2	L2/3 IT	L2/3	-0.1056		0.5286	-2.89	0.80444		-0.305184
+PML	Excitatory	C	10	L4 IT	L4	-0.1056		0.5286	3.37	0.12125		0.355872
+PML	Excitatory	C	11	L4 IT	L4	-0.1056		0.5286	3.18	0.08905		0.335808
+PML	Excitatory	C	18	L4 IT atypical	L4	-0.1056		0.5286	4.57	0.00994		0.482592
+PML	Excitatory	C	19	L5 ET	L5	-0.1056		0.5286	-4.46	0.01265		-0.470976
+PML	Excitatory	C	20	Unclassified	Mixed	-0.1056		0.5286	-2.89	0.23196		-0.305184
+PML	Excitatory	C	25	L6 CT	L6	-0.1056		0.5286	0.18	0.7501		0.019008
+PML	Excitatory	C	26	L5 ET	L5	-0.1056		0.5286	0.16	0.91553		0.016896
+PML	Excitatory	C	27	L2/3 IT	L2/3	-0.1056		0.5286	-0.55	0.80444		-0.05808000000000001
+PTPRF	Inhibitory	C	7	PV	L3-5	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	8	VIP	L1-3	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	9	SST	L3-5	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	13	LAMP5/NDNF	L1	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	15	LAMP5/KIT	L1-2	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	16	VIP	L1-3	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	21	PV	L3-5	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	22	LAMP5/LHX6	L2-3	0.0		1.0	0.0	1.0		-0.0
+PTPRF	Inhibitory	C	24	CGE-derived misc	L2-4	0.0		1.0	0.0	1.0		-0.0
+PTPRS	Astrocyte	C	4	Protoplasmic	Mixed				0.0	1.0		
+RGS3	Astrocyte	C	4	Protoplasmic	Mixed	0.0		1.0	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	7	PV	L3-5	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	8	VIP	L1-3	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	9	SST	L3-5	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	13	LAMP5/NDNF	L1	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	15	LAMP5/KIT	L1-2	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	16	VIP	L1-3	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	21	PV	L3-5	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	22	LAMP5/LHX6	L2-3	0.062		0.1767	0.0	1.0		-0.0
+SNTG1	Inhibitory	C	24	CGE-derived misc	L2-4	0.062		0.1767	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	7	PV	L3-5	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	8	VIP	L1-3	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	9	SST	L3-5	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	13	LAMP5/NDNF	L1	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	15	LAMP5/KIT	L1-2	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	16	VIP	L1-3	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	21	PV	L3-5	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	22	LAMP5/LHX6	L2-3	0.1017		0.1157	0.0	1.0		-0.0
+SYNE1	Inhibitory	C	24	CGE-derived misc	L2-4	0.1017		0.1157	0.0	1.0		-0.0
+ZCCHC17	Oligodendrocyte	C	0	MOL1/2	WM/L6	-0.0257		0.8339	0.0	1.0		0.0
+ZCCHC17	Oligodendrocyte	C	3	MOL2	WM/L6	-0.0257		0.8339	0.0	1.0		0.0
+ZCCHC17	Oligodendrocyte	C	28	MOL5/6	WM	-0.0257		0.8339	0.0	1.0		0.0
+ZCCHC17	Oligodendrocyte	C	32	MOL5/6	WM	-0.0257		0.8339	0.0	1.0		0.0
+ZNF268	Microglia	C	5	SPP1⁺ activated	Mixed	0.0		1.0	0.0	1.0		-0.0
+ZNF623	Oligodendrocyte	C	0	MOL1/2	WM/L6	0.0045		0.2085	0.0	1.0		-0.0
+ZNF623	Oligodendrocyte	C	3	MOL2	WM/L6	0.0045		0.2085	0.0	1.0		-0.0
+ZNF623	Oligodendrocyte	C	28	MOL5/6	WM	0.0045		0.2085	0.0	1.0		-0.0
+ZNF623	Oligodendrocyte	C	32	MOL5/6	WM	0.0045		0.2085	0.0	1.0		-0.0

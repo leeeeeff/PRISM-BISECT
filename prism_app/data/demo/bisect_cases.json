@@ -152,7 +152,10 @@
     "prism_delta_max": 0.0834,
     "prism_delta_min": -0.2371,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "IFT122",
@@ -328,7 +331,10 @@
     "prism_delta_max": 0.2114,
     "prism_delta_min": -0.334,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "FANCA",
@@ -504,7 +510,10 @@
     "prism_delta_max": 0.0691,
     "prism_delta_min": -0.1099,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "DMD",
@@ -631,7 +640,10 @@
     "prism_delta_max": 0.0579,
     "prism_delta_min": -0.0517,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "DLG1",
@@ -807,7 +819,10 @@
     "prism_delta_max": 0.4219,
     "prism_delta_min": -0.0859,
     "prism_match_ct": "exact",
-    "prism_match_ad": "gene_median"
+    "prism_match_ad": "gene_median",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "KIF21B",
@@ -983,7 +998,10 @@
     "prism_delta_max": 0.1667,
     "prism_delta_min": -0.3618,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "PML",
@@ -1087,7 +1105,10 @@
     "prism_delta_max": 0.0204,
     "prism_delta_min": -0.0114,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "CCAR1",
@@ -1263,7 +1284,10 @@
     "prism_delta_max": 0.0833,
     "prism_delta_min": -0.0678,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "SYNE1",
@@ -1439,7 +1463,10 @@
     "prism_delta_max": 0.2128,
     "prism_delta_min": -0.1091,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "MTHFD1",
@@ -1587,7 +1614,10 @@
     "prism_delta_max": 0.1126,
     "prism_delta_min": -0.0551,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "RGS3",
@@ -1727,7 +1757,10 @@
     "prism_delta_max": 0.1001,
     "prism_delta_min": -0.0381,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "ADGRB2",
@@ -1860,7 +1893,10 @@
     "prism_delta_max": 0.0738,
     "prism_delta_min": -0.0271,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "BSG",
@@ -2008,7 +2044,10 @@
     "prism_delta_max": 0.0503,
     "prism_delta_min": -0.1359,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "LETMD1",
@@ -2185,7 +2224,10 @@
     "prism_delta_max": 0.1793,
     "prism_delta_min": -0.2569,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "LETMD1",
@@ -2362,7 +2404,10 @@
     "prism_delta_max": 0.1793,
     "prism_delta_min": -0.2569,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "ZNF268",
@@ -2466,7 +2511,10 @@
     "prism_delta_max": 0.014,
     "prism_delta_min": -0.0362,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "DYNLT1",
@@ -2643,7 +2691,10 @@
     "prism_delta_max": 0.1016,
     "prism_delta_min": -0.3144,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "DYNLT1",
@@ -2820,7 +2871,10 @@
     "prism_delta_max": 0.1016,
     "prism_delta_min": -0.3144,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "PTPRS",
@@ -2996,7 +3050,10 @@
     "prism_delta_max": 0.1038,
     "prism_delta_min": -0.0714,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_skipping",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "FRMD4A",
@@ -3100,7 +3157,10 @@
     "prism_delta_max": 0.0,
     "prism_delta_min": 0.0,
     "prism_match_ct": "gene_median",
-    "prism_match_ad": "gene_median"
+    "prism_match_ad": "gene_median",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "ZNF623",
@@ -3204,7 +3264,10 @@
     "prism_delta_max": 0.0169,
     "prism_delta_min": -0.0127,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "RTN4",
@@ -3381,7 +3444,10 @@
     "prism_delta_max": 0.1021,
     "prism_delta_min": -0.41,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "LRPPRC",
@@ -3485,7 +3551,10 @@
     "prism_delta_max": 0.0437,
     "prism_delta_min": -0.0097,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "IFI16",
@@ -3661,7 +3730,10 @@
     "prism_delta_max": 0.1642,
     "prism_delta_min": -0.2163,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "ASXL3",
@@ -3765,7 +3837,10 @@
     "prism_delta_max": 0.0447,
     "prism_delta_min": -0.028,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "GOLGB1",
@@ -3941,7 +4016,10 @@
     "prism_delta_max": 0.099,
     "prism_delta_min": -0.1586,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "PTPRF",
@@ -4117,7 +4195,10 @@
     "prism_delta_max": 0.1996,
     "prism_delta_min": -0.6127,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "DOCK11",
@@ -4258,7 +4339,10 @@
     "prism_delta_max": 0.0161,
     "prism_delta_min": -0.3134,
     "prism_match_ct": "exact",
-    "prism_match_ad": "gene_median"
+    "prism_match_ad": "gene_median",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "ANKRD44",
@@ -4434,7 +4518,10 @@
     "prism_delta_max": 0.0803,
     "prism_delta_min": -0.0911,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "SNTG1",
@@ -4574,7 +4661,10 @@
     "prism_delta_max": 0.0603,
     "prism_delta_min": -0.0424,
     "prism_match_ct": "gene_median",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "SPTBN1",
@@ -4751,7 +4841,10 @@
     "prism_delta_max": 0.1424,
     "prism_delta_min": -0.521,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "RTN4",
@@ -4928,7 +5021,10 @@
     "prism_delta_max": 0.1084,
     "prism_delta_min": -0.4692,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "PSMC6",
@@ -5105,7 +5201,10 @@
     "prism_delta_max": 0.1187,
     "prism_delta_min": -0.4634,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "SPTBN1",
@@ -5282,7 +5381,10 @@
     "prism_delta_max": 0.145,
     "prism_delta_min": -0.5323,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "CNP",
@@ -5459,7 +5561,10 @@
     "prism_delta_max": 0.1203,
     "prism_delta_min": -0.232,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "COLQ",
@@ -5636,7 +5741,10 @@
     "prism_delta_max": 0.2036,
     "prism_delta_min": -0.3052,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "RPL8",
@@ -5813,7 +5921,10 @@
     "prism_delta_max": 0.2005,
     "prism_delta_min": -0.8836,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "RPL8",
@@ -5990,7 +6101,10 @@
     "prism_delta_max": 0.2005,
     "prism_delta_min": -0.8836,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "EGFR",
@@ -6167,7 +6281,10 @@
     "prism_delta_max": 0.3658,
     "prism_delta_min": -0.5178,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "EGFR",
@@ -6344,7 +6461,10 @@
     "prism_delta_max": 0.3658,
     "prism_delta_min": -0.5178,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "ZNHIT1",
@@ -6521,7 +6641,10 @@
     "prism_delta_max": 0.1691,
     "prism_delta_min": -0.2322,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "ZNHIT1",
@@ -6698,7 +6821,10 @@
     "prism_delta_max": 0.1691,
     "prism_delta_min": -0.2322,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "SON",
@@ -6875,7 +7001,10 @@
     "prism_delta_max": 0.1598,
     "prism_delta_min": -0.1773,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "RHOT2",
@@ -7052,7 +7181,10 @@
     "prism_delta_max": 0.0931,
     "prism_delta_min": -0.3082,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "RHOT2",
@@ -7229,7 +7361,10 @@
     "prism_delta_max": 0.0931,
     "prism_delta_min": -0.3082,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "PTPRG",
@@ -7406,7 +7541,10 @@
     "prism_delta_max": 0.0842,
     "prism_delta_min": -0.2948,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "RPL7",
@@ -7583,7 +7721,10 @@
     "prism_delta_max": 0.1945,
     "prism_delta_min": -0.8166,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "SAMM50",
@@ -7760,7 +7901,10 @@
     "prism_delta_max": 0.1598,
     "prism_delta_min": -0.5206,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "SAMM50",
@@ -7937,7 +8081,10 @@
     "prism_delta_max": 0.1598,
     "prism_delta_min": -0.5206,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "MAEA",
@@ -8114,7 +8261,10 @@
     "prism_delta_max": 0.2166,
     "prism_delta_min": -0.5146,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "CHMP3",
@@ -8291,7 +8441,10 @@
     "prism_delta_max": 0.1304,
     "prism_delta_min": -0.4798,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "CHMP3",
@@ -8468,7 +8621,10 @@
     "prism_delta_max": 0.1304,
     "prism_delta_min": -0.4798,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "SH3BGRL",
@@ -8645,7 +8801,10 @@
     "prism_delta_max": 0.1671,
     "prism_delta_min": -0.1034,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "IFT172",
@@ -8822,7 +8981,10 @@
     "prism_delta_max": 0.0974,
     "prism_delta_min": -0.3792,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "retained_intron"
   },
   {
     "gene": "COA1",
@@ -8999,7 +9161,10 @@
     "prism_delta_max": 0.1787,
     "prism_delta_min": -0.2682,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "PSMA3",
@@ -9140,7 +9305,10 @@
     "prism_delta_max": 0.0448,
     "prism_delta_min": -0.3209,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "CD40",
@@ -9317,7 +9485,10 @@
     "prism_delta_max": 0.1314,
     "prism_delta_min": -0.5609,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "RPL23",
@@ -9494,7 +9665,10 @@
     "prism_delta_max": 0.1643,
     "prism_delta_min": -0.7646,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "RPL23",
@@ -9671,7 +9845,10 @@
     "prism_delta_max": 0.1643,
     "prism_delta_min": -0.7646,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "retained_intron"
   },
   {
     "gene": "PHB2",
@@ -9820,7 +9997,10 @@
     "prism_delta_max": 0.0812,
     "prism_delta_min": -0.3421,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "PHB2",
@@ -9969,7 +10149,10 @@
     "prism_delta_max": 0.0812,
     "prism_delta_min": -0.3421,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "PTPRA",
@@ -10146,7 +10329,10 @@
     "prism_delta_max": 0.2731,
     "prism_delta_min": -0.4876,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "NDUFS4",
@@ -10324,7 +10510,10 @@
     "prism_delta_max": 0.2266,
     "prism_delta_min": -0.5375,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "RBCK1",
@@ -10501,7 +10690,10 @@
     "prism_delta_max": 0.1568,
     "prism_delta_min": -0.537,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "RBCK1",
@@ -10678,7 +10870,10 @@
     "prism_delta_max": 0.1568,
     "prism_delta_min": -0.537,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "TMOD1",
@@ -10855,7 +11050,10 @@
     "prism_delta_max": 0.0756,
     "prism_delta_min": -0.251,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "GAS6",
@@ -11032,7 +11230,10 @@
     "prism_delta_max": 0.1896,
     "prism_delta_min": -0.3247,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "UBE2D1",
@@ -11209,7 +11410,10 @@
     "prism_delta_max": 0.1458,
     "prism_delta_min": -0.6204,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "TIMM17A",
@@ -11386,7 +11590,10 @@
     "prism_delta_max": 0.1646,
     "prism_delta_min": -0.3946,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "TIMM17A",
@@ -11563,7 +11770,10 @@
     "prism_delta_max": 0.1646,
     "prism_delta_min": -0.3946,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "GSTM2",
@@ -11740,7 +11950,10 @@
     "prism_delta_max": 0.1068,
     "prism_delta_min": -0.3729,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "GSTM2",
@@ -11917,7 +12130,10 @@
     "prism_delta_max": 0.1068,
     "prism_delta_min": -0.3729,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "NIN",
@@ -12094,7 +12310,10 @@
     "prism_delta_max": 0.1792,
     "prism_delta_min": -0.3849,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "NIN",
@@ -12271,7 +12490,10 @@
     "prism_delta_max": 0.1792,
     "prism_delta_min": -0.3849,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "ABITRAM",
@@ -12448,7 +12670,10 @@
     "prism_delta_max": 0.1549,
     "prism_delta_min": -0.4163,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "MAPRE2",
@@ -12589,7 +12814,10 @@
     "prism_delta_max": 0.0454,
     "prism_delta_min": -0.2065,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "TRAF3IP1",
@@ -12766,7 +12994,10 @@
     "prism_delta_max": 0.1625,
     "prism_delta_min": -0.4265,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": null,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "TNIK",
@@ -12943,7 +13174,10 @@
     "prism_delta_max": 0.2616,
     "prism_delta_min": -0.5951,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "major_exon_loss",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "major_truncation"
   },
   {
     "gene": "PSMC4",
@@ -13084,7 +13318,10 @@
     "prism_delta_max": 0.0126,
     "prism_delta_min": -0.1401,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "NDFIP1",
@@ -13261,7 +13498,10 @@
     "prism_delta_max": 0.1323,
     "prism_delta_min": -0.3204,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "NDFIP1",
@@ -13438,7 +13678,10 @@
     "prism_delta_max": 0.1323,
     "prism_delta_min": -0.3204,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "NDUFS7",
@@ -13615,7 +13858,10 @@
     "prism_delta_max": 0.1302,
     "prism_delta_min": -0.6713,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "NEK1",
@@ -13792,7 +14038,10 @@
     "prism_delta_max": 0.4333,
     "prism_delta_min": -0.1074,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "NDUFS8",
@@ -13969,7 +14218,10 @@
     "prism_delta_max": 0.1235,
     "prism_delta_min": -0.5614,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "retained_intron"
   },
   {
     "gene": "ZNF736",
@@ -14147,7 +14399,10 @@
     "prism_delta_max": 0.1964,
     "prism_delta_min": -0.4457,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   },
   {
     "gene": "ZNF582",
@@ -14275,7 +14530,10 @@
     "prism_delta_max": 0.0309,
     "prism_delta_min": -0.1257,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "exon_exchange"
   },
   {
     "gene": "NDUFAF5",
@@ -14418,7 +14676,10 @@
     "prism_delta_max": 0.0527,
     "prism_delta_min": -0.0631,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "DOCK10",
@@ -14532,7 +14793,10 @@
     "prism_delta_max": 0.0525,
     "prism_delta_min": -0.0225,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "exon_exchange"
   },
   {
     "gene": "SAMHD1",
@@ -14689,7 +14953,10 @@
     "prism_delta_max": 0.0621,
     "prism_delta_min": -0.069,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "NDUFS8",
@@ -14860,7 +15127,10 @@
     "prism_delta_max": 0.0527,
     "prism_delta_min": -0.1308,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "exon_exchange"
   },
   {
     "gene": "NDUFS7",
@@ -15017,7 +15287,10 @@
     "prism_delta_max": 0.0867,
     "prism_delta_min": -0.0574,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "exon_exchange"
   },
   {
     "gene": "NDUFS4",
@@ -15195,7 +15468,10 @@
     "prism_delta_max": 0.2266,
     "prism_delta_min": -0.5375,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "USP1",
@@ -15301,7 +15577,10 @@
     "prism_delta_max": 0.0,
     "prism_delta_min": 0.0,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "alt_splice_site",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "alt_tss"
   },
   {
     "gene": "DDX19A",
@@ -15443,7 +15722,10 @@
     "prism_delta_max": 0.018,
     "prism_delta_min": -0.2001,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "retained_intron",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "DIS3",
@@ -15549,7 +15831,10 @@
     "prism_delta_max": 0.0194,
     "prism_delta_min": -0.0319,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_loss"
   },
   {
     "gene": "DCAF5",
@@ -15655,7 +15940,10 @@
     "prism_delta_max": 0.0058,
     "prism_delta_min": -0.0005,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "domain_gain"
   },
   {
     "gene": "RPS3",
@@ -15761,7 +16049,10 @@
     "prism_delta_max": 0.0,
     "prism_delta_min": 0.0,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "alt_splice_site",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "alt_apa"
   },
   {
     "gene": "AZIN1",
@@ -15867,7 +16158,10 @@
     "prism_delta_max": 0.0,
     "prism_delta_min": 0.0,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "exon_exchange"
   },
   {
     "gene": "NOL8",
@@ -15973,7 +16267,10 @@
     "prism_delta_max": 0.0266,
     "prism_delta_min": -0.0039,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "cassette_exon_cluster",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "cassette_exon_cluster"
   },
   {
     "gene": "CNOT11",
@@ -16151,7 +16448,10 @@
     "prism_delta_max": 0.0851,
     "prism_delta_min": -0.2527,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "exon_exchange",
+    "m15_nmd_switch": true,
+    "m16_mechanism": "nmd_switch"
   },
   {
     "gene": "ERCC6L2",
@@ -16329,6 +16629,9 @@
     "prism_delta_max": 0.2048,
     "prism_delta_min": -0.3031,
     "prism_match_ct": "exact",
-    "prism_match_ad": "exact"
+    "prism_match_ad": "exact",
+    "m14_event_type": "ale",
+    "m15_nmd_switch": false,
+    "m16_mechanism": "ale"
   }
 ]

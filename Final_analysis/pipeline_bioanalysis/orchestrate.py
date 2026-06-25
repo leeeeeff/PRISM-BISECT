@@ -152,6 +152,7 @@ def _worker(args: tuple) -> dict:
         m8_regulatory_context, m9_promoter_usage, m10_apa,
         m11_alphafold, m12_ppi, m13_conservation,
         m14_report,
+        m14_exon_comparator, m15_nmd_v2, m16_mechanism_classifier,
     )
     return _run_case(
         row, config, output_root, dry_run, mode,
@@ -161,6 +162,9 @@ def _worker(args: tuple) -> dict:
         m8_regulatory_context, m9_promoter_usage, m10_apa,
         m11_alphafold, m12_ppi, m13_conservation,
         m14_report,
+        m14_exon_comparator=m14_exon_comparator,
+        m15_nmd_v2=m15_nmd_v2,
+        m16_mechanism_classifier=m16_mechanism_classifier,
     )
 
 
@@ -204,6 +208,9 @@ def _run_case(
     m8=None, m9=None, m10=None,
     m11=None, m12=None, m13=None,
     m14=None,
+    m14_exon_comparator=None,
+    m15_nmd_v2=None,
+    m16_mechanism_classifier=None,
 ) -> dict:
     """
     Execute full BISECT pipeline for one candidate case.
@@ -409,6 +416,27 @@ def _run_case(
             case_result["m13_conservation"] = m13.run(case_result, config)
         except Exception as e:
             case_result["m13_conservation"] = {"error": str(e)}
+
+    # ── M14-exon: Exon Structure Comparator ──────────────────────────────────
+    if m14_exon_comparator is not None:
+        try:
+            case_result.update(m14_exon_comparator.run_m14(case_result, config))
+        except Exception as e:
+            case_result["m14_exon_comparator"] = {"error": str(e)}
+
+    # ── M15-nmd: NMD Calculator v2 ────────────────────────────────────────────
+    if m15_nmd_v2 is not None:
+        try:
+            case_result.update(m15_nmd_v2.run_m15(case_result, config))
+        except Exception as e:
+            case_result["m15_nmd_v2"] = {"error": str(e)}
+
+    # ── M16: Mechanism Classifier ─────────────────────────────────────────────
+    if m16_mechanism_classifier is not None:
+        try:
+            case_result.update(m16_mechanism_classifier.run_m16(case_result, config))
+        except Exception as e:
+            case_result["m16_mechanism_classifier"] = {"error": str(e)}
 
     # ══ STAGE 6: Output ═══════════════════════════════════════════════════════
 

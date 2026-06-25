@@ -241,7 +241,7 @@ pg = st.navigation(
         "타겟 분석": [
             st.Page("pages/05_target_hub.py", title="타겟 탐색",       icon="🎯"),
             st.Page("pages/05_targets.py",    title="시나리오 & 분석",  icon="📋"),
-            st.Page("pages/07_bisect.py",     title="BISECT Cases",    icon="🧫"),
+            st.Page("pages/07_bisect.py",     title="핵심 케이스 스터디",  icon="🧫"),
         ],
         "개별 분석": [
             st.Page("pages/06_gene.py",     title="유전자 분석",   icon="🧬"),

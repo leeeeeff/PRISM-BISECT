@@ -1,0 +1,44 @@
+gene	cell_type	tier	mechanism	delta	stager_p	perm_p	peak_layer	peak_co_score	n_layers_covered	layers
+DOCK11	Inhibitory	A-BP	Complex I / GEF	-0.2431		0.0008	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+NDUFS4	Inhibitory	A-BP	Complex I / GEF	-0.3204		0.0236	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+NDUFS8	Inhibitory	A-BP	Complex I / GEF	-0.3694		0.0044	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+NDUFS7	Excitatory	A-BP	Complex I / GEF	-0.0463		0.0482	L4	0.17161866666666667	5	L2/3; L4; L5; L6; Mixed
+IFT122	Excitatory	A-BP	Complex I / GEF	-0.2172		0.007	L4	0.805088	5	L2/3; L4; L5; L6; Mixed
+AZIN1	Inhibitory	A-DR	Isoform switch		0.0436		N/A		6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+CNOT11	Oligodendrocyte	A-DR	Isoform switch (NIC)		0.0348		N/A		2	WM; WM/L6
+DCAF5	Excitatory	A-DR	Domain gain (WD40)		0.0424		N/A		5	L2/3; L4; L5; L6; Mixed
+DDX19A	Inhibitory	A-DR	C-term truncation		0.00768		N/A		6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+DIS3	Oligodendrocyte	A-DR	Domain loss		0.0493		N/A		2	WM; WM/L6
+DOCK10	Microglia	A-DR	Minor exon		0.00115		N/A		1	Mixed
+ERCC6L2	Astrocyte	A-DR	Domain loss		0.0111		N/A		1	Mixed
+NDUFAF5	Excitatory	A-DR	NMD + C-term loss		0.000143		N/A		5	L2/3; L4; L5; L6; Mixed
+NOL8	Microglia	A-DR	Isoform switch		0.0385		N/A		1	Mixed
+RPS3	Excitatory	A-DR	Isoform switch		0.0477		N/A		5	L2/3; L4; L5; L6; Mixed
+SAMHD1	Inhibitory	A-DR	NMD + tetramer loss		0.00768		N/A		6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+USP1	Oligodendrocyte	A-DR	Isoform switch		7.66e-05		N/A		2	WM; WM/L6
+ZNF582	Excitatory	A-DR	Alternative TSS		7.21e-11		N/A		5	L2/3; L4; L5; L6; Mixed
+ZNF736	Excitatory	A-DR	Domain loss		2.6699999999999998e-24		N/A		5	L2/3; L4; L5; L6; Mixed
+ADGRB2	Inhibitory	C		-0.1291		0.1666	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+ANKRD44	Oligodendrocyte	C		0.1224		0.3556	WM	0.0	2	WM; WM/L6
+BSG	Oligodendrocyte	C		0.0597		0.2152	WM	0.0	2	WM; WM/L6
+CCAR1	Inhibitory	C		-0.188		0.1052	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+DLG1	OPC	C		-0.4306		0.0561	WM/L6	0.0	1	WM/L6
+DMD	Inhibitory	C		-0.0132		0.448	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+GOLGB1	Astrocyte	C		-0.0374		0.4268	Mixed	0.0	1	Mixed
+IFI16	Oligodendrocyte	C		-0.0517		0.7041	WM	0.0	2	WM; WM/L6
+LRPPRC	Oligodendrocyte	C		-0.0041		0.9754	WM	0.0	2	WM; WM/L6
+MTHFD1	OPC	C		0.0		1.0	WM/L6	0.0	1	WM/L6
+PTPRF	Inhibitory	C		0.0		1.0	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+RGS3	Astrocyte	C		0.0		1.0	Mixed	0.0	1	Mixed
+SNTG1	Inhibitory	C		0.062		0.1767	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+SYNE1	Inhibitory	C		0.1017		0.1157	L1	0.0	6	L1; L1-2; L1-3; L2-3; L2-4; L3-5
+ZCCHC17	Oligodendrocyte	C		-0.0257		0.8339	WM	0.0	2	WM; WM/L6
+ZNF268	Microglia	C		0.0		1.0	Mixed	0.0	1	Mixed
+ZNF623	Oligodendrocyte	C		0.0045		0.2085	WM	0.0	2	WM; WM/L6
+PML	Excitatory	C		-0.1056		0.5286	L4	0.391424	5	L2/3; L4; L5; L6; Mixed
+FRMD4A	Excitatory	C		-0.1382		0.1615	L4	0.5122613333333333	5	L2/3; L4; L5; L6; Mixed
+ASXL3	Excitatory	C		-0.1865		0.3112	L4	0.6912933333333333	5	L2/3; L4; L5; L6; Mixed
+FANCA	Excitatory	C		0.2		0.5037	L4	-0.7413333333333334	5	L2/3; L4; L5; L6; Mixed
+NDUFS4	Excitatory	C		-0.25		0.5023	L4	0.9266666666666667	5	L2/3; L4; L5; L6; Mixed
+KIF21B	Excitatory	C		-0.4333		0.113	L4	1.6060986666666668	5	L2/3; L4; L5; L6; Mixed
+PTPRS	Astrocyte	C					N/A		1	Mixed
