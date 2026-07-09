@@ -702,7 +702,25 @@ A central methodological concern is whether PRISM learns genuine isoform-level f
 
 ---
 
-### 3.7 PRISM and InterProScan occupy complementary, non-overlapping functional prediction spaces
+### 3.7 Isoform structural category determines prediction confidence and reveals annotation limitations
+
+To systematically characterise how alternative splicing outcomes relate to PRISM prediction accuracy, we classified all 36,748 long-read isoforms in the test cohort into four structural categories based on Pfam domain content relative to each gene's canonical isoform (maximum domain count per gene).
+
+**Structural category distribution.** We computed Pfam domain presence vectors for each isoform (TransDecoder + hmmscan, Pfam-A r36.0; top-512 most frequent domains across the test cohort) and classified each isoform as: **Type 0** (no domains detected in any isoform of the gene; n = 19,265; 52.4%); **Type 1 — Complete Domain Loss** (domain count = 0 vs. canonical domain count > 0; n = 3,800; 10.3%); **Type 2 — Partial Truncation** (0 < domain count < canonical domain count; n = 938; 2.6%); or **Type 3 — Same Domain Set** (domain count ≥ canonical domain count; n = 12,745; 34.7%). These proportions reflect the prevalence of complete versus partial domain rearrangement in human alternative splicing: the majority of alternatively spliced isoforms either retain all gene-level domains (Type 3) or produce proteins for which no Pfam domain is computationally recognizable (Type 0).
+
+**AUPRC stratified by structural category.** Evaluated on gene-level GO MF labels (82 terms, 36,748 isoforms; v17f* model), PRISM achieves Type 3 macro AUPRC = 0.784 [0.777, 0.793], Type 0 = 0.708 [0.697, 0.719], Type 2 = 0.651 [0.628, 0.681], Type 1 = 0.641 [0.624, 0.660], and overall = 0.734 [0.723, 0.747]. The Type 3 advantage is expected: isoforms that retain the full domain complement of their gene are most similar in sequence to the annotated canonical form, producing ESM-2 embeddings closely aligned with training examples. The Type 1 performance gap (Δ = −0.143 vs. Type 3) requires a mechanistic explanation.
+
+**Label confidence analysis reveals GO annotation noise for Type 1 isoforms.** Gene-level GO annotations systematically assign the same function labels to all isoforms of a gene, regardless of domain content. We quantified the domain-consistency of each positive label using GO-domain log-odds importance: for each GO term j and Pfam domain d, we computed the log-odds enrichment of domain d among GO-positive versus GO-negative isoforms (imp(d,j) = log[P(domain_d | GO_j+) / P(domain_d | GO_j−)]). Label confidence was then defined as conf(i,j) = dot(dm[i], imp_pos[j]) / (dot(canonical_dm[i], imp_pos[j]) + ε), where dm[i] is the binary Pfam domain vector for isoform i and imp_pos[j] the domain importance vector for GO term j. This metric captures whether the domains present in isoform i are the ones actually informative for GO term j, normalised by the canonical domain complement.
+
+Among positive GO labels (Y_ij = 1) for Type 1 isoforms, **89.9% have label confidence < 0.3** (mean confidence = 0.096) — these labels arise from gene-level annotation transfer onto isoforms that have lost the domains most informative for the GO term. In contrast, Type 2 (partial truncation) shows 23.2% low-confidence positives (mean = 0.544), Type 0 shows 2.5% (mean = 0.975), and Type 3 (same domain set) shows 0.2% (mean = 0.995). This label-noise gradient directly predicts the AUPRC hierarchy: PRISM is penalised for correctly predicting low functional activity in domain-loss isoforms, because gene-level annotation treats these the same as the canonical domain-complete form.
+
+**Critically, this is a labelling limitation, not a representation limitation.** Two lines of evidence confirm that ESM-2 already captures domain-level structural differences without explicit domain input. First, Type 1 (domain-loss) isoforms are 2.89× more distant from their gene's canonical isoform in ESM-2 L30 embedding space (mean cosine distance = 0.035 ± 0.066) compared to Type 3 (same-domain) isoforms (0.012 ± 0.025), demonstrating that the protein language model encodes the sequence consequence of domain loss without explicit domain annotation. Second, Ridge regression meta-models combining PRISM predictions with explicit Pfam domain feature vectors (domain_delta, 512-dim; domain binary matrix, 512-dim) in 3-fold gene-stratified cross-validation showed no improvement — and in most cases degraded performance (F1 = PRISM + domain_delta: Overall Δ = −0.043; F2 = PRISM + domain_matrix: Overall Δ = −0.042). Adding binary Pfam presence vectors introduces redundant and sparse noise (60.8% of test isoforms have zero Pfam domain annotation) onto continuous ESM-2 embeddings that already carry domain information. The Type 1 AUPRC deficit therefore reflects the systematic noise floor introduced by gene-level label inheritance, not a model representation failure. Isoform-specific ground truth — as available in the 42-pair UniProt benchmark (§3.N) — shows that PRISM correctly assigns lower functional scores to domain-loss isoforms (9/9 directionality, p = 0.002), confirming that the model's discrimination is correct but evaluated against noisy gene-level labels.
+
+**Within-gene gap analysis confirms domain variation as the performance discriminant.** Among 8,569 multi-isoform genes, 1,655 (19.3%) exhibit domain-level variation between isoforms. The mean within-gene PRISM score gap is 0.041 for domain-variable genes versus 0.015 for domain-invariant genes (Mann–Whitney U p = 2.0×10⁻²⁶², representing a 2.7× larger discrimination range when domain structure varies). Fisher's exact test confirms that high-gap genes are enriched in domain-variable genes (OR > 1, p < 0.05), establishing domain variation as the structural basis for PRISM's within-gene isoform discrimination capacity.
+
+---
+
+### 3.8 PRISM and InterProScan occupy complementary, non-overlapping functional prediction spaces
 
 We compared PRISM predictions with InterProScan+pfam2go across 26 BISECT-validated isoform switch cases to characterize the relationship between domain-based and embedding-based functional annotation.
 
@@ -716,7 +734,7 @@ We compared PRISM predictions with InterProScan+pfam2go across 26 BISECT-validat
 
 ---
 
-### 3.8 Task-specific functional representation transfer across tissues
+### 3.9 Task-specific functional representation transfer across tissues
 
 PRISM is trained on 18 muscle BP GO terms. We designed a direct test comparing PRISM's learned 18-dimensional output representation against raw ESM-2 640-dimensional embeddings on 20 brain-specific BP GO terms — a cross-tissue, cross-ontology transfer experiment.
 
@@ -738,7 +756,7 @@ For GO terms functionally **unrelated** to PRISM's training — neuropeptide sig
 
 ---
 
-### 3.9 PRISM achieves cross-tissue GO prediction on brain scRNA-seq without retraining
+### 3.10 PRISM achieves cross-tissue GO prediction on brain scRNA-seq without retraining
 
 Applied zero-shot to 63,994 brain isoforms from the Samsung AD cohort, PRISM achieved macro
 AUPRC of 0.5998 (muscle held-out: 0.7022; Δ = −0.102, −14.5% relative; Supplementary Table S3).
@@ -762,7 +780,7 @@ achieved macro AUPRC 0.408.
 
 ---
 
-### 3.10 Alzheimer's disease isoform switches discovered by cross-tissue application
+### 3.11 Alzheimer's disease isoform switches discovered by cross-tissue application
 
 Donor-level DTU analysis of the Samsung single-cell long-read cohort (13 AD, 8 CT donors; 8 cell types) was conducted in two complementary stages: (i) a genome-wide primary analysis by DRIMSeq quasi-Dirichlet-Multinomial regression with stageR two-stage OFDR control (§2.15), identifying 14 genes across 6 cell types with donor-level significant isoform proportion changes; and (ii) a targeted secondary analysis by donor-label permutation testing (n=10,000; see §2.15) applied to the pre-specified BISECT83 Complex I subunit candidates, yielding four additional batch-concordant switches below the DRIMSeq detection threshold (NDUFS7, NDUFS8, NDUFS4, DOCK11). Together, these two complementary statistical frameworks define a five-tier evidence hierarchy (see §3.8.3) and reveal a multi-component Complex I isoform disruption axis — assembly factor (NDUFAF5, Tier A-DR) plus three core subunits (NDUFS4/7/8, Tier A-BP) — alongside cell-type-selective Rho GEF disruption (DOCK10 Microglia, Tier A-DR; DOCK11 Inhibitory, Tier A-BP) and multiple RNA processing and transcriptional control genes. Post-hoc donor consistency filter (DCF; Supplementary Methods S1) was applied to each of the 14 DRIMSeq primary genes in its respective cell type; all 14 genes pass DCF in their actual cell type (jackknife stability ratio < 0.50 and directional consistency ≥ 0.60 for all), with particularly strong consistency for SAMHD1 (dir=1.00), AZIN1 (dir=1.00), DOCK10 (dir=1.00), NDUFAF5 (dir=1.00), and DCAF5 (dir=1.00). This provides independent donor-level stability confirmation orthogonal to DRIMSeq regression, strengthening the Tier A-DR classification for all 14 genes.
 
@@ -818,7 +836,7 @@ Donor-label permutation testing (n=10,000) applied to the pre-specified BISECT83
 Three core subunits of NADH:ubiquinone oxidoreductase (Complex I) show concordant isoform switching in AD neurons, with each reaching donor-level permutation significance independently.
 
 **NDUFS7 — Q-module PSST subunit switch in excitatory neurons (GO:0007005, GO:0022900).**
-NDUFS7 encodes the PSST subunit of Complex I, which coordinates a [4Fe-4S]₂ cluster essential for quinone reduction in the inner mitochondrial membrane. The canonical isoform NDUFS7-202 (213 aa; [4Fe-4S] cluster coordination motif CxxCxxCxxxCP) declined from 100.0% in CT donors to 94.9% in AD (Δ=−5.14%), with the AD-enriched alternative isoform NDUFS7-210 reciprocally increasing. Although the per-donor effect size is modest, the signal is highly reproducible: permutation p=0.048 (n=10 AD, 8 CT donors; donor-label permutation n=10,000), with directional concordance across both sequencing batches (PO Δ=−0.003, SMC Δ=−0.089). This isoform pair was independently detected in skeletal muscle SRA data (§3.8.9), where NDUFS7 alternative promoter usage reached BISECT Stage 2 PASS. The convergence of brain (Samsung) and muscle (SRA) NDUFS7 switch detection across independent tissues and platforms strengthens the inference that NDUFS7 isoform regulation is a tissue-general marker of mitochondrial dysfunction.
+NDUFS7 encodes the PSST subunit of Complex I, which coordinates a [4Fe-4S]₂ cluster essential for quinone reduction in the inner mitochondrial membrane. The canonical isoform NDUFS7-202 (213 aa; [4Fe-4S] cluster coordination motif CxxCxxCxxxCP) declined from 100.0% in CT donors to 94.9% in AD (Δ=−5.14%), with the AD-enriched alternative isoform NDUFS7-210 reciprocally increasing. Although the per-donor effect size is modest, the signal is highly reproducible: permutation p=0.048 (n=10 AD, 8 CT donors; donor-label permutation n=10,000), with directional concordance across both sequencing batches (PO Δ=−0.003, SMC Δ=−0.089). This isoform pair was independently detected in skeletal muscle SRA data (§3.8.9), where NDUFS7 alternative promoter usage reached BISECT Stage 2 PASS. The convergence of brain (Samsung) and muscle (SRA) NDUFS7 switch detection across independent tissues and platforms strengthens the inference that NDUFS7 isoform regulation is a tissue-general marker of mitochondrial dysfunction. UniProt annotation (O75251; isoform 2) independently confirms that NDUFS7-210 (182 aa) corresponds to a documented alternative isoform that lacks residues 183–213. This C-terminal region contains a conserved binding site at position 183 — embedded within the Oxidored_q6 domain context at its C-terminal boundary — and two α-helices (residues 187–202 and 206–211). Pfam domain analysis retains the Oxidored_q6 annotation in both isoforms (domain span 56–205 in the canonical sequence), as the domain boundary falls one residue before the divergent C-terminal arm; however, UniProt sub-domain annotation at the binding-site level reveals loss of the conserved coordination interface at position 183. This refines the brain NDUFS7 switch consequence from 'no Pfam domain change' to **binding site loss** at the C-terminal coordination interface of the PSST subunit — a structural specificity consistent with impaired quinone-binding geometry rather than complete [4Fe-4S] cluster scaffold loss, and mechanistically distinguishable from the skeletal muscle case (alternative promoter, full Oxidored_q6 retention).
 
 **NDUFS8 — Q-module TYKY subunit switch in inhibitory neurons (GO:0007005).**
 NDUFS8 encodes the TYKY subunit of Complex I, a core Q-module component that houses two [4Fe-4S] clusters in the canonical full-length protein. HMMER Pfam scan (Pfam-A r36.0, E < 0.01) of the predicted protein sequences of both brain NIC isoforms revealed that Fer4-family [4Fe-4S] binding domains are **retained in both** transcript100761.chr11.nic (CT-enriched; 131 aa; Fer4_6 E=0.001, Fer4 E=0.0013, multiple Fer4 variants) and transcript100759.chr11.nic (AD-enriched; 133 aa; same Fer4 domain set at identical E-values). Both isoforms encode the same 105-aa C-terminal core containing 7 cysteines (Cys-45, -48, -51, -55, -62, -88, -91 in shared region) consistent with the two-cluster CIAC/KLCE/AIC [4Fe-4S] coordination motif. The functional difference lies in the divergent N-terminal 26–28 aa: the CT isoform N-terminus contains a TLLWTELFR hydrophobic stretch compatible with an amphipathic mitochondrial targeting sequence (MTS)-like helix, while the AD isoform N-terminus (MRGQGRCRVGT**DAVG**RRVPLP**TPVLPT**) contains a proline-disrupted segment (PVLPTG) that breaks amphipathic helix formation. This identifies the brain NDUFS8 switch as a **localization switch**, not an Fe-S cluster loss event: both isoforms produce Fe-S cluster-competent proteins, but the AD-NIC isoform may fail to import into the mitochondrial matrix efficiently, stranding Fer4-domain-containing protein in the cytoplasm and reducing the TYKY subunit pool available for Complex I Q-module assembly. In inhibitory neurons, transcript100761 declined from 98.9% in CT to 62.0% in AD (Δ=−37.0%; perm p=0.004). This mechanistic class — Fe-S binding retained but mitochondrial import disrupted — is distinct from the SRA skeletal muscle case, where NDUFS8-201→NDUFS8-215 results in complete Fer4 domain loss (domains_lost: Fer4_3, Fer4_8, Fer4_9, Fer4_10, Fer4_16), but both point toward TYKY subunit depletion in Complex I assembly. This switch reaches strong donor-level significance: permutation p=0.004 (n=7 AD, 5 CT inhibitory neuron donors), with batch concordance across both cohorts (PO Δ=−0.500, SMC Δ=−0.319). The 37% effect size — 7-fold larger than NDUFS7 — represents one of the largest isoform proportion changes observed across the full panel. NDUFS8 isoform disruption in inhibitory neurons (versus NDUFS7 in excitatory neurons) implies that the two Q-module subunits respond to AD pathology in a cell-type-selective fashion.
@@ -906,9 +924,9 @@ Three Tier A-DR genes — ERCC6L2 (astrocytes), USP1 (oligodendrocytes), and RPS
 
 ---
 
-### 3.11 BISECT multi-evidence characterization of AD isoform switches
+### 3.12 BISECT multi-evidence characterization of AD isoform switches
 
-#### 3.8.1 Stage 2 domain filtering identifies functionally distinct isoform pairs
+#### 3.12.1 Stage 2 domain filtering identifies functionally distinct isoform pairs
 
 BISECT was applied to 63 Samsung AD brain Stage 1 candidates and 58 SRA multi-tissue cases
 (121 total; see §3.8.9). Pfam domain annotation (M2; HMMER 3.3.2, E < 0.01, Pfam-A r36.0)
@@ -921,7 +939,7 @@ gain. Most frequently lost domain families: Immunoglobulin-fold modules (Ig_3, I
 7 cases), Spectrin repeats (2 cases), and catalytic domains (Y_phosphatase in PTPRF,
 Kinesin_motor in KIF21B, Fanconi_A in FANCA).
 
-#### 3.8.2 Multi-evidence validation reveals cell-type-selective functional stratification
+#### 3.12.2 Multi-evidence validation reveals cell-type-selective functional stratification
 
 Application of M11–M13 to 26 Stage 2 PASS cases yielded 13/26 (50%) SUPPORTED by STRING PPI
 at high confidence (combined score ≥ 700, experimental channel escore > 0) (Fig. 3; Supplementary Table S2).
@@ -947,7 +965,7 @@ Evolutionary conservation (M13) spanned from phyloP = −0.493 (FANCA AD exon, a
 to phyloP = 4.826 (IFT122, very highly conserved). Three cases showed AD-specific exons with
 negative phyloP: FANCA (−0.493), BSG (−0.473), IFI16 (−0.089) — all accelerated evolution.
 
-#### 3.8.3 BISECT Tier classification: five-tier evidence hierarchy
+#### 3.12.3 BISECT Tier classification: five-tier evidence hierarchy
 
 BISECT cases are classified under a five-tier evidence hierarchy reflecting the statistical strength and replication level of each isoform switch:
 
@@ -1003,7 +1021,7 @@ promoter (M9), and 3′UTR stability (M10) — making it the most comprehensivel
 the panel with evidence spanning from chromatin-level promoter accessibility to protein-level
 interaction logic.
 
-#### 3.8.4 Tier B: Domain-loss isoforms with consistent functional predictions
+#### 3.12.4 Tier B: Domain-loss isoforms with consistent functional predictions
 
 Four candidates — FANCA, IFT122, SYNE1, RGS3 — were classified Tier B (now Tier C under the revised five-tier system; §3.8.3) on the basis of FSM isoform classification with consistent M12 support plus mechanistically coherent domain-change narratives. (PTPRF, previously classified Tier A in BISECT v1.0, has been reclassified to Tier C under the revised system pending donor-level statistical validation; its multi-module evidence remains intact — see §3.8.3 above.)
 
@@ -1020,14 +1038,14 @@ than AD exons (3.450).
 *RGS3*: AD isoform retains only RGS GAP domain; loses C2 and three PDZ domains.
 STRING: EFNB2 = 996, GNAI2 = 953. CT multi-domain exons: mean phyloP = 2.687 (conserved).
 
-#### 3.8.5 Tier C: Evidence divergence as calibration
+#### 3.12.5 Tier C: Evidence divergence as calibration
 
 *ADGRB2*: AD isoform gains HRM domain. STRING returns RANBP2 (900), RANGAP1, XPOT, KPNB1 — coherent
 nuclear transport cluster. However, AD HRM exon phyloP = 0.075 (low conservation), inconsistent
 with functional constraint. This M12/M13 divergence flags ADGRB2 for lower experimental priority,
 demonstrating that multi-evidence divergence is itself an interpretable signal.
 
-#### 3.8.6 Pathway-level convergence: DAPC remodelling and LAR-RPTP parallels
+#### 3.12.6 Pathway-level convergence: DAPC remodelling and LAR-RPTP parallels
 
 Two independent inhibitory neuron switches converge on the dystrophin-associated protein complex (Fig. 4):
 *DMD* (phyloP AD mean = 4.823, peak exon = 6.110; STRING: DAG1 = 999, SNTA1 = 998, SNTG1 = 992) and *SNTG1*
@@ -1051,7 +1069,7 @@ LRRC4B = 989 — the same Liprin-α network as PTPRF. Convergent disruption of t
 Liprin-α scaffold in both inhibitory neurons and astrocytes suggests a cell-type-distributed
 mechanism for synaptic scaffold organisation impairment in AD.
 
-#### 3.8.7 M3 motif analysis reveals sub-domain functional evidence
+#### 3.12.7 M3 motif analysis reveals sub-domain functional evidence
 
 M3 regular-expression scanning detected mechanistically informative motif-level evidence:
 
@@ -1076,7 +1094,7 @@ the 26 Stage 2 cases, arguing against transposable element-mediated exonisation 
 MTS composite scoring (M3): SYNE1 CT isoform scored highest in the panel (composite = 4; net charge
 = +3; μH = 0.253), warranting investigation of mitochondria-associated nuclear envelope organisation.
 
-#### 3.8.8 M9–M10 regulatory analysis: pervasive transcription unit switching across the AD panel
+#### 3.12.8 M9–M10 regulatory analysis: pervasive transcription unit switching across the AD panel
 
 To examine whether AD-associated isoform switches reflect transcription unit changes rather than
 splice-site selection from a shared pre-mRNA, BISECT M9 computed genomic TSS separation for all
@@ -1122,7 +1140,7 @@ transcription factor signature — convergent across five independent genes span
 driving alternative promoter selection rather than gene-specific splicing events, and identifies the
 STAT1–SP1 axis as a candidate therapeutic target for modulating AD-associated isoform landscapes.
 
-#### 3.8.9 Cross-tissue BISECT extension: SRA multi-tissue validation
+#### 3.12.9 Cross-tissue BISECT extension: SRA multi-tissue validation
 
 To assess whether AD-associated isoform switch mechanisms generalise beyond the Samsung brain cohort,
 BISECT was extended to 63 publicly available long-read RNA-seq samples from SRA (42 samples passing
@@ -1140,7 +1158,15 @@ SUPPORTED threshold (0/58), consistent with the absence of single-cell DTU enric
 broader functional annotation of cardiovascular/muscle isoform databases. Full SRA case data are
 provided in Supplementary Table S5.
 
-### 3.12 PRISM assigns high-confidence functions to unannotated novel isoforms without DTU evidence
+#### 3.12.10 Systematic feature-based consequence classification of all BISECT PASS cases
+
+To place BISECT's multi-evidence approach within the field-standard annotation framework, we applied the IsoformSwitchAnalyzeR (ISA) consequence classification schema (Vitting-Seerup and Sandelin, *Bioinformatics*, 2019; v2 preprint 2025) to all 101 BISECT Stage 2 PASS cases (43 brain, 58 muscle). ISA defines seven molecular consequence types from binary feature comparisons: Pfam domain gain/loss, signal peptide gain/loss (SignalP), NMD sensitivity change (50-nt rule), coding potential change (CPAT), IDR gain/loss (IUPred), intron retention, and APA/TSS change. We computed all available consequence types from existing BISECT annotations (Pfam domain gain/loss, structural category-derived NMD and coding potential, MTS-based localization change as a signal-peptide proxy, and TSS/APA annotations from the primary 121-case set); signal peptide (SignalP) and IDR (IUPred) annotation remain pending for the full set.
+
+In the 43 brain PASS cases, the most frequent consequence types are Pfam domain loss (53.5%), alternative promoter (39.5%), APA change (39.5%), and domain gain (37.2%). Domain gain is markedly more frequent in brain than muscle (37.2% vs 13.8%), suggesting that AD-associated brain switches more often involve acquisition of novel domain architectures rather than pure domain ablation. PPI disruption (STRING experimental SUPPORTED verdict) is detected in 30.2% of brain cases versus 0% in muscle, consistent with the brain-specific PPI validation layer in BISECT. Across the full 101-case set, 84.2% of PASS cases carry ≥2 consequence types simultaneously; high-impact multi-consequence cases include PTPRF Inhibitory (domain_loss + domain_gain + alt_promoter + APA + PPI; PRISM Δ=+0.729) and NDUFS4 Excitatory (domain_loss + domain_gain + localization_change + APA + PPI; Δ=−0.563).
+
+A directional observation merits note within the brain PASS set (n=29 cases with computed PRISM delta). All 24 AD_high cases — defined as switches where the AD-enriched isoform carries higher PRISM functional score (diffuse_delta > 0) — involve domain-level structural change (100%). The five CT_high cases (diffuse_delta < 0; CT isoform has higher PRISM score) cluster exclusively around mitochondrial Complex I subunits (NDUFS4, NDUFS7, NDUFS8) and the axonal kinesin KIF21B. This clustering is consistent with a mechanistic distinction: CT_high switches represent pathological displacement of a higher-function isoform by a PRISM-lower-scoring alternative, whereas AD_high switches involve domain rearrangement that PRISM scores as functionally distinct rather than simply deficient. This observation is based on small numbers (n=5 CT_high cases) and reflects the pre-selection criteria of the BISECT candidate set; it is reported as a hypothesis-generating pattern rather than a statistical claim. The two missing ISA feature types (signal peptide, IDR) could potentially reclassify some of the 7 currently unresolved brain cases; the NDUFS7 Excitatory case has been reclassified from 'no consequence detected' to 'binding site loss' based on UniProt sub-domain annotation (§3.10; see NDUFS7 paragraph), while DOCK10 (6-aa minor exon linker) and ZNF582 (31-aa N-terminal extension, novel annotation absent from UniProt) remain mechanistically pending.
+
+### 3.13 PRISM assigns high-confidence functions to unannotated novel isoforms without DTU evidence
 
 The 84 BISECT PASS cases required statistically significant differential transcript usage (DTU) as the entry criterion, leaving a distinct class of novel isoforms uncharacterized: those constitutively expressed at stable levels across conditions yet absent from any reference annotation. To assess whether PRISM provides independent functional information for this class, we applied the extended brain GO panel (73 BP terms, §3.8) to all 7,899 IsoQuant-specific novel isoforms—transcripts present in the Samsung AD scRNA-seq dataset but absent from the Ensembl reference used for PRISM training.
 
@@ -1167,7 +1193,7 @@ These 541 constitutively expressed novel isoforms represent functional predictio
 
 ---
 
-### 3.13 Brain isoform functional module landscape: 672 BP GO terms reveal 44 biologically coherent modules
+### 3.14 Brain isoform functional module landscape: 672 BP GO terms reveal 44 biologically coherent modules
 
 The 73-term extended brain GO panel (§3.12) targeted neuron-specific biological processes selected by cell-type enrichment criteria. To ask whether PRISM's cross-tissue representation captures a broader functional landscape without term pre-selection, we expanded the GO target set to all BP GO terms satisfying simultaneous annotation density thresholds in both training (muscle ≥ 50 annotated genes) and evaluation (brain ≥ 100 annotated unique genes) data, yielding **672 GO terms** spanning diverse biological processes.
 
