@@ -1,0 +1,138 @@
+Loading data...
+splice_delta shape: (36748, 150)
+exon_matrix shape: (36748, 50)
+esm2_emb shape: (36748, 640)
+isoform_ids shape: (36748,)
+gene_ids shape: (36748,)
+
+Total genes: 12709
+Genes with ≥2 isoforms: 8569
+
+============================================================
+STEP 1: BASIC SPLICE_DELTA STATISTICS
+============================================================
+Isoforms with non-zero splice_delta: 19160 / 36748 (52.1%)
+
+Distribution of |splice_delta|.sum():
+  P  0:    0.0
+  P 25:    0.0
+  P 50:    0.2
+  P 75:    1.9
+  P 90:    4.0
+  P 95:    8.9
+  P 99:   27.4
+  P100:  147.8
+
+Structural change categories:
+  Zero (canonical-identical): 17588 (47.9%)
+  Low  (0 < |Δ| ≤ 3):         14215 (38.7%)
+  High (|Δ| > 3):              4945 (13.5%)
+
+============================================================
+STEP 2: WITHIN-GENE SEPARATION (ESM-2 vs splice_delta)
+============================================================
+
+Within-gene ESM-2 distance (cosine):
+  P  0: 0.0000
+  P 25: 0.0000
+  P 50: 0.0026
+  P 75: 0.0175
+  P 90: 0.0562
+  P 95: 0.0892
+  P 99: 0.1494
+  P100: 0.3828
+
+Within-gene splice_delta distance (L1):
+  P  0:    0.0
+  P 25:    0.5
+  P 50:    1.4
+  P 75:    2.4
+  P 90:    5.6
+  P 95:    9.5
+  P 99:   21.5
+  P100:  102.3
+
+=== Critical subset: ESM-2 fails, splice_delta separates ===
+ESM-2 distance < P25 (0.0000) AND splice_delta distance > P75 (2.4):
+  73 genes (0.9% of multi-isoform genes)
+
+Top 10 genes by splice_delta/ESM-2 separation ratio:
+Gene            #iso  ESM-2 dist splice dist    Ratio
+b'ENSG00000197102.14'    8      0.0000        24.1 24131684.5
+b'ENSG00000102763.18'    3      0.0000        13.1 13111107.0
+b'ENSG00000176208.9'    2      0.0000         8.6 8636047.2
+b'ENSG00000215252.12'    2      0.0000         8.2 8184711.5
+b'ENSG00000183722.9'    4      0.0000         7.3 7282067.5
+b'ENSG00000171467.16'    2      0.0000         6.2 6248164.5
+b'ENSG00000088812.18'    2      0.0000         6.2 6180000.0
+b'ENSG00000130940.15'    2      0.0000         5.7 5680281.2
+b'ENSG00000106399.11'    2      0.0000         5.4 5426668.6
+b'ENSG00000151320.11'    2      0.0000         5.3 5346358.8
+
+============================================================
+STEP 3: CORRELATION ANALYSIS
+============================================================
+Pearson correlation:  r=0.2348, p=1.07e-107
+Spearman correlation: ρ=0.6089, p=0.00e+00
+
+⚠️  WEAK CORRELATION: ESM-2 and splice_delta capture COMPLEMENTARY isoform variations
+
+============================================================
+STEP 4: IDR PROXY ANALYSIS
+============================================================
+Zero-delta group: 17588 isoforms
+High-delta group: 4945 isoforms
+
+ESM-2 embedding norm:
+  Zero-delta: mean=6.64, std=0.75
+  High-delta: mean=6.91, std=0.73
+  t-test: t=-22.73, p=4.05e-113
+  → High-delta isoforms have HIGHER ESM-2 norm (larger structural embedding)
+
+Exon count:
+  Zero-delta: mean=11.0, std=8.9
+  High-delta: mean=11.5, std=9.1
+  t-test: t=-3.29, p=9.95e-04
+
+============================================================
+STEP 5: POS_BIAS EXPERIMENT RESULTS (from archived data)
+============================================================
+v10_splice experiment (20260518):
+  v10D_emb (ESM-2 only):      Macro AUPRC = 0.5126
+  v10D_splice (splice only):  Macro AUPRC = 0.6367
+  v10E (ESM-2 + splice):      13-GO mean AUPRC = ~0.70
+  v10E0 (ESM-2 only, same arch): 13-GO mean AUPRC = ~0.69
+  → GO-level performance: ESM-2+splice ≈ ESM-2 only
+
+pos_bias controls (20260517):
+  Gene-level mean baseline: pos_bias = 0.0 (by definition)
+  v10B (PRISM w/ ESM-2):
+    - GO:0006941 (muscle contraction): pos_bias = 1.902
+    - GO:0007005 (mitochondrion org):  pos_bias = 0.879
+    - GO:0006914 (autophagy):          pos_bias = 0.724
+  → PRISM achieves strong isoform-level separation (pos_bias > 0.7)
+
+✓ Historical observation confirmed:
+  'Adding splice_delta: GO performance dropped, pos_bias improved'
+  → splice_delta contributes to ISOFORM-LEVEL discrimination
+  → But does NOT improve GENE-LEVEL GO term prediction
+Traceback (most recent call last):
+  File "/home/welcome1/sw1686/DIFFUSE/analyze_splice_delta_esm2.py", line 312, in <module>
+    json.dump(output, f, indent=2)
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 431, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/home/welcome1/miniconda3/envs/isoform_env/lib/python3.9/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes_ is not JSON serializable

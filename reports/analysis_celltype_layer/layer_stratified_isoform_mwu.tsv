@@ -1,0 +1,8 @@
+gene	cluster	layer	AD_mean	CT_mean	delta	p_mwu	sig	n_AD	n_CT
+ZNF736	C10	L4_canonical	0.0				insuf	1	0
+ZNF736	C18	L4_atypical	0.0				insuf	1	0
+ZNF582	C10	L4_canonical	1.0				insuf	1	0
+ZNF582	C11	L4_canonical	1.0				insuf	2	0
+NDUFAF5	C10	L4_canonical	0.227	1.0	-0.773		insuf	2	1
+NDUFAF5	C11	L4_canonical		0.941			insuf	0	1
+NDUFAF5	C18	L4_atypical	0.0				insuf	1	0

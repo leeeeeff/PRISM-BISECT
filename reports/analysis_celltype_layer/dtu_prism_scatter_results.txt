@@ -1,0 +1,54 @@
+DTU × PRISM SCATTER ANALYSIS RESULTS
+================================================================================
+
+DATA SUMMARY
+PRISM scores shape: (63994, 41)
+Total isoforms: 63994
+Genes with canonical isoforms: 18514
+Total DTU events (all cell types): 133240
+Significant DTU events: 92579
+Matched DTU → PRISM: 92579
+
+OVERALL CORRELATION
+Spearman r(|delta_usage|, ΔPRISM): 0.1492, p=0.00e+00
+
+PER CELL TYPE CORRELATION
+Excitatory_neuron   : n=27675, r= 0.1757, p=8.48e-191
+Inhibitory_neuron   : n=21539, r= 0.1470, p=2.52e-104
+Astrocyte           : n=8881, r= 0.1297, p=1.34e-34
+Microglia           : n=2734, r= 0.1433, p=5.07e-14
+Oligodendrocyte     : n=18130, r= 0.1500, p=9.65e-92
+OPC                 : n=12300, r= 0.1479, p=4.32e-61
+Vascular_cell       : n=1289, r= 0.0839, p=2.58e-03
+Lymphocyte          : n=  31, r= 0.0909, p=6.27e-01
+
+BY USAGE DIRECTION
+AD_enriched    : n=8020, mean ΔPRISM=-0.0128, std= 0.0175
+CT_enriched    : n=8198, mean ΔPRISM=-0.0131, std= 0.0185
+no_significant_change: n=76361, mean ΔPRISM=-0.0182, std= 0.0216
+
+FUNCTION CHANGE
+ΔPRISM > 0 (gain):       0 (0.0%)
+ΔPRISM < 0 (loss):    72800 (78.6%)
+ΔPRISM = 0 (neutral): 19779 (21.4%)
+
+TOP 10 GENES BY |delta_usage| × |ΔPRISM|
+DDX42      DDX42-213       | δU= 0.8458, ΔPRISM=-0.1432, combined=0.12111 | Astrocyte, AD_enriched
+PKD1       PKD1-207        | δU=-0.6682, ΔPRISM=-0.1703, combined=0.11379 | Astrocyte, CT_enriched
+DLG1       transcript319500.chr3.nnic | δU=-0.6905, ΔPRISM=-0.1593, combined=0.10997 | OPC, CT_enriched
+DDX42      DDX42-216       | δU=-0.8623, ΔPRISM=-0.1148, combined=0.09900 | Astrocyte, CT_enriched
+MEF2A      transcript145558.chr15.nic | δU=-0.5938, ΔPRISM=-0.1439, combined=0.08545 | OPC, CT_enriched
+FYN        transcript160449.chr6.nic | δU= 0.5585, ΔPRISM=-0.1474, combined=0.08234 | Excitatory_neuron, AD_enriched
+PIN1       PIN1-204        | δU=-0.8843, ΔPRISM=-0.0894, combined=0.07902 | Astrocyte, CT_enriched
+TBL1X      transcript11420.chrX.nic | δU=-0.6545, ΔPRISM=-0.1151, combined=0.07534 | Oligodendrocyte, CT_enriched
+FBXW11     transcript231474.chr5.nnic | δU=-0.6989, ΔPRISM=-0.1074, combined=0.07503 | Oligodendrocyte, CT_enriched
+RPSA2      RPSA2-210       | δU=-0.7813, ΔPRISM=-0.0944, combined=0.07376 | OPC, CT_enriched
+
+ΔPRISM DISTRIBUTION (all significant DTU)
+Mean:       -0.0173
+Std:         0.0211
+Median:     -0.0103
+% positive: 0.0%
+% negative: 78.6%
+Min:        -0.1950
+Max:         0.0000

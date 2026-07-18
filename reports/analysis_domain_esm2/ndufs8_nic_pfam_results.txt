@@ -1,0 +1,51 @@
+NDUFS8 NIC Isoform Pfam Analysis — 2026-06-23
+==============================================
+
+INPUT FILES:
+  - transcript100761.chr11.nic.p1 (CT-enriched): 131 aa
+  - transcript100759.chr11.nic.p1 (AD-enriched): 133 aa
+  - Source: /home/dhkim1674/Project_AD_with_refTSS_novel/.../TD2/longest_orfs.pep
+  - HMMER version: 3.3.2, Pfam-A r36.0, E < 0.01
+
+SEQUENCES:
+  CT-NIC unique N-term (26 aa): MQDPEMDMKSVTDRAARTLLWTELFR
+    - TLLWTELFR: hydrophobic amphipathic stretch → MTS-compatible
+  AD-NIC unique N-term (28 aa): MRGQGRCRVGTDAWGRRVPLPTTPVLPT
+    - PVLPTG: proline-break → disrupts amphipathic helix → MTS-incompatible
+
+  Shared C-terminal (105 aa): GLGMTLSYLFREPATINYPFEKGPLSPRFRGEHALRRYPSGEERCIACKLCEAICPAQVSPCPNRPPRQPLPLGEGGQAALGPNPSPCLMCVPRKSLSPSEPLPS
+    Cysteines at positions: 45, 48, 51, 55, 62, 88, 91 (in shared region)
+    Fer4 motif: CIAC...KLCE...AIC = 4 Cys for one [4Fe-4S] cluster
+
+PFAM RESULTS (top hits, E < 0.01):
+  transcript100761 (CT-enriched):
+    Fer4_6    PF12837 E=0.001  4Fe-4S binding domain
+    Fer4      PF00037 E=0.0013 4Fe-4S binding domain
+    Fer4_7    PF12838 E=0.0013 4Fe-4S dicluster domain
+    Fer4_4    PF12800 E=0.0025 4Fe-4S binding domain
+    Fer4_21   PF14697 E=0.0032 4Fe-4S dicluster domain
+    Fer4_2    PF12797 E=0.0039 4Fe-4S binding domain
+    Fer4_17   PF13534 E=0.0053 4Fe-4S dicluster domain
+
+  transcript100759 (AD-enriched):
+    Fer4      PF00037 E=0.00049 (STRONGER than CT!)
+    Fer4_6    PF12837 E=0.001
+    Fer4_7    PF12838 E=0.0016
+    Fer4_4    PF12800 E=0.0026
+    Fer4_21   PF14697 E=0.0033
+    Fer4_2    PF12797 E=0.004
+    Fer4_17   PF13534 E=0.0055
+
+CONCLUSION:
+  BOTH NIC isoforms RETAIN [4Fe-4S] binding capability.
+  The brain NDUFS8 switch is a LOCALIZATION SWITCH:
+    CT-NIC → MTS-like amphipathic helix → mitochondrial import → Complex I assembly
+    AD-NIC → proline-disrupted N-term → impaired import → cytoplasmic Fe-S protein pool
+  
+  This is mechanistically DIFFERENT from SRA muscle case:
+    NDUFS8-201→NDUFS8-215 = Fe-S domain LOSS (Fer4_3/8/9/10/16 absent in NDUFS8-215)
+  
+  Both routes → TYKY subunit depletion in Complex I Q-module
+  
+  Requires experimental validation: mitochondrial import assay, TargetP prediction
+

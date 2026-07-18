@@ -1,0 +1,16 @@
+=== PROTEIN-LEVEL DIFFERENCE STATISICS FOR ESM-2 IDENTICAL ISOFORMS ===
+Total analyzed pairs: 10962
+
+Different Sequence / Splicing Frame shift: 5791 (52.8%)
+Identical Protein: 5042 (46.0%)
+Truncation / In-frame Indel (Substring): 129 (1.2%)
+
+Interpretation:
+1. Identical Protein: Alternative TSS/TES/UTRs or synonymous alternative splicing.
+   The protein structure/function is likely identical, meaning ESM-2 was biologically correct
+   to assign identical embeddings, but splicing delta captures RNA-level regulatory differences.
+2. Truncation / In-frame Indel: Small insertion/deletion (often in unstructured IDRs).
+   ESM-2's mean pooling did not capture these small changes due to overall protein length dilution,
+   where splicing delta successfully resolved them.
+3. Different Sequence / Frame shift: The isoforms produce substantially different proteins,
+   where ESM-2 failed to capture the difference (likely a failure of the encoder or data issue).

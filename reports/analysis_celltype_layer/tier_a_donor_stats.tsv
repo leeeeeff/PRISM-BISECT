@@ -1,0 +1,4 @@
+gene	cell_type	ct_isoform	n_ad_with_reads	n_ct_with_reads	n_ad_total	n_ct_total	n_ad_nonnan	n_ct_nonnan	ad_mean_frac	ct_mean_frac	observed_delta	mwu_pval	perm_pval_donor_level	PO_delta	SMC_delta	batch_concordant	po_ad_donors	smc_ad_donors
+KIF21B	Excitatory_neuron	transcript293004.chr1.nic	7	6	13	8	7	6	0.0	0.0903	-0.0903	0.3545	0.4716	-0.1806	0.0	NO	['PO05', 'PO11', 'PO28', 'PO41', 'PO42']	['SMC038', 'SMC049']
+NDUFS4	Excitatory_neuron	NDUFS4-201	7	6	13	8	7	6	0.1349	0.5382	-0.4033	0.0554	0.0414	-0.3056	-0.4838	YES	['PO05', 'PO11', 'PO28', 'PO41']	['SMC038', 'SMC041', 'SMC049']
+DLG1	OPC	transcript319500.chr3.nnic	9	4	13	8	9	4	0.0617	0.25	-0.1883	0.5397	0.3097	-0.5	0.1389	NO	['PO05', 'PO11', 'PO28', 'PO41', 'PO42']	['SMC029', 'SMC032', 'SMC036', 'SMC041']

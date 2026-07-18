@@ -1,0 +1,117 @@
+================================================================================
+SPLICE_DELTA vs ESM-2 COMPLEMENTARITY: QUANTITATIVE SUMMARY
+================================================================================
+Analysis Date: 2026-06-07
+Dataset: hMuscle test set (36,748 isoforms, 12,709 genes)
+
+--------------------------------------------------------------------------------
+1. COVERAGE STATISTICS
+--------------------------------------------------------------------------------
+Total isoforms:                              36,748
+Multi-isoform genes:                          8,569 (67.4% of all genes)
+Isoforms with non-zero splice_delta:        19,160 (52.1%)
+Isoforms with high structural change (|Δ|>3): 4,945 (13.5%)
+
+--------------------------------------------------------------------------------
+2. WITHIN-GENE SEPARATION CAPABILITY
+--------------------------------------------------------------------------------
+Metric                          ESM-2 (cosine)    splice_delta (L1)
+-------------------------------------------------------------------------
+P25 (25th percentile)           0.0000            0.5
+P50 (median)                    0.0026            1.4
+P75 (75th percentile)           0.0175            2.4
+P90                             0.0562            5.6
+
+CRITICAL: 25% of multi-isoform genes have ZERO ESM-2 separation
+          (ESM-2 cannot distinguish isoforms at all)
+
+--------------------------------------------------------------------------------
+3. COMPLEMENTARITY QUANTIFICATION
+--------------------------------------------------------------------------------
+Pearson correlation:            r = 0.235 (WEAK)
+Spearman correlation:           ρ = 0.609 (MODERATE)
+
+Interpretation: ESM-2 and splice_delta capture DIFFERENT aspects of 
+                isoform variation (complementary, not redundant)
+
+--------------------------------------------------------------------------------
+4. ESM-2 FAILURE / SPLICE_DELTA SUCCESS CASES
+--------------------------------------------------------------------------------
+Genes where ESM-2 fails (dist < P25) BUT splice_delta succeeds (dist > P75):
+  → 73 genes (0.9% of multi-isoform genes)
+
+Top example (ENSG00000197102.14):
+  - 8 isoforms
+  - ESM-2 pairwise distance: 0.0000 (ALL pairs IDENTICAL)
+  - splice_delta pairwise distance: 0.0 to 49.2 (LARGE variation)
+
+--------------------------------------------------------------------------------
+5. HISTORICAL EXPERIMENT RESULTS
+--------------------------------------------------------------------------------
+Model                    Input               Macro AUPRC    pos_bias
+-------------------------------------------------------------------------
+v10D_emb                 ESM-2 only          0.5126         —
+v10D_splice              splice_delta only   0.6367         —
+v10E                     ESM-2 + splice      ~0.70          —
+v10E0                    ESM-2 only          ~0.69          —
+v10B (PRISM)             ESM-2 only          —              0.7-1.9
+
+Observation: Adding splice_delta improves pos_bias (isoform separation)
+             but provides MINIMAL GO-level improvement (0.70 vs 0.69)
+
+--------------------------------------------------------------------------------
+6. BIOLOGICAL INTERPRETATION
+--------------------------------------------------------------------------------
+ESM-2 CAPTURES:
+  ✓ Protein sequence variation
+  ✓ Amino acid composition
+  ✓ Structured domain presence
+  ✗ CANNOT see: UTR variations, alternative TSS/TES, non-coding exons
+
+splice_delta CAPTURES:
+  ✓ Exon presence/absence (all exons, including UTRs)
+  ✓ Alternative splicing patterns (A3SS/A5SS/ES/IR)
+  ✓ Structural gene-level variation
+  ✗ Does NOT encode: amino acid sequence, domain structure
+
+Result: COMPLEMENTARY information sources
+
+--------------------------------------------------------------------------------
+7. IDR PROXY ANALYSIS
+--------------------------------------------------------------------------------
+                        Zero-delta       High-delta (|Δ|>3)    t-test
+                        (canonical)      (large changes)
+-------------------------------------------------------------------------
+ESM-2 norm              6.64 ± 0.75      6.91 ± 0.73           p=4e-113 ***
+Exon count              11.0 ± 8.9       11.5 ± 9.1            p=1e-3   **
+
+Interpretation: High-delta isoforms have slightly higher ESM-2 norm
+                (longer/more complex proteins), but the difference is
+                SMALL compared to splice_delta's discriminative power.
+
+--------------------------------------------------------------------------------
+8. RECOMMENDATION FOR PRISM v16
+--------------------------------------------------------------------------------
+STRATEGY: Integrate splice_delta via late fusion
+
+Expected Benefits:
+  ✓ Improved isoform-level separation (pos_bias: 0.7 → 1.5+)
+  ✓ Better discrimination for UTR-variant isoforms
+  ✓ Enhanced BISECT case discovery
+  ✓ Minimal or positive GO-level impact (0.70 → 0.71-0.72)
+
+Risk Mitigation:
+  → Gradient norm monitoring (prevent ESM-2 domination)
+  → Higher dropout on splice branch (prevent overfitting)
+  → Multi-task loss (focal + triplet) to balance GO vs pos_bias
+
+Success Criteria:
+  MINIMUM: Macro AUPRC ≥ 0.70, pos_bias ≥ 1.2
+  TARGET:  Macro AUPRC ≥ 0.72, pos_bias ≥ 1.5
+
+================================================================================
+CONCLUSION: splice_delta provides ORTHOGONAL information to ESM-2,
+            particularly for genes where protein sequence alone is
+            insufficient to distinguish isoforms (UTR variants, alt TSS).
+            Integration recommended for PRISM v16.
+================================================================================

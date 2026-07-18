@@ -151,6 +151,28 @@ reports/*.glb
 reports/*.py
 reports/*_draft_*.md
 reports/*_20260*.md
+
+# --- Mirrored rules for reports/ subfolders created by 2026-07-19 reorg ---
+# (files below were previously excluded by the reports/*.json|*.csv|*.py|*.glb|*_draft_*.md|*_20260*.md
+#  rules above when they lived flat in reports/; moving them one level deeper into topical
+#  subfolders would otherwise silently un-ignore them, so the same exclusion is mirrored here.)
+reports/manuscript_archive/*_20260*.md
+reports/manuscript_drafts/*.py
+reports/manuscript_drafts/*_draft_*.md
+reports/manuscript_drafts/*_20260*.md
+reports/meetings/*.py
+reports/meetings/*_20260*.md
+reports/analysis_brain3d/*.json
+reports/analysis_brain3d/*.csv
+reports/analysis_brain3d/*.glb
+reports/analysis_brain3d/*.py
+reports/analysis_celltype_layer/*.json
+reports/analysis_celltype_layer/*.csv
+reports/analysis_celltype_layer/*.py
+reports/analysis_domain_esm2/*.json
+reports/analysis_domain_esm2/*.csv
+reports/analysis_domain_esm2/*.py
+
 hMuscle/results_isoform/benchmark_diffuse/
 hMuscle/results_isoform/structures/
 hMuscle/results_isoform/features/pfam_to_int_mapping.json

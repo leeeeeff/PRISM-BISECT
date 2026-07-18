@@ -1,0 +1,183 @@
+================================================================================
+FUNCTIONAL DIVERGENCE INDEX (FDI) COMPUTATION RESULTS
+PRISM+BISECT Project — Brain Dataset (41 GO terms)
+================================================================================
+
+## OVERVIEW
+
+Total isoforms: 63,994
+GO terms: 41
+Total genes: 18,514
+Genes with ≥2 isoforms: 12,157
+
+## ISOFORM COUNT DISTRIBUTION
+
+Mean isoforms/gene: 3.46
+Median isoforms/gene: 2
+Max isoforms/gene: 64
+
+Genes with ≥ 2 isoforms: 12157 (65.66%)
+Genes with ≥ 3 isoforms:  8722 (47.11%)
+Genes with ≥ 4 isoforms:  6142 (33.17%)
+Genes with ≥ 5 isoforms:  4212 (22.75%)
+Genes with ≥10 isoforms:   969 ( 5.23%)
+Genes with ≥20 isoforms:   175 ( 0.95%)
+
+## FDI STATISTICS
+
+Mean FDI:          0.1646
+Median FDI:        0.1370
+Std FDI:           0.1564
+Min FDI:           0.0000
+Max FDI:           0.9421
+90th percentile:   0.3727
+95th percentile:   0.4544
+
+FDI distribution:
+  10th percentile: 0.0000
+  25th percentile: 0.0184
+  50th percentile: 0.1370
+  75th percentile: 0.2644
+  90th percentile: 0.3727
+  95th percentile: 0.4544
+  99th percentile: 0.6390
+
+## TOP 30 GENES BY FDI (Highest Functional Divergence)
+
+Rank  Gene                FDI N_iso  MeanSim   MaxGap  Isoforms
+----------------------------------------------------------------------------------------------------
+1      SRR             0.9421     2   0.0579   0.3492  transcript7767.chr17.nnic, SRR-201
+2      RPS4Y1          0.9149     2   0.0851   0.7732  RPS4Y1-203, RPS4Y1-201
+3      ZMAT2           0.8903     2   0.1097   0.8431  ZMAT2-201, ZMAT2-203
+4      MRPS18A         0.8727     2   0.1273   0.9369  transcript61124.chr6.nnic, MRPS18A-202
+5      SLC17A6         0.8656     2   0.1344   0.8926  SLC17A6-201, transcript32659.chr11.nnic
+6      CDNF            0.8605     2   0.1395   0.5877  transcript38637.chr10.nnic, CDNF-203
+7      NUDT1           0.8529     2   0.1471   0.7113  transcript7228.chr7.nic, NUDT1-203
+8      RPL29           0.8468     2   0.1532   0.7975  RPL29-206, RPL29-201
+9      SNRPD1          0.8460     2   0.1540   0.9120  SNRPD1-201, transcript26266.chr18.nnic
+10     CATSPER2        0.8450     2   0.1550   0.4950  CATSPER2-211, CATSPER2-205
+11     PRCC            0.8398     2   0.1602   0.8379  PRCC-201, PRCC-204
+12     CASP8           0.8278     2   0.1722   0.7963  CASP8-203, CASP8-217
+13     TGFBR3L         0.8127     2   0.1873   0.3597  TGFBR3L-202, TGFBR3L-203
+14     RBM28           0.8122     2   0.1878   0.3134  RBM28-201, RBM28-207
+15     PRSS53          0.8119     2   0.1881   0.9570  PRSS53-201, PRSS53-202
+16     SNRNP25         0.8101     2   0.1899   0.6017  SNRNP25-205, SNRNP25-204
+17     NOL6            0.8085     2   0.1915   0.5631  NOL6-201, NOL6-203
+18     CYB5R1          0.8084     2   0.1916   0.6466  CYB5R1-201, CYB5R1-207
+19     RBPMS           0.8061     2   0.1939   0.7736  RBPMS-211, RBPMS-204
+20     SNRPF           0.7962     2   0.2038   0.7847  SNRPF-201, SNRPF-203
+21     NT5DC3          0.7949     2   0.2051   0.9161  NT5DC3-201, NT5DC3-203
+22     MRPL27          0.7912     2   0.2088   0.8869  MRPL27-202, MRPL27-201
+23     POPDC3          0.7832     2   0.2168   0.8270  POPDC3-203, POPDC3-201
+24     TMEM42          0.7822     2   0.2178   0.3597  TMEM42-201, TMEM42-202
+25     SYT10           0.7777     2   0.2223   0.8841  SYT10-201, transcript51508.chr12.nnic
+26     SYF2            0.7774     2   0.2226   0.6936  SYF2-204, SYF2-201
+27     ATG2B           0.7761     2   0.2239   0.7157  ATG2B-202, ATG2B-207
+28     SLC35F3         0.7735     2   0.2265   0.2533  transcript339814.chr1.nic, SLC35F3-201
+29     ZNF490          0.7728     2   0.2272   0.8358  transcript29630.chr19.nnic, ZNF490-201
+30     MRPL17          0.7711     2   0.2289   0.7777  MRPL17-202, MRPL17-201
+
+## KNOWN HIGH-DIVERSITY GENES CHECK
+
+Expected high-FDI genes: NRXN1, CDK5R1, CACNA1C, PTPRD, RBFOX1, DSCAM, CNTNAP2
+
+NRXN1           FOUND — Rank 5875/FDI 0.1460 (26 isoforms)
+CDK5R1          FOUND — Rank 11676/FDI 0.0000 (2 isoforms)
+CACNA1C         FOUND — Rank  678/FDI 0.4414 (6 isoforms)
+PTPRD           FOUND — Rank 2155/FDI 0.3079 (15 isoforms)
+RBFOX1          FOUND — Rank 4957/FDI 0.1814 (21 isoforms)
+DSCAM           FOUND — Rank 9925/FDI 0.0052 (3 isoforms)
+CNTNAP2         FOUND — Rank 4639/FDI 0.1958 (9 isoforms)
+
+## BOTTOM 30 GENES BY FDI (Lowest Functional Divergence)
+
+Low FDI = isoforms functionally indistinct (potential gene-level collapse)
+
+Rank  Gene                FDI N_iso  MeanSim   MaxGap  Isoforms
+----------------------------------------------------------------------------------------------------
+1     ZSCAN31          0.0000     2   1.0000   0.8825  transcript34367.chr6.nnic, ZSCAN31-201
+2     ZSCAN2-AS1       0.0000     2   1.0000   0.1174  transcript129062.chr15.nnic, ZSCAN2-AS1-201
+3     ZSCAN16          0.0000     2   1.0000   0.8735  ZSCAN16-201, ZSCAN16-202
+4     ZNF845           0.0000     2   1.0000   0.6389  ZNF845-201, ZNF845-202
+5     ZNF837           0.0000     2   1.0000   0.5040  ZNF837-202, ZNF837-201
+6     ZNF81            0.0000     2   1.0000   0.5887  ZNF81-202, ZNF81-204
+7     ZNF800           0.0000     3   1.0000   0.3799  ZNF800-202, ZNF800-203, ZNF800-201
+8     ZNF790-AS1       0.0000     3   1.0000   0.1174  ZNF790-AS1-207, ZNF790-AS1-204, ZNF790-AS1-206
+9     ZNF790           0.0000     4   1.0000   0.5927  ZNF790-208, ZNF790-206, ZNF790-201, ... (4 total)
+10    ZNF70            0.0000     2   1.0000   0.7963  transcript16123.chr22.nnic, ZNF70-201
+11    ZNF610           0.0000     2   1.0000   0.7148  ZNF610-201, ZNF610-203
+12    ZNF600           0.0000     3   1.0000   0.5023  ZNF600-206, ZNF600-208, ZNF600-209
+13    ZNF596           0.0000     3   1.0000   0.6679  ZNF596-202, ZNF596-203, ZNF596-201
+14    ZNF594           0.0000     2   1.0000   0.7594  ZNF594-202, ZNF594-201
+15    ZNF592           0.0000     2   1.0000   0.5166  ZNF592-203, ZNF592-201
+16    ZNF524           0.0000     2   1.0000   0.6895  ZNF524-201, ZNF524-203
+17    ZNF502           0.0000     3   1.0000   0.7215  ZNF502-203, ZNF502-204, ZNF502-201
+18    ZNF445           0.0000     2   1.0000   0.7007  ZNF445-201, ZNF445-202
+19    ZNF436           0.0000     2   1.0000   0.8637  ZNF436-202, ZNF436-201
+20    ZNF432           0.0000     2   1.0000   0.6351  ZNF432-202, ZNF432-201
+21    ZNF337           0.0000     2   1.0000   0.5088  ZNF337-201, ZNF337-202
+22    ZNF331           0.0000    10   1.0000   0.8087  ZNF331-215, ZNF331-221, ZNF331-202, ... (10 total)
+23    ZNF319           0.0000     2   1.0000   0.5307  ZNF319-201, transcript97920.chr16.nnic
+24    ZNF280B          0.0000     2   1.0000   0.6279  ZNF280B-203, ZNF280B-201
+25    ZNF24            0.0000     2   1.0000   0.8878  ZNF24-202, ZNF24-201
+26    ZNF234           0.0000     2   1.0000   0.5840  ZNF234-204, ZNF234-201
+27    ZNF217           0.0000     2   1.0000   0.6296  ZNF217-201, ZNF217-202
+28    ZNF215           0.0000     2   1.0000   0.7770  ZNF215-203, ZNF215-208
+29    ZNF205           0.0000     3   1.0000   0.7503  ZNF205-206, ZNF205-201, ZNF205-202
+30    ZNF184           0.0000     3   1.0000   0.7434  ZNF184-202, ZNF184-203, ZNF184-201
+
+## BIMODAL CHECK
+
+Distribution of FDI values (bins of 0.1):
+
+[0.0-0.1):  5243 (43.13%) █████████████████████
+[0.1-0.2):  2375 (19.54%) █████████
+[0.2-0.3):  2231 (18.35%) █████████
+[0.3-0.4):  1348 (11.09%) █████
+[0.4-0.5):   540 ( 4.44%) ██
+[0.5-0.6):   249 ( 2.05%) █
+[0.6-0.7):    99 ( 0.81%) 
+[0.7-0.8):    53 ( 0.44%) 
+[0.8-0.9):    17 ( 0.14%) 
+[0.9-1.0):     2 ( 0.02%) 
+
+## CORRELATION: FDI vs NUMBER OF ISOFORMS
+
+Pearson correlation (FDI vs n_isoforms): -0.0100
+
+FDI by isoform count:
+  n= 2 isoforms: mean FDI = 0.1404 (N=3435)
+  n= 3 isoforms: mean FDI = 0.1638 (N=2580)
+  n= 4 isoforms: mean FDI = 0.1721 (N=1930)
+  n= 5 isoforms: mean FDI = 0.1798 (N=1205)
+  n=10 isoforms: mean FDI = 0.1846 (N= 195)
+  n=20 isoforms: mean FDI = 0.1725 (N=  25)
+
+## HIGH-ISOFORM GENES (≥10 isoforms)
+
+Gene            N_iso     FDI  MeanSim
+----------------------------------------
+TRIM2              64  0.1397   0.8603
+SNHG14             63  0.1167   0.8833
+MAPK10             58  0.0955   0.9045
+MALAT1             58  0.0000   1.0000
+ANK2               57  0.3279   0.6721
+BBS2               46  0.1579   0.8421
+MACF1              44  0.3487   0.6513
+SPG7               44  0.2912   0.7088
+CCDC88A            43  0.2480   0.7520
+DYNC1H1            42  0.2426   0.7574
+KRIT1              42  0.1732   0.8268
+MIR99AHG           42  0.1715   0.8285
+NDUFS2             41  0.1811   0.8189
+KMT2C              40  0.2515   0.7485
+AHI1               40  0.2299   0.7701
+GOLGB1             40  0.1730   0.8270
+NTRK2              40  0.0574   0.9426
+DMD                39  0.2777   0.7223
+CRELD1             39  0.1457   0.8543
+SPECC1             38  0.0969   0.9031
+
+================================================================================
+END OF REPORT
+================================================================================
