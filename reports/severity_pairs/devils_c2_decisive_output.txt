@@ -1,0 +1,32 @@
+
+=== muscle (baseline corr(severity,disorder|size)=-0.0919) ===
+axis    rel_effect    var_expl disorder_enc|rho|
+0           40.4%      0.0364             0.269
+1            5.0%      0.0224             0.113
+2            3.7%      0.0230             0.077
+3           10.5%      0.0193             0.052
+4            0.2%      0.0104             0.001
+5            1.0%      0.0086             0.164
+6            3.3%      0.0276             0.072
+7            0.6%      0.0116             0.051
+  Spearman(rel_shrink, variance)  = +0.690
+  Spearman(rel_shrink, encoding)  = +0.619
+  DISCRIMINATOR axis5(LENGTH): var_expl=0.0086(low) enc=0.164(high) rel_shrink=1.0%
+                axis0        : var_expl=0.0364(high) enc=0.269(high) rel_shrink=40.4%
+  => H_variance favored (rel tracks variance, low-var axis5 small) -> C2 CONFIRMED
+
+=== brain (baseline corr(severity,disorder|size)=-0.0971) ===
+axis    rel_effect    var_expl disorder_enc|rho|
+0           53.8%      0.0342             0.283
+1            8.2%      0.0251             0.111
+2            5.1%      0.0232             0.070
+3            9.5%      0.0168             0.044
+4            2.2%      0.0099             0.049
+5            0.7%      0.0094             0.166
+6            3.3%      0.0196             0.051
+7            1.1%      0.0105             0.015
+  Spearman(rel_shrink, variance)  = +0.833
+  Spearman(rel_shrink, encoding)  = +0.262
+  DISCRIMINATOR axis5(LENGTH): var_expl=0.0094(low) enc=0.166(high) rel_shrink=0.7%
+                axis0        : var_expl=0.0342(high) enc=0.283(high) rel_shrink=53.8%
+  => H_variance favored (rel tracks variance, low-var axis5 small) -> C2 CONFIRMED
