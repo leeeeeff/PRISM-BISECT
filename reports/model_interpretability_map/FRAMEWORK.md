@@ -213,3 +213,99 @@ bottlenecks, not one regression** —
   (B3-level), with its own subset, CV-dir-acc, and the gene-/label-permutation nulls.
 
 This preserves S_severity (no rewrite of the OLS) and prevents the cross-file contradiction.
+
+---
+
+## 8. Devils-advocate revision (2026-07-22)
+
+Framework referred to devils-advocate before any B4 computation (anti-local-minima: new
+framework proposal). Six attacks C1–C6 returned; adjudicated on scientific-depth grounds (the
+researcher decides direction, the critique flags logical holes only). Net: framework survives
+with **three revisions, one refutation of the critique, and one mandatory pre-computation gate.**
+
+**C1 — B2/B3 tautology? PARTIALLY ACCEPTED (critique's logic reversed).** The critique argued
+region-pool moving coherence↑/DR↓ in *opposite* directions means one phenomenon, two faces. This
+is backwards: a single knob driving one underlying quantity moves both readouts the *same* way;
+*dissociation* (opposite directions under one manipulation) is the strongest evidence of
+separateness. Valid residual point: B2 and B3 are **sequential-conditional** (B3 acts only on what
+B2 preserves), not orthogonal. → Revise language: "sequential-conditional stages, dissociated by
+the domain × pooling interaction," not "independent bottlenecks." Clean single-manipulation
+separation (a pooling op that moves coherence but not label-alignment) noted as future test.
+
+**C2 — δ_layer violates monotonicity? REFUTED; framework strengthened.** δ_layer = φ_L30 − φ_L15
+is a contrast of two *pooled* vectors at different depths; it does not undo residue-averaging, it
+accesses the **depth axis**, a separate information dimension. Pooling occurs per-layer; δ_layer
+bypasses final-layer integration, not the 1/L residue average. → **Split B2 into B2a (depth/
+layer-collapse, δ_layer-recoverable = manuscript tier ii) and B2b (residue-averaging, motif-
+destroying = tier iii, unrecoverable).** Monotonicity holds *per fixed extraction path*; δ_layer
+is a different path, not a counterexample. This aligns the framework with the manuscript's
+existing tier ii/iii distinction.
+
+**C3 — ridge reliance also variance-confounded? ACCEPTED as a mandatory gate.** Indirect evidence
+favours ridge (coherence-occlusion and ridge *disagreed* on axis0 — if both tracked variance they
+would agree), but no *direct* control exists. → **GATE before any B4 computation:** compute
+Spearman(axis variance, ridge reliance) across the 8 axes and a variance-matched synthetic-axis
+null. If reliance tracks variance (ρ ≳ 0.5 or synthetic ≈ real), B4 has no valid instrument and
+the map truncates at B3. This must pass before the compositional-B4-usage computation.
+
+**C4 — 64% = AUROC linearisation? ACCEPTED.** AUROC is a rank statistic; its differences are not
+additive information quantities, so (0.715−0.5)/(0.838−0.5) is indefensible as a "fraction of
+signal." → Recompute with explained-deviance / log-loss ratio under a common linear decoder, or
+retreat to qualitative ("8 axes capture most but not all of the linearly-decodable domain signal").
+Drop the "64%" figure until recomputed on an additive measure.
+
+**C5 — compositional a domain_binary proxy? LARGELY REFUTED (critique missed the design).** The
+compositional CV-dir-acc was computed on the domain_binary==0 subset — domain_binary is *constant*
+in the tested population and cannot be proxied. sheet_delta⊥axis0 already shown (r=−0.089). Valid
+residual: within-subset size_z partial not yet run; and "edit inside vs outside a retained domain"
+is a distinct covariate worth checking (not the domain_binary the critique named). → Add size_z
+partial as confirmation; note it is a within-non-domain composition signal by construction.
+
+**C6 — non-domain sub-mechanisms exhaustive/exclusive? ACCEPTED.** targeting/disorder/compositional
+are overlapping features (independent regressors), not a partition; an MTS loss can be simultaneously
+helix-rich. → Present §4b as a **hierarchical Venn decomposition** with explicit "not an exhaustive
+partition" caveat; the "% per bucket" must be nested (domain 69.8% → non-domain 30.2% → N-term X% →
+of which disorder Y% → compositional-residual Z% → pure-SLiM <1%), not summed side-by-side.
+
+**Revised cascade (post-critique):**
+```
+B0 physical → B1 encoding → B2a depth-collapse → B2b residue-averaging → B3 anchor → B4 usage → B5 label
+                            (δ_layer-recoverable)  (motif-destroying)    (sequential-conditional on B2b)
+```
+**Gate before B4 work:** C3 variance-vs-reliance control. **Writing fixes:** C4 (drop 64%), C6
+(Venn), C1 (language). **Cheap add-on:** C5 size_z partial.
+
+### 8b. C3 gate result (2026-07-22) — CONDITIONAL PASS
+
+`c3_gate_variance_vs_reliance.py` (reuses devils_c4_ridge_reliance occlusion; 8 real axes + 40
+random dirs; domain_binary & disorder_frac targets; muscle + brain).
+
+**Passes (robust):**
+- Metric is not mechanically variance-driven: across 40 random directions Spearman(captured-var,
+  reliance) ≈ 0 (muscle −0.19/+0.08, brain −0.06/−0.02, all n.s.).
+- Within-data variance control via the used/not-used dissociation running *against* variance:
+  axis3→domain has BELOW-median variance (11.0/9.5) yet the highest cross-tissue reliance
+  (+50.4%/+11.0%), while axis0→disorder has HIGHER variance (13.4/11.1) yet negative reliance
+  (−3.4%/−0.8%). Higher-variance axes 0/1/2 (var 13–16) carry near-zero domain reliance. Variance
+  rank ≠ reliance rank ⇒ the instrument measures usage, not variance. Replicates in both tissues.
+
+**Blemishes (block a clean pass):**
+- **axis6 muscle anomaly:** highest variance (26.5) AND highest muscle domain reliance (66.6%),
+  but does NOT replicate in brain (3.1%); axis3 replicates (50→11%). axis6 is a domain-family axis
+  (KRAB-ZNF/spectrin) so its muscle signal may be genuine, but non-replication + max variance =
+  can't exclude partial variance inflation. This single axis raises T1 rho(8 real axes) to 0.43–0.48
+  (below the 0.5 threshold but close).
+- **T2 void:** random unit directions capture ~0.9 variance vs real axes' 5–26 — no overlap, so the
+  variance-matched random null could not be constructed (fell back to n=0). T2 provided no
+  information; the real variance control is the cross-axis comparison above.
+
+**Verdict & consequence:**
+- Ridge reliance is usable as the B4 instrument, but usage claims require a **strengthened
+  criterion: exceed the random band AND replicate across tissues** (guards the axis6 failure mode).
+- To fully close T2, a proper variance-matched null must draw random directions from the 8-axis
+  span / top-PC subspace (high captured variance, target-unaligned); this directly adjudicates the
+  axis6 anomaly. Recommended before per-axis high-variance usage claims; the flagship axis3 claim
+  already survives via the cross-axis + cross-tissue evidence.
+- For the compositional-covariate B4 test: run in BOTH tissues; count only cross-tissue-consistent
+  usage.
+
