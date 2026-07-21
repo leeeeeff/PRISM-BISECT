@@ -368,3 +368,47 @@ noisier upper bounds.**
 - report brain as primary; require cross-tissue consistency; muscle = upper bound;
 - axis6-type high-variance single-tissue effects do not count as usage.
 
+
+---
+
+## 9. B4 compositional usage result (2026-07-22) — NOT used, and a B3 self-correction
+
+`b4_compositional_usage.py`, method (a): same instrument (cv_dir_acc under compositional
+median-split orientation) applied to the EMBEDDING difference (B3) and the PRISM score-vector
+difference (B4), non-domain internal-edit subset, both tissues, gene-permutation null.
+
+**B4 = not used at output.** Direction consistency attenuates from embedding (0.59–0.65) to PRISM
+output (0.53–0.58), and the output value sits AT its gene-permutation null in all 8 cases
+(4 covariates × 2 tissues). The compositional signal does not propagate to PRISM's functional
+scores. This reinforces the describability gap: encoded, weakly surfaced, but not used at output,
+and no label (B5).
+
+**B3 self-correction (surfaced by the B4 reproduction of B3).** The B3 embedding CV-dir-acc sits AT
+its gene-permutation null too (helix 0.616 vs 0.617; sheet 0.653 vs 0.653; all four Δ = −0.002 to
+−0.009, i.e. real ≤ null). The earlier session verdict "✅ CROSS-GENE SIGNAL" (test_covariate_
+gene_permutation_null.py) was a verdict-logic bug: it labelled "signal" whenever |real−null| ≥
+null_std with real_lo>0.5, even when real was BELOW null — mislabelling a gene-INDEPENDENT high
+baseline (the median-split orientation bias) as cross-gene signal. Correct reading: the compositional
+direction is REAL (label-permutation drops it to 0.5) but GENE-INDEPENDENT (real ≈ gene-perm null) =
+a dataset-wide long/short regularity, NOT a cross-gene anchor. It joins severity_score and the
+N-terminal "anchor" in the same category (this session's central orient-bias theme).
+
+**Map placement of compositional (helix/sheet/hydro/charge):**
+- B1 encoded: yes (computable; embedding difference has a label-driven median-split direction).
+- B2 surfaced: partially, as a gene-INDEPENDENT dataset-wide direction (not a per-gene-shared anchor).
+- B3 anchor: NO cross-gene anchor (real ≈ gene-perm null); only a dataset-wide orientation.
+- B4 used: NO (attenuated to the gene-perm null at PRISM output).
+- B5 label: absent.
+⇒ bucket = "encoded / weakly-surfaced-as-dataset-wide-direction, NOT used, NOT labelled" —
+reinforces the non-domain describability gap rather than opening a new usable signal.
+
+**Consequences:**
+- Manuscript §6b compositional paragraph (commit 69d67c8) states "All four exceed their gene-permuted
+  nulls in muscle" — FALSE; they sit at/below the null. Requires correction (see §10 pending).
+- Memory finding-6covariate-survivors ("cross-gene signal") and finding-sheet_delta_brain_artifact
+  ("muscle signal vs brain artifact") need the same correction: all four are gene-independent
+  dataset-wide, real only via label-permutation; the muscle/brain asymmetry was n-driven cleanliness,
+  not a signal/artifact split.
+- A fully parallel B4 could add a label-permutation null on the OUTPUT (does PRISM output carry ANY
+  real long/short structure under compositional orient?); the output's attenuation toward 0.5 already
+  indicates this is weak.
