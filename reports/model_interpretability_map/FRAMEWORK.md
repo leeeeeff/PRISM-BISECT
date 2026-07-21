@@ -309,3 +309,62 @@ random dirs; domain_binary & disorder_frac targets; muscle + brain).
 - For the compositional-covariate B4 test: run in BOTH tissues; count only cross-tissue-consistent
   usage.
 
+### 8c. T2 proper variance-matched null (2026-07-22) — verdict revised, MUSCLE confound found
+
+`c3_gate_T2_variance_matched_null.py`: high-variance null built from random unit combinations of
+the 8-axis span (captured var 4–29, now matched to real axes' 5–26). Fit reliance ~ captured_var
+across combos; place each real axis as a studentized residual. Target domain_binary, both tissues.
+
+**This proper null revised the §8b "conditional pass" — partially vindicating devils-advocate C3:**
+- **axis6 anomaly RESOLVED as variance inflation:** studentized muscle +1.13 / brain +0.07 = on-trend
+  both tissues. Its high muscle domain-reliance (0.083) is exactly what its variance (26.5) predicts.
+  Not a genuine domain signal — the cross-tissue guard correctly flagged it.
+- **MUSCLE has a genuine secondary variance→reliance trend** (r=+0.247, **p=0.027**), and axis3 sits
+  only +1.24 SD above it (within the resid_sd=0.032 scatter) = **on-trend, not clearly above.** The
+  §8b "rho≈0 ⇒ pass" was based on LOW-variance random dirs and missed this high-variance-regime
+  confound. The proper null changed the muscle verdict.
+- **BRAIN is clean:** axis3 studentized +3.06 (above trend), no significant variance trend (r=0.118 n.s.).
+- **Caveat on this null:** the span-combos include axis3 in the basis, so the null contains scaled
+  copies of the flagship — this inflates resid_sd and makes the muscle +1.24 a LOWER bound. An
+  axis3-EXCLUDED null (random combos of the other 7 axes) is needed to separate null-contamination
+  from a genuine muscle confound.
+- **Decisive evidence the instrument is NOT pure variance:** axis0→disorder reliance is NEGATIVE in
+  both tissues despite axis0's high variance (13.4/11.1). Pure variance would force positive. So the
+  metric measures target-specific usage; the confound is a secondary additive trend, not domination.
+
+**Revised gate verdict:** ridge reliance measures usage (not just variance), but carries a
+**tissue-dependent secondary variance inflation — significant in muscle, absent in brain.**
+Consequences for B4:
+1. **Brain is the primary tissue for usage claims** (clean); muscle per-axis usage magnitudes are
+   upper bounds and require cross-tissue replication.
+2. Before finalising any per-axis usage magnitude, close the muscle ambiguity with the axis3-EXCLUDED
+   high-variance null.
+3. The compositional-B4 test inherits this: report brain as primary, require cross-tissue consistency,
+   and treat muscle magnitudes as upper bounds.
+
+### 8d. Definitive T2 (flagship-excluded null, 2026-07-22) — GATE PASSES
+
+`c3_gate_T2_flagship_excluded_null.py`: high-variance null from random combinations of the 7 axes
+EXCLUDING axis3, so the null is high-variance yet ~orthogonal to the domain axis (no self-contamination).
+
+- **muscle:** axis3 reliance 0.0626 vs clean null (mean 0.019, p95 0.057); empirical p=0.025,
+  variance-matched z=+2.24 → **ABOVE (variance-independent), marginal.**
+- **brain:** axis3 reliance 0.0345 vs clean null (mean 0.003); empirical p=0.000, z=+15.95 →
+  **ABOVE, emphatic.**
+
+**Resolution:** the muscle span-combo "on-trend" (§8c) was NULL CONTAMINATION — the span-combos
+included axis3, so its scaled copies inflated the null band. Removing axis3 from the null basis, the
+flagship domain-usage signal is variance-independent in BOTH tissues. **C3 GATE PASSES.**
+
+**Tissue asymmetry is real (carried forward as B4 discipline):** brain axis3 towers over its null
+(z=+16); muscle only marginally clears it (p=0.025; some high-variance non-domain directions reach
+0.083 > axis3's 0.063). So muscle has genuine secondary variance-noise. Combined with axis0→disorder
+negative reliance (high variance, negative effect — impossible under pure variance), the instrument
+is validated as measuring usage, with **brain as the primary/clean tissue and muscle magnitudes as
+noisier upper bounds.**
+
+**B4 protocol (finalised for the compositional-usage computation):**
+- significance = exceed the flagship-EXCLUDED high-variance null (not raw random dirs, not span-combos);
+- report brain as primary; require cross-tissue consistency; muscle = upper bound;
+- axis6-type high-variance single-tissue effects do not count as usage.
+
