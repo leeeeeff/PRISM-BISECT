@@ -180,7 +180,9 @@ Brain within-gene splices  (100%)
 │
 └─ 30.2%  NON-DOMAIN                    [FIRM: genome-wide rate]
           measured composition (brain, n=25,262; `nondomain_mechanism_fractions.py`):
-          ├─ 51.5%  N-terminal targeting (muscle 63.0%) -> partial B4 (MTS alignment ρ=0.126)  [FIRM]
+          ├─ 51.5%  N-terminal targeting (muscle 63.0%) -> encoded, weak MTS alignment ρ=0.126 at
+          │         EMBEDDING (B1/B3), but B4 NOT used (`b4_nterm_usage.py`: charge/helix/hydro
+          │         targeting-orient B4 sits at gene-perm null, same as compositional) [FIRM]
           ├─ 48.1%  structured-internal -> of which specific-SLiM-bearing ~54.6% (pooling-lost, B2);
           │         compositional signal real but GENE-INDEPENDENT & B4 NOT used (§9) [FIRM]
           └─  0.4%  disorder-DOMINANT (>0.5) — negligible as a stream; disorder is an overlapping
@@ -255,7 +257,7 @@ placement (§9).
 
 | Bucket | Definition (bottleneck signature) | Domain | Non-domain |
 |---|---|---|---|
-| **Explained & used** | survives B1–B4, has B5 label | DR 0.630/0.775, label-capped | small (targeting, partial) |
+| **Explained & used** | survives B1–B4, has B5 label | DR 0.630/0.775, label-capped | **~none** (N-terminal B4 downgraded — b4_nterm_usage.py: not used at output) |
 | **Encoded, not surfaced** | dies B2 (pooling) | ~none | SLiM, part of disorder |
 | **Surfaced, un-anchored/un-labelled** | survives B2, dies B3 or B5 | (label-noise tail) | compositional, disorder, internal |
 | **True black box (not encoded)** | dies B1 | ~none | PTM-state, motif-*function* |

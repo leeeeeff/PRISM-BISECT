@@ -1,0 +1,12 @@
+====================================================================================
+B4 N-TERMINAL USAGE — does the targeting sub-stream reach PRISM's output? (brain)
+====================================================================================
+non-domain N-terminal pairs: n=13011  genes=5794
+|PRISM score-diff| per pair: mean=16.748
+------------------------------------------------------------------------------------
+  [charge] B3_embed=0.612(null 0.614) | B4_output=0.563(null 0.564±0.001) | NOT used (at gene-perm null)
+  [helix ] B3_embed=0.594(null 0.595) | B4_output=0.553(null 0.552±0.001) | NOT used (at gene-perm null)
+  [hydro ] B3_embed=0.613(null 0.615) | B4_output=0.576(null 0.578±0.001) | NOT used (at gene-perm null)
+------------------------------------------------------------------------------------
+verdict: if all NOT used -> N-terminal cell downgrades to 'encoded/partial-surfaced, not
+used at output' (same status as compositional); MTS ρ=0.126 is a B1/B3 alignment, not B4.

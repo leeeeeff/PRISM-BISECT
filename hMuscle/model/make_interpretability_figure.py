@@ -94,13 +94,16 @@ xL, xR = 6.75, 7.85        # N-terminal (left) ; structured-internal (right)
 # B1 split
 ribbon(axA, xn, xL, ys[1], ys[1] - 0.01, wn, 0.34, C_NDOM)
 ribbon(axA, xn, xR, ys[1], ys[1] - 0.01, wn, 0.30, C_NDOM)
-# N-terminal stream: encoded -> partial B4 (targeting weakly used) -> unlabelled
+# N-terminal stream: encoded, weak MTS alignment at B1/B3, but NOT used at output (B4 = gene-perm
+# null under targeting proxies; b4_nterm_usage.py) -> output reacts by SIZE, not targeting direction
 ribbon(axA, xL, xL, ys[1], ys[2], 0.34, 0.34, C_NDOM)
-ribbon(axA, xL, xL, ys[2], ys[3], 0.34, 0.30, C_NDOM)
-ribbon(axA, xL, xL, ys[3], ys[4], 0.30, 0.22, C_PART, alpha=0.95)   # weakly used (targeting)
-ribbon(axA, xL, xL, ys[4], ys[5], 0.22, 0.10, C_LOST, alpha=0.5)
+ribbon(axA, xL, xL, ys[2], ys[3], 0.34, 0.28, C_NDOM)
+ribbon(axA, xL, xL, ys[3], ys[4], 0.28, 0.14, C_LOST, alpha=0.55)   # B4 not used (targeting dir)
+ribbon(axA, xL, xL, ys[4], ys[5], 0.14, 0.07, C_LOST, alpha=0.45)
 axA.text(xL, ys[2] + 0.30, 'N-terminal\ntargeting 52%', ha='center', va='center',
          fontsize=6.3, color='#a5641a')
+axA.text(xL - 0.95, ys[3] - 0.02, 'MTS aligns at\nembedding (ρ.126)\nbut B4 not used',
+         ha='center', va='center', fontsize=5.6, color='#999')
 # structured-internal stream: loses SLiM at B2 (pooling), compositional at B3 (gene-indep)
 ribbon(axA, xR, xR, ys[1], ys[2], 0.30, 0.20, C_NDOM)
 ribbon(axA, xR + 0.15, xR + 1.75, ys[1] + 0.05, ys[2], 0.16, 0.08, C_LOST, alpha=0.6)  # SLiM peel
@@ -119,7 +122,8 @@ axA.text(xL - 0.55, ys[5] - 0.05, 'un-labelled', ha='center', va='center', fonts
 axA.text(0.05, 9.95, 'A', fontsize=15, fontweight='bold', ha='left')
 axA.text(5.0, -0.85, 'Information decreases downward. Domain/non-domain (69.8/30.2%) and non-domain '
          'sub-stream widths (N-terminal 52% / structured 48%) are MEASURED (brain); disorder-dominant '
-         '<1% (an overlapping\nproperty, not a stream). Green = used, amber = partial, grey = lost.',
+         '<1% (an overlapping\nproperty, not a stream). Green = used at output (only domain); grey = '
+         'lost or not used (N-terminal & structured both fail B4 at the gene-permutation null).',
          ha='center', fontsize=6.1, color='#666')
 
 
