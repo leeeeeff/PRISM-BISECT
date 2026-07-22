@@ -84,27 +84,43 @@ axA.text(xd - 1.05, ys[5] - 0.05, 'labelled ~10%', ha='center', va='center', fon
 axA.text(xd + 1.55, ys[5] - 0.05, 'label-noise\n~90% (Type-1)', ha='center', va='center', fontsize=6.6, color='#777')
 axA.text(xd, ys[0] + 0.62, 'DOMAIN  69.8%', ha='center', fontsize=9, fontweight='bold', color=C_DOM)
 
-# NON-DOMAIN river (right), narrower (~30.2%), branches off at B2 and B3
+# NON-DOMAIN river (right), ~30.2%, splits at B1 into MEASURED sub-streams:
+#   N-terminal targeting 51.5%  (-> partial B4)   ;  structured-internal 48.1% (-> SLiM B2 / comp B3)
 xn = 7.3
 wn = 0.62
-ribbon(axA, xn, xn, ys[0], ys[1], wn, wn, C_NDOM)
-ribbon(axA, xn, xn, ys[1], ys[2], wn, 0.42, C_NDOM)          # narrows at pooling
-# branch at B2: SLiM lost to pooling (peel right)
-ribbon(axA, xn + 0.2, xn + 1.9, ys[1] + 0.05, ys[2], 0.30, 0.10, C_LOST, alpha=0.6)
-axA.text(xn + 2.0, ys[2] + 0.15, 'SLiM\npooling-lost', ha='left', va='center', fontsize=6.4, color='#888')
-ribbon(axA, xn, xn, ys[2], ys[3], 0.42, 0.20, C_NDOM)        # narrows at anchor
-# branch at B3: disorder + compositional un-anchored / gene-independent
-ribbon(axA, xn + 0.1, xn + 1.9, ys[2] + 0.02, ys[3], 0.24, 0.10, C_LOST, alpha=0.6)
-axA.text(xn + 2.0, ys[3] + 0.15, 'disorder / compositional\nun-anchored, gene-indep.',
-         ha='left', va='center', fontsize=6.4, color='#888')
-ribbon(axA, xn, xn, ys[3], ys[4], 0.20, 0.12, C_PART, alpha=0.9)   # targeting weakly used
-ribbon(axA, xn, xn, ys[4], ys[5], 0.12, 0.05, C_LOST, alpha=0.5)   # ~none labelled
+ribbon(axA, xn, xn, ys[0], ys[1], wn, wn, C_NDOM)            # enters full
 axA.text(xn, ys[0] + 0.62, 'NON-DOMAIN  30.2%', ha='center', fontsize=9, fontweight='bold', color=C_NDOM)
-axA.text(xn + 0.35, ys[5] - 0.1, 'un-labelled', ha='left', va='center', fontsize=6.4, color='#999')
+xL, xR = 6.75, 7.85        # N-terminal (left) ; structured-internal (right)
+# B1 split
+ribbon(axA, xn, xL, ys[1], ys[1] - 0.01, wn, 0.34, C_NDOM)
+ribbon(axA, xn, xR, ys[1], ys[1] - 0.01, wn, 0.30, C_NDOM)
+# N-terminal stream: encoded -> partial B4 (targeting weakly used) -> unlabelled
+ribbon(axA, xL, xL, ys[1], ys[2], 0.34, 0.34, C_NDOM)
+ribbon(axA, xL, xL, ys[2], ys[3], 0.34, 0.30, C_NDOM)
+ribbon(axA, xL, xL, ys[3], ys[4], 0.30, 0.22, C_PART, alpha=0.95)   # weakly used (targeting)
+ribbon(axA, xL, xL, ys[4], ys[5], 0.22, 0.10, C_LOST, alpha=0.5)
+axA.text(xL, ys[2] + 0.30, 'N-terminal\ntargeting 52%', ha='center', va='center',
+         fontsize=6.3, color='#a5641a')
+# structured-internal stream: loses SLiM at B2 (pooling), compositional at B3 (gene-indep)
+ribbon(axA, xR, xR, ys[1], ys[2], 0.30, 0.20, C_NDOM)
+ribbon(axA, xR + 0.15, xR + 1.75, ys[1] + 0.05, ys[2], 0.16, 0.08, C_LOST, alpha=0.6)  # SLiM peel
+axA.text(xR + 1.85, ys[2] + 0.10, 'SLiM (~55% of\nstructured) pooling-lost',
+         ha='left', va='center', fontsize=6.0, color='#888')
+ribbon(axA, xR, xR, ys[2], ys[3], 0.20, 0.10, C_NDOM)
+ribbon(axA, xR + 0.1, xR + 1.75, ys[2] + 0.02, ys[3], 0.12, 0.06, C_LOST, alpha=0.6)   # comp peel
+axA.text(xR + 1.85, ys[3] + 0.10, 'compositional\ngene-indep. (B3)',
+         ha='left', va='center', fontsize=6.0, color='#888')
+ribbon(axA, xR, xR, ys[3], ys[4], 0.10, 0.05, C_LOST, alpha=0.5)
+ribbon(axA, xR, xR, ys[4], ys[5], 0.05, 0.03, C_LOST, alpha=0.4)
+axA.text(xR, ys[2] + 0.30, 'structured-\ninternal 48%', ha='center', va='center',
+         fontsize=6.3, color='#a5641a')
+axA.text(xL - 0.55, ys[5] - 0.05, 'un-labelled', ha='center', va='center', fontsize=6.2, color='#999')
 
 axA.text(0.05, 9.95, 'A', fontsize=15, fontweight='bold', ha='left')
-axA.text(5.0, -0.85, 'Information decreases downward; widths schematic (exact rates in text). '
-         'Green = passes, amber = partial, grey = lost.', ha='center', fontsize=6.3, color='#666')
+axA.text(5.0, -0.85, 'Information decreases downward. Domain/non-domain (69.8/30.2%) and non-domain '
+         'sub-stream widths (N-terminal 52% / structured 48%) are MEASURED (brain); disorder-dominant '
+         '<1% (an overlapping\nproperty, not a stream). Green = used, amber = partial, grey = lost.',
+         ha='center', fontsize=6.1, color='#666')
 
 
 # ============================ Panel B : axis compass + probes ============================

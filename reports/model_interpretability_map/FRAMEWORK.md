@@ -179,14 +179,18 @@ Brain within-gene splices  (100%)
 │         └─ ceiling cause: label noise (89.9% Type-1 low-conf), not representation
 │
 └─ 30.2%  NON-DOMAIN                    [FIRM: genome-wide rate]
-          ├─ disorder-region overlap: encoded AUROC 0.79 [FIRM], diffuse/no-anchor  [MED]
-          ├─ N-terminal targeting: partial MTS alignment ρ=0.126 [SOFT — gene-perm caveat]
-          ├─ compositional signal (helix/sheet/hydro/charge): B3 real but GENE-INDEPENDENT
-          │  (real ≈ gene-perm null), B4 NOT used (attenuates to gene-perm null at output, §9) [FIRM]
-          └─ pure SLiM: median score gap 0.0, 1.06% exceed 0.05 [FIRM] = the floor
+          measured composition (brain, n=25,262; `nondomain_mechanism_fractions.py`):
+          ├─ 51.5%  N-terminal targeting (muscle 63.0%) -> partial B4 (MTS alignment ρ=0.126)  [FIRM]
+          ├─ 48.1%  structured-internal -> of which specific-SLiM-bearing ~54.6% (pooling-lost, B2);
+          │         compositional signal real but GENE-INDEPENDENT & B4 NOT used (§9) [FIRM]
+          └─  0.4%  disorder-DOMINANT (>0.5) — negligible as a stream; disorder is an overlapping
+                    PROPERTY (any-overlap encoded AUROC 0.79, diffuse/no-anchor, §6b β<0), not a bucket
 ```
-> **Rows overlap (C6):** disorder / N-terminal / compositional are non-exclusive descriptors of the
-> same 30.2% non-domain pool; the shares are nested (non-domain ⊃ each descriptor), never summed.
+> **Rows overlap (C6):** the exclusive 3-way partition above (N-terminal / structured / disorder-dom)
+> is for the flow widths; the underlying descriptors are non-exclusive (an N-terminal edit can also be
+> disorder-rich), so shares are nested, never summed. **Correction from the measurement:** the first
+> draft treated disorder as a co-equal sub-mechanism — it is not; disorder-DOMINANT edits are <1%, and
+> N-terminal targeting is by far the largest single non-domain class (~half of all non-domain edits).
 
 **Resolved since first draft (§9):** the compositional question — the one flagged here as "not yet a
 number" — has been computed. The direction is real but gene-independent (not a cross-gene anchor) and
