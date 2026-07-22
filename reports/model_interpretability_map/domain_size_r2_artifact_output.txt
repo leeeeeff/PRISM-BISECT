@@ -1,0 +1,24 @@
+========================================================================================
+DOMAIN size->output R^2: ARTIFACT CHECK (range restriction / saturation / log-fit)
+========================================================================================
+
+[NONDOMAIN]  n=24677
+  edit size : mean=  287.5  std=  467.0  CV=1.624   median=139  p10=20  p90=682
+  log10size : mean=  2.095  std=  0.611  CV(log)=0.292
+  |dPRISM|1 : mean=  14.69  std=  13.57  CV=0.923   max=144.2  frac in top-10%-band=0.0%
+  Spearman(size,|dPRISM|)=0.684
+  R^2  raw-size=+0.160   log-size=+0.300   raw+log=+0.300
+
+[DOMAIN]  n=8471
+  edit size : mean=  815.3  std= 1010.3  CV=1.239   median=508  p10=138  p90=1722
+  log10size : mean=  2.697  std=  0.440  CV(log)=0.163
+  |dPRISM|1 : mean=  26.86  std=  17.88  CV=0.666   max=138.0  frac in top-10%-band=0.1%
+  Spearman(size,|dPRISM|)=0.410
+  R^2  raw-size=+0.042   log-size=+0.134   raw+log=+0.146
+
+----------------------------------------------------------------------------------------
+CV ratio domain/nondomain:  size=0.76  log-size=0.56  |dPRISM|=0.72
+DECISION (devils-advocate rules):
+  range restriction if size or log-size CV ratio < 0.5   -> got 0.76 / 0.56
+  saturation        if |dPRISM| CV ratio < 0.5           -> got 0.72
+  if log-size R^2 recovers toward non-domain -> low raw R^2 was linearity, not 'poor proxy'.

@@ -693,3 +693,28 @@ other 7 axes (a total-perturbation proxy) already capture ~85% of the naive axis
 **Manuscript impact: none** — Panel D already reports the 0.41/0.68 split without a mechanistic gloss;
 this refinement stays in the working doc. Method lesson reinforced: to test usage of a component,
 use its *signed directional* reliance, never its displacement *magnitude* against an output magnitude.
+
+### 13a. Artifact check on the domain size-R² gap (Option C, PROCEED-MINIMAL, 2026-07-23)
+
+Before chasing "which Pfam family determines domain output" (Option C), devils-advocate forced an
+artifact-first gate (`domain_size_r2_artifact_check.py`). It **deflates §13 point 3** — a third
+self-caught slip in this sub-track:
+
+- The raw R²=0.042 (domain) vs 0.160 (non-domain) headline was **mostly a LINEARITY artifact.** I fit
+  ridge *linearly on raw* edit size, but the size→output relation is log-linear (Panel D is on log
+  axes). With **log-size**: domain R² recovers to **0.134** (×3.2), non-domain to 0.300. So "size
+  explains domain output ~4× worse" was an artifact of the linear-on-raw fit.
+- A **real but modest residual** remains after the log-fix: domain 0.134 vs non-domain 0.300 (ratio
+  0.45), partly attributable to mild **range compression** — domain edits cluster large (mean 815 vs
+  287 residues; median 508 vs 139; log-size CV ratio 0.56, i.e. domain spans a narrower log-range).
+- **No saturation**: only 0.1% of domain pairs sit in the top-10% output band; max |ΔPRISM| 138
+  (domain) ≈ 144 (non-domain). CV ratios size 0.76 / log-size 0.56 / output 0.72 — none below the 0.5
+  clean-artifact threshold, but linearity + partial range-compression jointly explain most of the gap.
+
+**Verdict: DROP the Pfam-family investigation.** The residual heterogeneity is too small, and (per the
+pre-validation) Pfam identity is gene-family-confounded and underpowered (long tail). The Spearman ρ
+the *manuscript* reports (0.41 / 0.68) is rank-based and log-invariant, so the manuscript is unaffected;
+only this working-doc §13 overstated the effect via a linear fit. **Method lesson (third in this
+sub-track): match the fit to the known functional form — a low *linear* R² on a heavy-tailed predictor
+is a fit-specification artifact, not evidence the predictor is uninformative.** Interpretability-map
+track closed.
