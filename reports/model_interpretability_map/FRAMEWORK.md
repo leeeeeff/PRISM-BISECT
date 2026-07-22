@@ -608,3 +608,39 @@ Seven attacks returned; adjudicated on scientific-depth grounds, not paper-polis
 failed. The rest tightened language that had drifted ahead of the evidence. The map's load-bearing
 claims — domain is the only demonstrably output-used class; non-domain fractures across B2/B3/B4;
 the non-domain remainder is two open problems not one recoverable gap — all stand.
+
+## 12. Terminal decision: axis2 / axis7 NOT characterized (DROP, 2026-07-22)
+
+The last two unidentified joint-PCA axes (axis2, evr 0.022; axis7, evr 0.013 — the smallest) were
+referred to devils-advocate *before* any characterization effort (predict-before-you-look). Verdict:
+**DROP.** Recorded here as a first-class negative decision, with the mechanism.
+
+**Why naming them changes no load-bearing claim (predicted, not measured):**
+- axis2 is composition-weak (global-feature max |r| = 0.26: proline/turn/instability negative) →
+  it lands *in* the 36.3% reproducible-but-non-compositional undescribed tail; naming it "proline/turn
+  at r=0.26" does not shrink that tail, it *is* the tail.
+- axis7 has a moderate "acidic α-helix" signature (helix +0.36, acidic/charged +0.33), but helix and
+  charge are exactly the compositional descriptors already shown **B4-negative** (§6a, §9;
+  `b4_magnitude_usage.py`, incremental composition beyond size = +0.003 brain / +0.001 muscle). So
+  axis7 is pre-judged encoded-but-not-used, joining axis0/1/4/5/6 in the "encoded-only" bucket — the
+  "axis3 is the only output-used axis" claim is unchanged.
+- Combined they are evr 0.022 + 0.013 = 3.5% of total variance → at most ~10% of the 36.3% tail even
+  if wholly non-compositional (axis7 isn't). Rounding error, not tail-shrinkage.
+
+**Robustness sub-check (corrects the devils-advocate's "rotation-mixture" mechanism).** W_axes is
+*exactly* orthonormal (max off-diagonal 4×10⁻⁸), so axis2/7 are not linear mixtures of the identified
+axes — that literal confound is impossible. The *correct* concern is near-degeneracy: the low-variance
+block axis3–axis7 has consecutive eigenvalue ratios ≈ 1.0–1.2 (axis3/axis4 = 1.02), so the individual
+axis *directions* inside that block are not rotation-robust — a reseed could rotate axis7↔axis4↔axis5.
+Naming a specific low-variance PCA direction is therefore fragile **unless its identity is pinned by an
+external anchor**. axis3 survives this (its "domain/used" identity rests on ridge usage + BISECT
+concordance, not on its PCA position); axis2/7 have no such external anchor, so their identity rests
+purely on the rotation-unstable direction. This *strengthens* the DROP.
+
+**Decision rule if ever revisited:** run ridge test-time reliance (flagship-excluded high-variance
+null, §8d protocol) for axis2/axis7 → domain_binary/disorder targets, brain+muscle. Only outcome
+"axis2 or axis7 B4-positive cross-tissue" (predicted < 5%, contradicts §6a) would justify biological
+characterization. Expected outcome (both B4-negative) requires no run: the existing evidence
+(compositional B4-negative; low-evr encoded-only precedent = axis5) pre-determines it. **Do not run
+Pfam/UniProt/structural characterization on un-used, low-variance axes** — axis0/1/4/5/6 were never
+characterized beyond composition either; axis2/7 get the same treatment. Map is complete.
