@@ -1,0 +1,11 @@
+================================================================================
+B4 MAGNITUDE USAGE (MUSCLE) — does PRISM output-shift size depend on composition beyond size?
+muscle non-domain, n=11836, genes=5134
+================================================================================
+  (a) size alone            : held-out R^2 = +0.188
+  (c) 4 compositional alone : held-out R^2 = +0.003
+  (b) size + compositional  : held-out R^2 = +0.189
+  incremental R^2 of composition beyond size = +0.001
+--------------------------------------------------------------------------------
+  -> MUSCLE REPLICATES BRAIN: composition adds ~nothing beyond size.
+     'output = size reaction, not composition' is tissue-general.

@@ -312,7 +312,9 @@ Three corrections to the framework, forced by the data:
    un-anchored at B3". Output *magnitude* tracks edit *size*, not domain status (confirmed
    quantitatively: `b4_magnitude_usage.py`, incremental compositional R² beyond size = +0.003) — the
    model reacts by size; whether it reacts *directionally/correctly* (B3/B5) is the separate question,
-   and the B4 magnitude test shows it does not use composition beyond size.
+   and the B4 magnitude test shows it does not use composition beyond size. **Tissue-general**
+   (`b4_magnitude_usage_muscle.py`): muscle replicates brain — size R²=+0.188, incremental
+   composition beyond size = +0.001 (brain +0.003). "Output = pure edit-size reaction" holds in both.
 3. **LRPPRC partially validates as the low-perturbation control** — despite the *largest* edits
    (>1000 aa), it has the *smallest* total axis displacement (4.9–5.7 SD) and fewest PRISM terms
    moved. Same-family PPR-repeat edits move the representation least per residue: consistent with a
