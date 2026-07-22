@@ -1,0 +1,24 @@
+==========================================================================================
+DOMAIN-CLASS MAGNITUDE USAGE — does the domain axis (axis3) add output signal beyond size?
+==========================================================================================
+
+[DOMAIN]  n=8471, genes=3454, Spearman(size,|dPRISM|)=0.410
+  (a) size alone                 : R^2 = +0.042
+  (b) size + axis3 displacement  : R^2 = +0.233   (incremental axis3 | size = +0.191)
+  (c) size + all 8 axes          : R^2 = +0.268   (incremental 8-axis | size = +0.226)
+  (d) axis3 displacement alone   : R^2 = +0.206
+  (e) size + OTHER 7 axes        : R^2 = +0.236
+  >> DISCRIMINATING: incremental axis3 BEYOND size+other-7 = +0.032  (if ~0 => generic magnitude confound, NOT axis3-specific)
+
+[NONDOMAIN]  n=24677, genes=8590, Spearman(size,|dPRISM|)=0.684
+  (a) size alone                 : R^2 = +0.160
+  (b) size + axis3 displacement  : R^2 = +0.413   (incremental axis3 | size = +0.254)
+  (c) size + all 8 axes          : R^2 = +0.464   (incremental 8-axis | size = +0.304)
+  (d) axis3 displacement alone   : R^2 = +0.376
+  (e) size + OTHER 7 axes        : R^2 = +0.450
+  >> DISCRIMINATING: incremental axis3 BEYOND size+other-7 = +0.014  (if ~0 => generic magnitude confound, NOT axis3-specific)
+
+------------------------------------------------------------------------------------------
+Read: if domain incremental(axis3|size) >> non-domain incremental, output magnitude for domain
+      pairs uses domain-structural content (axis3), not just size -> explains the 0.41 vs 0.68 gap
+      and re-confirms axis3 as the output-used domain channel from the MAGNITUDE side.

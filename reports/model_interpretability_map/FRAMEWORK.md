@@ -662,3 +662,34 @@ characterization. Expected outcome (both B4-negative) requires no run: the exist
 (compositional B4-negative; low-evr encoded-only precedent = axis5) pre-determines it. **Do not run
 Pfam/UniProt/structural characterization on un-used, low-variance axes** — axis0/1/4/5/6 were never
 characterized beyond composition either; axis2/7 get the same treatment. Map is complete.
+
+## 13. Domain output-magnitude vs edit size — [LEARN] follow-up (Option B, 2026-07-23)
+
+Panel D showed Spearman(edit size, |ΔPRISM|₁) = 0.41 domain vs 0.68 non-domain. Hypothesis tested
+(`b4_domain_magnitude_usage.py`, brain): the domain gap is domain-structural *usage* in magnitude,
+carried by the output-used domain axis (axis3). **Prediction largely FAILED — self-caught confound.**
+
+Naive result looked confirmatory: axis3 trajectory displacement ||ΔZ₃||₂ adds +0.191 R² (domain) /
++0.254 (non-domain) beyond size. But this is a **magnitude–magnitude confound**: ||ΔZ₃|| is a
+displacement *magnitude* and |ΔPRISM| is a *magnitude*, so both scale with total perturbation — the
+exact magnitude/direction conflation the project already flagged ([[lesson-magnitude-direction-conflation-severity]]),
+here applied to myself. Two tells: (i) axis3 *alone* predicts non-domain output (0.376) BETTER than
+domain (0.206) — backwards if axis3 were the domain channel; (ii) the discriminating test (incremental
+axis3 BEYOND size + the *other 7* axes) collapses to **+0.032 domain / +0.014 non-domain** — i.e. the
+other 7 axes (a total-perturbation proxy) already capture ~85% of the naive axis3 signal.
+
+**Honest conclusions:**
+1. The naive "axis3 magnitude usage" is ~83% generic perturbation magnitude, not axis3-specific. The
+   map's "domain is output-used" claim continues to rest on the *directional* ridge-reliance test
+   (§8d), which is untouched; this magnitude test is not a valid usage instrument.
+2. A *small* axis3-specific residual survives and is ~2× larger for domain (+0.032) than non-domain
+   (+0.014) — weakly in the predicted direction, but too small to carry a claim.
+3. The robust content of the ρ gap is different: **size alone explains domain output magnitude poorly
+   (R²=0.042) vs non-domain (0.160).** For domain edits, residue count is a weak proxy for
+   representational consequence (a whole compact domain vs part can be removed at similar residue
+   counts); non-domain output scales more linearly with size. Embedding *displacement* (any axis)
+   predicts domain output far better than residue count does.
+
+**Manuscript impact: none** — Panel D already reports the 0.41/0.68 split without a mechanistic gloss;
+this refinement stays in the working doc. Method lesson reinforced: to test usage of a component,
+use its *signed directional* reliance, never its displacement *magnitude* against an output magnitude.
