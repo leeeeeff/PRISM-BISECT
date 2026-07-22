@@ -1,0 +1,38 @@
+==================================================================================
+NON-DOMAIN RESIDUAL DECOMPOSITION (Option A): future-recoverable vs true floor
+brain (primary/clean tissue)
+==================================================================================
+
+==================================================================================
+[NON-DOMAIN internal-edit]  n_pairs=11666  n_genes=5613  dim=1280
+----------------------------------------------------------------------------------
+  (0) dataset-wide mean orientation: cv-dir-acc=0.664  (mean-direction energy = 1.5% of raw |D|^2)
+  (A) reproducible structured variance (held-out captured MINUS random-subspace null):
+       K=  4: real=0.295  random-null=0.003  EXCESS=+0.292
+       K= 10: real=0.376  random-null=0.008  EXCESS=+0.368
+       K= 20: real=0.455  random-null=0.015  EXCESS=+0.440
+       K= 50: real=0.585  random-null=0.037  EXCESS=+0.547
+  (B) compositional 4-dir captured: real=0.187  random-4-null=0.003  EXCESS=+0.184
+  (C) non-compositional reproducible (K=4 excess - compositional excess) = +0.108
+  (D) interpretation: reproducible-structure(K=50 excess)=+0.547 of centered var; compositional explains +0.184; floor (non-reproducible) ~= 45.3% of centered var
+
+==================================================================================
+[DOMAIN-change (positive reference)]  n_pairs=8471  n_genes=3454  dim=1280
+----------------------------------------------------------------------------------
+  (0) dataset-wide mean orientation: cv-dir-acc=0.729  (mean-direction energy = 6.3% of raw |D|^2)
+  (A) reproducible structured variance (held-out captured MINUS random-subspace null):
+       K=  4: real=0.350  random-null=0.003  EXCESS=+0.347
+       K= 10: real=0.451  random-null=0.008  EXCESS=+0.443
+       K= 20: real=0.555  random-null=0.016  EXCESS=+0.539
+       K= 50: real=0.699  random-null=0.037  EXCESS=+0.661
+  (B) compositional 4-dir captured: real=0.227  random-4-null=0.003  EXCESS=+0.224
+  (C) non-compositional reproducible (K=4 excess - compositional excess) = +0.123
+  (D) interpretation: reproducible-structure(K=50 excess)=+0.661 of centered var; compositional explains +0.224; floor (non-reproducible) ~= 33.9% of centered var
+
+==================================================================================
+VERDICT
+==================================================================================
+  reproducible structured variance (K=50 excess over random): non-domain +0.547 vs domain +0.661
+  compositional-explained (excess):   non-domain +0.184 vs domain +0.224
+  -> of the non-domain reproducible structure, compositional names ~34%; the rest is decodable-but-non-compositional (R2/R3 tail, future work).
+  -> the non-reproducible remainder (~45% of centered variance) is the per-pair noise floor for non-domain edits.

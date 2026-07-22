@@ -192,9 +192,33 @@ Brain within-gene splices  (100%)
 number" — has been computed. The direction is real but gene-independent (not a cross-gene anchor) and
 is **not propagated to PRISM's output** (B4 negative in both tissues). So this slice of the 30.2%
 non-domain residual is **encoded, weakly surfaced as a dataset-wide orientation, un-anchored, un-used,
-and un-labelled** — it *reinforces* the describability gap rather than opening recoverable signal. The
-still-open number is the fraction of the non-domain residual that is *decodable-but-non-compositional*
-(the R2/R3 tail), not the compositional part.
+and un-labelled** — it *reinforces* the describability gap rather than opening recoverable signal.
+
+**The R2/R3 tail number, now computed (`nondomain_residual_decomposition.py`, Option A, brain
+n=11,666 non-domain pairs).** Decomposing the non-domain embedding-difference (1280-dim, centered)
+variance by gene-disjoint reproducibility (held-out variance captured by the train top-K PC subspace,
+in excess of a random-K-subspace null, K=50):
+
+```
+Non-domain embedding-difference variance (100%, centered)
+├─ 45.3%  per-pair NOISE FLOOR      — not gene-reproducible = the true describability floor
+└─ 54.7%  gene-REPRODUCIBLE structure (future-recoverable in principle)
+          ├─ 18.4%  named by the 4 compositional descriptors (helix/sheet/hydro/charge)
+          └─ 36.3%  reproducible-but-NON-compositional  ← the R2/R3 tail (future work)
+                    (includes size/position geometry partly nameable by other covariates,
+                     plus genuinely un-named structure)
+```
+Domain-change pairs are the positive reference: 66.1% reproducible / 33.9% floor (more structured,
+less noise, as expected). **Key reading:** the non-domain describability gap is *not* dominated by an
+information floor — roughly **half** the signal is gene-reproducible structure, of which our current
+descriptors name only **~34%** (0.184/0.547). So most of the gap is *structure we can see is
+reproducibly there but cannot yet name*, i.e. a missing-descriptor / missing-label problem, not
+irreducible noise. Caveats: the reproducible fraction grows with K (0.29 at K=4 → 0.55 at K=50) so the
+split is reported at a K=50 structured-dimensionality cutoff; and the compositional subspace here
+excludes size/disorder/nterm, so part of the 36.3% tail is nameable by those covariates rather than
+truly novel. The dataset-wide mean(long−short) orientation is reproducible (cv-dir-acc 0.664) but
+carries only 1.5% of raw energy — consistent with the compositional "weakly-surfaced dataset-wide"
+placement (§9).
 
 **Four terminal buckets** (the user's requested end-categories), now precisely defined:
 
