@@ -1,0 +1,49 @@
+==========================================================================================
+PRISM INTERPRETABILITY MAP -- case study (Part 1) + C4 deviance recompute (Part 2)
+brain (primary/clean tissue; C3 gate FRAMEWORK.md §8d)
+==========================================================================================
+
+------------------------------------------------------------------------------------------
+[Type A] NDUFS4  (MTS-exon / domain loss)   -- 9 within-gene pair(s)
+  pair(edit  219 aa)  domain=0 nterm=1 resync=1 disorder=0.08  |  comp[hlx 1.03 sht 1.01 hyd -0.73 chg +0.08]
+     top axes: ax6=-4.11  ax2=+2.05  ax4=+2.02   (|dA|_total=12.32 SD)
+     PRISM out: |dScore|_L1=27.27  #terms>0.05=122/672  topGO#495 d=+0.56
+  pair(edit  464 aa)  domain=0 nterm=1 resync=1 disorder=0.05  |  comp[hlx 1.02 sht 1.04 hyd -0.21 chg +0.02]
+     top axes: ax6=+2.00  ax5=+1.80  ax3=+1.24   (|dA|_total=8.54 SD)
+     PRISM out: |dScore|_L1=53.80  #terms>0.05=435/672  topGO#495 d=-0.54
+  pair(edit  134 aa)  domain=0 nterm=1 resync=1 disorder=0.11  |  comp[hlx 1.03 sht 0.97 hyd -0.97 chg +0.06]
+     top axes: ax3=+1.97  ax2=+1.35  ax6=-1.33   (|dA|_total=6.67 SD)
+     PRISM out: |dScore|_L1=10.83  #terms>0.05=51/672  topGO#155 d=+0.17
+
+------------------------------------------------------------------------------------------
+[Type B] MAPT  (N-terminal insert, no domain change)   -- 9 within-gene pair(s)
+  pair(edit  620 aa)  domain=0 nterm=0 resync=1 disorder=0.29  |  comp[hlx 0.97 sht 0.87 hyd -0.84 chg +0.00]
+     top axes: ax3=+2.67  ax2=-2.59  ax1=+2.55   (|dA|_total=11.77 SD)
+     PRISM out: |dScore|_L1=43.34  #terms>0.05=330/672  topGO#186 d=+0.32
+  pair(edit  384 aa)  domain=0 nterm=1 resync=1 disorder=0.32  |  comp[hlx 0.99 sht 0.83 hyd -0.92 chg -0.07]
+     top axes: ax2=-1.90  ax5=-1.25  ax1=+1.23   (|dA|_total=7.59 SD)
+     PRISM out: |dScore|_L1=21.14  #terms>0.05=107/672  topGO#499 d=-0.12
+  pair(edit  415 aa)  domain=0 nterm=1 resync=1 disorder=0.32  |  comp[hlx 0.99 sht 0.83 hyd -0.92 chg -0.07]
+     top axes: ax2=-2.04  ax5=-1.49  ax6=+1.07   (|dA|_total=7.37 SD)
+     PRISM out: |dScore|_L1=17.22  #terms>0.05=83/672  topGO#499 d=-0.11
+
+------------------------------------------------------------------------------------------
+[Type C] LRPPRC  (same-domain (negative control))   -- 29 within-gene pair(s)
+  pair(edit 1166 aa)  domain=0 nterm=1 resync=1 disorder=0.08  |  comp[hlx 1.05 sht 1.00 hyd -0.21 chg -0.02]
+     top axes: ax6=-1.77  ax3=+1.55  ax2=+0.64   (|dA|_total=5.65 SD)
+     PRISM out: |dScore|_L1=17.94  #terms>0.05=95/672  topGO#205 d=+0.17
+  pair(edit  809 aa)  domain=0 nterm=0 resync=1 disorder=0.08  |  comp[hlx 1.06 sht 1.00 hyd -0.25 chg -0.03]
+     top axes: ax2=+1.52  ax7=+1.50  ax3=+0.94   (|dA|_total=5.52 SD)
+     PRISM out: |dScore|_L1=23.16  #terms>0.05=152/672  topGO#205 d=+0.22
+  pair(edit  801 aa)  domain=0 nterm=0 resync=1 disorder=0.08  |  comp[hlx 1.06 sht 1.00 hyd -0.22 chg -0.03]
+     top axes: ax2=+1.30  ax7=+1.19  ax3=+0.59   (|dA|_total=4.90 SD)
+     PRISM out: |dScore|_L1=20.52  #terms>0.05=119/672  topGO#205 d=+0.20
+
+==========================================================================================
+PART 2 -- C4 fix: deviance-based 8-axis vs 640-linear domain-change decodability
+(replaces the AUROC-difference '64%'; McFadden pseudo-R^2 is additive, AUROC is not)
+==========================================================================================
+  brain pairs: n=33802  domain-change prevalence=0.253
+  8-axis  |dA| : AUROC=0.750   McFadden R^2=0.1012
+  640-dim |dE| : AUROC=0.779   McFadden R^2=0.1545
+  -> 8-axis captures 65.5% of the linearly-decodable domain deviance (additive measure; NOT the old AUROC-difference 64%)

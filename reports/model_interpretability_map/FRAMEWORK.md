@@ -81,11 +81,18 @@ For whatever survives to B4 (used by the model), how well can we *narrate* it?
 | **R3 — non-linear only** | recovered only by a non-linear probe | 0.838 → 0.890 |
 | **R4 — used but undescribable** | contributes to prediction yet escapes all probes above | 0.890 → (representational ceiling) |
 
-Converting to "share of the above-chance decodable signal": the 8 axes capture
-(0.715−0.5)/(0.838−0.5) ≈ **64%** of the *linearly*-decodable domain signal; the non-linear
-probe adds a further slice (R3). So even the best-understood class (domain) is only ~2/3
-narratable by our current interpretable coordinates — a number worth stating plainly rather
-than implying the axes are the whole story.
+Converting to "share of the decodable signal" needs an *additive* measure — AUROC differences are
+not (AUROC is a rank statistic; C4). Under a common logistic decoder for domain-architecture change
+(`case_study_interpretability.py`, brain canonical-anchored pairs, n=33,802), the deviance-based
+**McFadden pseudo-R²** is 0.101 for the 8 axes and 0.155 for the full 640-dim linear probe, so the
+8 axes capture **65.5% of the linearly-decodable domain deviance**. (This additive re-derivation
+lands almost exactly on the earlier, indefensible AUROC-difference arithmetic ≈64% — reassuring that
+the *qualitative* "~2/3 narratable" holds, but only the deviance ratio is a defensible number.) The
+non-linear probe adds a further slice (R3). So even the best-understood class (domain) is only ~2/3
+narratable by our current interpretable coordinates — worth stating plainly rather than implying the
+axes are the whole story. *(AUROC on this set: 8-axis 0.750, 640-dim 0.779; the manuscript's
+length-matched decile classifier gives 0.715/0.838 on the full within-gene pair enumeration — a
+different pair set, reported there, not replaced here.)*
 
 ---
 
@@ -105,7 +112,8 @@ B5 LABEL ~   ── PARTIAL: Type-1 domain-loss labels are 89.9% low-confidence 
                 inheritance onto domain-lost isoforms) [prior]
 CEILING      ── set by LABEL NOISE + representational saturation, NOT by encoding.
                 Capacity / within-gene supervision / layer-selection all fail to raise 0.630.
-Description  ── R1 0.715 → R2 0.838 → R3 0.890 (≈64% of linear signal is 8-axis-narratable)
+Description  ── R1 0.715 → R2 0.838 → R3 0.890 (8 axes = 65.5% of linear domain DEVIANCE,
+                McFadden R² 0.101/0.155; the additive C4 measure, ≈ the old AUROC-diff 64%)
 ```
 → Domain is **"solved to the representation, capped by labels."** The residual here is an
 *annotation* limit, provable because ESM-2 places Type-1 isoforms 2.89× farther from canonical
@@ -115,6 +123,14 @@ than Type-3 [prior] — it encodes what the labels do not express.
 
 This class does **not** fail at one bottleneck — it fractures into sub-mechanisms that fail at
 *different* bottlenecks. That heterogeneity is the whole point.
+
+> **Read the rows below as overlapping features, not an exhaustive/exclusive partition (C6).**
+> Targeting, disorder, and compositional descriptors are independent regressors, so a single
+> edit can be simultaneously N-terminal, disorder-region, and helix-rich; the per-bucket shares
+> in §5 are therefore *nested* (domain → non-domain → within-non-domain descriptors), not summed
+> side by side. And B2 (pooling) → B3 (anchor) are **sequential-conditional stages** (B3 acts only
+> on what B2 preserves), dissociated by the domain × pooling interaction — not two independent
+> bottlenecks (C1).
 
 ```
                                     B1 enc.  B2 pool  B3 anchor        B4 use  B5 label
@@ -132,11 +148,17 @@ Key transitions and where each dies:
   with labelling (region-pool *lowers* DR-AUC) — dies again at **B3** (no common anchor).
 - **Disorder-region**: survives B1 (decodes at AUROC 0.79) but as a **diffuse low-amplitude**
   shift (§6b: disorder β<0 after size control) — effectively no scorable direction (B3).
-- **Compositional (this session)**: helix/sheet/hydro/charge give a *median-split* usable direction
-  that survives the gene-permutation null (and, for brain sheet_delta, the label-permutation null
-  where gene-perm was fold-saturated). This is a **genuine B3-level signal on the non-domain
-  residual** — but its **B4 usage** (does the current MLP head exploit it?) and **B5 label** (what
-  GO term rewards it?) are both **untested/absent**. This is the live frontier.
+- **Compositional (this session; RESOLVED in §9)**: helix/sheet/hydro/charge give a *median-split*
+  direction that is **real** (label-permutation drops it to 0.5, e.g. brain sheet 0.653→0.500) but
+  **gene-INDEPENDENT** — real CV-dir-acc sits at/below its gene-permutation null in all cases, so it
+  is a dataset-wide long/short regularity, **not** a cross-gene anchor (the earlier "survives the
+  gene-perm null" reading was a verdict-logic bug; see §9). Its **B4 usage** was then computed and is
+  **negative** — the direction attenuates to the gene-perm null at PRISM output (`b4_compositional_
+  usage.py`), and its **B5 label** is absent. So this bullet is no longer a "live frontier": it is
+  **encoded / weakly-surfaced-as-dataset-wide, un-anchored, un-used, un-labelled**.
+  *(C5: computed on the domain_binary==0 subset so domain change cannot proxy it, and sheet_delta ⊥
+  axis0 (r=−0.089); a within-subset size_z partial was the planned confirmation but is now moot given
+  the §9 B4-negative placement.)*
 - **PTM-state**: the fundamental floor — sequence encodes the site, not the modification state;
   no sequence model can cross B3/B5 here.
 
@@ -153,21 +175,26 @@ Denominator = within-gene splice events (isoform-resolution population). Numbers
 Brain within-gene splices  (100%)
 ├─ 69.8%  DOMAIN-affecting              [FIRM: genome-wide rate, §6]
 │         ├─ used by model: DR-AUC 0.775 vs 0.500 null
-│         ├─ 8-axis-narratable: ~64% of the linear signal
+│         ├─ 8-axis-narratable: 65.5% of linear domain deviance (McFadden R², additive; C4)
 │         └─ ceiling cause: label noise (89.9% Type-1 low-conf), not representation
 │
 └─ 30.2%  NON-DOMAIN                    [FIRM: genome-wide rate]
           ├─ disorder-region overlap: encoded AUROC 0.79 [FIRM], diffuse/no-anchor  [MED]
           ├─ N-terminal targeting: partial MTS alignment ρ=0.126 [SOFT — gene-perm caveat]
-          ├─ compositional signal (helix/sheet/hydro/charge): B3 real [FIRM this session],
-          │  B4/B5 UNTESTED  ← quantifiable share of the 30.2% not yet measured
+          ├─ compositional signal (helix/sheet/hydro/charge): B3 real but GENE-INDEPENDENT
+          │  (real ≈ gene-perm null), B4 NOT used (attenuates to gene-perm null at output, §9) [FIRM]
           └─ pure SLiM: median score gap 0.0, 1.06% exceed 0.05 [FIRM] = the floor
 ```
+> **Rows overlap (C6):** disorder / N-terminal / compositional are non-exclusive descriptors of the
+> same 30.2% non-domain pool; the shares are nested (non-domain ⊃ each descriptor), never summed.
 
-**What is honestly NOT yet a number:** the *fraction of the 30.2% non-domain residual* that the
-compositional covariates actually explain, and whether that fraction is *used* by PRISM (B4) or
-merely *encodable* (B1–B3). Producing that number is the natural next computation — and it is the
-number that would tell us how much of the describability gap is "future-recoverable" vs "true floor."
+**Resolved since first draft (§9):** the compositional question — the one flagged here as "not yet a
+number" — has been computed. The direction is real but gene-independent (not a cross-gene anchor) and
+is **not propagated to PRISM's output** (B4 negative in both tissues). So this slice of the 30.2%
+non-domain residual is **encoded, weakly surfaced as a dataset-wide orientation, un-anchored, un-used,
+and un-labelled** — it *reinforces* the describability gap rather than opening recoverable signal. The
+still-open number is the fraction of the non-domain residual that is *decodable-but-non-compositional*
+(the R2/R3 tail), not the compositional part.
 
 **Four terminal buckets** (the user's requested end-categories), now precisely defined:
 
@@ -177,7 +204,7 @@ number that would tell us how much of the describability gap is "future-recovera
 | **Encoded, not surfaced** | dies B2 (pooling) | ~none | SLiM, part of disorder |
 | **Surfaced, un-anchored/un-labelled** | survives B2, dies B3 or B5 | (label-noise tail) | compositional, disorder, internal |
 | **True black box (not encoded)** | dies B1 | ~none | PTM-state, motif-*function* |
-| **Below ceiling, unexplained (FUTURE)** | used (B4) but description-tier R4 | R2+R3 gap ≈ (0.838→0.890+) | compositional B4 test |
+| **Below ceiling, unexplained (FUTURE)** | used (B4) but description-tier R4 | R2+R3 gap (non-linear domain tail) | decodable-but-non-compositional non-domain residual (compositional now resolved as B4-negative, §9) |
 
 ---
 
@@ -192,10 +219,43 @@ Then the "explainer" asks, per pair: *which axes carry this pair's shift, and do
 predict that axis profile?* The gap between covariate-predicted and actual axis-profile = the
 pair's R2+R3+R4 residual (represented but not covariate-describable).
 
-**Diagnostic triple** (spans the grid):
+**Diagnostic triple** (spans the grid), *a-priori expectation*:
 - **Type A — NDUFS4** (MTS-exon / domain loss): expected B1–B4 all pass, R1 high. The "everything works" reference.
 - **Type B — MAPT 3R/4R** (N-terminal insert count, no domain change): expected die at B2/B3, near-zero score gap. The "encoded-but-lost" reference.
 - **Type C — LRPPRC** (same-domain, CT=AD score): B1 may encode, but B4/B5 flat. The negative control.
+
+### 6a. Case-study RESULT (`case_study_interpretability.py`, brain; 2026-07-22)
+
+Per-pair projection onto the 8 axes (Δ in population-SD units) + the edit covariates + PRISM's
+output shift. The a-priori triple is **partly refuted, and the refutation is the finding:**
+
+| gene | edit (aa) | domain_binary | nterm | top axes (SD) | |ΔA|Σ | PRISM |ΔScore|₁ / #terms>0.05 |
+|---|---|---|---|---|---|---|
+| NDUFS4 | 219–464 | **0** | 1 | ax6 −4.1, ax2, ax3 | 6.7–12.3 | 11–54 / 51–435 |
+| MAPT | 384–620 | **0** | 0–1 | ax3 +2.7, ax2, ax1 | 7.4–11.8 | 17–43 / 83–330 |
+| LRPPRC | 801–1166 | **0** | 0–1 | ax6, ax3, ax2 | **4.9–5.7** | 18–23 / **95–152** |
+
+Three corrections to the framework, forced by the data:
+1. **NDUFS4 is not a Pfam-domain case.** Its MTS-exon loss scores `domain_binary=0, nterm=1` — a
+   **N-terminal targeting** edit, not a domain-architecture change. So it belongs to the §4b
+   *targeting* row, not §4a. The "domain loss" label was a biological gloss; at the Pfam/covariate
+   resolution the map uses, NDUFS4 is non-domain. (This is itself a describability lesson: the
+   biologically meaningful loss — mitochondrial import — is invisible to the domain covariate.)
+2. **MAPT is not B2/B3-silent.** Its large edits move PRISM's output substantially (up to 330/672
+   terms), refuting the "encoded-but-lost, near-zero score gap" expectation. Output *magnitude*
+   tracks edit *size*, not domain status — the model reacts; whether it reacts *correctly* (B5) is
+   the separate, untested question.
+3. **LRPPRC partially validates as the low-perturbation control** — despite the *largest* edits
+   (>1000 aa), it has the *smallest* total axis displacement (4.9–5.7 SD) and fewest PRISM terms
+   moved. Same-family PPR-repeat edits move the representation least per residue: consistent with a
+   weak-perturbation control, though not literally flat.
+
+**Map lesson from the triple:** at the individual-pair level the model's *output magnitude* is
+driven by edit size and is a poor read-out of the domain/non-domain distinction; the encoding axes
+(|ΔA| profile) separate the cases better (LRPPRC lowest), but the covariates do **not** cleanly
+predict which axes carry each pair — the per-pair axis profile is heterogeneous (ax6/ax2/ax3 rotate
+across pairs of the same gene), i.e. most of each pair's shift sits in the R2+R3 residual the 8
+axes + 7 covariates do not narrate. This is the describability gap made concrete on single isoforms.
 
 This makes the abstract cascade a concrete, per-isoform readout — and is directly extensible to
 any BISECT case.
@@ -412,3 +472,29 @@ reinforces the non-domain describability gap rather than opening a new usable si
 - A fully parallel B4 could add a label-permutation null on the OUTPUT (does PRISM output carry ANY
   real long/short structure under compositional orient?); the output's attenuation toward 0.5 already
   indicates this is weak.
+
+---
+
+## 10. Devils-advocate writing fixes applied to the body (2026-07-22)
+
+All §8 verdicts are now folded into the body (previously they lived only in §8 as a record):
+
+- **C1 (sequential-conditional):** §4b caveat box — B2→B3 are sequential-conditional stages
+  dissociated by the domain×pooling interaction, not independent bottlenecks.
+- **C4 (drop AUROC-diff 64%):** §3, §4a, §5 now cite the deviance-based **McFadden R² ratio = 65.5%**
+  (0.101/0.155, `case_study_interpretability.py` Part 2). The additive number coincides with the old
+  ≈64%, so the qualitative "~2/3 narratable" survives; only the deviance ratio is defensible.
+- **C5 (size_z partial):** §4b compositional bullet — noted as moot given the §9 B4-negative placement
+  (domain_binary constant in-subset, sheet_delta ⊥ axis0 r=−0.089 already shown).
+- **C6 (Venn, not partition):** §4b + §5 caveats — non-domain sub-mechanisms are overlapping
+  descriptors, shares are nested not summed.
+
+**Case study (§6a) executed (`case_study_interpretability.py`, Option A).** The a-priori diagnostic
+triple was *partly refuted by the data* (NDUFS4's MTS loss is domain_binary=0 = a targeting edit, not
+a Pfam-domain case; MAPT's large edits move PRISM output, not silent; LRPPRC validated as the lowest
+per-residue perturbation). Net map lesson: per-pair PRISM output magnitude tracks edit **size**, not
+domain status; the 8 axes + 7 covariates leave most of each individual pair's shift in the R2+R3
+residual — the describability gap made concrete on single isoforms.
+
+**Status:** C1/C4/C5/C6 writing fixes DONE; C3 gate PASSED (§8d); B4 computed (§9); case study DONE
+(§6a). The framework body is now internally consistent with its own §8/§9 findings.
