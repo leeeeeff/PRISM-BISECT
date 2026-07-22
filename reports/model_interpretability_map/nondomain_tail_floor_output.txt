@@ -1,0 +1,24 @@
+==================================================================================
+NON-DOMAIN TAIL (A) + FLOOR (B) — brain primary
+==================================================================================
+non-domain pairs: n=11666  genes=5613
+
+==================================================================================
+OPTION A — narrow the tail: reproducible structure surviving FULL covariate removal
+==================================================================================
+  full 7-covariate subspace captured (held-out): 0.257 (random-7 null 0.005) EXCESS=+0.252
+  reproducible structure of covariate-ORTHOGONAL residual (K=50): 0.467 (random null 0.039) EXCESS=+0.427
+  -> prior total reproducible=0.547; compositional-only named 0.184; full 7-cov named +0.252;
+     genuinely-UN-NAMED reproducible tail (survives all covariates) = +0.427 of centered var.
+
+==================================================================================
+OPTION B — is the 45% floor pooling-dilution or true noise? (edit changed-fraction strata)
+==================================================================================
+  changed-fraction quintile cutoffs: [0.053 0.142 0.314 0.526]
+  Q1: n= 2332  median changed-frac=0.023  reproducible-excess(K=20)=+0.666  (floor~=33%)
+  Q2: n= 2334  median changed-frac=0.091  reproducible-excess(K=20)=+0.427  (floor~=57%)
+  Q3: n= 2333  median changed-frac=0.218  reproducible-excess(K=20)=+0.401  (floor~=60%)
+  Q4: n= 2333  median changed-frac=0.410  reproducible-excess(K=20)=+0.392  (floor~=61%)
+  Q5: n= 2334  median changed-frac=0.681  reproducible-excess(K=20)=+0.447  (floor~=55%)
+  trend: Spearman(changed-fraction, reproducible-excess) = -0.400 (p=0.505)
+  -> flat/weak = the floor is closer to genuine per-pair noise, not simple pooling dilution

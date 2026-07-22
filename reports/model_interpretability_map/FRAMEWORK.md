@@ -220,6 +220,26 @@ truly novel. The dataset-wide mean(long−short) orientation is reproducible (cv
 carries only 1.5% of raw energy — consistent with the compositional "weakly-surfaced dataset-wide"
 placement (§9).
 
+**Tail narrowed + floor probed (`nondomain_tail_and_floor.py`, brain non-domain).**
+- *Option A — how much of the tail is truly un-named?* Removing the **full 7-covariate subspace**
+  (compositional + size + disorder + resync — every covariate that varies inside the non-domain
+  subset) leaves a covariate-orthogonal residual whose reproducible structure is still large (K=50
+  excess **+0.427**, versus the original +0.547; the 7 covariates jointly capture only +0.252). So
+  the reproducible non-domain structure is **high-dimensional and mostly outside our hand-crafted
+  descriptor basis** — the R2/R3 tail is genuinely large, not an artefact of leaving size/disorder
+  out. Caveat: "un-named" = outside these 7 descriptors, which could still include other nameable
+  properties (full AA composition, secondary-structure content), so this is an invitation to richer
+  descriptors, not proof of deep un-nameability.
+- *Option B — is the 45% floor a pooling artefact or genuine noise?* If mean-pooling merely diluted a
+  fixed local signal, the reproducible fraction would **rise** with edit changed-fraction (larger
+  edits diluted less). It does not: Spearman(changed-fraction, reproducible-excess) = **−0.40 (n.s.,
+  5 strata)**, and the *smallest* edits (Q1, 2.3% changed) are the *most* reproducible (floor 33%)
+  while larger edits sit at floor 55–61%. The floor therefore is **not** simple pooling dilution —
+  larger, more heterogeneous edits are more per-pair idiosyncratic (genuine biological diversity),
+  so the floor will not be recovered by swapping the pooling operator alone. Caveat: the two effects
+  (dilution↑, heterogeneity↓) could partly cancel; the firm conclusion is only that there is **no net
+  positive size trend**, ruling out the simple recoverable-by-pooling story.
+
 **Four terminal buckets** (the user's requested end-categories), now precisely defined:
 
 | Bucket | Definition (bottleneck signature) | Domain | Non-domain |
