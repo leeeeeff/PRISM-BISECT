@@ -1,0 +1,22 @@
+[load] muscle train N=31668, 30 layers ...
+[z-scored] tn (31668, 30, 640)
+[split 0] done
+[split 1] done
+[split 2] done
+
+============================================================================================
+AXIS ROTATION STABILITY — split-half PCA re-extraction (full-fit axis vs half-fit subspace)
+s_k = individual DIRECTION stability (max|cos|); u_k = 8-d SUBSPACE stability (proj norm)
+============================================================================================
+axis     evr   gap   A-vs-B dir s_k subspace u_k  W-vs-half  name
+   0  0.0429  1.47      0.999±0.000        1.000      1.000  β-sheet/hydrophobic
+   1  0.0292  1.33      0.998±0.001        1.000      1.000  length/size(weak)
+   2  0.0219  1.21      0.996±0.002        0.999      0.999  Pro-turn(GREY)
+   3  0.0181  1.02      0.960±0.031        0.998      0.990  DOMAIN(used,anchored)
+   4  0.0178  1.15      0.960±0.028        0.999      0.990  (unnamed)
+   5  0.0155  1.06      0.990±0.006        0.998      0.997  length
+   6  0.0146  1.12      0.989±0.002        0.997      0.997  inv-domain/low-cplx
+   7  0.0130   nan      0.978±0.017        0.980      0.994  acidic-helix(GREY)
+--------------------------------------------------------------------------------------------
+Read: s_k~1 = direction preserved (stable/anchored). u_k~1 & s_k low = subspace kept but
+      individual axis ROTATES within a near-degenerate block -> naming that direction is fragile.

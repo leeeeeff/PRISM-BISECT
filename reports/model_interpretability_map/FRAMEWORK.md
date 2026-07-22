@@ -627,15 +627,33 @@ referred to devils-advocate *before* any characterization effort (predict-before
 - Combined they are evr 0.022 + 0.013 = 3.5% of total variance → at most ~10% of the 36.3% tail even
   if wholly non-compositional (axis7 isn't). Rounding error, not tail-shrinkage.
 
-**Robustness sub-check (corrects the devils-advocate's "rotation-mixture" mechanism).** W_axes is
-*exactly* orthonormal (max off-diagonal 4×10⁻⁸), so axis2/7 are not linear mixtures of the identified
-axes — that literal confound is impossible. The *correct* concern is near-degeneracy: the low-variance
-block axis3–axis7 has consecutive eigenvalue ratios ≈ 1.0–1.2 (axis3/axis4 = 1.02), so the individual
-axis *directions* inside that block are not rotation-robust — a reseed could rotate axis7↔axis4↔axis5.
-Naming a specific low-variance PCA direction is therefore fragile **unless its identity is pinned by an
-external anchor**. axis3 survives this (its "domain/used" identity rests on ridge usage + BISECT
-concordance, not on its PCA position); axis2/7 have no such external anchor, so their identity rests
-purely on the rotation-unstable direction. This *strengthens* the DROP.
+**Robustness sub-check — SELF-CORRECTION (Option B, `axis_rotation_stability.py`, 2026-07-23).**
+My first-pass argument here (and the devils-advocate's "rotation-mixture" mechanism) claimed axis2/7
+are *rotation-unstable* because they sit in a near-degenerate low-variance block (axis3–axis7,
+eigenvalue ratios ≈ 1.0–1.2). **The data refutes this.** First, W_axes is *exactly* orthonormal (max
+off-diagonal 4×10⁻⁸), so axis2/7 are not linear mixtures of the identified axes — that literal confound
+is impossible. Second, a split-half PCA re-extraction (fit PCA(8) on two *disjoint* halves of the 31,668
+muscle-train isoforms × 30 layers, per-layer z-scored; measure per-axis max|cos| between halves) shows
+**every axis direction is highly reproducible**: s_k = 0.999 (axis0), 0.998 (axis1), **0.996 (axis2)**,
+0.960 (axis3), 0.960 (axis4), 0.990 (axis5), 0.989 (axis6), **0.978 (axis7)**; all subspace-overlaps
+u_k ≥ 0.98. With ~950k samples the directions are pinned tight despite the small eigenvalue gaps, so
+the near-degeneracy → instability inference was theoretically plausible but empirically wrong.
+
+Two corrected conclusions, both of which *still* support the DROP but for the right reason:
+1. **Direction stability is NOT the identified/grey discriminator.** The "grey" axes 2/7 (s = 0.996,
+   0.978) are *as reproducible or more* than the flagship domain axis. So axis2/7 stay grey not because
+   their direction is unstable but because their compositional signature is weak (axis2) or redundant
+   with already-B4-negative descriptors (axis7 = helix/charge), and neither is output-used.
+2. **The one genuinely rotation-sensitive axis is axis3 itself** (s = 0.960 ± 0.031, the lowest —
+   because axis3/axis4 is the tightest eigenvalue pair, ratio 1.02; it rotates ~16° with axis4 across
+   halves). Yet axis3's *identity* (domain/used) is the most robust of all, because it is pinned by an
+   **external functional anchor** (ridge usage + BISECT concordance), not by its PCA geometry. This is
+   the clean lesson: *geometric direction stability* and *identity robustness* are different properties;
+   only external anchoring guarantees the latter, and eigenvalue separation guarantees neither here.
+
+So the honest justification for leaving axis2/7 grey is composition-weakness + B4-negativity (above),
+**not** rotation-instability. (This correction is working-doc-only: axis2/7 were never named in the
+manuscript, so S_map/Discussion are unaffected.)
 
 **Decision rule if ever revisited:** run ridge test-time reliance (flagship-excluded high-variance
 null, §8d protocol) for axis2/axis7 → domain_binary/disorder targets, brain+muscle. Only outcome
