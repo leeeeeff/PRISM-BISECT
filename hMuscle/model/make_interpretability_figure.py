@@ -10,8 +10,9 @@ Four panels, one coherent visual language (colour = stage status; width/length =
   B  The 8 joint-PCA axes as a compass + covariate PROBES (arrows) coloured by usage.
   C  Non-domain embedding-difference variance decomposition (sunburst): floor / reproducible
      (compositional-named / tail), with the amino-acid-composition refinement annotated.
-  D  Description resolution dial (8-axis -> 640-linear -> non-linear) + the 3 diagnostic
-     case-study isoforms placed by total axis displacement vs PRISM output reaction.
+  D  Description resolution dial (8-axis -> 640-linear -> non-linear) + a per-pair scatter of
+     PRISM output shift vs edit size, coloured by domain status (domain/non-domain trends both
+     rise with size and overlap -> output is a size reaction), with the 3 diagnostic case genes.
 
 All numbers are from committed analyses (see annotations). Output: PNG + PDF at 300 dpi.
 """
@@ -166,7 +167,7 @@ def probe(ang, color, label, used_txt, r_axis, lab_xy):
              bbox=dict(boxstyle='round,pad=0.2', fc='white', ec=color, lw=0.8), zorder=5)
 r_ax3 = rlen(0.025)
 r_ax0 = rlen(0.156)
-probe(315, C_USED, 'domain probe', 'USED (ridge +11..50%)', r_ax3, (1.2, -1.2))
+probe(315, C_USED, 'domain probe', 'USED (ridge +11% brain)', r_ax3, (1.2, -1.2))
 probe(90, C_LOST, 'disorder probe', 'encoded, NOT used (−3%)', r_ax0, (-1.0, 1.5))
 # compositional probe -> dataset-wide (center), not an axis; draw as dashed to center
 axB.add_patch(FancyArrowPatch((-1.15, -1.05), (-0.15, -0.15), arrowstyle='-|>', mutation_scale=11,
@@ -209,8 +210,8 @@ for f, c, l in [(comp_named, C_COMP, f'comp.\nnamed\n{comp_named:.0%}'),
              fontsize=6.6, color='#5a4420', fontweight='bold')
     ang += ext
 axC.text(0.2, -1.28,
-         'Reproducible (gene-generalizing) = future-recoverable; floor = per-pair, not a pooling\n'
-         'artefact (reproducible fraction does not rise with edit size, ρ=−0.40 n.s.).\n'
+         'Reproducible = gene-generalizing GEOMETRIC structure (mostly composition, gene-indep. & unused),\n'
+         'not an established functional property; floor = per-pair, no simple size-dilution (ρ=−0.40 n.s.).\n'
          'Full 20-aa composition names ~61% of reproducible; ~0.39 survives = structural/positional tail.',
          ha='center', fontsize=6.2, color='#555')
 
@@ -218,7 +219,7 @@ axC.text(0.2, -1.28,
 # ============================ Panel D : resolution dial + case study ============================
 axD.set_xlim(0, 10); axD.set_ylim(0, 10); axD.axis('off')
 axD.text(0.1, 9.7, 'D', fontsize=15, fontweight='bold', ha='left')
-axD.text(5, 9.75, 'Description resolution (domain) + diagnostic isoform case study',
+axD.text(5, 9.75, 'Description resolution (domain) + per-pair output vs edit size',
          ha='center', fontsize=8.2)
 # --- resolution horizontal nested bar (top) ---
 x0, x1, yb = 1.2, 8.8, 8.4
@@ -237,22 +238,43 @@ for lbl, f, c in segs:
 axD.text(x0, yb - 0.3, 'AUROC 0.71 → 0.84 → 0.89 ; McFadden R² ratio = 65.5% narratable by 8 axes',
          ha='left', fontsize=6.4, color='#555')
 
-# --- case study scatter: x = total |dA| (axis displacement), y = PRISM #terms moved ---
-axins = axD.inset_axes([0.1, 0.06, 0.85, 0.60])
-cases = {
-    'NDUFS4 (Type A: MTS/targeting, domain=0)': ([12.32, 8.54, 6.67], [122, 435, 51], C_DOM),
-    'MAPT (Type B: N-term insert)':            ([11.77, 7.59, 7.37], [330, 107, 83], C_NDOM),
-    'LRPPRC (Type C: same-domain ctrl)':       ([5.65, 5.52, 4.90], [95, 152, 119], C_USED),
-}
-for lbl, (dx, dy, c) in cases.items():
-    axins.scatter(dx, dy, s=70, color=c, edgecolor='white', lw=1.0, label=lbl, zorder=3)
-axins.set_xlabel('total axis displacement  |ΔA|  (SD units)', fontsize=7)
-axins.set_ylabel('PRISM output terms moved (>0.05, /672)', fontsize=7)
+# --- size-vs-output scatter: x = edit size, y = PRISM |dScore|_1, colour = domain status ---
+# (makes 'output magnitude is an edit-SIZE reaction, not a domain-status reaction' verifiable by eye)
+D = np.load(OUT.parent / 'panelD_size_output.npz', allow_pickle=True)
+sz, mg, dm = D['size'].astype(float), D['mag'].astype(float), D['dom'].astype(int)
+isc, cg = D['is_case'], D['case_gene']
+rho_all, rho_dom, rho_nd = float(D['rho_all']), float(D['rho_dom']), float(D['rho_nd'])
+axins = axD.inset_axes([0.12, 0.06, 0.83, 0.60])
+rng = np.random.default_rng(0)
+for mask, c, lab in [(dm == 0, C_NDOM, 'non-domain'), (dm == 1, C_DOM, 'domain')]:
+    idx = np.where(mask & ~isc)[0]
+    if len(idx) > 2200:
+        idx = rng.choice(idx, 2200, replace=False)
+    axins.scatter(sz[idx], mg[idx], s=4, color=c, alpha=0.16, lw=0, label=f'{lab} (n={int(mask.sum())})')
+# binned-median trend per class (shows BOTH rise with size)
+edges = np.logspace(np.log10(max(sz.min(), 1)), np.log10(sz.max()), 9)
+ctr = np.sqrt(edges[:-1] * edges[1:])
+for mask, c in [(dm == 0, C_NDOM), (dm == 1, C_DOM)]:
+    med = [np.median(mg[mask & (sz >= edges[i]) & (sz < edges[i + 1])])
+           if (mask & (sz >= edges[i]) & (sz < edges[i + 1])).sum() >= 15 else np.nan
+           for i in range(len(ctr))]
+    axins.plot(ctr, med, '-', color=c, lw=1.8, zorder=4)
+# case-study genes overlaid as stars
+case_col = {'NDUFS4': '#7b3fa0', 'MAPT': '#b0303a', 'LRPPRC': '#2e8b57'}
+for g, cc in case_col.items():
+    m = isc & (cg == g)
+    axins.scatter(sz[m], mg[m], s=48, marker='*', color=cc, edgecolor='white',
+                  lw=0.5, zorder=5, label=f'{g}')
+axins.set_xscale('log'); axins.set_yscale('log')
+axins.set_xlabel('edit size  (# changed residues)', fontsize=7)
+axins.set_ylabel('PRISM output shift  |ΔScore|₁', fontsize=7)
 axins.tick_params(labelsize=6.5)
-axins.legend(fontsize=5.7, loc='upper left', framealpha=0.9)
-axins.grid(alpha=0.25, lw=0.5)
-axins.set_title('per-pair: output reaction tracks edit SIZE, not domain status; '
-                'LRPPRC lowest displacement', fontsize=6.2, color='#555')
+axins.legend(fontsize=5.2, loc='upper left', framealpha=0.9, ncol=2, handletextpad=0.3, columnspacing=0.7)
+axins.grid(alpha=0.22, lw=0.5, which='both')
+axins.set_title(f'output magnitude rises with edit size in BOTH classes '
+                f'(Spearman ρ={rho_all:.2f}); domain (blue) and non-domain (orange) trends\n'
+                f'overlap → output is a size reaction, not a domain-status reaction '
+                f'(composition adds ΔR²=+0.003 beyond size)', fontsize=5.9, color='#555')
 
 for ax in (axA, axB, axC, axD):
     for sp in ax.spines.values():
