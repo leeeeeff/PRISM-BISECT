@@ -1,0 +1,12 @@
+==================================================================================
+OPTION B REFINEMENT — is the non-domain tail beyond amino-acid COMPOSITION?
+brain non-domain; reference: total reproducible ~0.547, 7-covariate named 0.252
+==================================================================================
+non-domain pairs: n=11666  genes=5613
+
+  [compositional-4 ] dims= 4  descriptor-captured EXCESS=+0.185  |  residual reproducible (K=50) EXCESS=+0.462
+  [AA-composition-20] dims=20  descriptor-captured EXCESS=+0.335  |  residual reproducible (K=50) EXCESS=+0.387
+
+  -> full 20-dim amino-acid composition names +0.335 of centered variance;
+     reproducible structure surviving it = +0.387 (of the ~0.547 total) is BEYOND
+     amino-acid composition = structural / positional / contextual tail (true future work).

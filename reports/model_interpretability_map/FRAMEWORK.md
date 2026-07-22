@@ -230,6 +230,13 @@ placement (§9).
   out. Caveat: "un-named" = outside these 7 descriptors, which could still include other nameable
   properties (full AA composition, secondary-structure content), so this is an invitation to richer
   descriptors, not proof of deep un-nameability.
+- *Option A refinement — how much of the tail is beyond amino-acid COMPOSITION?* (`nondomain_tail_
+  rich.py`) The full 20-dim amino-acid composition of the changed residues (which linearly dominates
+  helix/sheet/hydro/charge) names **+0.335** of the centered variance — ~61% of the reproducible
+  0.547, far more than the coarse 4 (0.185) or the 7 covariates (0.252). But a real reproducible
+  residual (**+0.387**) survives full composition, so the deepest tail is **structural / positional /
+  contextual, genuinely beyond amino-acid composition** — this is the true future-work core, smaller
+  than the raw tail but not an artefact of coarse descriptors.
 - *Option B — is the 45% floor a pooling artefact or genuine noise?* If mean-pooling merely diluted a
   fixed local signal, the reproducible fraction would **rise** with edit changed-fraction (larger
   edits diluted less). It does not: Spearman(changed-fraction, reproducible-excess) = **−0.40 (n.s.,
