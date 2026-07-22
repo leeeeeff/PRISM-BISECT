@@ -33,7 +33,12 @@ mapped territory (a future-work bucket), not a blank.
 Hence the map is a **2-D grid**:
 
 - **Vertical — information-flow cascade (B0→B5):** where, along the sequence→score pipeline, does
-  the isoform difference get lost? Information is monotone non-increasing down this axis.
+  the isoform difference get lost? Information about a *fixed* isoform difference is monotone
+  non-increasing along a *single* extraction path (B0→B1→…→B5): each stage is a deterministic
+  function of the previous, so it cannot manufacture information the previous stage discarded.
+  (Devils-advocate attack 7: this is per-path monotonicity, not a claim that a later stage always
+  carries less *total* signal than an earlier one across different edits or that pooling/anchoring
+  are information-lossless — B2 and B3 are precisely the lossy stages the map localises.)
 - **Horizontal — description resolution:** given that something survives to a given bottleneck,
   how finely can we characterise it — by 8 axes / by full-640 linear / by non-linear only /
   undescribable?
@@ -284,7 +289,9 @@ pair's R2+R3+R4 residual (represented but not covariate-describable).
 ### 6a. Case-study RESULT (`case_study_interpretability.py`, brain; 2026-07-22)
 
 Per-pair projection onto the 8 axes (Δ in population-SD units) + the edit covariates + PRISM's
-output shift. The a-priori triple is **partly refuted, and the refutation is the finding:**
+output shift. The a-priori triple is **partly refined (not refuted) — and the refinement is the finding.**
+(Devils-advocate attack 6: "refuted" overstates it. NDUFS4's re-classification and MAPT's output
+movement do not break the cascade; they *sharpen* which stage each pair terminates at. Reframed below.)
 
 | gene | edit (aa) | domain_binary | nterm | top axes (SD) | |ΔA|Σ | PRISM |ΔScore|₁ / #terms>0.05 |
 |---|---|---|---|---|---|---|
@@ -299,9 +306,13 @@ Three corrections to the framework, forced by the data:
    resolution the map uses, NDUFS4 is non-domain. (This is itself a describability lesson: the
    biologically meaningful loss — mitochondrial import — is invisible to the domain covariate.)
 2. **MAPT is not B2/B3-silent.** Its large edits move PRISM's output substantially (up to 330/672
-   terms), refuting the "encoded-but-lost, near-zero score gap" expectation. Output *magnitude*
-   tracks edit *size*, not domain status — the model reacts; whether it reacts *correctly* (B5) is
-   the separate, untested question.
+   terms), revising the "encoded-but-lost, near-zero score gap" expectation. But this *confirms*
+   B1/B2 pass for these edits (the signal is encoded and survives pooling into an output reaction) —
+   it does not contradict the cascade; it relocates MAPT from "silent at B2/B3" to "reacts at B1/B2,
+   un-anchored at B3". Output *magnitude* tracks edit *size*, not domain status (confirmed
+   quantitatively: `b4_magnitude_usage.py`, incremental compositional R² beyond size = +0.003) — the
+   model reacts by size; whether it reacts *directionally/correctly* (B3/B5) is the separate question,
+   and the B4 magnitude test shows it does not use composition beyond size.
 3. **LRPPRC partially validates as the low-perturbation control** — despite the *largest* edits
    (>1000 aa), it has the *smallest* total axis displacement (4.9–5.7 SD) and fewest PRISM terms
    moved. Same-family PPR-repeat edits move the representation least per residue: consistent with a
@@ -555,3 +566,43 @@ residual — the describability gap made concrete on single isoforms.
 
 **Status:** C1/C4/C5/C6 writing fixes DONE; C3 gate PASSED (§8d); B4 computed (§9); case study DONE
 (§6a). The framework body is now internally consistent with its own §8/§9 findings.
+
+## 11. Second devils-advocate pass on the finished map (2026-07-22, Option C)
+
+After the map + figure + manuscript integration were complete, the whole map was referred to
+devils-advocate a second time (anti-local-minima: "this direction is right"-type consolidation).
+Seven attacks returned; adjudicated on scientific-depth grounds, not paper-polish.
+
+**Tested-and-rejected (the strongest objection failed a decisive test):**
+- **Attacks 2 & 5 — "PRISM output moves hundreds of GO terms per non-domain edit; calling it 'not
+  used' is indefensible."** This conflates *directional* usage (does the edit's compositional
+  orientation reach output? — already negative via cv_dir_acc) with *magnitude* usage (does output
+  SIZE depend on composition beyond edit size?). New decisive test `b4_magnitude_usage.py`
+  (brain non-domain, n=24,677, 8,590 genes, gene-disjoint ridge on |ΔPRISM|₁): size alone R²=+0.160;
+  4 compositional alone R²=+0.004; size+composition R²=+0.162 → **incremental composition beyond
+  size = +0.003**. PRISM's output reaction is a pure edit-SIZE reaction; composition adds ~nothing
+  in magnitude *or* direction. **"Not used" is precise in both senses.** Objection FAILS.
+
+**Accepted-and-softened (valid holes in the *language*, not the result):**
+- **Attack 1 — "reproducible ≠ functional."** The 54.7% gene-reproducible non-domain fraction was
+  written as if optimistic (future-recoverable). Correct: it is *geometric* reproducibility (top-PC
+  subspace generalises to held-out genes), and most of it is composition, which is gene-independent
+  and unused. Discussion softened to "geometric rather than an established functional property."
+- **Attack 3 — "'not a pooling artefact' overstated."** The floor's Spearman −0.40-with-edit-size
+  (n.s.) rules out a *simple monotone* dilution account but not dilution offset by heterogeneity.
+  Discussion softened to "does not support a simple mean-pooling-dilution account, although dilution
+  and biological heterogeneity could offset."
+- **Attack 4 — "McFadden 65.5% is pair-set-specific."** True; it is computed on the canonical-
+  anchored severity-pair set. S_map Panel D legend now states this explicitly.
+
+**Framing-only (reclassified, no new computation):**
+- **Attack 6 — "refuted" overstates the case study.** Reframed §6a: the triple is *refined*, not
+  refuted; MAPT's output movement *confirms* B1/B2 pass and relocates it within the cascade.
+- **Attack 7 — monotonicity claim.** Clarified §2: per-extraction-path monotonicity (each stage a
+  deterministic function of the previous), not a cross-edit total-signal ordering; B2/B3 are exactly
+  the lossy stages the map localises.
+
+**Net:** no finding overturned. The one attack that could have overturned "not used" was tested and
+failed. The rest tightened language that had drifted ahead of the evidence. The map's load-bearing
+claims — domain is the only demonstrably output-used class; non-domain fractures across B2/B3/B4;
+the non-domain remainder is two open problems not one recoverable gap — all stand.

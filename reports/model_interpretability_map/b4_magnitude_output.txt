@@ -1,0 +1,11 @@
+================================================================================
+B4 MAGNITUDE USAGE — does PRISM output-shift size depend on composition beyond size?
+brain non-domain, n=24677, genes=8590
+================================================================================
+  (a) size alone            : held-out R^2 = +0.160
+  (c) 4 compositional alone : held-out R^2 = +0.004
+  (b) size + compositional  : held-out R^2 = +0.162
+  incremental R^2 of composition beyond size = +0.003
+--------------------------------------------------------------------------------
+  -> composition adds ~nothing beyond size: PRISM output magnitude is a SIZE reaction.
+     'not used' is precise (no compositional signal, directional OR magnitude, beyond size).
