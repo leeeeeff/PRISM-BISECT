@@ -55,6 +55,11 @@ sequence  →  ESM-2 per-residue {h_i ∈ ℝ⁶⁴⁰}  →  mean-pool → (φ_
              └── B1 encoding ──┘               └── B2 pooling ──┘  └─ B3 anchor ─┘ └─ B4 usage ─┘        └─ B5 label ─┘
 ```
 
+> **§14 (2026-07-23) empirically refines B1 and B2b below.** B1 is NOT a single lossless box:
+> layer-resolved probes show feature-specific peak depths (disorder ~L2, domain ~L9) plus a shared
+> late-layer erosion. B2b is NOT an O(k/L) low-pass: per-residue re-extraction shows it is a
+> **spatial-coherence filter** (coherent shifts survive, incoherent spread is averaged out). See §14.
+
 | Bottleneck | Question | Metric (established) | Null / oracle |
 |---|---|---|---|
 | **B0 Physical** | Does the splice change the sequence? | changed-residue count, Pfam-envelope overlap | — (ground truth) |
@@ -718,3 +723,189 @@ only this working-doc §13 overstated the effect via a linear fit. **Method less
 sub-track): match the fit to the known functional form — a low *linear* R² on a heavy-tailed predictor
 is a fit-specification artifact, not evidence the predictor is uninformative.** Interpretability-map
 track closed.
+
+## 14. Operator re-framing → layer-resolved (A) + pooling-kernel (B) tests (2026-07-23)
+
+The map was re-expressed as an explicit operator cascade ("kernel of each stage's operator = the
+information it destroys"), referred to devils-advocate (7 attacks), and the two load-bearing
+assumptions were tested with new computation. **Both attacks improved the framing rather than
+breaking it: two literal math claims were dropped, and the B2b mechanism was upgraded.**
+
+**Self-corrections to the operator language (accepted before testing):**
+- *mean-pool is NOT an "orthogonal projection onto the DC mode."* Type mismatch: `P: ℝ^{L×640}→ℝ^640`,
+  `m=(1/L)1ᵀH`, is a lossy linear *surjection*; the genuine projection `H↦(1/L)11ᵀH` outputs a rank-1
+  matrix `1mᵀ`. The kernel `{H:1ᵀH=0}` is real but the "orthogonal projection" label is wrong.
+- *"kernel = information destroyed" holds only for the LINEAR stages* (B2b `P`; B3 fixed-`w` projection).
+  For nonlinear B1 (LayerNorm/attention/softmax) and B4 (ReLU/sigmoid), `ker(Jacobian)` is a local
+  tangent object ≠ MI loss. Decisive counter: LayerNorm's Jacobian is generically full-rank
+  (`ker={0}`) yet it globally removes per-token mean+scale — "kernel=destroyed" would falsely call it
+  lossless.
+
+### 14a. Option A — layer-resolved depth trajectory (cached pooled, all 30 layers, gene-disjoint CV)
+
+`layer_resolved_depth_trajectory.py`, `layer_depth_close_A.py`. Canonical-anchored
+`δφ^(ℓ)=φ^(ℓ)[other]−φ^(ℓ)[canonical]`; logistic AUROC per layer. Brain n=33,802 / muscle n=15,885.
+
+- **B1 is not monotone-lossless — feature-specific peak depth + shared late erosion (tissue-general).**
+  Domain decodability peaks MID-network (brain L9 0.815, muscle L11–12 0.638), erodes to a trough
+  (L19–24, brain ~0.745 / muscle ~0.58), partially recovers by L30 (0.787/0.609). Disorder (within
+  non-domain) peaks at the EARLIEST layers (L2, brain 0.871 / muscle 0.735) and erodes monotonically.
+  Reading: **local composition properties (disorder) are readable shallow; global/structural
+  properties (domain) require mid-network context; both are then eroded as late layers specialise for
+  the MLM objective.** So "B1 encoding" is a depth-ordered emergence, not one box. Both shapes
+  replicate across tissues (muscle weaker throughout, consistent with DR-AUC 0.630 vs 0.775).
+- **Final-layer LN removes SCALE but preserves domain DIRECTION.** `‖δφ^(ℓ)‖` grows monotonically
+  L1→L29 (7.1→54.0) then collapses at L30 (1.8, the final emb-layer-norm), yet domain AUROC *recovers*
+  L20→L30 — a concrete instance that LN destroys magnitude DOF while the domain-discriminative
+  direction survives (domain is not scale-encoded). Because AUROC is on per-dim-standardised features,
+  the curve reflects *directional* discriminability, not the norm growth.
+- **δ_layer (B2a) partly recovers the missed mid-peak, and the L9 anchor beats PRISM's L15/L30.**
+  Brain: `φ9` alone 0.815 > `φ15` 0.798 > `φ30` 0.787; `φ30−φ15` (what PRISM uses) 0.796; **concat[φ9,φ30]
+  0.824 (+0.028 over φ30−φ15)**. This is *why* δ_layer helps — L15 sits nearer the L9 peak than L30.
+  An architecture lead (not acted on without a full ablation; muscle shows the same ordering but weaker
+  and no concat gain, its domain signal being intrinsically weak).
+- Caveat: the late-layer trough could be partly a massive-activation/rogue-dimension × per-dim-standardisation
+  artifact; and this is all POOLED, so it cannot separate "B1 eroded it" from "B2b pooled it away at each
+  depth." Both are resolved by B (per-residue).
+
+### 14b. Option B — the pooling kernel is a COHERENCE filter, not O(k/L) (per-residue, L9/L15/L30)
+
+`b_extract_perresidue.py` re-ran ESM-2 keeping per-residue tensors at L9/L15/L30 for 2,262 isoforms
+(brain: 800 SLiM-candidate pairs = non-domain 3–40 aa localized edits; 400 domain controls ≥80 aa).
+`b_analyze_pooling_kernel.py` aligns each long/short pair (SequenceMatcher); at 'equal'-aligned
+positions `δh_p=h_long[p]−h_short[aligned]` is a **pure context effect** (same residue).
+
+- **T1 contextual-spread (‖δh_p‖ / edit-core magnitude, by distance from the edit):** the edit is NOT
+  locally supported — attention spreads it (1–2 aa neighbours carry 34% [SLiM] / 50% [domain] of the
+  edit-core magnitude), so the O(k/L) *local-support* premise is false (devils Attack 2 correct). BUT
+  the spatial EXTENT differs sharply: SLiM decays 0.341→0.031 (>100 aa) = ~11× (quasi-local); domain
+  decays 0.496→0.152 = ~3×, still 15% at >100 aa (quasi-global).
+- **T2 pooling survival (DC coherence `frac_kept=‖mean_p δh_p‖²/mean_p‖δh_p‖²`):** SLiM 0.082/0.050/0.071
+  (L9/L15/L30) vs domain 0.312/0.216/0.160 — **mean-pool discards ~92% of SLiM's per-residue δ-energy
+  vs ~69% of domain's (≈3.8× survival gap at L9).** Raw edit pooling weight `edit_len/L`: SLiM 3.8%,
+  domain 67%.
+- **Mechanism (upgrade of B2b):** mean-pool keeps only the DC (mean) component. SLiM's spread is
+  spatially INCOHERENT (positions point different directions → mean cancels → ~5–8% survives); domain
+  shifts are COHERENT (aligned directions → mean survives → 16–31%). So **B2b is a spatial-COHERENCE
+  filter, not a k/L low-pass — it preserves coherent shifts (domain) and averages away incoherent
+  perturbations (SLiM), independent of raw edit size.** This is the same maths as coherent-integration
+  gain in signal processing (only phase-aligned components survive averaging). T1 (distance-normalised,
+  confound-free) and T2 corroborate via independent routes.
+- Caveat: `frac_kept` depends on the equal-flank fraction (domain edits are 67% of their protein, so
+  fewer/nearer equal positions) — a partial confound on T2; T1 is independent of it and gives the same
+  verdict.
+
+### 14c. Verdicts on the two attacks
+
+- **Attack 1 SEVERE ("B1 destroys SLiM") — REFUTED for SLiM.** SLiM is strongly encoded per-residue at
+  the edit core at ALL layers (L9/L15/L30); it dies at POOLING (T2, ~92% discarded), not inside B1.
+  This confirms the original "B1 encodes, B2b destroys SLiM" placement. (B1 *is* mildly lossy in the
+  §14a sense — a shared late-layer erosion of pooled decodability — but it does not destroy the local
+  SLiM signal.)
+- **Attack 2 ("O(k/L) low-pass") — conclusion upheld, mechanism replaced.** SLiMs do die at mean-pool,
+  but by coherence filtering, not k/L dilution. The literal O(k/L) and "orthogonal-projection" claims
+  are dropped; the coherence-filter statement replaces them and is more defensible.
+
+**Net:** the operator re-framing survives as a *verified mechanistic model* (not a pedagogical
+restatement): B1 = depth-ordered feature-specific emergence + late erosion; **B2b = spatial-coherence
+filter (the geometric root of the domain vs non-domain trace split)**; B2a = depth-contrast recovering
+the mid-peak (L9 anchor > L15/L30). Scope: brain-primary, 1,200 pairs, SLiM operationally 3–40 aa.
+Reusable asset: `reports/model_interpretability_map/b_perres{,_muscle}/` (per-residue npz L9/L15/L30).
+
+### 14d. Coherence causal test + muscle replication (2026-07-23)
+
+**Muscle replication of the pooling kernel (`b_prep_subset_muscle.py`→`b_extract_perresidue.py`→
+`b_analyze_pooling_kernel.py _muscle`; 800 SLiM / 400 domain).** The coherence filter is
+tissue-general. T2 `frac_kept`: SLiM 0.087/0.051/0.077 (L9/L15/L30) vs domain 0.260/0.204/0.167 —
+~3× survival gap (brain 3.8×); edit weight SLiM 0.039 / domain 0.60. T1 spread (L9): SLiM 0.334→0.031
+(~11×, quasi-local), domain 0.503→0.117 (~4×, quasi-global). Near-identical to brain §14b. *(Gotcha
+recorded: muscle sequences must be parsed with `build_severity_pairs.parse_pep_sequences`, not
+`compute_esm2_all_layers.parse_pep_file` — the latter mis-returns ENST-id records; a first muscle run
+with the wrong parser gave zero equal-blocks. The muscle pair indices are into `my_isoform_list_fixed`.)*
+
+**Causal test — is the pooling-DISCARDED (incoherent, non-DC) energy INFORMATIVE, or noise?**
+(`b_causal_coherence.py`, brain, L9, gene-disjoint.) Per pair: DC = mean of equal-aligned δh (survives
+mean-pool); mode = S₁·Vt₁ of centered δh (dominant DISCARDED direction × magnitude); rand =
+magnitude-matched random direction. Decode within-class targets from DC vs DC+mode vs DC+rand.
+- **SLiM:** disorder DC 0.732 → +mode 0.675 / +rand 0.667 (**mode-beyond-null +0.009 ≈ 0**);
+  nterm DC 0.849 → +mode 0.812 / +rand 0.765 (**mode-beyond-null +0.047**, small).
+- **domain:** disorder DC 0.748 → +mode 0.665 / +rand 0.738 (**mode-beyond-null −0.073**, i.e. the
+  discarded mode is *worse than random* — pure noise).
+- **Verdict (matches predict-before-you-look from region-pool raising coherence but LOWERING DR-AUC):**
+  the discarded incoherent energy is **not usefully label-informative** — mean-pool is not throwing away
+  recoverable signal, it is correctly discarding incoherent noise. So the coherence filter is a real
+  bottleneck for *survival* but **NOT a recoverable architecture opportunity**; SLiM labelability is
+  limited by the genuine spatial diffuseness of the signal, not by the pooling operator. (Minor
+  exception: N-terminal targeting carries a little recoverable structure in the discarded mode,
+  +0.047 — consistent with its terminus-localized coherence.) This independently reconfirms §5's
+  "the floor is not recovered by swapping the pooling operator." **Interpretability-map operator track
+  (C→A→B) closed.**
+
+### 14e. SLiM-dispersion follow-up — "noise" corrected to structured-but-not-SLiM-functional (2026-07-23)
+
+Prompted by the biological point that SLiM multi-directional dispersion is *the mechanism* of
+per-isoform identity (Davey/Gibson; Buljan et al. 2012), not noise. Two label-free/native tests on
+the pooling-discarded (non-DC) equal-aligned residual of brain SLiM pairs (L9/L15).
+
+- **§14d's "noise" was too strong — CORRECTED (`b_slim_dispersion_structure.py`).** The discarded
+  energy is **not random**: gene-disjoint top-K subspace reproducibility excess **+0.31** over a random
+  subspace (SLiM, replicated L9 & L15), i.e. it occupies a reproducible **~48–55-dim** manifold
+  (participation ratio 54.5/48.2), *higher-dimensional* than domain's (37.5/28.9). Within a pair there
+  is **no single dominant discarded direction** (split-half top-PC |cos| real 0.55–0.64 < marginal-
+  variance null 0.76–0.84, whereas domain real > null) — genuinely multi-directional. So the precise
+  statement is **"structured but high-dimensional / un-poolable by a 1-D DC and un-anchorable by a 1-D
+  B3,"** not "noise." (Caveat: this reproducible subspace can include generic position/length/context
+  geometry, not necessarily SLiM-identity.)
+- **But it is NOT linearly SLiM-functional (`b_option_B_slim_target.py`).** Target = change in the
+  project's own SLiM regex classes (exp_true_motif_level.py A3: NLS/NES/PXXP/CK2/PKA/…) in the edit.
+  Decode from DC vs DC+discarded-mode vs DC+magnitude-matched-rand, gene-disjoint. The discarded mode
+  adds **~0 beyond null** for all classes (NLS +0.047, PXXP −0.028, CK2 −0.028, PKA −0.004), and DC
+  itself only weakly carries SLiM-class (AUROC 0.54–0.62). So the reproducible ~50-dim discarded
+  structure is **generic (position/length/context), not linearly SLiM-class-specific.**
+- **Net:** the discarded SLiM energy is real reproducible structure (correcting "noise") yet neither
+  poolable, cross-gene-anchorable, GO/disorder-informative (§14d), nor linearly SLiM-class-informative
+  (§14e). Three routes remained; **two are now tested and closed:**
+  - **Edit-core route (`b_editcore_slim.py`) — SLiM survives the core but it is COMPOSITION.** The
+    edit-core representation predicts SLiM-class *better than the pooled δφ* (NLS 0.764 vs 0.658, PXXP
+    0.671 vs 0.575, CK2/PKA +0.04–0.07) — so identity survives in the residues and mean-pool dilutes it
+    (vindicating a core-focused/motif-centric pooling). BUT the 20-dim edit AA-**composition** matches or
+    beats the ESM edit-core (0.65–0.78 ≥ editcore), so the recoverable signal is *compositional* — and
+    composition is already gene-independent and B4-negative (§6a/§9, unused by PRISM). "Core-focused
+    pooling" would thus recover the edit's composition, not context-dependent switching.
+  - **Non-linear route (`b_nonlinear_beyond_comp.py`, HistGradientBoosting) — does NOT rescue it.** Across
+    all four classes ESM edit-core adds ~0 beyond composition (editcore-beyond-comp +0.019/+0.012/−0.028/
+    −0.065), and the discarded mode is at chance (0.497–0.574). Non-linearity does not surface SLiM signal
+    the linear probes missed, in either the core-beyond-composition or the discarded context.
+  - **ELM high-specificity-label route (`b_elm_beyond_comp.py`, 353 ELM class regexes) — TESTED,
+    partial positive with a clean mechanism.** For the 25 most-specific testable ELM classes, the median
+    editcore-beyond-composition is −0.017 (composition is still the ceiling for most), BUT **6/25 exceed
+    it, and the strongest are all POSITIONALLY-defined SLiMs**: DEG_Nend_Nbox_1 +0.239, DEG_Nend_UBRbox_2
+    +0.236, LIG_BIR_II_1 +0.197, DEG_Nend_UBRbox_1 +0.093 (N-end-rule degrons + N-terminal IAP ligand).
+    Interpretation: the ESM edit-core beats composition **exactly for the SLiMs whose identity is
+    positional (N-terminal)** — ESM encodes N-terminal position, which 20-dim composition cannot;
+    internal composition-defined SLiMs (SH2/MAPK-docking/PKA/caspase/LIR) still add ~0. So the model DOES
+    carry SLiM-functional information beyond composition, but it is dominated by POSITIONAL (N-terminal)
+    encoding, not context-dependent binding-interface switching.
+  - **Supervision-causal test (`b_supervision_causal.py`) — SELF-CORRECTS the "supervision-only" reading.**
+    The +0.24 positional-SLiM encoding was measured on the EDIT-CORE, but PRISM ingests the MEAN-POOLED δφ.
+    Decoding the N-end-degron change from comp vs comp+pooled-δφ (PRISM's actual input) vs comp+editcore:
+    **pooled-beyond-comp ≈ 0 (−0.029 to +0.035) while editcore-beyond-comp = +0.09 to +0.24.** So the
+    encoded positional signal is **NOT accessible from PRISM's pooled input** even for the SLiMs where the
+    edit-core carries it — mean-pool destroys the pooled-accessibility. Controls (SH2/endocytic) flat for
+    both. **Therefore the earlier "bottleneck = supervision, not geometry" was overstated.** The correct
+    reading: it is a **JOINT B2b (pooling) + B4/B5 (supervision) bottleneck, with pooling PRIMARY for
+    output-accessibility** — even a perfect SLiM label cannot be used by PRISM's pooled architecture because
+    the pooled input no longer carries the signal beyond composition.
+  - **Terminal reading (3-layer, corrected):** (i) *Structural*: discarded dispersion is real ~50-dim
+    reproducible structure. (ii) *Encoding*: positionally-defined SLiMs (N-end degrons) are encoded in the
+    per-residue edit-core beyond composition (+0.24, via ESM's N-terminal positional encoding); composition-
+    defined SLiMs are not. (iii) *Output-accessibility & usage*: mean-pool (B2b) removes the pooled-
+    accessibility of even the encoded positional signal (pooled-beyond-comp ≈ 0), and separately no isoform-
+    level label rewards it (B4/B5, `b4_nterm_usage.py`). **The SLiM bottleneck is B2b-pooling AND B4/B5-
+    supervision jointly — pooling first for accessibility. This VINDICATES a motif/edit-core-centric pooling
+    architecture (bypass B2b) as NECESSARY, to be paired with SLiM-specific supervision** — the "geometry-
+    bypass is necessary-not-sufficient, supervision is the binding constraint" phrasing of §14e is corrected:
+    both bind, and pooling is the primary gate to output-accessibility. **SLiM sub-track closed (with two
+    self-corrections: "noise"→structured; "supervision-only"→joint-pooling-primary).**
+  Assets: `b_slim_dispersion_structure.py`, `b_option_B_slim_target.py`, `b_editcore_slim.py`,
+  `b_nonlinear_beyond_comp.py`, `b_{optionB_slim_target,editcore_slim}.tsv`. **SLiM sub-track closed.**
