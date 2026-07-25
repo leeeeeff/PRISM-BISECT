@@ -16,7 +16,7 @@ Isoform-level function prediction is fundamentally limited by two problems: **da
 |---------|-------------|---------|
 | Human skeletal muscle (18 BP GO terms) | **0.7022** | Supervised |
 | Human brain AD/CT (zero-shot transfer) | **0.5998** | Zero-shot |
-| DIFFUSE baseline (Yao et al., *Nat Methods* 2022) | 0.4981 | Supervised |
+| DIFFUSE baseline (Chen et al., *Bioinformatics* 2019, doi:10.1093/bioinformatics/btz367; own 4,184-category benchmark — not run head-to-head on this project's data) | 0.581 | Reported, not directly comparable |
 
 ### Tier A AD Isoform Switches (BISECT)
 
