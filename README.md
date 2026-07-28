@@ -2,7 +2,7 @@
 
 **PRISM** (Protein-isoform Resolution via Intrinsic Sequence Modeling) and **BISECT** (Biological Isoform-Switch Evidence Characterization Tool) — a two-stage framework for isoform-level function prediction and disease-associated isoform-switch characterization from long-read single-cell RNA sequencing data.
 
-> Manuscript in preparation. Target: *Nature Methods* / *Nature Machine Intelligence*.
+> Manuscript in preparation. Target: *Nature Communications*.
 
 ---
 
