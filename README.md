@@ -183,7 +183,7 @@ All numeric results in the manuscript were verified against per-case `analysis.j
   title   = {PRISM: isoform-level function prediction via protein language model embeddings
              reveals disease-associated alternative splicing in Alzheimer's disease},
   author  = {Lee, Seungwon and ...},
-  journal = {Nature Methods},
+  journal = {Nature Communications},
   year    = {2026},
   note    = {Manuscript in preparation}
 }
