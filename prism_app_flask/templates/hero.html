@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}PRISM+BISECT — Isoform Function Representation Map{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="coord">▸ SYS/PRISM · v15d · ESM-2 t30 · brain N=63,994 · 8-axis representation map</div>
+  <h1>Read isoform <em>function</em><br><span class="thin">from</span> sequence</h1>
+  <p class="lead">
+    PRISM decomposes ESM-2 representations along an <b>information cascade (B0→B5)</b> to predict
+    each isoform's function; BISECT characterizes the biological consequences of isoform switching.
+  </p>
+  <div class="hero-cta">
+    <a class="btn primary" href="{{ url_for('tutorial.home') }}#data">▸ Start analysis</a>
+    <a class="btn ghost" href="{{ url_for('individual.result', query='NDUFS8') }}">Example: probe NDUFS8</a>
+  </div>
+</section>
+
+<section class="cascade">
+  <h2><span class="tag-label sig">§ 01</span>&nbsp;&nbsp;Representation cascade — what survives, what dies</h2>
+  <p class="cascade-note">Each sequence feature flows through six stages. Some survive to <b>usage</b> (the model acts on them);
+    others are <b>diluted</b> by mean-pooling or <b>encoded but never used</b>. This determines what PRISM can actually resolve.</p>
+
+  <div class="cascade-grid">
+    <div class="cg-row cg-head">
+      <div class="cg-feat"></div>
+      {% for k,n in [('B0','sequence'),('B1','encoding'),('B2','pooling'),('B3','anchor'),('B4','usage'),('B5','label')] %}
+        <div class="cg-cell cg-stage"><span class="k">{{k}}</span>{{n}}</div>
+      {% endfor %}
+    </div>
+    {% for feat, states, fate in [
+      ('domain content',      ['live','live','live','live','use','use'],  'survives → resolvable'),
+      ('sequence length',     ['live','live','live','live','use','use'],  'survives → resolvable'),
+      ('disorder / IDR',      ['live','live','fade','fade','dead','dead'],'partly diluted'),
+      ('2° structure / comp', ['live','live','live','live','dead','dead'],'encoded, not used'),
+      ('local motif / SLiM',  ['live','live','dead','dead','dead','dead'],'pooling-diluted'),
+      ('degron / N-terminal', ['live','live','dead','dead','dead','dead'],'pooling-diluted') ] %}
+      <div class="cg-row">
+        <div class="cg-feat">{{ feat }}</div>
+        {% for s in states %}<div class="cg-cell s-{{s}}"></div>{% endfor %}
+        <div class="cg-fate f-{{ 'ok' if 'survives' in fate else ('mid' if 'partly' in fate else 'no') }}">{{ fate }}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="cascade-legend">
+    <span><i class="lg s-live"></i> carried</span>
+    <span><i class="lg s-fade"></i> fading</span>
+    <span><i class="lg s-use"></i> used at output</span>
+    <span><i class="lg s-dead"></i> lost</span>
+  </div>
+
+  <div class="cascade-verdict">
+    <div class="cv ok"><b>✓ PRISM resolves</b><span>domain-level function · gene-level GO · structural class · length-driven isoforms</span></div>
+    <div class="cv no"><b>✕ not resolvable</b><span>local motif edits · isoform-specific degrons — diluted by pooling or blocked by gene-level labels</span></div>
+  </div>
+</section>
+
+<section class="cap-grid">
+  {% for c in capabilities %}
+  <a class="cap-card" href="{{ c.href }}">
+    <div class="cap-idx">MODE / {{ '%02d'|format(loop.index) }}</div>
+    <div class="cap-icon">{{ icon(c.icon)|safe }}</div>
+    <h3>{{ c.title }}</h3>
+    <p>{{ c.desc }}</p>
+  </a>
+  {% endfor %}
+</section>
+{% endblock %}

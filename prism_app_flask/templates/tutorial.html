@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Tutorial — PRISM+BISECT{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="tag-label"><span class="sig">▸</span> TUTORIAL / KNOWLEDGE BASE</div>
+  <h1>PRISM+BISECT Tutorial</h1>
+  <p><a class="btn ghost" href="{{ github }}" target="_blank" rel="noopener">▸ GitHub repository</a></p>
+</section>
+
+<section class="tut-blog">
+  <nav class="tut-toc" id="tutToc">
+    {% for s in sections %}
+    <a href="#{{ s.id }}" class="tut-toc-item{% if loop.first %} on{% endif %}" data-id="{{ s.id }}">
+      <span class="tut-toc-icon">{{ icon(s.icon)|safe }}</span>
+      <span class="tut-toc-label">{{ s.title }}</span>
+    </a>
+    {% endfor %}
+  </nav>
+  <div class="tut-posts">
+    {% for s in sections %}
+    <article class="tut-post{% if loop.first %} active{% endif %}" id="{{ s.id }}">
+      <div class="step-k">{{ s.k }}</div>
+      <h2>{{ icon(s.icon)|safe }} {{ s.title }}</h2>
+      <p class="tut-dek">{{ s.desc }}</p>
+      {% if s.body %}
+        {{ s.body | safe }}
+      {% else %}
+        {% if s.code %}<pre><code>{{ s.code }}</code></pre>{% endif %}
+        {% if s.stub %}<p class="tut-stub muted mono sm">▸ Write-up coming soon.</p>{% endif %}
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/tutorial.js') }}"></script>
+{% endblock %}

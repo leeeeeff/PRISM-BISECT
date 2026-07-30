@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}Individual Analysis — PRISM+BISECT{% endblock %}
+{% block head %}
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="tag-label"><span class="sig">▸</span> INDIVIDUAL / GENE·ISOFORM PROBE</div>
+  <h1>Individual Gene · Isoform Probe</h1>
+  <form class="search-bar search-bar-lg" onsubmit="event.preventDefault(); goSearch(this);">
+    <input id="q" name="q" value="{{ query or '' }}" autocomplete="off"
+           placeholder="Gene symbol (e.g. NDUFS8, MAPT) or isoform ID">
+    <button class="btn primary" type="submit">▸ Probe</button>
+    <ul id="suggest" class="suggest"></ul>
+  </form>
+</section>
+
+<!-- Gene Quick Report — open by default; expands to a single-axis-at-a-time
+     candidate browser (streamlit target_hub.py card format ported; search aid). Auto-collapses
+     once a "▸ full analysis" pick loads the full panel readout below (see renderDetail() /
+     qcCollapse() in individual.js). -->
+<section class="panels qc-sec">
+  <button class="qc-toggle" id="qc-toggle" type="button" aria-expanded="true" aria-controls="qc-body">
+    <span class="tag-label sig">§ 00 · GENE QUICK REPORT</span>
+    <span class="muted mono sm">4 analysis axes · one candidate at a time · click to browse</span>
+    <span class="qc-chevron">▾</span>
+  </button>
+  <div id="qc-body" class="qc-body">
+    <div class="tissue-tabs qc-axis-tabs" id="qc-axis-tabs">
+      <button class="ttab on" data-axis="s1"><span class="qc-tab-label"></span></button>
+      <button class="ttab" data-axis="s3"><span class="qc-tab-label"></span></button>
+      <button class="ttab" data-axis="bisect"><span class="qc-tab-label"></span></button>
+      <button class="ttab" data-axis="diversity"><span class="qc-tab-label"></span></button>
+    </div>
+    {% for ax in ['s1','s3','bisect','diversity'] %}
+    <div class="panel wide qc-axis-panel {{ '' if loop.first else 'hidden' }}" data-axis="{{ ax }}">
+      <h3>
+        <span class="qc-axis-label"></span>
+        <span class="qc-nav">
+          <button class="qc-prev" type="button" aria-label="previous candidate">◂</button>
+          <span class="qc-pos mono sm"></span>
+          <button class="qc-next" type="button" aria-label="next candidate">▸</button>
+        </span>
+      </h3>
+      <p class="cap qc-axis-desc"></p>
+      <div class="qc-card-body"><p class="muted mono sm">▸ loading…</p></div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="result" class="result"
+         data-query="{{ query or '' }}"
+         data-kind="{{ resolved.kind if resolved else '' }}"
+         data-key="{{ resolved.key if resolved else '' }}">
+  {% if not query %}
+    <p class="hint">Enter a gene symbol or isoform ID to probe GO prediction · 8-axis representation-map position · per-layer information trajectory.</p>
+  {% elif resolved and resolved.kind == 'none' %}
+    <p class="err">✕ ‘{{ query }}’ — no match in brain universe (N=63,994)</p>
+  {% endif %}
+</section>
+
+<!-- Isoform list (gene search) -->
+<section id="iso-list" class="iso-list hidden">
+  <h2><span class="sig">§ 02</span>&nbsp;&nbsp;Isoforms</h2>
+  <div class="readout" id="gene-readout"></div>
+  <table>
+    <thead><tr>
+      <th></th><th>isoform</th><th>peak</th><th>axis3·domain</th><th>axis5·length</th>
+      <th>max GO</th><th>top term</th>
+    </tr></thead>
+    <tbody id="iso-tbody"></tbody>
+  </table>
+  <div class="iso-cart-row">
+    <button class="btn ghost sm" type="button" onclick="addSelectedToCart()">+ Add selected to CART</button>
+    <span class="muted mono sm" id="isoAddCartStatus"></span>
+  </div>
+  <div class="panel wide" style="margin-top:1rem">
+    <h3><span class="ix">§</span>Transcripts × GO heatmap · functional modules</h3>
+    <div id="geneHeatmap"></div>
+    <p class="cap">rows = isoforms · cols = top GO terms grouped into functional modules (color bar above columns) · click a cell to inspect its module ↓</p>
+    <div id="moduleDetail"></div>
+  </div>
+</section>
+
+<!-- Panels -->
+<section id="panels" class="panels hidden">
+  <div class="panel-head">
+    <span class="tag-label sig">§ 03 · READOUT</span>
+    <h2 id="detail-title"></h2>
+    <span id="detail-gene" class="badge"></span>
+    <span id="detail-peak" class="badge alt"></span>
+    <span id="detail-noncoding" class="badge noncoding hidden"
+      title="Non-coding transcript — ESM-2 embedding is zero by design, so every panel below is sigmoid(bias)-only, no real functional signal">⚠ non-coding (no signal)</span>
+  </div>
+
+  <!-- I1 — top predicted function, prominent -->
+  <div class="top-go-banner" id="topGoBanner"></div>
+
+  <div class="panel-grid">
+    <div class="panel wide"><h3><span class="ix">A</span>GO function prediction · top 8</h3>
+      <div class="pa-split">
+        <div id="topGo3" class="top-go3"></div>
+        <div id="panelA"></div>
+      </div></div>
+    <div class="panel"><h3><span class="ix">B</span>Sequence covariates</h3>
+      <div id="covPanel"></div>
+      <p class="cap">Computed from the protein sequence. Available for coding transcripts with a mapped ORF; non-coding / novel transcripts are unavailable (no protein).</p></div>
+    <div class="panel"><h3><span class="ix">C</span>8-axis fingerprint
+        <select id="axisSel" class="seg-sel"></select></h3>
+      <div id="panelC"></div>
+      <div class="axis-meaning" id="axisMeaning"></div></div>
+    <div class="panel wide"><h3><span class="ix">E</span>Domain architecture · vs most-complete isoform</h3>
+      <div id="domPanel"></div></div>
+    <div class="panel wide"><h3><span class="ix">D</span>Layer profile · information magnitude vs functional discriminability
+        <select id="layerGo" class="seg-sel"></select></h3>
+      <div id="panelD"></div>
+      <p class="cap"><b style="color:var(--signal)">orange (left axis)</b> = this isoform's representation <b>magnitude</b> ‖Z‖ (how much signal it carries per layer) · <b style="color:var(--trace)">blue (right axis)</b> = <b>discriminability</b> of the selected function (how well each layer separates GO+ vs GO− isoforms, global) · ▲ info-peak · ★ discriminability-peak — the two peaks usually differ: magnitude peaks late, discrimination peaks earlier</p></div>
+    <div class="panel wide"><h3><span class="ix">3D</span>Joint PCA trajectory · PC1–PC2–PC3</h3>
+      <div class="p3d-ctrl">
+        <select id="cohortGo" class="seg-sel"></select>
+        <span class="seg" id="pca3dToggle">
+          <button data-mode="raw" class="on">unnormalized</button><button data-mode="norm">normalized</button>
+        </span>
+        <label class="opt"><input type="checkbox" id="optGrad" checked> layer gradient</label>
+        <label class="opt"><input type="checkbox" id="optFisherColor"> colour by discriminability (Fisher)</label>
+        <label class="opt"><input type="checkbox" id="optPeaks"> peak markers</label>
+        <label class="opt"><input type="checkbox" id="optBundle" checked> GO-matched isoforms</label>
+      </div>
+      <div class="p3d-sibs" id="p3dSibs"></div>
+      <div id="panel3D"></div>
+      <p class="cap"><b style="color:var(--signal)">colored</b> = this isoform · <b style="color:var(--txt-hi)">dashed high-contrast</b> = GO-matched mean path · faint lines = other isoforms independently top-scoring for the selected GO term (excludes this one) · toggle sibling isoforms above to overlay their paths · gradient = layer L1→L30 colour ramp, or per-layer discriminability (AUROC) if that option is on · peaks = info/discriminability peak markers</p></div>
+  </div>
+</section>
+
+<!-- Compact isoform-list recap — appears in the left margin (wide viewports only) once the
+     real isoform list (§02) scrolls out of view, so you don't have to scroll back up to remember
+     which other isoforms belong to this gene while reading §03. Hides again once §02 is back
+     in view. Populated/toggled by individual.js (IntersectionObserver on #iso-list table). -->
+<div class="iso-mini-summary hidden" id="isoMiniSummary"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/instrument.js') }}"></script>
+<script src="{{ url_for('static', filename='js/individual.js') }}"></script>
+{% endblock %}

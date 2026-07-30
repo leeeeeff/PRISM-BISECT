@@ -85,6 +85,8 @@ web/
 # --- Generated documents (re-derivable from MD) ---
 *.docx
 *.html
+# Flask app view layer is source, not a generated doc — whitelist it back
+!prism_app_flask/templates/*.html
 
 # --- Sample metadata (institutional use only) ---
 processed_sample_metadata.*.csv

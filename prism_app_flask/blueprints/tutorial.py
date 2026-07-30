@@ -184,6 +184,168 @@ tier and confidence first (is this case worth attention at all), then the mechan
 </div>
 """
 
+DATA_BODY = r"""
+<div class="tut-quicknav">
+  <span class="tut-quicknav-label">On this page</span>
+  <a href="#data-env">1. Environment &amp; package installation</a>
+  <a href="#data-raw">2. Raw data this pipeline expects</a>
+  <a href="#data-preprocess">3. Preprocessing: reads → per-residue ESM-2 embeddings</a>
+  <a href="#data-train">4. Training PRISM</a>
+  <a href="#data-bisect">5. Running BISECT on your own switch calls</a>
+  <a href="#data-app">6. Populating this app with your own data</a>
+</div>
+
+<h3 id="data-env">1. Environment &amp; package installation</h3>
+<p>Everything below assumes a single conda environment (<code>isoform_env</code>) shared by
+preprocessing, training, BISECT, and this Flask app. Three separate requirement files exist because
+the three stages have genuinely different dependency footprints (deep learning vs. bioinformatics
+utilities vs. the web app itself) — installing all three into one env is intentional, not an
+accident of repo history.</p>
+<pre><code># clone
+git clone https://github.com/leeeeeff/PRISM-BISECT.git
+cd PRISM-BISECT
+
+# one shared conda env for the whole pipeline
+conda create -n isoform_env python=3.9
+conda activate isoform_env
+
+# PRISM: deep learning + ESM-2 (torch, fair-esm, tensorflow for the Keras training head)
+pip install -r requirements_training.txt
+pip install tensorflow==2.12
+
+# BISECT: evidence-pipeline utilities (requests/Jinja2 for case reports, biopython, ...)
+pip install -r requirements_bisect.txt
+
+# this Flask app (adds only flask + gunicorn on top of the above — numpy/pandas already present)
+pip install -r prism_app_flask/requirements.txt</code></pre>
+<p>BISECT's domain-annotation module (M2) additionally needs <b>HMMER</b> installed as a system
+binary (not a pip package) plus the Pfam-A HMM database:</p>
+<pre><code># HMMER (hmmscan) — via conda-forge, or your package manager
+conda install -c bioconda hmmer
+
+# Pfam-A.hmm — https://www.ebi.ac.uk/interpro/download/pfam/
+hmmpress Pfam-A.hmm   # build the binary index hmmscan needs</code></pre>
+<div class="tut-callout">
+<b>GPU is required for §3–4, not for the app itself.</b> ESM-2 extraction and PRISM training both
+need CUDA (tested on CUDA 12.x). This Flask app only reads precomputed <code>.npy</code>/<code>.json</code>
+indices at runtime (§6) and runs fine on CPU — you do not need a GPU merely to browse or deploy it.
+</div>
+
+<h3 id="data-raw">2. Raw data this pipeline expects</h3>
+<p>Nothing in this repository ships the raw sequencing data itself — it is available on request (see
+the Data Availability table below), reflecting normal practice for in-house patient/tissue material.
+What the pipeline needs, concretely:</p>
+<pre><code>long-read scRNA-seq BAM  (ONT, aligned)          — one per tissue/condition
+reference genome FASTA + annotation GTF          — species-matched to the BAM
+Pfam-A.hmm                                       — BISECT M2 domain annotation (§1)
+ESM-2 checkpoint (esm2_t30_150M_UR50D)           — auto-downloaded by fair-esm on first call, no manual step</code></pre>
+<p>The muscle and brain datasets this project's own numbers come from are in-house (ONT long-read for
+muscle; IsoQuant-called GTF with 10,817 novel isoforms for brain AD/CT) — available upon request, not
+bundled. A public 42-sample SRA validation cohort is listed in
+<code>Final_analysis/pipeline_bioanalysis/cases_input_sra.csv</code> and is the easiest way to exercise
+the full pipeline end to end without requesting the in-house data first.</p>
+
+<h3 id="data-preprocess">3. Preprocessing: reads → per-residue ESM-2 embeddings</h3>
+<p>Three stages, each a deterministic transformation of the last (this is stage B0→B1 of the
+representation cascade in Topic 02 §4 — the biology happens before any of it):</p>
+<pre><code># 1) long-read isoform quantification → GTF + per-isoform counts
+bambu -r reads.bam -a annotation.gtf -g genome.fa
+# (brain uses IsoQuant instead of Bambu — same role, different caller)
+
+# 2) ORF calling → translated protein sequence per isoform
+TransDecoder.LongOrfs -t transcripts.fa
+
+# 3) per-residue, all-30-layer ESM-2 embeddings (single forward pass, all layers at once)
+cd hMuscle/preprocessing/
+CUDA_VISIBLE_DEVICES=0 python compute_esm2_all_layers.py --batch_size 32
+# → hMuscle/data/esm2_layer_NN_t30_150M.npy  (NN=01..30), shape (n_isoform, 640), float32</code></pre>
+<p>Domain-level covariates (Pfam gain/loss, used throughout BISECT and the app's domain chips) are
+built from the same protein sequences via a separate <code>hmmscan</code> pass, then assembled into a
+matrix with one of the <code>build_*domain*.py</code> scripts in <code>hMuscle/preprocessing/</code>
+(e.g. <code>build_train_domain_from_hmmscan.py</code> for the training population,
+<code>build_domain_matrix_v3.py</code> for later dataset versions) — these are dataset-shape-specific
+rather than one universal entrypoint, because the crosswalk from transcript ID to HMMER's output
+differs slightly per annotation source (Bambu vs. IsoQuant naming).</p>
+
+<h3 id="data-train">4. Training PRISM</h3>
+<p>Once §3's per-layer embeddings exist, training and evaluation are two commands (full architecture,
+loss, and hyperparameters are derived from first principles in Topic 02 §2–3; ablation discipline in
+Topic 05 §3):</p>
+<pre><code>conda activate isoform_env
+cd hMuscle
+
+# train production model (v15d_bp_clean) directly
+python model/v15d_bp_clean.py
+
+# or the backgrounded, logged production entrypoint (long-running — resource discipline: pin one
+# GPU, cap thread counts, nice if sharing the server)
+OMP_NUM_THREADS=4 nice -n 10 nohup python run_GPU_Full.py \
+  &gt; logs_isoform/run_$(date +%Y%m%d_%H%M).log 2&gt;&amp;1 &amp;
+tail -f logs_isoform/$(ls -t logs_isoform | head -1)
+
+# evaluate → macro-AUPRC/AUROC vs. baselines (Topic 03)
+python results_isoform/evaluation.py</code></pre>
+
+<h3 id="data-bisect">5. Running BISECT on your own switch calls</h3>
+<pre><code>cd Final_analysis/pipeline_bioanalysis
+cp config.yaml.example config.yaml   # fill in local paths (genome, Pfam-A.hmm, ESM-2 cache, ...)
+
+# full case list (15-module pipeline, M1 sequence extraction → M15 cross-case comparison)
+python orchestrate.py --cases cases_input_sra.csv --output outputs/
+
+# a single gene/cell-type case
+python orchestrate.py --gene KIF21B --cell_type Excitatory</code></pre>
+<p>BISECT needs a differential-transcript-usage (DTU) call as its starting point — a gene, a
+cell type, and which two isoforms swap dominance between conditions. That upstream DTU step
+(DRIMSeq or equivalent on your own condition-labeled long-read data) is outside BISECT's own scope;
+<code>cases_input_sra.csv</code> is a pre-computed example case list so you can run the 15 downstream
+modules without first standing up your own DTU pipeline.</p>
+
+<h3 id="data-app">6. Populating this app with your own data</h3>
+<p>This app never reads the ~600-dimensional score matrix or embeddings directly at request time —
+it reads small precomputed indices built once by the scripts in <code>prism_app_flask/precompute/</code>,
+then serves them from a fast on-disk/mmap format. To point the app at a new dataset (a new tissue, or
+a rerun of an existing one), regenerate the index for that dataset:</p>
+<pre><code>conda activate isoform_env
+
+# core per-isoform index: 8-axis position + percentile, per-layer trajectory magnitude,
+# peak-information layer, gene→isoform / id→row lookup tables
+python prism_app_flask/precompute/build_isoform_index.py
+
+# domain architecture (Pfam gain/loss chips) for the same isoform population
+python prism_app_flask/precompute/build_brain_domains.py
+
+# sequence covariates (disorder fraction, N-terminal helix propensity, charge/aromatic content, ...)
+python prism_app_flask/precompute/build_brain_covariates.py
+
+# gene → canonical-isoform anchor (MANE &gt; Ensembl_canonical &gt; APPRIS &gt; longest-CDS), used by
+# the /mydata triage ranked list to compare every isoform against its own gene's reference
+python prism_app_flask/precompute/build_canonical_map.py
+
+# per-GO × per-layer discriminability (Fisher LDA AUROC) — descriptive only, not a deployed-performance claim
+python prism_app_flask/precompute/build_go_layer_fisher.py
+
+# BISECT-specific: per-case CT/AD usage fractions + disorder/domain tracks for the report UI
+python prism_app_flask/precompute/build_bisect_dtu.py
+python prism_app_flask/precompute/build_bisect_tracks.py</code></pre>
+<p>Each script's own docstring documents its exact input paths and output shape — read it before
+running, since a couple (notably <code>build_bisect_dtu.py</code>) read from an external
+collaborator's DTU output directory that is not part of this repository and will need to be pointed at
+your own DTU results.</p>
+<p>Once the index exists, launch (or restart) the app:</p>
+<pre><code>./prism_app_flask/run.sh dev     # Flask dev server, http://0.0.0.0:8600
+./prism_app_flask/run.sh prod    # gunicorn, 2 workers, --preload (shared-memory index across workers)
+./prism_app_flask/run.sh stop</code></pre>
+<div class="tut-callout">
+<b>Why precompute instead of computing on request.</b> The per-isoform index (axis position, layer
+trajectory, canonical anchor, ...) is the same fixed lookup for every request that touches a given
+isoform — recomputing an 8-axis projection or a Fisher AUROC per page load would turn an O(1) lookup
+into unnecessary repeated work. <code>run.sh prod</code>'s <code>--preload</code> flag exists for the
+same reason one level up: the index is loaded once by the gunicorn master and shared copy-on-write
+across workers, rather than re-read per worker.
+</div>
+"""
+
 GLOSSARY_BODY = r"""
 <dl class="tut-glossary">
   <dt>editcore</dt>
@@ -272,14 +434,10 @@ GLOSSARY_BODY = r"""
 
 SECTIONS = [
     {'id': 'data', 'k': 'TOPIC 01', 'icon': 'download', 'title': 'Data Generation',
-     'desc': 'long-read single-cell → isoform score matrix. Quantify transcripts (Bambu/IsoQuant) '
-             'and extract ORFs with TransDecoder to obtain protein sequences.',
-     'code': '# 1) long-read isoform quantification → GTF + counts\n'
-             'bambu -r reads.bam -a annotation.gtf -g genome.fa\n'
-             '# 2) ORF / protein sequence\n'
-             'TransDecoder.LongOrfs -t transcripts.fa\n'
-             '# 3) score matrix = (n_isoform, n_GO) PRISM prediction\n'
-             'python run_GPU_Full.py   # → *_scores.npy'},
+     'desc': 'Environment and package installation, the raw data this pipeline expects, and the full '
+             'chain from long-read reads through preprocessing, PRISM training, BISECT, and populating '
+             'this app with your own data — everything needed to reproduce this repository end to end.',
+     'body': DATA_BODY},
     {'id': 'principles', 'k': 'TOPIC 02', 'icon': 'sigma', 'title': 'Core Principles & Mathematical Derivation',
      'desc': 'Why PRISM is built the way it is, worked out from first principles: the two failure modes of '
              'gene-level annotation transfer, the forward pass and loss, the B0→B5 representation cascade, '

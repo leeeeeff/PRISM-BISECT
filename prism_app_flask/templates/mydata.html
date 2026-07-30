@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% block title %}My Data — PRISM+BISECT{% endblock %}
+{% block head %}
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+  <!-- area-proportional Venn diagram (existing-annotation vs PRISM-prediction panel) — D3 (peer dep)
+       + benfred/venn.js, the standard academic-figure library for this (used over hand-rolled Plotly
+       circle shapes, which can't do real area-proportional layout or per-region interactivity). -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/venn.js@0.2.20/build/venn.min.js"></script>
+{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="tag-label"><span class="sig">▸</span> MY DATA / DATASET OVERVIEW</div>
+  <h1>My Data Analysis</h1>
+  <div class="tissue-tabs" id="tissue-tabs">
+    {% for t in tissues %}
+      <button class="ttab {{ 'on' if t.key==active }}" data-tissue="{{ t.key }}">
+        {{ t.label }}<span class="muted"> · {{ t.desc }}</span></button>
+    {% endfor %}
+  </div>
+  <p class="cap" style="margin-top:.6rem">{{ universe_note }}</p>
+</section>
+
+<section id="dash" class="panels" data-active="{{ active }}">
+  <div class="readout" id="ds-readout"><span class="muted mono">preparing…</span></div>
+
+  <div class="stat-row" id="stat-row"></div>
+
+  <div class="panel-grid" style="margin-top:1rem">
+    <!-- Panel order = analytical funnel: ACT (triage ranked list — the actionable output, each row
+         crosswalks to individual analysis) → EXPLORE (GO-score distribution, existing-vs-PRISM
+         novelty) → ORIENT/REFERENCE (structural-type composition, module landscape). Reordered
+         2026-07-30 so the highest-importance / highest-analysis-potential panel leads. -->
+    <div class="panel wide">
+      <h3><span class="ix">§</span>Isoform triage — ranked vs canonical
+        <select id="triageConsequence" class="seg-sel">
+          <option value="">all evidence kinds</option>
+          <option value="domain">domain change</option>
+          <option value="orf">ORF change</option>
+          <option value="idr">IDR / compositional Δ</option>
+          <option value="novel_go">novel-GO only</option>
+          <option value="none">no detected change</option>
+        </select>
+        <select id="triageSort" class="seg-sel">
+          <option value="consequence">sort: consequence evidence</option>
+          <option value="score">sort: max GO score</option>
+          <option value="confidence">sort: confidence</option>
+        </select>
+      </h3>
+      <p class="cap sm muted">Every isoform that differs from its gene's canonical (MANE / Ensembl_canonical /
+        APPRIS / longest_CDS), ranked by <b>validated-consequence evidence first</b> — named-domain change
+        or ORF change — never by edit size alone. Nothing is hidden: rows with only a structural descriptor
+        (IDR/compositional Δ) or only a novel-GO guess are shown too, just ranked lower by default. Expand a
+        row (▸) for the measured descriptor — it describes <i>what</i> differs, not which function changes.</p>
+      <div class="p3d-sibs" id="triageStructTypeChips" style="margin:.4rem 0">
+        <span class="sib-lbl">structural type:</span>
+        <button class="sib-chip on" data-value="" type="button">all</button>
+        <button class="sib-chip" data-value="known" type="button">FSM</button>
+        <button class="sib-chip" data-value="nic" type="button">NIC</button>
+        <button class="sib-chip" data-value="nnic" type="button">NNIC</button>
+      </div>
+      <p class="cap sm muted" id="triageKindCounts"></p>
+      <div class="bi-tablewrap">
+        <table>
+          <thead><tr><th></th><th>gene</th><th>isoform</th><th>type</th><th>evidence</th><th>max score</th></tr></thead>
+          <tbody id="triageTbody"></tbody>
+        </table>
+      </div>
+      <p class="muted sm" id="triageMore"></p>
+    </div>
+    <div class="panel wide">
+      <h3><span class="ix">§</span>GO term score distribution · by gene
+        <select id="goTermSel" class="seg-sel"></select>
+        <input id="goDistGeneSearch" class="seg-sel" list="goDistGeneList"
+               placeholder="Highlight gene…" autocomplete="off" style="width:150px">
+        <datalist id="goDistGeneList"></datalist>
+        <label class="seg-sel" style="cursor:pointer;white-space:nowrap">
+          <input type="checkbox" id="goDistHideNoncoding" checked style="vertical-align:middle">
+          <span class="muted sm">hide non-coding (no signal)</span>
+        </label>
+        <span class="muted mono sm" id="goDistGeneStatus" style="margin-left:.4rem"></span>
+      </h3>
+      <div id="goDistPlot"></div>
+      <p class="cap" id="go-dist-cap"></p>
+      <div class="gene-hl-row" id="goDistHlRow"></div>
+      <div class="gene-hl-panels" id="goDistHlPanels"></div>
+      <div class="gene-lock-panel hidden" id="goDistLockPanel"></div>
+    </div>
+    <div class="panel wide">
+      <h3><span class="ix">§</span>Existing annotation vs PRISM prediction
+        <span class="badge caveat" title="Manual literature audit (WebSearch + UniProt REST, 81 sampled genes across the score>0.5 range) found no isoform-specific evidence for any prediction, and 14–25% of predictions directly contradicted the gene's documented function — flat across score tiers 0.5–0.6 / 0.6–0.7 / 0.7+ (bootstrap 95% CI overlap). PRISM's score ranks candidates; it is not a calibrated probability of correctness. Rows below marked ✓ lit-matched or ⚠ lit-contradicted come from that audit sample — everything else is unaudited, not implicitly confirmed.">candidate list — verify before citing</span>
+        <label class="seg-sel novelgo-toggle" style="cursor:pointer">
+          <input type="checkbox" id="novelGoHiconf"><span>top-ranked (score&gt;<span id="novelGoHiconfThr"></span>) new predictions</span>
+        </label>
+        <label class="seg-sel novelgo-toggle" style="cursor:pointer">
+          <input type="checkbox" id="novelGoBeats"><span>new predictions that exceed the gene's known function</span>
+        </label>
+      </h3>
+      <p class="cap sm muted" id="novelGoLitCaveat">This panel ranks (gene, GO term) candidates by PRISM score for follow-up literature/experimental checking — it does not assert confirmed novel function, and isoform-level ground truth is essentially unavailable in public databases (GO/ELM/UniProt/HPA all keyed at the gene level, not the isoform). A manual spot-check of 81 "new" predictions (score 0.5–1.0) found <b>0/81</b> isoform-specific evidence either way, a <b>14–25%</b> gene-level literature-contradiction rate that does <em>not</em> fall at higher score, and roughly <b>60%</b> a clean gene-level match to documented function. Rows from that checked sample are marked <span class="badge match" style="padding:.05rem .5rem;font-size:.65rem">✓ lit-matched</span> / <span class="badge caveat" style="padding:.05rem .5rem;font-size:.65rem">⚠ lit-contradicted</span> below — unmarked rows simply haven't been checked yet, not validated by omission.</p>
+      <div class="novelgo-split">
+        <div class="novelgo-col">
+          <div id="novelGoBar"></div>
+        </div>
+        <div class="novelgo-col">
+          <div id="novelGoVenn"></div>
+          <p class="cap sm muted" style="margin-top:.2rem">click a region to list its isoforms ↓</p>
+        </div>
+      </div>
+      <p class="cap" id="novel-go-cap"></p>
+      <div class="panel-inset hidden" id="novelGoRegionPanel">
+        <div class="panel-head" style="margin-top:0">
+          <span class="tag-label sig" id="novelGoRegionTitle">§ REGION</span>
+          <button class="btn ghost sm" id="novelGoRegionClose" type="button" style="margin-left:auto">✕ close</button>
+        </div>
+        <div class="bi-tablewrap">
+          <table>
+            <thead><tr><th>gene</th><th>isoform</th><th>novel GO</th><th>score</th></tr></thead>
+            <tbody id="novelGoRegionTbody"></tbody>
+          </table>
+        </div>
+        <p class="muted sm" id="novelGoRegionMore"></p>
+      </div>
+    </div>
+    <div class="panel wide hidden" id="novelGoBPanel">
+      <h3><span class="ix">§</span>Examples · new prediction exceeds the gene's own known function (top-12 by margin)</h3>
+      <table><thead><tr><th>gene</th><th>isoform</th><th>novel GO</th><th>novel score</th><th>own-best (annotated)</th><th>margin</th></tr></thead>
+        <tbody id="novelgob-tbody"></tbody></table></div>
+    <div class="panel wide">
+      <h3><span class="ix">§</span>Structural type · score&gt;<span id="typeThrLabel">0.4</span> isoforms</h3>
+      <div class="novelgo-split">
+        <div class="novelgo-col"><div id="typePie"></div></div>
+        <div class="novelgo-col">
+          <div class="bi-tablewrap">
+            <table>
+              <thead><tr><th>type</th><th>high-conf</th><th>total</th><th>%</th></tr></thead>
+              <tbody id="typeBreakdownTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p class="cap" id="type-cap">Known / NIC / NNIC among high-confidence isoforms (app-wide threshold, fixed independent of the QC threshold above).</p></div>
+    <div class="panel wide"><h3><span class="ix">§</span>Module landscape · coverage top-15 GO</h3><div id="landBar"></div></div>
+  </div>
+</section>
+
+<!-- Additional reference figures — brain-672 reference space, selectable (one at a time) -->
+<section class="panels figx">
+  <div class="panel-head">
+    <span class="tag-label sig">§ FIG · GO-SCORE SPACE EXPLORER</span>
+  </div>
+  <div class="tissue-tabs figx-tabs" id="figx-tabs">
+    <button class="ttab on" data-fig="umap">GO-Score UMAP</button>
+    <button class="ttab" data-fig="bubble">Module reference landscape</button>
+    <button class="ttab" data-fig="corr">GO-GO correlation matrix</button>
+  </div>
+
+  <!-- UMAP-only controls — colour-by selects what the legend groups are; click legend entries
+       to toggle categories on/off (native Plotly behaviour, fixed axis range so the view itself
+       never shifts) — "Selected isoform list" reads whatever is currently on and lists it below;
+       selection (legend) and listing (button) are deliberately decoupled. -->
+  <div class="umap-ctrl" id="umapCtrl">
+    <label class="umap-ctrl-item">
+      <span class="umap-ctrl-k">Embedding</span>
+      <select id="umapSpace" class="seg-sel">
+        <option value="go_score">GO score (672-dim, prediction output)</option>
+        <option value="axis8">8-axis L30 (ESM-2 representation, pre-prediction)</option>
+      </select>
+    </label>
+    <label class="umap-ctrl-item">
+      <span class="umap-ctrl-k">Colour by</span>
+      <select id="umapColorBy" class="seg-sel">
+        <option value="max_go">max_go (GO clusters)</option>
+        <option value="isoform_type">isoform_type</option>
+        <option value="max_score">max_score</option>
+      </select>
+    </label>
+    <label class="umap-ctrl-item hidden" id="umapLabelToggleWrap">
+      <input type="checkbox" id="umapLabelToggle" checked>
+      <span class="umap-ctrl-k" style="text-transform:none">Show cluster labels</span>
+    </label>
+    <span class="umap-ctrl-item hidden" id="umapScoreHost">
+      <span class="umap-ctrl-k">max_score ≥</span>
+      <input type="range" id="umapScoreThr" min="0" max="1" step="0.01" value="0.5">
+      <span class="umap-thr-val" id="umapScoreThrVal">0.50</span>
+    </span>
+  </div>
+  <p class="cap sm muted" id="umapHint" style="margin:.3rem 0 0">
+    Click legend entries to turn categories on/off (the view stays fixed — only colour changes), then press "Selected isoform list" below for whatever's currently on.
+    Double-click a legend entry to isolate it (Plotly default — turns everything else off); with exactly one large module (n≥500) isolated, press "View GO terms in this module ▸" to drill down.</p>
+  <p class="cap" id="figx-cap"></p>
+  <div class="umap-breadcrumb hidden" id="umapBreadcrumb">
+    <button class="btn ghost sm" id="umapBreadcrumbBack" type="button">◂ all 8 clusters</button>
+    <span id="umapBreadcrumbLabel"></span>
+  </div>
+  <div class="panel wide" id="figx-host">
+    <label class="umap-score-toggle hidden" id="umapScoreToggleWrap" title="overlay PRISM score as a colour gradient, independent of the module colour-by dropdown">
+      <input type="checkbox" id="umapScoreToggle"><span>score gradient</span>
+    </label>
+    <div id="figxPlot"></div>
+  </div>
+  <!-- score-gradient mode's module on/off chips — placed AFTER figx-host (not before) so toggling
+       score gradient on/off only ever pushes the list-row/isoform-panel below it down, and never
+       shifts the plot itself; previously sat above figx-host and visibly shoved the whole UMAP
+       down whenever this row appeared. -->
+  <div class="umap-modfilter hidden" id="umapModFilterRow"></div>
+
+  <div class="umap-list-row hidden" id="umapListRow">
+    <button class="btn ghost sm hidden" id="umapModuleGoBtn" type="button">▸ View GO terms in this module</button>
+    <button class="btn primary sm" id="umapListBtn" type="button">▸ Selected isoform list</button>
+  </div>
+
+  <!-- Currently-on-in-legend selection → isoform list, downloadable -->
+  <div class="panel wide hidden" id="umapIsoPanel">
+    <div class="panel-head" style="margin-top:0">
+      <span class="tag-label sig" id="umapIsoTitle">§ SELECTION</span>
+      <button class="btn ghost sm" id="umapDownloadBtn" type="button" style="margin-left:auto">▸ download CSV</button>
+    </div>
+    <div class="bi-tablewrap">
+      <table>
+        <thead><tr><th>gene</th><th>isoform</th><th>top GO</th><th>max score</th><th>type</th></tr></thead>
+        <tbody id="umapIsoTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/instrument.js') }}"></script>
+<script src="{{ url_for('static', filename='js/mydata.js') }}"></script>
+{% endblock %}

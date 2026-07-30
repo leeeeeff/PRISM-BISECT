@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PRISM · Isoform Function Analysis{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Pretendard (Korean-optimized sans) — replaces IBM Plex Sans for --sans (body/prose) only;
+       --mono (IBM Plex Mono, above) stays for the instrument-panel headers/tables/tabular numerals. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <script>
+    // 페인트 전에 테마 적용 — FOUC(플래시) 방지. 기본은 dark(계측기 미학).
+    (function(){ try{ var t=localStorage.getItem('prism-theme');
+      if(t) document.documentElement.dataset.theme=t; }catch(e){} })();
+  </script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('hero.index') }}">PRISM<span>+BISECT</span></a>
+    <nav>
+      <a href="{{ url_for('tutorial.home') }}">Tutorial</a>
+      <a href="{{ url_for('mydata.home') }}">My Data</a>
+      <a href="{{ url_for('analysis_home.home') }}">Analysis Hub</a>
+      <a href="{{ url_for('individual.search_landing') }}">Individual</a>
+      <a href="{{ url_for('bisect.home') }}">BISECT</a>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              title="Toggle dark / light theme" aria-label="Toggle theme"></button>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="foot">
+    PRISM+BISECT · Protein-Isoform Resolution via Intrinsic Sequence Modeling ·
+    Lee et al. (2026) · universe=brain N=63,994 · 30-layer ESM-2 · 8-axis map
+  </footer>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/icons.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/genecards.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

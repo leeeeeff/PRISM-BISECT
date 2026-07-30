@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Analysis Hub — PRISM+BISECT{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="tag-label"><span class="sig">▸</span> ANALYSIS HUB / GENE·ISOFORM CART</div>
+  <h1>Analysis Hub</h1>
+  <p class="muted mono" style="font-size:.86rem">Cases you've pushed from the cart — notes and observations, in one place.</p>
+</section>
+
+<section class="hub-cart" id="hub-cart"></section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/hub.js') }}"></script>
+{% endblock %}

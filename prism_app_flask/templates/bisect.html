@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}BISECT — PRISM+BISECT{% endblock %}
+{% block head %}
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="tag-label"><span class="sig">▸</span> BISECT / ISOFORM-SWITCH CASES</div>
+  <h1>BISECT Case Explorer</h1>
+  <div class="readout" id="bi-readout"></div>
+</section>
+
+<!-- OVERVIEW SECTION (mechanism × cell type) -->
+<section class="panels bi-overview">
+  <div class="panel-head" style="margin-top:0">
+    <span class="tag-label sig">§ 00 · CASES BY MECHANISM × CELL TYPE</span>
+  </div>
+  <div class="panel wide"><div id="mechCellBar"></div>
+    <p class="cap">BISECT PASS case counts by transcript-generation mechanism (rows) × cell type —
+      hover a bar to see its per-cell-type breakdown.</p></div>
+</section>
+
+<!-- FILTERING SECTION (top) -->
+<section class="panels bi-browse">
+  <div class="panel-head" style="margin-top:0">
+    <span class="tag-label sig">§ 01 · BROWSE / FILTER</span>
+  </div>
+  <div class="bi-filters">
+    <input id="bi-search" placeholder="Search gene…" autocomplete="off">
+    <select id="f-cell"><option value="">all cell types</option></select>
+    <select id="f-tier"><option value="">all tiers</option></select>
+    <select id="f-mech"><option value="">all mechanisms</option></select>
+    <span class="muted mono" id="bi-count" style="margin-left:auto"></span>
+  </div>
+  <div class="bi-tablewrap">
+    <table>
+      <thead><tr>
+        <th data-s="gene">gene</th><th data-s="cell_type">cell</th><th data-s="tier">tier</th>
+        <th data-s="delta">ΔIF</th><th data-s="mechanism">mechanism</th><th>domains</th>
+      </tr></thead>
+      <tbody id="bi-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- REPORT SECTION (bottom, full width) -->
+<section class="panels bi-report-sec">
+  <div class="panel-head">
+    <span class="tag-label sig">§ 02 · CASE REPORT</span>
+  </div>
+  <div class="bi-report" id="bi-detail">
+    <p class="hint">Select a case above to see the full CT↔AD switch report — PRISM functional shift · IDR &amp; domain architecture · AlphaFold confidence · genomic architecture · NMD · conservation · PPI · regulators.</p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/instrument.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bisect.js') }}"></script>
+{% endblock %}
