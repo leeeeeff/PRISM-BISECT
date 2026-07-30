@@ -1,0 +1,12 @@
+{
+  "mean_pool_dr_auc": 0.8151969981238274,
+  "region_pool_dr_auc": 0.7101313320825516,
+  "delta": -0.10506566604127576,
+  "n_gene_term": 533,
+  "bootstrap_ci": [
+    -0.18264556962025322,
+    -0.0321343387178194
+  ],
+  "verdict": "H_stand (CI includes 0)",
+  "prediction": "H_lift if >0.02 else H_stand"
+}

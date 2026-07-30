@@ -1,0 +1,6 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:06:01.935882
+#Origin: asimov
+#Type: tsv
+#NumInstances: 0
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"

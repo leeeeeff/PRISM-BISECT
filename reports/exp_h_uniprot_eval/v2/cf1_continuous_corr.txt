@@ -1,0 +1,83 @@
+=================================================================
+CF1: UniProt Continuous Correlation Analysis
+  Reviewer concern: gap≥0.10 (11/11=100%) is cherry-picking
+  Response: continuous correlation + failed case analysis
+=================================================================
+
+Dataset: 51 total pairs
+  Evaluable (gap+correct not None): 48
+  With length data: 48
+  Both-direction (always correct by def): 2
+  Missing sequence (excluded): 3
+
+[1] Length-based continuous correlations
+  (n=48 pairs with length data from FASTA cache)
+  Spearman rho(gap, |len_a - len_b|): +0.602  p=0.000  n=48
+  Spearman rho(gap, % truncation): +0.604  p=0.000  n=48
+  Spearman rho(gap, max(len_a, len_b)): +0.294  p=0.043  n=48
+  Spearman rho(gap, len_a (canonical)): +0.301  p=0.038  n=48
+
+[2] Structural category accuracy (evaluable, excl. both/missing)
+  domain_loss  : N=13: acc=12/13 (92.3%)  mean_gap=0.309
+  regulatory   : N=13: acc=4/13 (30.8%)  mean_gap=0.022
+  intermediate : N=20: acc=8/20 (40.0%)  mean_gap=0.011
+  both_dir     : N=2: acc=2/2 (always correct by definition)
+
+  Mann-Whitney U (gap: domain_loss > regulatory): U=148, p=0.0006
+
+  [Threshold check] gap >= 0.10: 11/11 correct
+  [Threshold check] domain_loss, gap >= 0.05: 10/10 correct
+
+[3] Failed cases (correct=0, N=22)
+  -------------------------------------------------------------
+  gene         go_term      gap    category     note
+  -------------------------------------------------------------
+  TP53         GO_0006977   0.0000 intermediate nan
+  FLNB         GO_0005200   0.0000 regulatory   nan
+  PTBP1        GO_0003723   0.0001 regulatory   PTBP1 iso2 (PTB4) lacks RRM2; altered RNA binding 
+  CDKN2A       GO_0006977   0.0005 intermediate nan
+  KIT          GO_0004714   0.0006 intermediate KIT iso2 has internal deletion in kinase domain ac
+  NTRK1        GO_0004714   0.0010 intermediate nan
+  IGF1         GO_0005158   0.0016 intermediate nan
+  APP          GO_0005178   0.0022 regulatory   nan
+  SRSF1        GO_0000398   0.0025 regulatory   nan
+  MCL1         GO_0097553   0.0027 intermediate nan
+  TP73         GO_0006977   0.0034 intermediate nan
+  RAC1         GO_0003924   0.0090 regulatory   RAC1 (iso1 192aa) has normal GTPase rate; RAC1B (i
+  AXL          GO_0004714   0.0093 intermediate sAXL (iso2) is soluble extracellular ectodomain on
+  ACTN1        GO_0005200   0.0111 regulatory   nan
+  TP63         GO_0006357   0.0125 intermediate nan
+  BIRC5        GO_0005515   0.0126 intermediate Survivin-2B (iso3) has extended loop altering BIR-
+  SMN1         GO_0005515   0.0198 domain_loss  SMN (iso1 294aa) has full C-terminal Tudor domain 
+  HIF1A        GO_0003700   0.0225 intermediate HIF1A iso2 lacks C-terminal TAD; reduced transcrip
+  WT1          GO_0003677   0.0308 regulatory   -KTS (iso3) has stronger dsDNA binding; +KTS (iso4
+  HNRNPA1      GO_0003729   0.0399 regulatory   nan
+  MAPT         GO_0008017   0.0411 regulatory   nan
+  BCL2         GO_0097553   0.0508 intermediate nan
+
+[4] Pattern summary of failed cases
+  Total failed: 22
+  gap < 0.01 (near-tie): 13  (59%)
+  regulatory category:   9  (41%)
+  intermediate category: 12  (55%)
+  domain_loss category:  1  (5%)
+  wrong direction despite gap>=0.01: 9
+
+[5] Key observations for CF1 response
+  (A) Continuous gap-structure correlation:
+      rho(gap, %truncation) = +0.604 (p=0.000)
+  (B) Categorical: domain_loss vs regulatory gap distribution
+      MWU p=0.0006 (significant) — domain_loss has larger gaps
+  (C) Reviewer cherry-picking claim:
+      gap>=0.10 cutoff selects 11 of 48 pairs (23%); acc=11/11
+      BUT: domain_loss cases (N=13) show acc=12/13 (92%) regardless of threshold
+  (D) Failure modes of the 22 failed cases:
+      • 13 cases (59%) have gap<0.01 → near-tie, not wrong prediction
+      • 9 cases (41%) are regulatory (subtle diff, PRISM not expected to separate)
+      • 1 domain_loss failures exist — examined individually below
+
+  [domain_loss failures detail]
+    SMN1       GO_0005515   gap=0.0198  len_a=294  len_b=262.0
+      note: SMN (iso1 294aa) has full C-terminal Tudor domain for Sm protein binding; SMN-de
+
+=================================================================

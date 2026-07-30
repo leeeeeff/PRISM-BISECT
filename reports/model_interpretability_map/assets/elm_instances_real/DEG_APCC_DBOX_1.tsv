@@ -1,0 +1,24 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:09.249844
+#Origin: asimov
+#Type: tsv
+#NumInstances: 18
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI004589"	"DEG"	"DEG_APCC_DBOX_1"	"ACM1_YEAST"	"Q08981"	"Q08981 D6W3A3"	"118"	"126"	"23707760 18596038 18498748 18519589"	"anti bait coimmunoprecipitation; anti tag coimmunoprecipitation; competition binding; deletion analysis; inhibitor; mutation decreasing interaction; mutation disrupting interaction; over expressed level; radiolabel; ubiquitinase assay; western blot; x-ray crystallography"	"true positive"	"4BH6"	"Saccharomyces cerevisiae S288c"
+"ELMI001000"	"DEG"	"DEG_APCC_DBOX_1"	"AURKB_HUMAN"	"Q96GD4"	"Q96GD4 D3DTR4 O14630 O60446 O95083 Q96DV5 Q9UQ46"	"314"	"322"	"16204042 15923616"	"mutation analysis"	"false positive"	""	"Homo sapiens"
+"ELMI004595"	"DEG"	"DEG_APCC_DBOX_1"	"BUB1B_HUMAN"	"O60566"	"O60566 B2R6U0 B4DL09 B4DLG3 O60501 O60627 O60758 O75389 Q59HH6 Q8WV50 Q96KM4"	"223"	"231"	"27509861"	"electron microscopy"	"true positive"	"5LCW"	"Homo sapiens"
+"ELMI000998"	"DEG"	"DEG_APCC_DBOX_1"	"CCNA1_XENLA"	"P18606"	"P18606"	"40"	"48"	"1321060 8885231 8670806"	"mutation analysis"	"true positive"	""	"Xenopus laevis"
+"ELMI002599"	"DEG"	"DEG_APCC_DBOX_1"	"CCNB1_HUMAN"	"P14635"	"P14635"	"41"	"49"	"23091007"	"mutation analysis; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI003750"	"DEG"	"DEG_APCC_DBOX_1"	"CCNB_ARBPU"	"P07818"	"P07818"	"41"	"49"	"1846030 8885231"	"mutation analysis"	"true positive"	""	"Arbacia punctulata"
+"ELMI004594"	"DEG"	"DEG_APCC_DBOX_1"	"FBX5_HUMAN"	"Q9UKT4"	"Q9UKT4 B3KNX5 Q8WV29 Q9UGC8"	"321"	"329"	"23707760 16921029 23708605 26083744 35634770"	"Identification by mass spectrometry; affinity chromatography technology; anti bait coimmunoprecipitation; competition binding; deletion analysis; electron microscopy; inferred by author; inhibitor; mutation decreasing interaction; ubiquitinase assay; western blot"	"true positive"	"4UI9"	"Homo sapiens"
+"ELMI004590"	"DEG"	"DEG_APCC_DBOX_1"	"HSL1_YEAST"	"P34244"	"P34244 A2NP40 D6VXI6"	"827"	"835"	"23707760 11562348 23708605 18596038 18519589"	"anti tag coimmunoprecipitation; competition binding; mutation decreasing interaction; radiolabel; ubiquitinase assay; western blot"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI001035"	"DEG"	"DEG_APCC_DBOX_1"	"ID2_HUMAN"	"Q02363"	"Q02363"	"99"	"107"	"16810178"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004592"	"DEG"	"DEG_APCC_DBOX_1"	"MES1_SCHPO"	"P41005"	"P41005"	"33"	"41"	"23707760 21389117 18331722"	"anti tag coimmunoprecipitation; inferred by author; isothermal titration calorimetry; mutation decreasing interaction; radiolabel; ubiquitinase assay"	"true positive"	""	"Schizosaccharomyces pombe 972h-"
+"ELMI004591"	"DEG"	"DEG_APCC_DBOX_1"	"MPS1_YEAST"	"P54199"	"P54199 D6VRW4"	"355"	"363"	"20729194 18519589"	"anti bait coimmunoprecipitation; mutation decreasing interaction; pull down; rna interference; ubiquitinase assay; western blot"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI001003"	"DEG"	"DEG_APCC_DBOX_1"	"O93355_XENLA"	"O93355"	"O93355"	"32"	"40"	"9635433"	"mutation analysis"	"true positive"	""	"Xenopus laevis"
+"ELMI001004"	"DEG"	"DEG_APCC_DBOX_1"	"PLK1_HUMAN"	"P53350"	"P53350 Q15153 Q99746"	"336"	"344"	"14734534"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001002"	"DEG"	"DEG_APCC_DBOX_1"	"Q9IA80_XENLA"	"Q9IA80"	"Q9IA80"	"54"	"62"	"10411507"	"mutation analysis"	"true positive"	""	"Xenopus laevis"
+"ELMI004593"	"DEG"	"DEG_APCC_DBOX_1"	"Q9M2R1_ARATH"	"Q9M2R1"	"Q9M2R1"	"103"	"111"	"23707760 22844260"	"Identification by mass spectrometry; inferred by author; mutation disrupting interaction; tandem affinity purification; two hybrid; western blot"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002115"	"DEG"	"DEG_APCC_DBOX_1"	"SKP2_HUMAN"	"Q13309"	"Q13309 A8K5E0 Q8TDZ0 Q8TDZ1 Q9BV69"	"2"	"10"	"15014503"	"coimmunoprecipitation; glutathione s tranferase tag; mutation analysis; pull down; radiolabel"	"true positive"	""	"Homo sapiens"
+"ELMI000999"	"DEG"	"DEG_APCC_DBOX_1"	"STK6A_XENLA"	"Q91820"	"Q91820 Q6INY9"	"377"	"385"	"12208850 11707286"	"mutation analysis"	"false positive"	""	"Xenopus laevis"
+"ELMI001033"	"DEG"	"DEG_APCC_DBOX_1"	"STK6_HUMAN"	"O14965"	"O14965 E1P5F9 O60445 O75873 Q9BQD6 Q9UPG5"	"370"	"378"	"15536123"	"mutation analysis"	"false positive"	""	"Homo sapiens"

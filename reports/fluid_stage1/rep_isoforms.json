@@ -1,0 +1,1894 @@
+{
+  "clusters": {
+    "1": {
+      "tag": "winner",
+      "label": "Glycolysis winner (weakest)",
+      "target_go": "GO:0006096",
+      "n_members": 383,
+      "n_bisect": 1,
+      "n_target": 10,
+      "bisect_symbols": [
+        "NDUFAF5"
+      ],
+      "target_symbols": [
+        "DMD",
+        "GABARAPL1"
+      ],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 20.70707893371582,
+          "isoform": "ENST00000691057.1",
+          "gene": "ENSG00000064313.13",
+          "symbol": "TAF2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 22.703489303588867,
+          "isoform": "ENST00000685568.1",
+          "gene": "ENSG00000101333.19",
+          "symbol": "PLCB4",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 24.491849899291992,
+          "isoform": "ENST00000330714.8",
+          "gene": "ENSG00000183486.14",
+          "symbol": "MX2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 25.578195571899414,
+          "isoform": "ENST00000370396.7",
+          "gene": "ENSG00000171100.16",
+          "symbol": "MTM1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 26.232711791992188,
+          "isoform": "ENST00000692015.1",
+          "gene": "ENSG00000171100.16",
+          "symbol": "MTM1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 26.41761589050293,
+          "isoform": "ENST00000693563.1",
+          "gene": "ENSG00000001631.17",
+          "symbol": "KRIT1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 26.69072914123535,
+          "isoform": "ENST00000674628.2",
+          "gene": "ENSG00000100697.17",
+          "symbol": "DICER1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 27.884857177734375,
+          "isoform": "ENST00000360521.7",
+          "gene": "ENSG00000170525.21",
+          "symbol": "PFKFB3",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 27.884857177734375,
+          "isoform": "ENST00000360521.7",
+          "gene": "ENSG00000170525.21",
+          "symbol": "PFKFB3",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 27.884857177734375,
+          "isoform": "ENST00000360521.7",
+          "gene": "ENSG00000170525.21",
+          "symbol": "PFKFB3",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 28.34794044494629,
+          "isoform": "ENST00000302236.10",
+          "gene": "ENSG00000168152.13",
+          "symbol": "THAP9",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 28.671302795410156,
+          "isoform": "ENST00000358365.7",
+          "gene": "ENSG00000126858.19",
+          "symbol": "RHOT1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 28.69397735595703,
+          "isoform": "ENST00000259486.10",
+          "gene": "ENSG00000136960.13",
+          "symbol": "ENPP2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 28.751771926879883,
+          "isoform": "ENST00000264930.10",
+          "gene": "ENSG00000113504.21",
+          "symbol": "SLC12A7",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 29.31852912902832,
+          "isoform": "ENST00000547312.5",
+          "gene": "ENSG00000087470.21",
+          "symbol": "DNM1L",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "PLEC",
+          10
+        ],
+        [
+          "SOD2",
+          10
+        ],
+        [
+          "DMD",
+          9
+        ],
+        [
+          "ATP1B1",
+          9
+        ],
+        [
+          "LRRK2",
+          7
+        ],
+        [
+          "RHOT2",
+          6
+        ],
+        [
+          "PFKFB3",
+          6
+        ],
+        [
+          "ALDOA",
+          6
+        ],
+        [
+          "NEDD4L",
+          5
+        ],
+        [
+          "WIPI2",
+          5
+        ],
+        [
+          "RHOT1",
+          5
+        ],
+        [
+          "NDUFA10",
+          5
+        ],
+        [
+          "YWHAZ",
+          4
+        ],
+        [
+          "HK1",
+          4
+        ],
+        [
+          "MX1",
+          4
+        ],
+        [
+          "VPS13C",
+          3
+        ],
+        [
+          "CHRNA1",
+          3
+        ],
+        [
+          "PIK3CA",
+          3
+        ],
+        [
+          "DNM1L",
+          3
+        ],
+        [
+          "ADPGK",
+          3
+        ],
+        [
+          "PLD6",
+          3
+        ],
+        [
+          "MX2",
+          3
+        ],
+        [
+          "MYH7",
+          3
+        ],
+        [
+          "VPS13A",
+          3
+        ],
+        [
+          "MTM1",
+          3
+        ]
+      ]
+    },
+    "3": {
+      "tag": "winner",
+      "label": "Muscle contraction winner",
+      "target_go": "GO:0006941",
+      "n_members": 164,
+      "n_bisect": 3,
+      "n_target": 0,
+      "bisect_symbols": [
+        "NDUFS4",
+        "NDUFS7",
+        "NDUFS8"
+      ],
+      "target_symbols": [],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 28.2114315032959,
+          "isoform": "ENST00000169551.11",
+          "gene": "ENSG00000075336.12",
+          "symbol": "TIMM21",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 28.2114315032959,
+          "isoform": "ENST00000169551.11",
+          "gene": "ENSG00000075336.12",
+          "symbol": "TIMM21",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 30.790674209594727,
+          "isoform": "ENST00000261388.7",
+          "gene": "ENSG00000011638.11",
+          "symbol": "LDAF1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 31.658016204833984,
+          "isoform": "ENST00000494664.6",
+          "gene": "ENSG00000113845.10",
+          "symbol": "TIMMDC1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 33.457149505615234,
+          "isoform": "ENST00000370321.8",
+          "gene": "ENSG00000122406.14",
+          "symbol": "RPL5",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 33.91944885253906,
+          "isoform": "BambuTx658",
+          "gene": "ENSG00000145494.12",
+          "symbol": "NDUFS6",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 33.91944885253906,
+          "isoform": "ENST00000274137.10",
+          "gene": "ENSG00000145494.12",
+          "symbol": "NDUFS6",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 33.91944885253906,
+          "isoform": "BambuTx658",
+          "gene": "ENSG00000145494.12",
+          "symbol": "NDUFS6",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 36.62898635864258,
+          "isoform": "ENST00000259037.8",
+          "gene": "ENSG00000136521.13",
+          "symbol": "NDUFB5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 36.632686614990234,
+          "isoform": "ENST00000313525.4",
+          "gene": "ENSG00000059769.20",
+          "symbol": "DNAJC25",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 36.78201675415039,
+          "isoform": "ENST00000281031.5",
+          "gene": "ENSG00000151366.13",
+          "symbol": "NDUFC2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 37.258697509765625,
+          "isoform": "ENST00000507754.9",
+          "gene": "ENSG00000186010.19",
+          "symbol": "NDUFA13",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 37.5516471862793,
+          "isoform": "ENST00000184266.3",
+          "gene": "ENSG00000065518.8",
+          "symbol": "NDUFB4",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 38.328617095947266,
+          "isoform": "ENST00000432641.3",
+          "gene": "ENSG00000196636.8",
+          "symbol": "SDHAF3",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 38.76899337768555,
+          "isoform": "ENST00000645300.1",
+          "gene": "ENSG00000122406.14",
+          "symbol": "RPL5",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "RPL15",
+          6
+        ],
+        [
+          "NDUFA5",
+          6
+        ],
+        [
+          "TMEM126B",
+          5
+        ],
+        [
+          "RPL37",
+          4
+        ],
+        [
+          "RPL31",
+          4
+        ],
+        [
+          "ATP5MC2",
+          4
+        ],
+        [
+          "ATP5PF",
+          4
+        ],
+        [
+          "NDUFS6",
+          3
+        ],
+        [
+          "ATP5F1D",
+          3
+        ],
+        [
+          "COA1",
+          3
+        ],
+        [
+          "LETM1",
+          3
+        ],
+        [
+          "DNLZ",
+          3
+        ],
+        [
+          "RPL34",
+          3
+        ],
+        [
+          "IMMT",
+          3
+        ],
+        [
+          "APOO",
+          2
+        ],
+        [
+          "RPL37A",
+          2
+        ],
+        [
+          "RPL7",
+          2
+        ],
+        [
+          "RPL18",
+          2
+        ],
+        [
+          "TIMM21",
+          2
+        ],
+        [
+          "RPL6",
+          2
+        ],
+        [
+          "RPL19",
+          2
+        ],
+        [
+          "NDUFB2",
+          2
+        ],
+        [
+          "NDUFB5",
+          2
+        ],
+        [
+          "ATP5MC3",
+          2
+        ],
+        [
+          "OXA1L",
+          2
+        ]
+      ]
+    },
+    "10": {
+      "tag": "winner",
+      "label": "Glycolysis winner (mid)",
+      "target_go": "GO:0006096",
+      "n_members": 250,
+      "n_bisect": 3,
+      "n_target": 0,
+      "bisect_symbols": [
+        "NDUFS4",
+        "NDUFS7",
+        "NDUFS8"
+      ],
+      "target_symbols": [],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 19.892047882080078,
+          "isoform": "ENST00000277865.5",
+          "gene": "ENSG00000148672.10",
+          "symbol": "GLUD1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 22.783231735229492,
+          "isoform": "ENST00000340802.12",
+          "gene": "ENSG00000152556.17",
+          "symbol": "PFKM",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 23.300447463989258,
+          "isoform": "ENST00000244571.5",
+          "gene": "ENSG00000124608.5",
+          "symbol": "AARS2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 24.38949966430664,
+          "isoform": "ENST00000551339.6",
+          "gene": "ENSG00000152556.17",
+          "symbol": "PFKM",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 24.418842315673828,
+          "isoform": "ENST00000557135.5",
+          "gene": "ENSG00000140105.18",
+          "symbol": "WARS1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 24.444196701049805,
+          "isoform": "ENST00000262030.8",
+          "gene": "ENSG00000110955.9",
+          "symbol": "ATP5F1B",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 24.682706832885742,
+          "isoform": "ENST00000546964.5",
+          "gene": "ENSG00000152556.17",
+          "symbol": "PFKM",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 24.682706832885742,
+          "isoform": "ENST00000546964.5",
+          "gene": "ENSG00000152556.17",
+          "symbol": "PFKM",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 24.825225830078125,
+          "isoform": "ENST00000398752.11",
+          "gene": "ENSG00000152234.16",
+          "symbol": "ATP5F1A",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 24.835636138916016,
+          "isoform": "ENST00000415930.8",
+          "gene": "ENSG00000105220.17",
+          "symbol": "GPI",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 24.835636138916016,
+          "isoform": "ENST00000415930.8",
+          "gene": "ENSG00000105220.17",
+          "symbol": "GPI",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 24.93819236755371,
+          "isoform": "ENST00000357179.10",
+          "gene": "ENSG00000100038.20",
+          "symbol": "TOP3B",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 25.7786865234375,
+          "isoform": "ENST00000230050.4",
+          "gene": "ENSG00000112306.8",
+          "symbol": "RPS12",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 26.637001037597656,
+          "isoform": "ENST00000549941.7",
+          "gene": "ENSG00000152556.17",
+          "symbol": "PFKM",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 28.204057693481445,
+          "isoform": "ENST00000219794.11",
+          "gene": "ENSG00000103507.14",
+          "symbol": "BCKDK",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "NDUFS2",
+          10
+        ],
+        [
+          "PFKM",
+          9
+        ],
+        [
+          "RPLP0",
+          8
+        ],
+        [
+          "ATP5F1A",
+          6
+        ],
+        [
+          "PFKL",
+          5
+        ],
+        [
+          "NDUFA10",
+          5
+        ],
+        [
+          "GDAP1",
+          4
+        ],
+        [
+          "SSBP1",
+          4
+        ],
+        [
+          "RPL10A",
+          4
+        ],
+        [
+          "NDUFV1",
+          4
+        ],
+        [
+          "HSPD1",
+          4
+        ],
+        [
+          "GPI",
+          4
+        ],
+        [
+          "PFKP",
+          4
+        ],
+        [
+          "NDUFAF6",
+          4
+        ],
+        [
+          "TYMP",
+          3
+        ],
+        [
+          "LETMD1",
+          3
+        ],
+        [
+          "RPL8",
+          3
+        ],
+        [
+          "RPL9",
+          3
+        ],
+        [
+          "ATG7",
+          3
+        ],
+        [
+          "TOMM40L",
+          3
+        ],
+        [
+          "ATP1A2",
+          3
+        ],
+        [
+          "RPL17",
+          3
+        ],
+        [
+          "SPG7",
+          3
+        ],
+        [
+          "SIRT5",
+          3
+        ],
+        [
+          "PPIF",
+          2
+        ]
+      ]
+    },
+    "11": {
+      "tag": "winner",
+      "label": "Glycolysis winner (strongest)",
+      "target_go": "GO:0006096",
+      "n_members": 286,
+      "n_bisect": 4,
+      "n_target": 0,
+      "bisect_symbols": [
+        "NDUFAF5"
+      ],
+      "target_symbols": [],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 21.244041442871094,
+          "isoform": "ENST00000526691.5",
+          "gene": "ENSG00000198431.18",
+          "symbol": "TXNRD1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 21.244041442871094,
+          "isoform": "ENST00000526691.5",
+          "gene": "ENSG00000198431.18",
+          "symbol": "TXNRD1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 24.251352310180664,
+          "isoform": "ENST00000344924.8",
+          "gene": "ENSG00000172331.12",
+          "symbol": "BPGM",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 24.668737411499023,
+          "isoform": "ENST00000262746.5",
+          "gene": "ENSG00000117450.15",
+          "symbol": "PRDX1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 26.81907081604004,
+          "isoform": "ENST00000679545.1",
+          "gene": "ENSG00000123983.15",
+          "symbol": "ACSL3",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 26.833690643310547,
+          "isoform": "ENST00000379250.10",
+          "gene": "ENSG00000124523.17",
+          "symbol": "SIRT5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 26.833690643310547,
+          "isoform": "ENST00000680442.1",
+          "gene": "ENSG00000124523.17",
+          "symbol": "SIRT5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 26.833690643310547,
+          "isoform": "ENST00000379250.10",
+          "gene": "ENSG00000124523.17",
+          "symbol": "SIRT5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 26.833690643310547,
+          "isoform": "ENST00000379250.10",
+          "gene": "ENSG00000124523.17",
+          "symbol": "SIRT5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 26.833690643310547,
+          "isoform": "ENST00000680442.1",
+          "gene": "ENSG00000124523.17",
+          "symbol": "SIRT5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 26.833690643310547,
+          "isoform": "ENST00000680442.1",
+          "gene": "ENSG00000124523.17",
+          "symbol": "SIRT5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 27.169198989868164,
+          "isoform": "ENST00000340124.9",
+          "gene": "ENSG00000166123.14",
+          "symbol": "GPT2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 27.273014068603516,
+          "isoform": "ENST00000677553.1",
+          "gene": "ENSG00000113013.16",
+          "symbol": "HSPA9",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 27.60463523864746,
+          "isoform": "ENST00000268261.9",
+          "gene": "ENSG00000140650.13",
+          "symbol": "PMM2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 27.71575164794922,
+          "isoform": "ENST00000454381.3",
+          "gene": "ENSG00000144644.15",
+          "symbol": "GADL1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "SIRT5",
+          18
+        ],
+        [
+          "SLC25A36",
+          8
+        ],
+        [
+          "PMPCA",
+          7
+        ],
+        [
+          "ENO1",
+          5
+        ],
+        [
+          "AIFM2",
+          5
+        ],
+        [
+          "BCS1L",
+          5
+        ],
+        [
+          "PKM",
+          4
+        ],
+        [
+          "PFKFB1",
+          4
+        ],
+        [
+          "PITRM1",
+          4
+        ],
+        [
+          "DNAJC10",
+          4
+        ],
+        [
+          "PHB1",
+          4
+        ],
+        [
+          "NDUFAF5",
+          4
+        ],
+        [
+          "GAPDH",
+          3
+        ],
+        [
+          "TPI1",
+          3
+        ],
+        [
+          "FOXRED1",
+          3
+        ],
+        [
+          "AIFM1",
+          3
+        ],
+        [
+          "ACAD9",
+          3
+        ],
+        [
+          "ENO3",
+          3
+        ],
+        [
+          "ATP2A1",
+          3
+        ],
+        [
+          "ATP1A2",
+          3
+        ],
+        [
+          "PGM1",
+          3
+        ],
+        [
+          "SLC25A33",
+          2
+        ],
+        [
+          "FUCA2",
+          2
+        ],
+        [
+          "HSD17B10",
+          2
+        ],
+        [
+          "MPV17",
+          2
+        ]
+      ]
+    },
+    "5": {
+      "tag": "interesting",
+      "label": "Mitochondrion sub-mode",
+      "target_go": "GO:0007005",
+      "n_members": 178,
+      "n_bisect": 0,
+      "n_target": 0,
+      "bisect_symbols": [],
+      "target_symbols": [],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 23.354665756225586,
+          "isoform": "ENST00000417981.6",
+          "gene": "ENSG00000130159.15",
+          "symbol": "ECSIT",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 26.041284561157227,
+          "isoform": "ENST00000293288.12",
+          "gene": "ENSG00000087088.21",
+          "symbol": "BAX",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 26.734004974365234,
+          "isoform": "ENST00000589955.2",
+          "gene": "ENSG00000171791.14",
+          "symbol": "BCL2",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 26.734004974365234,
+          "isoform": "ENST00000589955.2",
+          "gene": "ENSG00000171791.14",
+          "symbol": "BCL2",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 28.04947853088379,
+          "isoform": "ENST00000373556.8",
+          "gene": "ENSG00000147099.21",
+          "symbol": "HDAC8",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 29.791723251342773,
+          "isoform": "ENST00000684074.1",
+          "gene": "ENSG00000148343.19",
+          "symbol": "MIGA2",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 32.996803283691406,
+          "isoform": "ENST00000317635.6",
+          "gene": "ENSG00000178307.10",
+          "symbol": "TMEM11",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 33.923744201660156,
+          "isoform": "ENST00000270502.7",
+          "gene": "ENSG00000142444.7",
+          "symbol": "TIMM29",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 33.938690185546875,
+          "isoform": "ENST00000484134.5",
+          "gene": "ENSG00000156990.14",
+          "symbol": "RPUSD3",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 34.4813117980957,
+          "isoform": "ENST00000376726.3",
+          "gene": "ENSG00000154930.15",
+          "symbol": "ACSS1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 36.158958435058594,
+          "isoform": "ENST00000399765.5",
+          "gene": "ENSG00000015475.19",
+          "symbol": "BID",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 37.02980041503906,
+          "isoform": "ENST00000368759.5",
+          "gene": "ENSG00000107949.17",
+          "symbol": "BCCIP",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 38.08084487915039,
+          "isoform": "ENST00000443751.4",
+          "gene": "ENSG00000180488.17",
+          "symbol": "MIGA1",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 38.08084487915039,
+          "isoform": "ENST00000443751.4",
+          "gene": "ENSG00000180488.17",
+          "symbol": "MIGA1",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 39.51612854003906,
+          "isoform": "ENST00000715264.1",
+          "gene": "ENSG00000120693.16",
+          "symbol": "SMAD9",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "BCL2L1",
+          17
+        ],
+        [
+          "DNM1L",
+          10
+        ],
+        [
+          "MIGA1",
+          6
+        ],
+        [
+          "RPL10",
+          5
+        ],
+        [
+          "BCL2",
+          4
+        ],
+        [
+          "BID",
+          4
+        ],
+        [
+          "RPL13",
+          3
+        ],
+        [
+          "TMEM11",
+          3
+        ],
+        [
+          "SIVA1",
+          3
+        ],
+        [
+          "HEBP2",
+          3
+        ],
+        [
+          "CLU",
+          3
+        ],
+        [
+          "DMAC2",
+          3
+        ],
+        [
+          "SDHAF4",
+          2
+        ],
+        [
+          "ZNF767P",
+          2
+        ],
+        [
+          "IL32",
+          2
+        ],
+        [
+          "BAX",
+          2
+        ],
+        [
+          "ATP5PD",
+          2
+        ],
+        [
+          "NDUFB1",
+          2
+        ],
+        [
+          "ATG13",
+          2
+        ],
+        [
+          "MAP3K4",
+          2
+        ],
+        [
+          "PGK1",
+          2
+        ],
+        [
+          "BLOC1S2",
+          2
+        ],
+        [
+          "PDCD10",
+          2
+        ],
+        [
+          "FBXO7",
+          2
+        ],
+        [
+          "UQCRB",
+          2
+        ]
+      ]
+    },
+    "6": {
+      "tag": "interesting",
+      "label": "Muscle-only sub-mode",
+      "target_go": "GO:0006941",
+      "n_members": 103,
+      "n_bisect": 0,
+      "n_target": 11,
+      "bisect_symbols": [],
+      "target_symbols": [
+        "TPM1"
+      ],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 30.427852630615234,
+          "isoform": "ENST00000326775.10",
+          "gene": "ENSG00000196652.12",
+          "symbol": "ZKSCAN5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 32.136688232421875,
+          "isoform": "ENST00000710326.1",
+          "gene": "ENSG00000167625.12",
+          "symbol": "ZNF526",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 32.993446350097656,
+          "isoform": "ENST00000274599.10",
+          "gene": "ENSG00000145908.14",
+          "symbol": "ZNF300",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 34.087547302246094,
+          "isoform": "ENST00000563137.7",
+          "gene": "ENSG00000102935.12",
+          "symbol": "ZNF423",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 35.609493255615234,
+          "isoform": "ENST00000339411.5",
+          "gene": "ENSG00000065029.15",
+          "symbol": "ZNF76",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 38.876808166503906,
+          "isoform": "ENST00000510026.5",
+          "gene": "ENSG00000172262.12",
+          "symbol": "ZNF131",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 41.08403778076172,
+          "isoform": "ENST00000220429.12",
+          "gene": "ENSG00000104064.18",
+          "symbol": "GABPB1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 41.25987243652344,
+          "isoform": "ENST00000380877.8",
+          "gene": "ENSG00000104064.18",
+          "symbol": "GABPB1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 41.269187927246094,
+          "isoform": "ENST00000614994.5",
+          "gene": "ENSG00000267508.6",
+          "symbol": "ZNF285",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 41.80598068237305,
+          "isoform": "ENST00000295208.7",
+          "gene": "ENSG00000144026.14",
+          "symbol": "ZNF514",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 41.84462356567383,
+          "isoform": "BambuTx1920",
+          "gene": "ENSG00000256683.7",
+          "symbol": "ZNF350",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 42.68785858154297,
+          "isoform": "ENST00000396464.7",
+          "gene": "ENSG00000104064.18",
+          "symbol": "GABPB1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 42.785552978515625,
+          "isoform": "ENST00000696538.1",
+          "gene": "ENSG00000167840.14",
+          "symbol": "ZNF232",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 42.88557052612305,
+          "isoform": "ENST00000221665.5",
+          "gene": "ENSG00000179943.8",
+          "symbol": "FIZ1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 43.53953552246094,
+          "isoform": "ENST00000715174.1",
+          "gene": "ENSG00000155657.29",
+          "symbol": "TTN",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "TTN",
+          14
+        ],
+        [
+          "TPM1",
+          11
+        ],
+        [
+          "GABPB1",
+          3
+        ],
+        [
+          "ZNF205",
+          2
+        ],
+        [
+          "COLQ",
+          2
+        ],
+        [
+          "ZNF611",
+          2
+        ],
+        [
+          "ZNF350",
+          1
+        ],
+        [
+          "FIZ1",
+          1
+        ],
+        [
+          "ZNF426",
+          1
+        ],
+        [
+          "YY1",
+          1
+        ],
+        [
+          "TRIP11",
+          1
+        ],
+        [
+          "ZNF155",
+          1
+        ],
+        [
+          "ZNF300",
+          1
+        ],
+        [
+          "ZNF514",
+          1
+        ],
+        [
+          "BRD3",
+          1
+        ],
+        [
+          "ZNF596",
+          1
+        ],
+        [
+          "NCL",
+          1
+        ],
+        [
+          "MYEF2",
+          1
+        ],
+        [
+          "ZKSCAN5",
+          1
+        ],
+        [
+          "ZNF71",
+          1
+        ],
+        [
+          "ZNF576",
+          1
+        ],
+        [
+          "ZNF76",
+          1
+        ],
+        [
+          "ZBTB42",
+          1
+        ],
+        [
+          "ZNF419",
+          1
+        ],
+        [
+          "KLC1",
+          1
+        ]
+      ]
+    },
+    "8": {
+      "tag": "interesting",
+      "label": "Muscle contraction sub-mode",
+      "target_go": "GO:0006941",
+      "n_members": 258,
+      "n_bisect": 0,
+      "n_target": 0,
+      "bisect_symbols": [],
+      "target_symbols": [],
+      "top15_nearest": [
+        {
+          "rank": 1,
+          "dist": 22.8136043548584,
+          "isoform": "ENST00000511664.6",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 2,
+          "dist": 22.8136043548584,
+          "isoform": "ENST00000511664.6",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 3,
+          "dist": 22.8136043548584,
+          "isoform": "ENST00000511664.6",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 4,
+          "dist": 25.752859115600586,
+          "isoform": "ENST00000699048.1",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 5,
+          "dist": 25.752859115600586,
+          "isoform": "ENST00000699048.1",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 6,
+          "dist": 26.46249771118164,
+          "isoform": "ENST00000683086.1",
+          "gene": "ENSG00000104936.20",
+          "symbol": "DMPK",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 7,
+          "dist": 26.573497772216797,
+          "isoform": "ENST00000550735.7",
+          "gene": "ENSG00000089022.15",
+          "symbol": "MAPKAPK5",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 8,
+          "dist": 27.67404556274414,
+          "isoform": "ENST00000264235.13",
+          "gene": "ENSG00000082701.17",
+          "symbol": "GSK3B",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 9,
+          "dist": 27.67404556274414,
+          "isoform": "ENST00000264235.13",
+          "gene": "ENSG00000082701.17",
+          "symbol": "GSK3B",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 10,
+          "dist": 28.10309600830078,
+          "isoform": "ENST00000649792.2",
+          "gene": "ENSG00000175356.14",
+          "symbol": "SCUBE2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 11,
+          "dist": 28.147680282592773,
+          "isoform": "ENST00000383811.8",
+          "gene": "ENSG00000163703.20",
+          "symbol": "CRELD1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 12,
+          "dist": 28.1718807220459,
+          "isoform": "ENST00000522948.5",
+          "gene": "ENSG00000008853.18",
+          "symbol": "RHOBTB2",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 13,
+          "dist": 29.189239501953125,
+          "isoform": "ENST00000321725.10",
+          "gene": "ENSG00000010327.10",
+          "symbol": "STAB1",
+          "is_go_pos": false,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 14,
+          "dist": 29.225934982299805,
+          "isoform": "ENST00000699047.1",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        },
+        {
+          "rank": 15,
+          "dist": 29.225934982299805,
+          "isoform": "ENST00000699047.1",
+          "gene": "ENSG00000145349.20",
+          "symbol": "CAMK2D",
+          "is_go_pos": true,
+          "is_bisect": false,
+          "is_target": false
+        }
+      ],
+      "top25_genes": [
+        [
+          "CAMK2D",
+          22
+        ],
+        [
+          "ANK2",
+          7
+        ],
+        [
+          "SCN3B",
+          6
+        ],
+        [
+          "SCN1B",
+          5
+        ],
+        [
+          "MYL3",
+          5
+        ],
+        [
+          "UBA52",
+          5
+        ],
+        [
+          "TTC19",
+          4
+        ],
+        [
+          "PKD1",
+          4
+        ],
+        [
+          "SCN2B",
+          4
+        ],
+        [
+          "EDNRA",
+          4
+        ],
+        [
+          "RAB29",
+          3
+        ],
+        [
+          "CSRP3",
+          3
+        ],
+        [
+          "SCN4B",
+          3
+        ],
+        [
+          "CAMK2A",
+          3
+        ],
+        [
+          "MAPK8",
+          3
+        ],
+        [
+          "DDX17",
+          2
+        ],
+        [
+          "GSK3A",
+          2
+        ],
+        [
+          "HTRA2",
+          2
+        ],
+        [
+          "ADGRD1",
+          2
+        ],
+        [
+          "GSK3B",
+          2
+        ],
+        [
+          "ERBB4",
+          2
+        ],
+        [
+          "VLDLR",
+          2
+        ],
+        [
+          "TBL1XR1",
+          2
+        ],
+        [
+          "ZFTRAF1",
+          2
+        ],
+        [
+          "SLIRP",
+          2
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "cache": "../../reports/fluid_stage1/curve_cluster_20260706_1541.npz",
+    "bisect_hits": [
+      "DLG1",
+      "DOCK11",
+      "ERCC6L2",
+      "KIF21B",
+      "LRPPRC",
+      "NDUFAF5",
+      "NDUFS4",
+      "NDUFS7",
+      "NDUFS8",
+      "ZNF736"
+    ],
+    "target_genes": [
+      "DMD",
+      "GABARAPL1",
+      "KIF1B",
+      "OBSCN",
+      "SEH1L",
+      "TPM1",
+      "TPM2",
+      "TPM3"
+    ]
+  }
+}

@@ -1,0 +1,100 @@
+sample	condition	cluster	cluster_label	n_barcodes	output
+PO05	AD	18	C18_L4atypical	23	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO05_C18_L4atypical_barcodes.txt
+PO11	AD	18	C18_L4atypical	75	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO11_C18_L4atypical_barcodes.txt
+PO13	Control	18	C18_L4atypical	16	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO13_C18_L4atypical_barcodes.txt
+PO15	Control	18	C18_L4atypical	34	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO15_C18_L4atypical_barcodes.txt
+PO20	Control	18	C18_L4atypical	39	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO20_C18_L4atypical_barcodes.txt
+PO23	Control	18	C18_L4atypical	17	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO23_C18_L4atypical_barcodes.txt
+PO28	AD	18	C18_L4atypical	127	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO28_C18_L4atypical_barcodes.txt
+PO41	AD	18	C18_L4atypical	70	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO41_C18_L4atypical_barcodes.txt
+PO42	AD	18	C18_L4atypical	68	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO42_C18_L4atypical_barcodes.txt
+SMC029	AD	18	C18_L4atypical	2	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC029_C18_L4atypical_barcodes.txt
+SMC030	Control	18	C18_L4atypical	45	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC030_C18_L4atypical_barcodes.txt
+SMC031	Active control	18	C18_L4atypical	15	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC031_C18_L4atypical_barcodes.txt
+SMC032	AD	18	C18_L4atypical	32	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC032_C18_L4atypical_barcodes.txt
+SMC033	Control	18	C18_L4atypical	93	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC033_C18_L4atypical_barcodes.txt
+SMC035	Active control	18	C18_L4atypical	55	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC035_C18_L4atypical_barcodes.txt
+SMC036	AD	18	C18_L4atypical	23	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC036_C18_L4atypical_barcodes.txt
+SMC037	Active control	18	C18_L4atypical	55	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC037_C18_L4atypical_barcodes.txt
+SMC038	AD	18	C18_L4atypical	36	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC038_C18_L4atypical_barcodes.txt
+SMC039	AD	18	C18_L4atypical	102	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC039_C18_L4atypical_barcodes.txt
+SMC041	AD	18	C18_L4atypical	174	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC041_C18_L4atypical_barcodes.txt
+SMC043	AD	18	C18_L4atypical	6	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC043_C18_L4atypical_barcodes.txt
+SMC049	AD	18	C18_L4atypical	238	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC049_C18_L4atypical_barcodes.txt
+SMC052	Control	18	C18_L4atypical	130	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC052_C18_L4atypical_barcodes.txt
+SMC053	Active control	18	C18_L4atypical	128	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC053_C18_L4atypical_barcodes.txt
+PO05	AD	10	C10_L4canonical	125	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO05_C10_L4canonical_barcodes.txt
+PO11	AD	10	C10_L4canonical	186	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO11_C10_L4canonical_barcodes.txt
+PO13	Control	10	C10_L4canonical	109	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO13_C10_L4canonical_barcodes.txt
+PO15	Control	10	C10_L4canonical	98	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO15_C10_L4canonical_barcodes.txt
+PO20	Control	10	C10_L4canonical	220	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO20_C10_L4canonical_barcodes.txt
+PO23	Control	10	C10_L4canonical	62	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO23_C10_L4canonical_barcodes.txt
+PO28	AD	10	C10_L4canonical	321	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO28_C10_L4canonical_barcodes.txt
+PO41	AD	10	C10_L4canonical	130	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO41_C10_L4canonical_barcodes.txt
+PO42	AD	10	C10_L4canonical	147	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO42_C10_L4canonical_barcodes.txt
+SMC027	Control	10	C10_L4canonical	5	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC027_C10_L4canonical_barcodes.txt
+SMC029	AD	10	C10_L4canonical	4	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC029_C10_L4canonical_barcodes.txt
+SMC030	Control	10	C10_L4canonical	66	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC030_C10_L4canonical_barcodes.txt
+SMC031	Active control	10	C10_L4canonical	24	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC031_C10_L4canonical_barcodes.txt
+SMC032	AD	10	C10_L4canonical	60	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC032_C10_L4canonical_barcodes.txt
+SMC033	Control	10	C10_L4canonical	290	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC033_C10_L4canonical_barcodes.txt
+SMC035	Active control	10	C10_L4canonical	157	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC035_C10_L4canonical_barcodes.txt
+SMC036	AD	10	C10_L4canonical	19	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC036_C10_L4canonical_barcodes.txt
+SMC037	Active control	10	C10_L4canonical	251	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC037_C10_L4canonical_barcodes.txt
+SMC038	AD	10	C10_L4canonical	282	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC038_C10_L4canonical_barcodes.txt
+SMC039	AD	10	C10_L4canonical	86	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC039_C10_L4canonical_barcodes.txt
+SMC041	AD	10	C10_L4canonical	312	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC041_C10_L4canonical_barcodes.txt
+SMC043	AD	10	C10_L4canonical	9	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC043_C10_L4canonical_barcodes.txt
+SMC049	AD	10	C10_L4canonical	447	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC049_C10_L4canonical_barcodes.txt
+SMC052	Control	10	C10_L4canonical	361	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC052_C10_L4canonical_barcodes.txt
+SMC053	Active control	10	C10_L4canonical	385	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC053_C10_L4canonical_barcodes.txt
+PO05	AD	11	C11_L4canonical	176	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO05_C11_L4canonical_barcodes.txt
+PO11	AD	11	C11_L4canonical	179	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO11_C11_L4canonical_barcodes.txt
+PO13	Control	11	C11_L4canonical	90	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO13_C11_L4canonical_barcodes.txt
+PO15	Control	11	C11_L4canonical	82	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO15_C11_L4canonical_barcodes.txt
+PO20	Control	11	C11_L4canonical	211	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO20_C11_L4canonical_barcodes.txt
+PO23	Control	11	C11_L4canonical	185	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO23_C11_L4canonical_barcodes.txt
+PO28	AD	11	C11_L4canonical	356	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO28_C11_L4canonical_barcodes.txt
+PO41	AD	11	C11_L4canonical	155	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO41_C11_L4canonical_barcodes.txt
+PO42	AD	11	C11_L4canonical	119	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO42_C11_L4canonical_barcodes.txt
+SMC027	Control	11	C11_L4canonical	6	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC027_C11_L4canonical_barcodes.txt
+SMC029	AD	11	C11_L4canonical	9	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC029_C11_L4canonical_barcodes.txt
+SMC030	Control	11	C11_L4canonical	66	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC030_C11_L4canonical_barcodes.txt
+SMC031	Active control	11	C11_L4canonical	13	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC031_C11_L4canonical_barcodes.txt
+SMC032	AD	11	C11_L4canonical	80	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC032_C11_L4canonical_barcodes.txt
+SMC033	Control	11	C11_L4canonical	336	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC033_C11_L4canonical_barcodes.txt
+SMC035	Active control	11	C11_L4canonical	157	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC035_C11_L4canonical_barcodes.txt
+SMC036	AD	11	C11_L4canonical	11	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC036_C11_L4canonical_barcodes.txt
+SMC037	Active control	11	C11_L4canonical	204	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC037_C11_L4canonical_barcodes.txt
+SMC038	AD	11	C11_L4canonical	213	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC038_C11_L4canonical_barcodes.txt
+SMC039	AD	11	C11_L4canonical	69	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC039_C11_L4canonical_barcodes.txt
+SMC041	AD	11	C11_L4canonical	377	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC041_C11_L4canonical_barcodes.txt
+SMC043	AD	11	C11_L4canonical	6	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC043_C11_L4canonical_barcodes.txt
+SMC049	AD	11	C11_L4canonical	484	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC049_C11_L4canonical_barcodes.txt
+SMC052	Control	11	C11_L4canonical	272	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC052_C11_L4canonical_barcodes.txt
+SMC053	Active control	11	C11_L4canonical	434	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC053_C11_L4canonical_barcodes.txt
+PO05	AD	19	C19_L5	41	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO05_C19_L5_barcodes.txt
+PO11	AD	19	C19_L5	19	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO11_C19_L5_barcodes.txt
+PO13	Control	19	C19_L5	114	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO13_C19_L5_barcodes.txt
+PO15	Control	19	C19_L5	20	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO15_C19_L5_barcodes.txt
+PO20	Control	19	C19_L5	172	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO20_C19_L5_barcodes.txt
+PO23	Control	19	C19_L5	61	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO23_C19_L5_barcodes.txt
+PO28	AD	19	C19_L5	64	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO28_C19_L5_barcodes.txt
+PO41	AD	19	C19_L5	65	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO41_C19_L5_barcodes.txt
+PO42	AD	19	C19_L5	52	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/PO42_C19_L5_barcodes.txt
+SMC027	Control	19	C19_L5	6	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC027_C19_L5_barcodes.txt
+SMC029	AD	19	C19_L5	1	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC029_C19_L5_barcodes.txt
+SMC030	Control	19	C19_L5	36	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC030_C19_L5_barcodes.txt
+SMC031	Active control	19	C19_L5	9	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC031_C19_L5_barcodes.txt
+SMC032	AD	19	C19_L5	7	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC032_C19_L5_barcodes.txt
+SMC033	Control	19	C19_L5	326	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC033_C19_L5_barcodes.txt
+SMC035	Active control	19	C19_L5	47	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC035_C19_L5_barcodes.txt
+SMC036	AD	19	C19_L5	11	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC036_C19_L5_barcodes.txt
+SMC037	Active control	19	C19_L5	31	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC037_C19_L5_barcodes.txt
+SMC038	AD	19	C19_L5	15	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC038_C19_L5_barcodes.txt
+SMC039	AD	19	C19_L5	7	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC039_C19_L5_barcodes.txt
+SMC041	AD	19	C19_L5	40	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC041_C19_L5_barcodes.txt
+SMC043	AD	19	C19_L5	1	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC043_C19_L5_barcodes.txt
+SMC049	AD	19	C19_L5	18	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC049_C19_L5_barcodes.txt
+SMC052	Control	19	C19_L5	122	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC052_C19_L5_barcodes.txt
+SMC053	Active control	19	C19_L5	125	/home/welcome1/sw1686/DIFFUSE/reports/c18_barcodes/SMC053_C19_L5_barcodes.txt

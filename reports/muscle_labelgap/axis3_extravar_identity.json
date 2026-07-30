@@ -1,0 +1,59 @@
+{
+  "n_pairs": 178,
+  "labeling": {
+    "region_pos_frac": 0.8426966292134831,
+    "mean_pos_frac": 0.8258426966292135
+  },
+  "var_ratio_region_over_mean": 1.8677397966384888,
+  "covariates": {
+    "dlen_edit": {
+      "rho_region": 0.06560639225263794,
+      "p_region": 0.385620341259449,
+      "rho_mean": 0.2177830174093345,
+      "p_mean": 0.003592142607399791,
+      "amplification": -0.15217662515669655
+    },
+    "pos_edit": {
+      "rho_region": 0.21013851390404162,
+      "p_region": 0.0049955864363943085,
+      "rho_mean": 0.27045556221203393,
+      "p_mean": 0.0002718220289238983,
+      "amplification": -0.06031704830799231
+    },
+    "ddis": {
+      "rho_region": -0.16672096533117067,
+      "p_region": 0.026561035102934245,
+      "rho_mean": -0.14627173151253367,
+      "p_mean": 0.05205330992471276,
+      "amplification": 0.020449233818637003
+    },
+    "dhyd": {
+      "rho_region": 0.14744037841475385,
+      "p_region": 0.050184844718899925,
+      "rho_mean": 0.10891466682909912,
+      "p_mean": 0.14900772547285263,
+      "amplification": 0.03852571158565474
+    },
+    "dchg": {
+      "rho_region": -0.031183457922673782,
+      "p_region": 0.6803176347073376,
+      "rho_mean": -0.030023981541692592,
+      "p_mean": 0.6915869169445787,
+      "amplification": 0.0011594763809811906
+    },
+    "dlen_prot": {
+      "rho_region": 0.06560639225263794,
+      "p_region": 0.385620341259449,
+      "rho_mean": 0.2177830174093345,
+      "p_mean": 0.003592142607399791,
+      "amplification": -0.15217662515669655
+    }
+  },
+  "ddom_direct": {
+    "rho_region": 0.2261887584539881,
+    "p": 0.002467839859512669
+  },
+  "top_amplified": "dhyd",
+  "verdict": "FUNCTIONAL covariate 'dhyd' amplifies most -> extra variance is functionally describable (rho=+0.147)",
+  "bonferroni_alpha": 0.008333333333333333
+}

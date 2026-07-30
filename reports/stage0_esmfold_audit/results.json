@@ -1,0 +1,226 @@
+{
+  "maxlen": 350,
+  "nondomain": {},
+  "domain_ctrl": {
+    "n": 30,
+    "median_edit_plddt": 55.265,
+    "mean_edit_plddt": 59.15800000000001,
+    "frac_gt70": 0.4,
+    "frac_50_70": 0.2,
+    "frac_lt50": 0.4
+  },
+  "gate": "AMBIGUOUS (60-70) \u2192 judgement call",
+  "rows_nondomain": [],
+  "rows_domain_ctrl": [
+    {
+      "gene": "APBB1IP",
+      "len": 172,
+      "changed_aa": 348,
+      "edit_plddt": 46.79,
+      "whole_plddt": 49.24
+    },
+    {
+      "gene": "LIN7A",
+      "len": 233,
+      "changed_aa": 135,
+      "edit_plddt": 87.48,
+      "whole_plddt": 80.84
+    },
+    {
+      "gene": "HSPB1",
+      "len": 186,
+      "changed_aa": 100,
+      "edit_plddt": 38.24,
+      "whole_plddt": 47.01
+    },
+    {
+      "gene": "RPS4X",
+      "len": 263,
+      "changed_aa": 164,
+      "edit_plddt": 82.63,
+      "whole_plddt": 84.02
+    },
+    {
+      "gene": "ARHGEF39",
+      "len": 116,
+      "changed_aa": 262,
+      "edit_plddt": 41.12,
+      "whole_plddt": 59.98
+    },
+    {
+      "gene": "AKR1C1",
+      "len": 323,
+      "changed_aa": 174,
+      "edit_plddt": 89.24,
+      "whole_plddt": 87.91
+    },
+    {
+      "gene": "TIMP1",
+      "len": 261,
+      "changed_aa": 286,
+      "edit_plddt": 27.54,
+      "whole_plddt": 27.58
+    },
+    {
+      "gene": "MOB3A",
+      "len": 206,
+      "changed_aa": 328,
+      "edit_plddt": 36.62,
+      "whole_plddt": 38.59
+    },
+    {
+      "gene": "INPP5J",
+      "len": 271,
+      "changed_aa": 737,
+      "edit_plddt": 67.68,
+      "whole_plddt": 83.05
+    },
+    {
+      "gene": "SMIM14",
+      "len": 99,
+      "changed_aa": 261,
+      "edit_plddt": 56.37,
+      "whole_plddt": 56.25
+    },
+    {
+      "gene": "ENSG00000290459",
+      "len": 232,
+      "changed_aa": 184,
+      "edit_plddt": 44.82,
+      "whole_plddt": 43.48
+    },
+    {
+      "gene": "CCDC34",
+      "len": 229,
+      "changed_aa": 172,
+      "edit_plddt": 80.75,
+      "whole_plddt": 66.3
+    },
+    {
+      "gene": "BIN3",
+      "len": 253,
+      "changed_aa": 122,
+      "edit_plddt": 91.13,
+      "whole_plddt": 90.31
+    },
+    {
+      "gene": "MCUB",
+      "len": 165,
+      "changed_aa": 172,
+      "edit_plddt": 41.79,
+      "whole_plddt": 53.42
+    },
+    {
+      "gene": "SLC25A16",
+      "len": 332,
+      "changed_aa": 192,
+      "edit_plddt": 85.63,
+      "whole_plddt": 86.55
+    },
+    {
+      "gene": "FAM32A",
+      "len": 112,
+      "changed_aa": 23,
+      "edit_plddt": 51.64,
+      "whole_plddt": 56.43
+    },
+    {
+      "gene": "AIDA",
+      "len": 306,
+      "changed_aa": 165,
+      "edit_plddt": 71.93,
+      "whole_plddt": 77.69
+    },
+    {
+      "gene": "MBLAC2",
+      "len": 199,
+      "changed_aa": 141,
+      "edit_plddt": 30.6,
+      "whole_plddt": 60.29
+    },
+    {
+      "gene": "TRIB2",
+      "len": 343,
+      "changed_aa": 136,
+      "edit_plddt": 74.16,
+      "whole_plddt": 81.88
+    },
+    {
+      "gene": "C1QTNF2",
+      "len": 330,
+      "changed_aa": 198,
+      "edit_plddt": 81.7,
+      "whole_plddt": 73.52
+    },
+    {
+      "gene": "RASL10A",
+      "len": 203,
+      "changed_aa": 88,
+      "edit_plddt": 79.68,
+      "whole_plddt": 81.31
+    },
+    {
+      "gene": "DMRT2",
+      "len": 328,
+      "changed_aa": 423,
+      "edit_plddt": 32.77,
+      "whole_plddt": 33.29
+    },
+    {
+      "gene": "FKBP14",
+      "len": 126,
+      "changed_aa": 89,
+      "edit_plddt": 58.83,
+      "whole_plddt": 72.28
+    },
+    {
+      "gene": "MRPL9",
+      "len": 122,
+      "changed_aa": 152,
+      "edit_plddt": 32.86,
+      "whole_plddt": 35.88
+    },
+    {
+      "gene": "SEPHS1",
+      "len": 332,
+      "changed_aa": 65,
+      "edit_plddt": 54.16,
+      "whole_plddt": 80.33
+    },
+    {
+      "gene": "LRRC46",
+      "len": 274,
+      "changed_aa": 80,
+      "edit_plddt": 52.97,
+      "whole_plddt": 69.02
+    },
+    {
+      "gene": "CCDC113",
+      "len": 137,
+      "changed_aa": 297,
+      "edit_plddt": 38.68,
+      "whole_plddt": 61.61
+    },
+    {
+      "gene": "MEX3C",
+      "len": 96,
+      "changed_aa": 652,
+      "edit_plddt": 30.62,
+      "whole_plddt": 31.35
+    },
+    {
+      "gene": "DESI2",
+      "len": 194,
+      "changed_aa": 33,
+      "edit_plddt": 89.18,
+      "whole_plddt": 86.09
+    },
+    {
+      "gene": "PURA",
+      "len": 322,
+      "changed_aa": 103,
+      "edit_plddt": 77.13,
+      "whole_plddt": 81.65
+    }
+  ]
+}

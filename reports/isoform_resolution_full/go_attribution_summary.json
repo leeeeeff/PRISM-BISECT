@@ -1,0 +1,17 @@
+{
+  "n_analyzed": 2738,
+  "scenario1_n": 926,
+  "scenario1_frac": 0.33820306793279764,
+  "scenario2_n": 1161,
+  "scenario2_frac": 0.42403214024835645,
+  "mixed_n": 651,
+  "mean_go_corr_overall": 0.36512131444602114,
+  "mean_go_corr_s1": 0.9777143723512152,
+  "mean_go_corr_s2": -0.24418511996746295,
+  "mean_go_corr_dom_var": 0.3950417607727643,
+  "mean_go_corr_no_dom_var": 0.3463943842628933,
+  "mwu_p_domain_vs_nodom": 0.8441862774805082,
+  "top_consistency_overall": 0.7365515893787586,
+  "top_consistency_s1": 0.9948801063946854,
+  "top_consistency_s2": 0.5735326605158647
+}

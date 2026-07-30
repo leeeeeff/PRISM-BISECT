@@ -1,0 +1,24 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:05.379560
+#Origin: asimov
+#Type: tsv
+#NumInstances: 18
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI004303"	"TRG"	"TRG_DiLeu_LyEn_5"	"AT10B_HUMAN"	"O94823"	"O94823 Q9H725"	"26"	"31"	"32614659"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004309"	"TRG"	"TRG_DiLeu_LyEn_5"	"GTR8_MOUSE"	"Q9JIF3"	"Q9JIF3 Q5BKP8 Q9JJP4 Q9JJZ0"	"8"	"13"	"21067453"	"confocal microscopy; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI004310"	"TRG"	"TRG_DiLeu_LyEn_5"	"GTR8_RAT"	"Q9JJZ1"	"Q9JJZ1 Q9JMA6"	"8"	"13"	"10671487"	"fluorescence microscopy; mutation analysis"	"true positive"	""	"Rattus norvegicus"
+"ELMI004314"	"TRG"	"TRG_DiLeu_LyEn_5"	"LAAT1_HUMAN"	"Q6ZP29"	"Q6ZP29 B3KWQ5 Q6ZMJ3 Q6ZP27 Q9NXC7"	"284"	"289"	"26577948"	"fluorescence microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004316"	"TRG"	"TRG_DiLeu_LyEn_5"	"MFSD8_HUMAN"	"Q8NHS3"	"Q8NHS3 B2RDM1 B7Z205 Q8N2P3"	"9"	"14"	"20406422"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004304"	"TRG"	"TRG_DiLeu_LyEn_5"	"NPC1_HUMAN"	"O15118"	"O15118 Q9P130"	"1271"	"1276"	"15347664"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004311"	"TRG"	"TRG_DiLeu_LyEn_5"	"O17470_CAEEL"	"O17470"	"O17470 Q21034"	"552"	"557"	"27151641"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Caenorhabditis elegans"
+"ELMI004315"	"TRG"	"TRG_DiLeu_LyEn_5"	"P4K2A_HUMAN"	"Q9BTU6"	"Q9BTU6 D3DR59 Q9NSG8"	"57"	"62"	"18256276"	"anti bait coimmunoprecipitation; anti tag coimmunoprecipitation; confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004308"	"TRG"	"TRG_DiLeu_LyEn_5"	"PMEL_MOUSE"	"Q60696"	"Q60696"	"616"	"621"	"16760433"	"fluorescence microscopy; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI004368"	"TRG"	"TRG_DiLeu_LyEn_5"	"PTR2_ARATH"	"P46032"	"P46032"	"7"	"12"	"22537078"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI004306"	"TRG"	"TRG_DiLeu_LyEn_5"	"S15A4_HUMAN"	"Q8N697"	"Q8N697 A6H8Y9 B3KTK1 Q71M34 Q7Z5F8 Q8TAH0"	"10"	"15"	"29224352"	"fluorescence microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004307"	"TRG"	"TRG_DiLeu_LyEn_5"	"S35F6_RAT"	"Q5RKH7"	"Q5RKH7"	"356"	"361"	"18479248"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Rattus norvegicus"
+"ELMI004305"	"TRG"	"TRG_DiLeu_LyEn_5"	"SCRB2_HUMAN"	"Q14108"	"Q14108"	"471"	"476"	"21097499"	"mutation analysis; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI004313"	"TRG"	"TRG_DiLeu_LyEn_5"	"TPC2_MOUSE"	"Q8BWC0"	"Q8BWC0 Q6NSV0 Q8BTJ7 Q8R396"	"4"	"9"	"22490017"	"confocal microscopy"	"true positive"	""	"Mus musculus"
+"ELMI004312"	"TRG"	"TRG_DiLeu_LyEn_5"	"TYRO_MOUSE"	"P11344"	"P11344"	"513"	"518"	"21097499"	"mutation analysis; two hybrid"	"true positive"	""	"Mus musculus"
+"ELMI004317"	"TRG"	"TRG_DiLeu_LyEn_5"	"VAM3_YEAST"	"Q12241"	"Q12241 D6W2G5"	"155"	"160"	"9722605"	"cosedimentation; mutation analysis; phenotype-based detection assay; radiolabel; western blot"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI004318"	"TRG"	"TRG_DiLeu_LyEn_5"	"YPQ1_YEAST"	"Q12010"	"Q12010 D6W1X6"	"124"	"129"	"26577948"	"fluorescence microscopy; fusion protein; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI004319"	"TRG"	"TRG_DiLeu_LyEn_5"	"YPQ3_YEAST"	"P38279"	"P38279 D6VQE2"	"131"	"136"	"26577948"	"fluorescence microscopy; fusion protein; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae S288c"

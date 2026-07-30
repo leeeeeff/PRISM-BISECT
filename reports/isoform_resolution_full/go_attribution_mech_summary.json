@@ -1,0 +1,66 @@
+{
+  "n_s1": 926,
+  "n_s2": 1161,
+  "n_mixed": 651,
+  "s1_type_fractions": {
+    "Type0_NoDomain": 0.4679175353254575,
+    "Type1_DomainLoss": 0.1762798239518184,
+    "Type2_PartialTrunc": 0.03173500115821172,
+    "Type3_SameDomain": 0.3240676395645124
+  },
+  "s2_type_fractions": {
+    "Type0_NoDomain": 0.3371343579573624,
+    "Type1_DomainLoss": 0.17798710956866634,
+    "Type2_PartialTrunc": 0.047430176830275984,
+    "Type3_SameDomain": 0.4374483556436953
+  },
+  "s2_top_type_same_frac": 0.7140396210163652,
+  "s2_top_type_diff_frac": 0.2859603789836348,
+  "mean_score_gap_s1": 0.04782339185476303,
+  "mean_score_gap_s2": 0.02104424312710762,
+  "mwu_gap_s2_vs_s1_p": 2.126796238623391e-12,
+  "s2_with_type1_frac": 0.28079242032730406,
+  "type1_tops_go_in_s2_frac": 0.8282208588957055,
+  "top_go_split_terms": [
+    [
+      39,
+      575
+    ],
+    [
+      62,
+      75
+    ],
+    [
+      15,
+      73
+    ],
+    [
+      41,
+      57
+    ],
+    [
+      8,
+      52
+    ],
+    [
+      47,
+      47
+    ],
+    [
+      7,
+      45
+    ],
+    [
+      3,
+      41
+    ],
+    [
+      4,
+      37
+    ],
+    [
+      63,
+      35
+    ]
+  ]
+}

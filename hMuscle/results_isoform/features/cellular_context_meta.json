@@ -1,0 +1,65 @@
+{
+  "n_transcripts": 63994,
+  "cell_types": [
+    "Astrocyte",
+    "Excitatory neuron",
+    "Inhibitory neuron",
+    "Lymphocyte",
+    "Microglia",
+    "OPC",
+    "Oligodendrocyte",
+    "Vascular cell"
+  ],
+  "cell_type_counts": {
+    "Astrocyte": 6047,
+    "Excitatory neuron": 34951,
+    "Inhibitory neuron": 23428,
+    "Lymphocyte": 171,
+    "Microglia": 3577,
+    "OPC": 6870,
+    "Oligodendrocyte": 18936,
+    "Vascular cell": 1507
+  },
+  "state_names": [
+    "neuronal_activity",
+    "DAM_microglia",
+    "homeostatic_microglia",
+    "reactive_astrocyte",
+    "oxphos_active",
+    "cell_cycle_active",
+    "er_stress",
+    "mature_oligodendrocyte",
+    "wnt_active"
+  ],
+  "state_marker_coverage": {
+    "neuronal_activity": "8/8",
+    "DAM_microglia": "8/8",
+    "homeostatic_microglia": "4/5",
+    "reactive_astrocyte": "4/5",
+    "oxphos_active": "7/7",
+    "cell_cycle_active": "5/6",
+    "er_stress": "5/5",
+    "mature_oligodendrocyte": "4/4",
+    "wnt_active": "5/5"
+  },
+  "cell_type_vec_shape": [
+    63994,
+    8
+  ],
+  "state_assoc_shape": [
+    63994,
+    9
+  ],
+  "enst_ids_sample": [
+    "ENST00000000233",
+    "ENST00000000412",
+    "ENST00000000442",
+    "ENST00000001008",
+    "ENST00000001146"
+  ],
+  "description": {
+    "cell_type_expression_vectors": "Layer 3: per-transcript mean log1p-CPM per cell type (63994 x 8)",
+    "cell_state_association_vectors": "Layer 4 aggregated: log2 fold-enrichment in high vs low state cells (63994 x 9)",
+    "usage": "absolute per-isoform features, no gene-level relative computation -> no gradient conflict"
+  }
+}

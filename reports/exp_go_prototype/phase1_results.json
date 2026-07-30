@@ -1,0 +1,26 @@
+{
+  "go_centroid": {
+    "L30": {
+      "fold_ab": 0.08476425460713294,
+      "fold_ba": 0.07632620947696858,
+      "mean": 0.08054523204205076
+    },
+    "delta(L30-15)": {
+      "fold_ab": 0.1685676198997964,
+      "fold_ba": 0.16551719750145805,
+      "mean": 0.16704240870062723
+    },
+    "L30+delta": {
+      "fold_ab": 0.1686187360004893,
+      "fold_ba": 0.16543076357101744,
+      "mean": 0.16702474978575338
+    }
+  },
+  "baselines": {
+    "prism_v17f_star": 0.734,
+    "knn": 0.636,
+    "gene_mean": 0.803,
+    "domain_lr": 0.163
+  },
+  "note": "Phase1: label-weighted centroid. Phase2: SwissProt canonical prototype (annotation-free)."
+}

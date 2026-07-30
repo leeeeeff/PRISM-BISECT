@@ -1,0 +1,8 @@
+Method	Category	All_MF	CI_low	CI_high	L2_Structural	Note
+Pfam domain LR	Gene-level	0.1625	NA	NA	NA	Pfam domain features + LogisticRegression; gene-level annotation transfer
+DeepFRI CNN-LM	Gene-level	0.1114	0.1077	0.1165	0.0256	CNN-LM seq-only, 65/81 valid MF terms in vocab; uncovered terms set to 0
+k-NN ESM-2 (k=5)	Isoform	0.6364	0.6207	0.6517	0.5427	k=5 cosine, L30 ESM-2, isoform-level retrieval
+PRISM zero-shot	Isoform	0.5962	NA	NA	0.3127	v15d trained on 18 GO-BP terms, zero-shot transfer to 82 MF terms
+D0: ESM-2+MLP	Isoform	0.6597	0.6541	0.6655	0.5207	ESM-2 L30 frozen + MLP Dense(256)→BN→Drop(0.3)→Dense(128)→Drop(0.2)→sigmoid, focal γ=2, 5-seed
+D1: FT-ESM+MLP	Isoform	0.6601	0.6469	0.6733	0.5196	ESM-2 L30 fine-tuned (GO-MF supervised) + MLP Dense(256)→BN→Drop(0.3)→Dense(128)→Drop(0.2)→sigmoid, focal γ=2, 5-seed
+v17f* (ours)	Isoform	0.7343	0.7227	0.7470	0.6366	delta(L30-L15) concat L30 → Dense(256)→BN→Drop(0.2)→Dense(128)→sigmoid, focal γ=2, 5-seed ensemble

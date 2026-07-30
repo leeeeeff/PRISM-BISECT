@@ -1,0 +1,9 @@
+{
+  "gene_level_mito_auprc": 0.6873465259141351,
+  "L1_mts_soft_mito_auprc": 0.5254061050210943,
+  "L2_ref_macro_auprc": 0.590144422345684,
+  "L3_binary_mito_auprc": 0.5970603568484506,
+  "n_reversal_cases": 163,
+  "prism_reversal_accuracy": 0.4662576687116564,
+  "n_mts_switch_genes": 99
+}

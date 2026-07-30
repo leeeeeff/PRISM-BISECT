@@ -1,0 +1,27 @@
+{
+  "NDUFS8": {
+    "found": true,
+    "error": "no valid terms"
+  },
+  "DOCK11": {
+    "found": true,
+    "error": "no valid terms"
+  },
+  "NDUFAF5": {
+    "found": true,
+    "error": "no valid terms"
+  },
+  "NDUFS4": {
+    "found": true,
+    "error": "no valid terms"
+  },
+  "NDUFS7": {
+    "found": true,
+    "error": "no valid terms"
+  },
+  "_meta": {
+    "between_gene_std": 0.0894167572259903,
+    "model": "v17f_star_no_tpsi",
+    "n_test_isoforms": 36748
+  }
+}

@@ -1,0 +1,18 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:21.432245
+#Origin: asimov
+#Type: tsv
+#NumInstances: 12
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI003206"	"DEG"	"DEG_COP1_1"	"ETS1_HUMAN"	"P14921"	"P14921 A9UL17 F5GYX9 Q14278 Q16080 Q6N087 Q96AC5"	"273"	"283"	"25117710"	"alanine scanning; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI003204"	"DEG"	"DEG_COP1_1"	"ETS2_HUMAN"	"P15036"	"P15036 A6NM68 D3DSH6 Q53Y89"	"46"	"56"	"25117710"	"alanine scanning; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI003205"	"DEG"	"DEG_COP1_1"	"ETS2_HUMAN"	"P15036"	"P15036 A6NM68 D3DSH6 Q53Y89"	"301"	"311"	"25117710"	"alanine scanning; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI002764"	"DEG"	"DEG_COP1_1"	"ETV1_HUMAN"	"P50549"	"P50549 A4D118 B2R768 B7Z2I4 B7Z618 B7Z9P2 C9JT37 E9PHB1 F5GXR2 O75849 Q4KMQ6 Q59GA7 Q6AI30 Q9UQ71 Q9Y636"	"67"	"74"	"21572435"	"anti tag coimmunoprecipitation; coimmunoprecipitation; mutation analysis; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI002765"	"DEG"	"DEG_COP1_1"	"ETV4_HUMAN"	"P43268"	"P43268 A8K314 B7Z5J3 B7Z9J6 Q96AW9"	"74"	"81"	"21572435"	"anti tag coimmunoprecipitation"	"true positive"	""	"Homo sapiens"
+"ELMI002766"	"DEG"	"DEG_COP1_1"	"ETV5_HUMAN"	"P41161"	"P41161 A6NH46 Q6IBN5"	"66"	"73"	"21572435"	"anti tag coimmunoprecipitation"	"true positive"	""	"Homo sapiens"
+"ELMI000270"	"DEG"	"DEG_COP1_1"	"HY5_ARATH"	"O24646"	"O24646"	"38"	"46"	"9659918"	"glutathione s tranferase tag; pull down"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI003184"	"DEG"	"DEG_COP1_1"	"HYH_ARATH"	"Q8W191"	"Q8W191 Q8LB41 Q9LUN6"	"26"	"34"	"12023303"	"alanine scanning; beta galactosidase complementation; fluorescent resonance energy transfer; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI000269"	"DEG"	"DEG_COP1_1"	"JUND_HUMAN"	"P17535"	"P17535 Q53EK9"	"242"	"252"	"12615916"	"coimmunoprecipitation"	"true positive"	""	"Homo sapiens"
+"ELMI000268"	"DEG"	"DEG_COP1_1"	"JUN_HUMAN"	"P05412"	"P05412 Q96G93"	"227"	"235"	"12615916"	"coimmunoprecipitation"	"true positive"	""	"Homo sapiens"
+"ELMI000641"	"DEG"	"DEG_COP1_1"	"STH_ARATH"	"Q9SID1"	"Q9SID1 Q9C558"	"229"	"237"	"11226162"	"two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI003183"	"DEG"	"DEG_COP1_1"	"TRIB1_HUMAN"	"Q96RU8"	"Q96RU8 B4DMM6 C5HU08 O15180 Q9H2Y8"	"354"	"361"	"27041596"	"coimmunoprecipitation; competition binding; fluorescence polarization spectroscopy; mutation analysis; western blot; x-ray crystallography"	"true positive"	"5IGO 5IGQ"	"Homo sapiens"

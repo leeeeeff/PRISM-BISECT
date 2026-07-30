@@ -1,0 +1,89 @@
+
+PRISM 아이소폼 해상도 정량 분석 — 도메인 기반 툴과의 차이 원인
+=================================================================
+분석일: 2026-07-02
+데이터: UniProt curated 42 evaluable pairs + BISECT 101 PASS cases
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+핵심 질문: "탐지 최소 단위가 도메인이면, 도메인 툴과 차이 원인은?"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Feature 6-유형 분류 & PRISM 정확도]
+                       label  n  accuracy  mean_gap  pfam_detectable
+Type 1\nComplete Domain Loss  8  1.000000  0.382687         1.000000
+  Type 2\nPartial Truncation  7  0.714286  0.035743         0.714286
+ Type 3\nShort Motif (<30aa)  5  0.400000  0.051880         0.000000
+ Type 5\nSubtle Quantitative 21  0.428571  0.016805         0.000000
+ Type 6\nLocalization Switch  1  1.000000  0.000000         0.000000
+
+[Pfam 탐지 가능 여부 vs PRISM 성능]
+- Pfam 탐지 가능 (n=13): accuracy=0.923, mean_gap=0.241
+- Pfam 탐지 불가 (n=29): accuracy=0.448, mean_gap=0.027
+  ← PRISM은 Pfam이 탐지 불가한 케이스에서도 위 accuracy 달성
+
+[핵심 발견: ESM-2가 포착하는 도메인 외 Feature]
+
+Type 2 — Partial Truncation (Pfam hit 유지, 기능 저하)
+  사례: NTRK3 (613-839 missing, kinase C-lobe partial)
+  Pfam 결과: Protein kinase domain hit → 기능 있다고 예측 (오답)
+  PRISM: δ_layer=L30-L15가 C-말단 소실로 인한 임베딩 변화 포착
+  → gap=0.139, correct=True
+
+Type 3 — Short Functional Motif (< 30aa, Pfam threshold 미달)
+  사례: NDUFS8 MTS 25aa 파괴 (미토콘드리아 import 실패)
+  사례: IGF1 N-terminal signal peptide 소실 (세포내 잔류)
+  사례: BCL2L1 BH1+BH4 소실 (BCL-xL→BCL-xS pro-apoptotic 전환)
+  Pfam 결과: 서열 너무 짧아 domain 미검출 (탐지 불가)
+  PRISM: ESM-2 L30 레이어가 국소 구조 변화의 기능적 함의 포착
+  → BCL2L1 gap = 0.117
+
+Type 5 — Subtle Quantitative Change (동일 도메인, 미세 차이)
+  사례: EGFR 6aa 삽입 (TK domain 연속성 유지, 활성 변화)
+  사례: NTRK1 6aa 결실 (도메인 intact, 결합 친화도 미세 변화)
+  Pfam 결과: 동일 domain hit → 기능 구별 불가 (binary output)
+  PRISM: 연속적 임베딩 공간에서 미세 차이 포착 가능
+  → 이 유형에서 PRISM accuracy = 0.429 (낮음 — 현재 PRISM 한계 영역)
+
+Type 6 — Localization Switch (도메인 유사, 세포 위치만 변화)
+  사례: FGF2 HMW(핵) vs LMW(분비) — 동일 FGF core domain
+  PRISM: gap = 0.000 (탐지 실패 — 현재 한계)
+
+[BISECT 101케이스 Feature Type 분포]
+feature_type
+Type2_PartialTrunc    41
+Type1_DomainLoss      34
+Type5_Subtle          10
+Type6_LocSwitch        8
+Type4_AltSeq           8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+결론: PRISM vs 도메인 기반 툴의 차이는 3개 레이어에서 발생
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+레이어 1 — 탐지 범위 확장 (Type 2,3):
+  도메인 툴: binary (domain present = 1, absent = 0)
+  PRISM:     연속적 확률 (partial domain → partial score)
+  → NTRK3처럼 kinase C-lobe만 소실해도 gap 포착
+
+레이어 2 — 서열 해상도 확장 (Type 3):
+  도메인 툴: Pfam 탐지 하한선 ~30aa
+  PRISM:     ESM-2 잔기 수준 임베딩 → 25aa MTS 파괴도 포착
+  → NDUFS8 MTS case (BISECT Tier A Localization Switch)
+
+레이어 3 — 연속 표현 (Type 5):
+  도메인 툴: 도메인 보유=기능 동일 (차등 불가)
+  PRISM:     δ_layer 공간에서 기능 강도 차이 포착 (현재는 성능 한계)
+  → 향후 더 깊은 레이어 활용 또는 주석 개선 필요
+
+[현재 PRISM 탐지 한계]
+- Type 5 (Subtle): accuracy=0.429
+  → 도메인 내부 미세 서열 차이는 δ_layer로 포착 불충분
+- Type 6 (Localization): 현재 GO MF 라벨에 CC 정보 부재
+  → BISECT LOC 모듈이 이를 보완 (NDUFS8 Inhibitory case)
+- Dominant-negative (CASP9, TP53 ΔN): 기능 반전 = gain-of-function 방향
+  → PRISM은 이를 역방향으로 예측하지 못함
+
+출력 파일:
+  /home/welcome1/sw1686/DIFFUSE/reports/isoform_resolution/feature_type_analysis.tsv
+  /home/welcome1/sw1686/DIFFUSE/reports/isoform_resolution/figure_feature_types.png
+  /home/welcome1/sw1686/DIFFUSE/reports/isoform_resolution/figure_domain_vs_prism.png

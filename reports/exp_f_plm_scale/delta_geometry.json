@@ -1,0 +1,113 @@
+{
+  "t30_150M": {
+    "label": "t30_150M",
+    "n_layers": 30,
+    "all_pairs": {
+      "n_pairs": 76552,
+      "mean_d2_real": 200.293734876339,
+      "mean_d2_rand": 18320.950979642002,
+      "excess_pct": -98.90675033681984,
+      "diff_ci95": [
+        -18289.057549463272,
+        -17938.01051095348
+      ],
+      "significant": true
+    },
+    "length_matched_pairs": {
+      "n_pairs": 38501,
+      "mean_d2_real": 51.56860606179088,
+      "mean_d2_rand": 18266.10746945899,
+      "excess_pct": -99.71768147018727,
+      "diff_ci95": [
+        -18445.969509910406,
+        -17981.62174900542
+      ],
+      "significant": true
+    },
+    "between_gene_control": {
+      "n_pairs": 76552,
+      "mean_d2_real": 1048.9261474609375,
+      "mean_d2_rand": 18430.3203125,
+      "excess_pct": -94.30869296193123,
+      "diff_ci95": [
+        -17394.835302734376,
+        -17367.63798828125
+      ]
+    },
+    "within_over_between_real_d2_ratio": 0.1909512269869295
+  },
+  "prot_t5_xl": {
+    "label": "prot_t5_xl",
+    "n_layers": 24,
+    "all_pairs": {
+      "n_pairs": 76552,
+      "mean_d2_real": 21023.187158039203,
+      "mean_d2_rand": 1019056.9824829038,
+      "excess_pct": -97.93699591687044,
+      "diff_ci95": [
+        -1018055.6920772208,
+        -971920.5153183986
+      ],
+      "significant": true
+    },
+    "length_matched_pairs": {
+      "n_pairs": 38501,
+      "mean_d2_real": 4580.000505339277,
+      "mean_d2_rand": 997633.3128384652,
+      "excess_pct": -99.5409134351871,
+      "diff_ci95": [
+        -1022193.1353753266,
+        -955843.3961221772
+      ],
+      "significant": true
+    },
+    "between_gene_control": {
+      "n_pairs": 76552,
+      "mean_d2_real": 97397.390625,
+      "mean_d2_rand": 1043606.875,
+      "excess_pct": -90.66723361611366,
+      "diff_ci95": [
+        -947644.9015625,
+        -944777.9890625
+      ]
+    },
+    "within_over_between_real_d2_ratio": 0.2158495933323594
+  },
+  "ankh_base": {
+    "label": "ankh_base",
+    "n_layers": 48,
+    "all_pairs": {
+      "n_pairs": 76552,
+      "mean_d2_real": 231348201.49581376,
+      "mean_d2_rand": 35415575682.23388,
+      "excess_pct": -99.3467614261827,
+      "diff_ci95": [
+        -35793739908.850655,
+        -34413753628.8222
+      ],
+      "significant": true
+    },
+    "length_matched_pairs": {
+      "n_pairs": 38501,
+      "mean_d2_real": 53736492.14510913,
+      "mean_d2_rand": 35319339581.63788,
+      "excess_pct": -99.84785533143705,
+      "diff_ci95": [
+        -36215936895.74876,
+        -34207123356.528236
+      ],
+      "significant": true
+    },
+    "between_gene_control": {
+      "n_pairs": 76552,
+      "mean_d2_real": 691397504.0,
+      "mean_d2_rand": 35700416512.0,
+      "excess_pct": -98.06333482265472,
+      "diff_ci95": [
+        -35056612761.6,
+        -34959505612.8
+      ]
+    },
+    "within_over_between_real_d2_ratio": 0.33460954104892715
+  }
+}

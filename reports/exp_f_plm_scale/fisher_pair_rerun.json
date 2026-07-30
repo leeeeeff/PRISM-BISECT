@@ -1,0 +1,26 @@
+{
+  "prot_t5_xl": {
+    "label": "ProtT5-XL",
+    "L_final": 24,
+    "L_mid_baseline_50pct": 12,
+    "L_mid_fisher": 15,
+    "delta_only_fisher": 0.6766,
+    "delta_only_fisher_std": 0.0015,
+    "concat_fisher": 0.7296,
+    "concat_fisher_std": 0.0022,
+    "baseline_delta_only": "0.6744",
+    "baseline_concat": "0.7288"
+  },
+  "ankh_base": {
+    "label": "Ankh-base",
+    "L_final": 48,
+    "L_mid_baseline_50pct": 24,
+    "L_mid_fisher": 20,
+    "delta_only_fisher": 0.6221,
+    "delta_only_fisher_std": 0.0028,
+    "concat_fisher": 0.7109,
+    "concat_fisher_std": 0.0021,
+    "baseline_delta_only": "0.6638",
+    "baseline_concat": "0.7126"
+  }
+}

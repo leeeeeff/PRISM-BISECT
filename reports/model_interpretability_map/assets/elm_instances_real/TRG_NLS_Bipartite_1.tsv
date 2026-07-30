@@ -1,0 +1,17 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:23.187291
+#Origin: asimov
+#Type: tsv
+#NumInstances: 11
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI002172"	"TRG"	"TRG_NLS_Bipartite_1"	"CDN1A_HUMAN"	"P38936"	"P38936 Q14010 Q9BUT4"	"142"	"158"	"12417334 15340083"	"confocal microscopy; green fluorescent protein tag; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001390"	"TRG"	"TRG_NLS_Bipartite_1"	"HIBN_XENLA"	"P06180"	"P06180"	"534"	"553"	"10336485 12695505"	"edman degradation; x-ray crystallography"	"true positive"	"1PJN"	"Xenopus laevis"
+"ELMI001388"	"TRG"	"TRG_NLS_Bipartite_1"	"NUPL_XENLA"	"P05221"	"P05221"	"155"	"171"	"3417784 10764582"	"colocalization; mutation analysis; x-ray crystallography"	"true positive"	"1EJY"	"Xenopus laevis"
+"ELMI001394"	"TRG"	"TRG_NLS_Bipartite_1"	"P53_HUMAN"	"P04637"	"P04637 Q15086 Q15087 Q15088 Q16535 Q16807 Q16808 Q16809 Q16810 Q16811 Q16848 Q2XN98 Q3LRW1 Q3LRW2 Q3LRW3 Q3LRW4 Q3LRW5 Q86UG1 Q8J016 Q99659 Q9BTM4 Q9HAQ8 Q9NP68 Q9NPJ2 Q9NZD0 Q9UBI2 Q9UQ61"	"305"	"323"	"10551826 10321742"	"colocalization; competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001391"	"TRG"	"TRG_NLS_Bipartite_1"	"P73_HUMAN"	"O15350"	"O15350 B7Z9C1 O15351 Q17RN8 Q5TBV5 Q5TBV6 Q8NHW9 Q8TDY5 Q8TDY6 Q9NTK8"	"327"	"349"	"11847229"	"colocalization; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001858"	"TRG"	"TRG_NLS_Bipartite_1"	"PB2_I34A1"	"P03428"	"P03428 A4GXH0 Q20N28 Q8JUU8"	"738"	"756"	"17310249"	"mutation analysis; x-ray crystallography"	"true positive"	"2JDQ"	"Influenza A virus (A/Puerto Rico/8/1934(H1N1))"
+"ELMI003754"	"TRG"	"TRG_NLS_Bipartite_1"	"POPB_RALSO"	"Q9RBS1"	"Q9RBS1"	"98"	"118"	"10792715"	"deletion analysis; fusion protein; imaging technique; sequence based prediction"	"true positive"	""	"Ralstonia solanacearum GMI1000"
+"ELMI001389"	"TRG"	"TRG_NLS_Bipartite_1"	"RB_HUMAN"	"P06400"	"P06400 A8K5E3 P78499 Q5VW46 Q8IZL4"	"860"	"877"	"8336704 12695505"	"colocalization; mutation analysis; x-ray crystallography"	"true positive"	"1PJM"	"Homo sapiens"
+"ELMI001392"	"TRG"	"TRG_NLS_Bipartite_1"	"SWI5_YEAST"	"P08153"	"P08153 D6VSC9 E9P945"	"636"	"653"	"1652372"	"colocalization; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI001393"	"TRG"	"TRG_NLS_Bipartite_1"	"VIRD2_RHIRD"	"P06668"	"P06668"	"396"	"414"	"8391110"	"colocalization; mutation analysis"	"true positive"	""	"Agrobacterium tumefaciens"
+"ELMI003923"	"TRG"	"TRG_NLS_Bipartite_1"	"W5U6C5_LISMN"	"W5U6C5"	"W5U6C5"	"162"	"184"	"24449750"	"phenotype-based detection assay; sequence based prediction"	"true positive"	""	"Listeria monocytogenes"

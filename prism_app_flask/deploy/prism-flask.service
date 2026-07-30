@@ -1,0 +1,28 @@
+# systemd unit 템플릿 — 상시 서비스(부팅 시 자동기동, 크래시 시 재시작).
+# 설치(관리자 권한 필요):
+#   sudo cp prism_app_flask/deploy/prism-flask.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now prism-flask
+#   systemctl status prism-flask   ·   journalctl -u prism-flask -f
+#
+# 경로/사용자는 환경에 맞게 수정할 것(아래는 node212 기준 예시).
+
+[Unit]
+Description=PRISM+BISECT Flask app (gunicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=welcome1
+WorkingDirectory=/home/welcome1/sw1686/DIFFUSE
+Environment=OMP_NUM_THREADS=4
+# conda env 의 gunicorn 절대경로 사용(로그인 셸 없이 실행되므로)
+ExecStart=/home/welcome1/miniconda3/envs/isoform_env/bin/gunicorn \
+    --workers 2 --preload --timeout 120 \
+    --bind 0.0.0.0:8600 \
+    prism_app_flask.app:app
+Restart=on-failure
+RestartSec=5
+Nice=10
+
+[Install]
+WantedBy=multi-user.target

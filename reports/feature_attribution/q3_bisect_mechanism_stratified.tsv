@@ -1,0 +1,5 @@
+type	description	n	mean_ratio	median_ratio	ratio>2	ratio_eq1
+Type_A_domain_loss	CT has higher PRISM score; AD isoform lost Pfam domains	54	5.612717799114997	5.391816935462945	53	0
+Type_B_domain_gain	AD isoform gained domains (DLG1, NEK1, PHB2); ratio<1	3	0.7615315065623932	0.4738242698785957	0	0
+Type_C_no_domain_chg	Same domain architecture; negative control	23	0.9999969670683789	0.9999979131930026	0	23
+Type_D_partial	Partial structural evidence	3	1.2185655154071016	1.254979097966364	0	0

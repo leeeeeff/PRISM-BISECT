@@ -183,3 +183,15 @@ patch_missing.sh
 
 # --- Streamlit secrets (access tokens — NEVER commit) ---
 .streamlit/secrets.toml
+
+# --- Third-party tool clones / weights (not authored here, GB-scale) ---
+hMuscle/model/DeepFRI/
+
+# --- SOTA benchmark rerun caches (regenerable from pipeline, exceed GitHub limits) ---
+reports/truebrain_rerun_20260714/
+reports/benchmark_external/
+reports/exp_e_sota/
+reports/exp_d_finetune/
+
+# --- BioNexus KG collaboration (separate track, not part of PRISM+BISECT) ---
+kg/

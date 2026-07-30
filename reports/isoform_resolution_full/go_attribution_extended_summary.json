@@ -1,0 +1,53 @@
+{
+  "s2_mode_top_n_genes": 1161,
+  "s2_dom_dep_wins": 532,
+  "s2_motif_dep_wins": 1559,
+  "top_s2_specialized_gos": [
+    [
+      "GO:0003723",
+      153
+    ],
+    [
+      "GO:0042802",
+      146
+    ],
+    [
+      "GO:0005524",
+      85
+    ],
+    [
+      "GO:0000978",
+      70
+    ],
+    [
+      "GO:0003677",
+      69
+    ],
+    [
+      "GO:0003676",
+      65
+    ],
+    [
+      "GO:0008270",
+      60
+    ],
+    [
+      "GO:0000981",
+      57
+    ],
+    [
+      "GO:0003700",
+      50
+    ],
+    [
+      "GO:0042803",
+      49
+    ]
+  ],
+  "mixed_specialist_pairs": 524,
+  "mixed_5515_diff_from_generalist": 162,
+  "extended_total_genes": 7459,
+  "extended_s2_rate": 0.21799168789381954,
+  "extended_mixed_rate": 0.10336506234079636,
+  "domain_dep_terms_count": 26
+}

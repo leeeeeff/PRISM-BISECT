@@ -1,0 +1,43 @@
+gene	feature_type	pfam_detectable	mechanism	gap	correct	score_a	score_b
+EGFR	Type5_Subtle	False	6aa TK domain insert; domain intact, affinity shift	0.0111	True	0.9759	0.9648
+FGFR1	Type1_DomainLoss	True	IgIII domain loss; kinase still present	0.071	True	0.9903	0.9193
+NTRK1	Type5_Subtle	False	6aa deletion within kinase domain; domain present	0.0001	True	0.9788	0.9787
+VEGFR2	Type1_DomainLoss	True	sVEGFR2: TM+TK domain absent; soluble decoy	0.5125	True	0.9472	0.4347
+CDK4	Type2_PartialTrunc	False	Internal deletion reducing kinase competency	0.0339	False	0.9362	0.9701
+BCL2	Type3_ShortMotif	False	TM anchor absent; homo/heterodimerization depends on membrane	0.0452	False	0.3571	0.4023
+MCL1	Type3_ShortMotif	False	BH3 retained; BH1-2 lost; net effect misclassified	0.0011	False	0.0094	0.0083
+BCL2L1	Type3_ShortMotif	False	BH1+BH4 absent in BCL-xS; BH3-only = pro-apoptotic	0.1167	True	0.1555	0.0388
+CASP9	Type5_Subtle	False	iso2 lacks catalytic domain; PRISM doesn't capture dominance	0.0117	False	0.0003	0.012
+BRCA1	Type1_DomainLoss	True	iso2 63aa; all domains absent	0.4162	True	0.4168	0.0006
+TP53	Type5_Subtle	False	ΔN40: TA domain lost; PRISM gap tiny (both high)	0.0038	False	0.9931	0.9969
+CDKN2A	Type5_Subtle	False	unclassified	0.1891	True	0.8482	0.6591
+CDKN2A	Type5_Subtle	False	unclassified	0.0002	False	0.0003	0.0001
+IGF1	Type3_ShortMotif	False	iso2 lacks N-term signal peptide; intracellular retention	0.0362	True	0.9186	0.8824
+FGF2	Type6_LocSwitch	False	HMW=nuclear; LMW=secreted; same growth factor core	0.0	True	0.9014	0.9014
+HNRNPA1	Type3_ShortMotif	False	A1b lacks C-terminal RGG box; RNA binding reduced	0.0602	False	0.1827	0.2429
+SRSF1	Type2_PartialTrunc	True	iso3 lacks RRM2; RNA binding impaired	0.0015	False	0.9975	0.999
+RBFOX1	Type1_DomainLoss	True	iso3 26aa; RRM absent	0.0122	True	0.993	0.9808
+RUNX1	Type2_PartialTrunc	True	RUNX1a lacks TA domain; Runt present	0.0131	True	0.89	0.8769
+TP63	Type5_Subtle	False	ΔNp63 represses; TA present but N-terminal switch	0.0073	False	0.9839	0.9912
+TP73	Type5_Subtle	False	ΔNp73 dominant-negative; both isoforms high scores	0.002	True	0.988	0.986
+ACTN1	Type5_Subtle	False	Smooth vs non-muscle; same actin-binding domain	0.0141	False	0.5182	0.5323
+FLNB	Type5_Subtle	False	Exon 30B absent in hinge-1; domain-level same	0.0	False	0.6523	0.6523
+APP	Type2_PartialTrunc	True	APP-695 lacks Kunitz/OX-2; iso-7 has integrin binding	0.0142	True	0.8492	0.835
+MAPT	Type5_Subtle	False	2N4R vs 0N3R; repeat region number change	0.0579	False	0.7341	0.792
+PARK2	Type1_DomainLoss	True	iso3: UBL domain lost	0.6454	True	0.8691	0.2237
+DLG4	Type2_PartialTrunc	True	iso2 lacks PDZ1; scaffold intact but truncated	0.0002	True	0.9963	0.9961
+SNAP25	Type5_Subtle	False	Adult vs fetal SNARE; subtle palmitoylation site	0.0001	True	0.0001	0.0
+FLT1	Type1_DomainLoss	True	sFLT1: TM+kinase absent; soluble decoy	0.2277	True	0.9338	0.7061
+NTRK2	Type1_DomainLoss	True	TrkB-T1: intracellular kinase absent	0.1923	True	0.9925	0.8002
+NTRK3	Type2_PartialTrunc	False	TrkC-T1: 613-839 missing (kinase C-lobe partial)	0.1385	True	0.9925	0.854
+AXL	Type5_Subtle	False	Minor isoform; PRISM gap very small	0.0004	True	0.9441	0.9437
+MDM2	Type2_PartialTrunc	True	Short MDM2 lacks p53-binding domain; ubiquitin ligase retained	0.0488	True	0.8561	0.8073
+WT1	Type5_Subtle	False	+/- KTS insert; zinc finger counting same	0.0362	False	0.4905	0.5267
+CEBPA	Type5_Subtle	False	p30 vs p42; p30 lacks TA1; both have bZIP	0.0019	True	0.9856	0.9837
+TIA1	Type5_Subtle	False	iso2 RRM arrangement; subtle difference	0.0	False	0.9998	0.9998
+PTBP1	Type5_Subtle	False	iso4 lacks exon 9; RRM still present	0.0001	False	0.9994	0.9995
+FGFR2	Type1_DomainLoss	True	iso-14 254aa: extracellular only, kinase absent	0.9842	True	0.9873	0.0031
+KIT	Type5_Subtle	False	Minor exon difference; kinase present in both	0.0001	True	0.9907	0.9906
+RUNX2	Type5_Subtle	False	Minor N-terminal difference; Runt domain present	0.0054	False	0.9074	0.9128
+HIF1A	Type5_Subtle	False	Truncated N-terminal variant; HIF1AN binding reduced	0.0055	False	0.9801	0.9856
+BIRC5	Type5_Subtle	False	Survivin-ΔEx3 missing helix; BIR present	0.0059	True	0.9899	0.9958

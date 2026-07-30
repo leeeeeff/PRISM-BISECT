@@ -1,0 +1,124 @@
+{
+  "go_specialization": {
+    "total_cases": 13532,
+    "n_genes": 2417,
+    "by_feature_type": {
+      "Type0_NoDomain": {
+        "n": 4231,
+        "mean_excess": 0.14394,
+        "mean_pred": 0.64396
+      },
+      "Type1_DomainLoss": {
+        "n": 2133,
+        "mean_excess": 0.15519,
+        "mean_pred": 0.68471
+      },
+      "Type2_PartialTrunc": {
+        "n": 717,
+        "mean_excess": 0.13916,
+        "mean_pred": 0.66436
+      },
+      "Type3_SameDomain": {
+        "n": 6451,
+        "mean_excess": 0.14776,
+        "mean_pred": 0.6825
+      }
+    },
+    "top_go_terms": [
+      {
+        "go_id": "GO:0005515",
+        "go_name": "protein binding",
+        "n_isoforms": 2583
+      },
+      {
+        "go_id": "GO:0003723",
+        "go_name": "RNA binding",
+        "n_isoforms": 721
+      },
+      {
+        "go_id": "GO:0005524",
+        "go_name": "ATP binding",
+        "n_isoforms": 565
+      },
+      {
+        "go_id": "GO:0042802",
+        "go_name": "identical protein binding",
+        "n_isoforms": 533
+      },
+      {
+        "go_id": "GO:0003677",
+        "go_name": "DNA binding",
+        "n_isoforms": 437
+      },
+      {
+        "go_id": "GO:0000981",
+        "go_name": "DNA-binding transcription factor activity, RNA polymerase II",
+        "n_isoforms": 322
+      },
+      {
+        "go_id": "GO:0000978",
+        "go_name": "RNA polymerase II cis-regulatory region sequence-specific DN",
+        "n_isoforms": 309
+      },
+      {
+        "go_id": "GO:0008270",
+        "go_name": "zinc ion binding",
+        "n_isoforms": 297
+      },
+      {
+        "go_id": "GO:0003676",
+        "go_name": "nucleic acid binding",
+        "n_isoforms": 295
+      },
+      {
+        "go_id": "GO:0004672",
+        "go_name": "protein kinase activity",
+        "n_isoforms": 243
+      }
+    ]
+  },
+  "novel_go": {
+    "total_cases": 17230,
+    "n_genes": 3775
+  },
+  "type3_pairs": {
+    "total_same_domain_pairs": 52479,
+    "high_gap_n": 1039,
+    "high_gap_frac": 0.0198,
+    "low_gap_n": 42297,
+    "esm2_cosine": {
+      "high_gap_mean": 0.072605,
+      "low_gap_mean": 0.005446,
+      "ratio": 13.3325,
+      "mwu_p": 9.114546908285828e-169
+    },
+    "len_diff_spearman_rho": 0.8075,
+    "len_diff_spearman_p": 0.0,
+    "top_discriminating_pc": {
+      "pc_num": 1,
+      "auroc": 0.5774
+    },
+    "top_pc_aurocs": [
+      [
+        1,
+        0.5774
+      ],
+      [
+        3,
+        0.5643
+      ],
+      [
+        20,
+        0.5635
+      ],
+      [
+        10,
+        0.561
+      ],
+      [
+        7,
+        0.557
+      ]
+    ]
+  }
+}

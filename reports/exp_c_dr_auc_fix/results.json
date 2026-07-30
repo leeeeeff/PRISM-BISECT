@@ -1,0 +1,34 @@
+{
+  "part1_baseline_verification": {
+    "prism_v17f_star": {
+      "dr_auc": 0.6296261535343247,
+      "n_pairs": 3542,
+      "expected": 0.6296
+    },
+    "gene_mean_oracle": {
+      "dr_auc": 0.5,
+      "n_pairs": 3542,
+      "expected": 0.5
+    }
+  },
+  "part2_option_a_lambda005": {
+    "lambda_aux": 0.05,
+    "seeds": [
+      42,
+      7,
+      13
+    ],
+    "auprc_all": 0.5838007083909167,
+    "auprc_l2": 0.4116703667871616,
+    "dr_auc": 0.6256712839826042,
+    "n_pairs": 3542,
+    "delta_dr_auc": -0.00395486955172053,
+    "delta_auprc": -0.1501992916090833,
+    "time_s": 110.97327208518982
+  },
+  "conclusion": {
+    "beats_centroid_hurdle": false,
+    "dr_auc_improves": false,
+    "verdict": "REJECTED"
+  }
+}

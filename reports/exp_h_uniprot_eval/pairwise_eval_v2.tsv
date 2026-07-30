@@ -1,0 +1,31 @@
+gene	iso_a	iso_b	go_term	direction	score_a	score_b	gap	prism_correct	note
+EGFR	P00533-1	P00533-4	GO_0004714	A_only	None	None		None	GO term not in training (GO:0004714)
+FGFR1	P11362-1	P11362-11	GO_0005007	A_only	None	None		None	GO term not in training (GO:0005007)
+NTRK1	P04629-1	P04629-2	GO_0004714	A_only	None	None		None	GO term not in training (GO:0004714)
+VEGFR2	P35968-1	P35968-2	GO_0004714	A_only	None	None		None	GO term not in training (GO:0004714)
+CDK4	P11802-1	P11802-2	GO_0004693	A_only	None	None		None	GO term not in training (GO:0004693)
+BCL2	P10415-1	P10415-2	GO_0097553	A_only	None	None		None	GO term not in training (GO:0097553)
+MCL1	Q07820-1	Q07820-2	GO_0097553	B_only	None	None		None	GO term not in training (GO:0097553)
+BCL2L1	Q07817-1	Q07817-2	GO_0005244	B_only	None	None		None	GO term not in training (GO:0005244)
+CASP9	P55211-1	P55211-2	GO_0004197	A_only	None	None		None	GO term not in training (GO:0004197)
+BRCA1	P38398-1	P38398-2	GO_0006281	A_only	None	None		None	GO term not in training (GO:0006281)
+TP53	P04637-1	P04637-9	GO_0006977	A_only	None	None		None	GO term not in training (GO:0006977)
+CDKN2A	P42771-1	P42771-2	GO_0008285	A_only	None	None		None	GO term not in training (GO:0008285)
+CDKN2A	P42771-2	P42771-1	GO_0006977	B_only	None	None		None	GO term not in training (GO:0006977)
+VEGFA	P15692-1	P15692-7	GO_0005178	A_only	None	None		None	P15692-7 not in scores
+IGF1	P05019-1	P05019-2	GO_0005158	A_only	None	None		None	GO term not in training (GO:0005158)
+FGF2	P09038-1	P09038-4	GO_0008083	both	0.9014	0.9014	0.0	None	
+PCBP1	Q15365-1	Q15365-2	GO_0003723	A_only	None	None		None	Q15365-2 not in scores
+HNRNPA1	P09651-1	P09651-2	GO_0003729	A_only	0.1827	0.2429	0.060200000000000004	False	
+SRSF1	Q07955-1	Q07955-3	GO_0000398	A_only	None	None		None	GO term not in training (GO:0000398)
+RBFOX1	O43251-1	O43251-3	GO_0000398	A_only	None	None		None	GO term not in training (GO:0000398)
+RUNX1	Q01196-1	Q01196-2	GO_0006357	A_only	None	None		None	GO term not in training (GO:0006357)
+TP63	Q9H3D4-1	Q9H3D4-5	GO_0006357	A_only	None	None		None	GO term not in training (GO:0006357)
+TP73	O15350-1	O15350-3	GO_0006977	A_only	None	None		None	GO term not in training (GO:0006977)
+ACTN1	P12814-1	P12814-2	GO_0005200	A_only	None	None		None	GO term not in training (GO:0005200)
+FLNB	O75369-1	O75369-5	GO_0005200	A_only	None	None		None	GO term not in training (GO:0005200)
+APP	P05067-1	P05067-7	GO_0005178	A_only	0.7001	0.6681	0.03199999999999992	True	
+MAPT	P10636-1	P10636-5	GO_0008017	A_only	0.7341	0.792	0.05790000000000006	False	
+PARK2	O60260-1	O60260-3	GO_0004842	A_only	0.8691	0.2237	0.6454	True	
+DLG4	P78352-1	P78352-2	GO_0007399	A_only	None	None		None	GO term not in training (GO:0007399)
+SNAP25	P60880-1	P60880-2	GO_0016079	A_only	None	None		None	GO term not in training (GO:0016079)

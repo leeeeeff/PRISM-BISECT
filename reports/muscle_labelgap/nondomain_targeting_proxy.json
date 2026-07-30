@@ -1,0 +1,73 @@
+{
+  "n": 1505,
+  "n_nterm": 878,
+  "n_internal": 627,
+  "proxy": "MitoFates/TargetP-lite N-terminal presequence (ESM-2-independent)",
+  "prediction": "H1 null: proj~dLength only, no dMTS specificity (gap stands)",
+  "N-terminal": {
+    "n": 878,
+    "proj_vs_dMTS_raw": {
+      "rho": 0.1423009707867866,
+      "p": 2.315433919813856e-05
+    },
+    "proj_vs_dMTS_partial_len_hyd": {
+      "rho": 0.12609724247439527,
+      "p": 0.00018274073777113086
+    },
+    "proj_vs_dLength": {
+      "rho": 0.43075421110477835,
+      "p": 5.662369063987096e-41
+    },
+    "per_feature_partial": {
+      "net_charge": {
+        "rho": 0.11693847005316604,
+        "p": 0.0005242977026646988
+      },
+      "arg_frac": {
+        "rho": 0.11177212358541377,
+        "p": 0.0009203140192574672
+      },
+      "acidic_frac": {
+        "rho": -0.14189391430347037,
+        "p": 2.4975173119068804e-05
+      },
+      "muH": {
+        "rho": -0.021693200024046653,
+        "p": 0.5213805626341907
+      }
+    }
+  },
+  "internal": {
+    "n": 627,
+    "proj_vs_dMTS_raw": {
+      "rho": 0.001219649341114907,
+      "p": 0.9756850006462591
+    },
+    "proj_vs_dMTS_partial_len_hyd": {
+      "rho": 0.007627189505229474,
+      "p": 0.849073430885835
+    },
+    "proj_vs_dLength": {
+      "rho": 0.24630505981006243,
+      "p": 4.059348099014239e-10
+    },
+    "per_feature_partial": {
+      "net_charge": {
+        "rho": 0.0008373207807842433,
+        "p": 0.9833325114399583
+      },
+      "arg_frac": {
+        "rho": 0.05258391272249895,
+        "p": 0.18922520674519974
+      },
+      "acidic_frac": {
+        "rho": 0.03442617013316911,
+        "p": 0.39023787889708295
+      },
+      "muH": {
+        "rho": 0.03736366124168008,
+        "p": 0.3510537686973263
+      }
+    }
+  }
+}

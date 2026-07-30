@@ -1,0 +1,15 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:28.575007
+#Origin: asimov
+#Type: tsv
+#NumInstances: 9
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI001103"	"DEG"	"DEG_SIAH_1"	"AFF4_HUMAN"	"Q9UHB7"	"Q9UHB7 B2RP19 B7WPD2 Q498B2 Q59FB3 Q6P592 Q8TDR1 Q9P0E4"	"252"	"260"	"15459319"	"coimmunoprecipitation; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001105"	"DEG"	"DEG_SIAH_1"	"CYBP_HUMAN"	"Q9HB71"	"Q9HB71 B2ZWH2 O60666"	"59"	"67"	"11389839 16085652"	"coimmunoprecipitation; two hybrid; x-ray crystallography"	"true positive"	"2A25"	"Homo sapiens"
+"ELMI001107"	"DEG"	"DEG_SIAH_1"	"DAB1_HUMAN"	"O75553"	"O75553 A4FU90 B3KTG3 Q4LE59 Q5T6M6 Q5T6M9 Q5T835 Q5T836 Q5T837 Q6NWS9 Q6NWT0 Q6NWT1 Q9NYA8"	"360"	"368"	"11752454"	"coimmunoprecipitation; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI001102"	"DEG"	"DEG_SIAH_1"	"DCC_HUMAN"	"P43146"	"P43146"	"1331"	"1339"	"9334332"	"classical fluorescence spectroscopy"	"true positive"	""	"Homo sapiens"
+"ELMI001114"	"DEG"	"DEG_SIAH_1"	"KLF10_HUMAN"	"Q13118"	"Q13118 B2R794 Q503B2"	"200"	"208"	"12072443"	"two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI001109"	"DEG"	"DEG_SIAH_1"	"OBF1_HUMAN"	"Q16633"	"Q16633 B2R8Z9 Q14983"	"46"	"54"	"11483518"	"classical fluorescence spectroscopy; coimmunoprecipitation"	"true positive"	""	"Homo sapiens"
+"ELMI001108"	"DEG"	"DEG_SIAH_1"	"PEG10_HUMAN"	"Q86TG7"	"Q86TG7 Q96A68 Q9UPV1"	"253"	"261"	"12810624"	"coimmunoprecipitation; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI001113"	"DEG"	"DEG_SIAH_1"	"PHYL_DROME"	"Q27934"	"Q27934 C0PV22 Q9V721"	"115"	"123"	"16615911 12626763"	"coimmunoprecipitation; mutation analysis; pull down; x-ray crystallography"	"true positive"	"2AN6"	"Drosophila melanogaster"
+"ELMI001111"	"DEG"	"DEG_SIAH_1"	"SH3R1_HUMAN"	"Q7Z6J0"	"Q7Z6J0 Q05BT2 Q8IW46 Q9HAM2 Q9P234"	"600"	"608"	"16230351"	"coimmunoprecipitation; two hybrid"	"true positive"	""	"Homo sapiens"

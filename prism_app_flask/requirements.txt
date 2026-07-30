@@ -1,0 +1,6 @@
+# PRISM Flask 앱 런타임 의존성 (conda env: isoform_env 에 추가 설치)
+flask>=3.0
+gunicorn>=21.0
+numpy
+pandas
+# 재사용: prism_app.core / pipeline (별도 설치 불필요, repo 내 import)

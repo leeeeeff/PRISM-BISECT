@@ -1,0 +1,54 @@
+{
+  "ESM2_8M": {
+    "scale": "ESM2_8M",
+    "embed_dim": 320,
+    "prism": {
+      "All MF": 0.5075828020615406,
+      "L2_Structural": 0.3435981832654861,
+      "Other": 0.6344776419981504,
+      "L4_CellState": 0.29474769365441406
+    },
+    "v17f": {
+      "All MF": 0.5063547121840846,
+      "L2_Structural": 0.3438640822638143,
+      "Other": 0.6313979919829087,
+      "L4_CellState": 0.311454670495591
+    },
+    "elapsed": 379.27880668640137
+  },
+  "ESM2_35M": {
+    "scale": "ESM2_35M",
+    "embed_dim": 480,
+    "prism": {
+      "All MF": 0.5564724512943396,
+      "L2_Structural": 0.3845574016567993,
+      "Other": 0.6885589833558721,
+      "L4_CellState": 0.3550805328985088
+    },
+    "v17f": {
+      "All MF": 0.555898965359579,
+      "L2_Structural": 0.3861279153164361,
+      "Other": 0.686909650697582,
+      "L4_CellState": 0.3438755282973695
+    },
+    "elapsed": 348.7532501220703
+  },
+  "ESM2_150M": {
+    "scale": "ESM2_150M",
+    "embed_dim": 640,
+    "prism": {
+      "All MF": 0.596,
+      "L2_Structural": 0.313,
+      "L4_CellState": 0.304,
+      "L1_Generic_mid": 0.671,
+      "L1_Generic_high": 0.822
+    },
+    "v17f": {
+      "All MF": 0.717,
+      "L2_Structural": 0.622,
+      "L4_CellState": 0.576,
+      "L1_Generic_mid": 0.787,
+      "L1_Generic_high": 0.859
+    }
+  }
+}

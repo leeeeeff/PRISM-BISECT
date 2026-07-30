@@ -1,0 +1,15 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:30.250228
+#Origin: asimov
+#Type: tsv
+#NumInstances: 9
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI002518"	"DEG"	"DEG_SCF_COI1_1"	"A7XXZ0_SOLLC"	"A7XXZ0"	"A7XXZ0"	"199"	"216"	"17637677 18458331"	"his tag; pull down; two hybrid"	"true positive"	""	"Solanum lycopersicum"
+"ELMI002519"	"DEG"	"DEG_SCF_COI1_1"	"B2XVS2_SOLLC"	"B2XVS2"	"B2XVS2"	"251"	"268"	"18458331"	"his tag; mutation analysis; pull down"	"true positive"	""	"Solanum lycopersicum"
+"ELMI002515"	"DEG"	"DEG_SCF_COI1_1"	"TI10A_ARATH"	"Q9LMA8"	"Q9LMA8 Q8LAG5 Q93Z09"	"203"	"220"	"17637677 20927106 18547396"	"mutation analysis; pull down; two hybrid; x-ray crystallography"	"true positive"	"3OGL"	"Arabidopsis thaliana"
+"ELMI002517"	"DEG"	"DEG_SCF_COI1_1"	"TI10B_ARATH"	"Q9S7M2"	"Q9S7M2 Q8LBU1"	"205"	"222"	"18547396"	"two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002522"	"DEG"	"DEG_SCF_COI1_1"	"TI11A_ARATH"	"Q9LDU5"	"Q9LDU5 Q8LAR9"	"182"	"199"	"17637677"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002520"	"DEG"	"DEG_SCF_COI1_1"	"TI11B_ARATH"	"Q9C9E3"	"Q9C9E3"	"186"	"203"	"17637677"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002514"	"DEG"	"DEG_SCF_COI1_1"	"TIF6B_ARATH"	"Q9LVI4"	"Q9LVI4 Q56W78 Q8LF26"	"303"	"320"	"17637675 18547396"	"fluorescence microscopy; mutation analysis; protease assay; pull down; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002516"	"DEG"	"DEG_SCF_COI1_1"	"TIF7_ARATH"	"Q8W4J8"	"Q8W4J8 A8MSB0 F4I6W0 Q0WLN3 Q2V4D4 Q9CAC0"	"221"	"238"	"18547396"	"mutation analysis; pull down; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002521"	"DEG"	"DEG_SCF_COI1_1"	"TIF9_ARATH"	"Q93ZM9"	"Q93ZM9 Q3E9I1 Q3E9I2 Q9LYV4"	"169"	"186"	"17637677"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"

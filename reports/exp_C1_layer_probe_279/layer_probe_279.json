@@ -1,0 +1,29 @@
+{
+  "n_layers": 30,
+  "min_pos": 100,
+  "n_valid_gos": 0,
+  "per_go": {},
+  "bucket_summary": {
+    "Early (L1-10)": {
+      "BP": 0,
+      "MF": 0,
+      "CC": 0
+    },
+    "Mid (L11-20)": {
+      "BP": 0,
+      "MF": 0,
+      "CC": 0
+    },
+    "Late (L21-30)": {
+      "BP": 0,
+      "MF": 0,
+      "CC": 0
+    }
+  },
+  "cat_totals": {
+    "BP": 0,
+    "MF": 0,
+    "CC": 0
+  },
+  "elapsed_sec": 94.87172555923462
+}

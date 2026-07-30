@@ -1,0 +1,25 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:12:59.598680
+#Origin: asimov
+#Type: tsv
+#NumInstances: 19
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI001309"	"DEG"	"DEG_SCF_TRCP1_1"	"ATF4_HUMAN"	"P18848"	"P18848 Q9UH31"	"218"	"224"	"11238952"	"mutation analysis; protein kinase assay; radiolabel; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI001313"	"DEG"	"DEG_SCF_TRCP1_1"	"BORA_HUMAN"	"Q6PGQ7"	"Q6PGQ7 Q5W0P3 Q5W0P4 Q86YC6 Q96IW9 Q9H640"	"496"	"501"	"18378770"	"coimmunoprecipitation; de novo protein sequencing by mass spectrometry; protein kinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001308"	"DEG"	"DEG_SCF_TRCP1_1"	"CLSPN_HUMAN"	"Q9HAW4"	"Q9HAW4 A6NFL4 Q1RMC6 Q2KHM3 Q5VYG0 Q6P6H5 Q8IWI1"	"29"	"34"	"16885022"	"coimmunoprecipitation; fluorescence-activated cell sorting; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001302"	"DEG"	"DEG_SCF_TRCP1_1"	"CTNB1_HUMAN"	"P35222"	"P35222 A8K1L7 Q8NEW9 Q8NI94 Q9H391"	"32"	"37"	"12820959"	"protein kinase assay; x-ray crystallography"	"true positive"	"1P22"	"Homo sapiens"
+"ELMI001310"	"DEG"	"DEG_SCF_TRCP1_1"	"DLG1_HUMAN"	"Q12959"	"Q12959 A5YKK7 B7ZMM0 B9EIQ5 D3DXB8 D3DXB9 Q12958"	"597"	"602"	"12902344"	"coimmunoprecipitation; glutathione s tranferase tag; pull down; rna interference; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI001311"	"DEG"	"DEG_SCF_TRCP1_1"	"FBX5_HUMAN"	"Q9UKT4"	"Q9UKT4 B3KNX5 Q8WV29 Q9UGC8"	"144"	"149"	"12791266"	"classical fluorescence spectroscopy; knock out; protein kinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI002123"	"DEG"	"DEG_SCF_TRCP1_1"	"FGD1_HUMAN"	"P98174"	"P98174 Q5H999 Q8N4D9"	"282"	"287"	"15743413"	"alanine scanning; coimmunoprecipitation; radiolabel"	"true positive"	""	"Homo sapiens"
+"ELMI002124"	"DEG"	"DEG_SCF_TRCP1_1"	"FGD3_HUMAN"	"Q5JSP0"	"Q5JSP0 Q4VX84 Q7Z7D9 Q8N5G1"	"75"	"80"	"18363964"	"alanine scanning; classical fluorescence spectroscopy; coimmunoprecipitation; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI001303"	"DEG"	"DEG_SCF_TRCP1_1"	"IKBA_HUMAN"	"P25963"	"P25963 B2R8L6"	"31"	"36"	"10230406 9990852 10497169"	"coimmunoprecipitation; detection by mass spectrometry; mutation analysis; protein kinase assay; protein kinase assay; radiolabel"	"true positive"	""	"Homo sapiens"
+"ELMI001304"	"DEG"	"DEG_SCF_TRCP1_1"	"IKBB_HUMAN"	"Q15653"	"Q15653 A8K3F4 Q96BJ7"	"18"	"23"	"10497169"	"coimmunoprecipitation; mutation analysis; radiolabel"	"true positive"	""	"Homo sapiens"
+"ELMI001305"	"DEG"	"DEG_SCF_TRCP1_1"	"IKBE_HUMAN"	"O00221"	"O00221 Q5T9V9"	"156"	"161"	"10497169"	"coimmunoprecipitation; mutation analysis; radiolabel"	"true positive"	""	"Homo sapiens"
+"ELMI002453"	"DEG"	"DEG_SCF_TRCP1_1"	"INAR1_HUMAN"	"P17181"	"P17181 B2R6L9 D3DSF0 Q53GW9 Q53H11 Q6PKD7 Q7M4L2 Q8WTZ2"	"534"	"539"	"15337770 14532120"	"anti tag coimmunoprecipitation; mutation analysis; protein kinase assay; pull down; radiolabel; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001316"	"DEG"	"DEG_SCF_TRCP1_1"	"LMP1_EBVB9"	"P03230"	"P03230 Q777A4"	"210"	"215"	"14523018"	"coimmunoprecipitation; mutation analysis"	"true positive"	""	"Human herpesvirus 4 (strain B95-8)"
+"ELMI001306"	"DEG"	"DEG_SCF_TRCP1_1"	"NFKB1_HUMAN"	"P19838"	"P19838 Q68D84 Q86V43 Q8N4X7 Q9NZC0"	"926"	"932"	"12482991"	"competition binding; protein kinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001307"	"DEG"	"DEG_SCF_TRCP1_1"	"PDCD4_HUMAN"	"Q53EL6"	"Q53EL6 O15501 Q5VZS6 Q6PJI5 Q8TAR5 Q99834"	"70"	"76"	"17053147"	"detection by mass spectrometry; mutation analysis; protein kinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI003324"	"DEG"	"DEG_SCF_TRCP1_1"	"PLK4_DROME"	"O97143"	"O97143 Q86NL8"	"292"	"297"	"24184097 19084407 19171756"	"alanine scanning; coimmunoprecipitation; mass spectrometry studies of complexes; mutation analysis; pull down; western blot"	"true positive"	""	"Drosophila melanogaster"
+"ELMI001314"	"DEG"	"DEG_SCF_TRCP1_1"	"PRLR_HUMAN"	"P16471"	"P16471 B2R882 Q16354 Q8TD75 Q8TD78 Q96P35 Q96P36 Q9BX87 Q9UHJ5"	"348"	"353"	"15082796"	"coimmunoprecipitation; protein kinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001312"	"DEG"	"DEG_SCF_TRCP1_1"	"SNAI1_HUMAN"	"O95863"	"O95863 Q9P113 Q9UBP7 Q9UHH7"	"95"	"100"	"9990853"	"coimmunoprecipitation; mutation analysis; protein kinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001315"	"DEG"	"DEG_SCF_TRCP1_1"	"VPU_HV1BR"	"P05923"	"P05923"	"51"	"56"	"14674748 14561767"	"confocal microscopy; nuclear magnetic resonance; radiolabel"	"true positive"	""	"Human immunodeficiency virus type 1 (BRU ISOLATE)"

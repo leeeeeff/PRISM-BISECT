@@ -1,0 +1,30 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:12:51.249359
+#Origin: asimov
+#Type: tsv
+#NumInstances: 24
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI002545"	"DEG"	"DEG_SCF_TIR1_1"	"IAA10_ARATH"	"Q38828"	"Q38828"	"93"	"105"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002543"	"DEG"	"DEG_SCF_TIR1_1"	"IAA11_ARATH"	"Q38829"	"Q38829 Q8LPJ8"	"88"	"100"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002527"	"DEG"	"DEG_SCF_TIR1_1"	"IAA12_ARATH"	"Q38830"	"Q38830 Q8LA42"	"69"	"81"	"15992545"	"glutathione s tranferase tag; mutation analysis; pull down"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002544"	"DEG"	"DEG_SCF_TIR1_1"	"IAA13_ARATH"	"Q38831"	"Q38831 Q84TE5"	"76"	"88"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002537"	"DEG"	"DEG_SCF_TIR1_1"	"IAA14_ARATH"	"Q38832"	"Q38832 O23311 Q9C5W8"	"76"	"88"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002546"	"DEG"	"DEG_SCF_TIR1_1"	"IAA15_ARATH"	"Q9C966"	"Q9C966"	"70"	"82"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002536"	"DEG"	"DEG_SCF_TIR1_1"	"IAA16_ARATH"	"O24407"	"O24407"	"70"	"82"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002524"	"DEG"	"DEG_SCF_TIR1_1"	"IAA17_ARATH"	"P93830"	"P93830 O49162"	"82"	"94"	"11713520"	"glutathione s tranferase tag; mutation analysis; pull down"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002531"	"DEG"	"DEG_SCF_TIR1_1"	"IAA18_ARATH"	"O24408"	"O24408 Q8L9I9"	"96"	"108"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002538"	"DEG"	"DEG_SCF_TIR1_1"	"IAA19_ARATH"	"O24409"	"O24409 Q8L8X3 Q9LDL6"	"70"	"82"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002525"	"DEG"	"DEG_SCF_TIR1_1"	"IAA1_ARATH"	"P49677"	"P49677 O23312"	"55"	"67"	"15546359"	"glutathione s tranferase tag; mutation analysis; pull down"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002530"	"DEG"	"DEG_SCF_TIR1_1"	"IAA26_ARATH"	"Q8LAL2"	"Q8LAL2 Q9LK75 Q9ZSY7"	"103"	"115"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002542"	"DEG"	"DEG_SCF_TIR1_1"	"IAA27_ARATH"	"Q9ZSY8"	"Q9ZSY8"	"143"	"155"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002526"	"DEG"	"DEG_SCF_TIR1_1"	"IAA28_ARATH"	"Q9XFM0"	"Q9XFM0 Q9S9V6"	"48"	"60"	"21734647"	"mutation analysis; pull down"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002532"	"DEG"	"DEG_SCF_TIR1_1"	"IAA2_ARATH"	"P49678"	"P49678 O22596"	"60"	"72"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002528"	"DEG"	"DEG_SCF_TIR1_1"	"IAA3_ARATH"	"Q38822"	"Q38822 O04741"	"64"	"76"	"14617065"	"mutation analysis; pull down"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002534"	"DEG"	"DEG_SCF_TIR1_1"	"IAA4_ARATH"	"P33077"	"P33077"	"62"	"74"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002533"	"DEG"	"DEG_SCF_TIR1_1"	"IAA4_PEA"	"P49679"	"P49679"	"70"	"82"	"11595806"	"sequence based prediction"	"unknown"	""	"Pisum sativum"
+"ELMI002539"	"DEG"	"DEG_SCF_TIR1_1"	"IAA5_ARATH"	"P33078"	"P33078 Q38823 Q8H1E0"	"53"	"65"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002540"	"DEG"	"DEG_SCF_TIR1_1"	"IAA6_ARATH"	"Q38824"	"Q38824 Q8LEM1 Q9C539"	"70"	"82"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002529"	"DEG"	"DEG_SCF_TIR1_1"	"IAA6_PEA"	"P49680"	"P49680"	"55"	"67"	"10758506"	"mutation analysis"	"true positive"	""	"Pisum sativum"
+"ELMI002523"	"DEG"	"DEG_SCF_TIR1_1"	"IAA7_ARATH"	"Q38825"	"Q38825 Q8LAK1"	"82"	"94"	"17410169 11713520"	"coimmunoprecipitation; glutathione s tranferase tag; mutation analysis; pull down; x-ray crystallography"	"true positive"	"2P1Q"	"Arabidopsis thaliana"
+"ELMI002541"	"DEG"	"DEG_SCF_TIR1_1"	"IAA8_ARATH"	"Q38826"	"Q38826"	"165"	"177"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"
+"ELMI002535"	"DEG"	"DEG_SCF_TIR1_1"	"IAA9_ARATH"	"Q38827"	"Q38827 Q8LBP2 Q9FLH4"	"183"	"195"	"11595806"	"sequence based prediction"	"unknown"	""	"Arabidopsis thaliana"

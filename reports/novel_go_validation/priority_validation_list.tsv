@@ -1,0 +1,56 @@
+gene	isoform	isoform_idx	go_idx	go_id	go_name	pred_score	gene_mean	excess	feature_type	domain_count	seq_length	n_gene_isoforms	type	priority_rule
+ENSG00000248643	BambuTx1271	228	7	GO:0003676	nucleic acid binding	0.9845	0.9845	0.0	Type3_SameDomain	2	364	4	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000261408	ENST00000567351.5	28622	41	GO:0005524	ATP binding	0.9615	0.9666	-0.005	Type1_DomainLoss	0	255	5	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000286070	ENST00000404603.5	19045	15	GO:0003723	RNA binding	0.9586	0.1988	0.7598	Type3_SameDomain	1	126	6	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000284874	ENST00000455843.5	22569	20	GO:0003924	GTPase activity	0.9561	0.5748	0.3813	Type3_SameDomain	1	453	5	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000261408	ENST00000567351.5	28621	22	GO:0004672	protein kinase activity	0.9536	0.959	-0.0054	Type1_DomainLoss	0	255	5	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000248643	BambuTx1271	228	15	GO:0003723	RNA binding	0.9481	0.9481	0.0	Type3_SameDomain	2	364	4	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000284874	ENST00000455843.5	22568	42	GO:0005525	GTP binding	0.9459	0.5719	0.3741	Type3_SameDomain	1	453	5	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000054267	ENST00000474953.5	23587	7	GO:0003676	nucleic acid binding	0.9365	0.3638	0.5727	Type3_SameDomain	1	695	8	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000054267	ENST00000474953.5	23588	15	GO:0003723	RNA binding	0.9332	0.5024	0.4308	Type3_SameDomain	1	695	8	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000284874	ENST00000455843.5	22569	75	GO:0060090	molecular adaptor activity	0.9328	0.5676	0.3652	Type3_SameDomain	1	453	5	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000100056	ENST00000252137.11	3192	22	GO:0004672	protein kinase activity	0.9255	0.9255	0.0	Type3_SameDomain	1	479	3	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000100056	ENST00000252137.11	3191	41	GO:0005524	ATP binding	0.9213	0.9213	-0.0	Type3_SameDomain	1	479	3	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000230148	ENST00000504972.4	24979	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.9187	0.4703	0.4483	Type3_SameDomain	1	145	2	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000273003	ENST00000301886.3	6978	59	GO:0035091	phosphatidylinositol binding	0.9185	0.9185	0.0	Type3_SameDomain	1	342	2	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000261408	ENST00000567351.5	28622	78	GO:0106310	protein serine kinase activity	0.9178	0.9221	-0.0042	Type1_DomainLoss	0	255	5	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000182903	ENST00000515578.5	25580	41	GO:0005524	ATP binding	0.9048	0.2421	0.6627	Type2_PartialTrunc	1	207	4	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000293360	BambuTx565	1253	41	GO:0005524	ATP binding	0.9048	0.9029	0.0019	Type3_SameDomain	1	207	5	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000284874	ENST00000455843.5	22570	39	GO:0005515	protein binding	0.9044	0.6882	0.2162	Type3_SameDomain	1	453	5	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000290791	ENST00000608318.3	30205	8	GO:0003677	DNA binding	0.8946	0.8946	0.0	Type3_SameDomain	1	164	3	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000213516	ENST00000399794.6	18726	39	GO:0005515	protein binding	0.8891	0.8891	0.0	Type3_SameDomain	1	390	3	novel_GO	Type3_SameDomain + pred>0.7
+ENSG00000304694	ENST00000805502.1	36653	29	GO:0004984	olfactory receptor activity	0.8642	0.8642	0.0	Type1_DomainLoss	0	133	4	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000150687	ENST00000532234.5	26533	27	GO:0004888	transmembrane signaling receptor activity	0.8594	0.3285	0.531	Type1_DomainLoss	1	411	3	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000144366	ENST00000451191.5	22261	39	GO:0005515	protein binding	0.8554	0.8869	-0.0314	Type1_DomainLoss	0	146	4	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000124151	BambuTx1987	748	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.85	0.4497	0.4002	Type2_PartialTrunc	1	322	3	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000261408	ENST00000567351.5	28622	39	GO:0005515	protein binding	0.8377	0.8325	0.0053	Type1_DomainLoss	0	255	5	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000269825	BambuTx1924	706	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.8341	0.7868	0.0473	Type2_PartialTrunc	1	291	4	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000164506	ENST00000706864.1	36119	39	GO:0005515	protein binding	0.8325	0.8041	0.0283	Type1_DomainLoss	0	291	5	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000275111	ENST00000611463.1	30364	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.8189	0.8109	0.0079	Type2_PartialTrunc	1	345	4	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000304694	ENST00000805502.1	36653	28	GO:0004930	G protein-coupled receptor activity	0.7994	0.7994	0.0	Type1_DomainLoss	0	133	4	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000102125	ENST00000615986.4	30691	39	GO:0005515	protein binding	0.7931	0.3784	0.4147	Type1_DomainLoss	0	282	4	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000131263	ENST00000332687.11	9646	39	GO:0005515	protein binding	0.7925	0.7925	0.0	Type1_DomainLoss	1	624	3	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000196569	ENST00000688799.1	35039	39	GO:0005515	protein binding	0.7917	0.608	0.1837	Type2_PartialTrunc	1	477	6	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000305887	ENST00000813755.1	36682	39	GO:0005515	protein binding	0.7902	0.6989	0.0913	Type1_DomainLoss	0	111	10	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000115170	ENST00000681995.1	34283	78	GO:0106310	protein serine kinase activity	0.7771	0.2974	0.4797	Type2_PartialTrunc	1	150	8	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000167232	ENST00000599743.5	29922	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.775	0.6061	0.1689	Type2_PartialTrunc	1	156	2	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000141258	ENST00000572841.1	28851	39	GO:0005515	protein binding	0.7746	0.6488	0.1258	Type2_PartialTrunc	1	168	3	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000174307	ENST00000367311.5	13316	39	GO:0005515	protein binding	0.7717	0.7717	0.0	Type1_DomainLoss	0	167	4	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000116406	ENST00000466392.2	23129	39	GO:0005515	protein binding	0.7675	0.551	0.2165	Type1_DomainLoss	0	223	6	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000117054	ENST00000680582.1	34082	39	GO:0005515	protein binding	0.7614	0.8016	-0.0402	Type1_DomainLoss	0	291	14	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000115525	ENST00000639867.1	31697	39	GO:0005515	protein binding	0.7494	0.5823	0.1672	Type1_DomainLoss	0	290	8	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000105357	ENST00000595016.1	29757	39	GO:0005515	protein binding	0.7493	0.6551	0.0942	Type2_PartialTrunc	1	346	5	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000156873	ENST00000563588.6	28427	78	GO:0106310	protein serine kinase activity	0.7435	0.7504	-0.0068	Type1_DomainLoss	0	406	3	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000112339	ENST00000527005.5	26206	15	GO:0003723	RNA binding	0.7424	0.5172	0.2252	Type1_DomainLoss	1	197	4	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000261408	ENST00000567351.5	28622	23	GO:0004674	protein serine/threonine kinase activity	0.7386	0.7208	0.0178	Type1_DomainLoss	0	255	5	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000141279	ENST00000700480.1	35789	39	GO:0005515	protein binding	0.7385	0.7389	-0.0004	Type1_DomainLoss	1	602	9	novel_GO	Type1_DomainLoss + pred>0.6
+ENSG00000122566	ENST00000678277.1	33734	16	GO:0003729	mRNA binding	0.7296	0.4272	0.3024	Type2_PartialTrunc	1	158	23	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000197951	ENST00000328070.10	9276	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.7284	0.7391	-0.0107	Type2_PartialTrunc	1	489	3	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000198838	ENST00000634730.1	31443	39	GO:0005515	protein binding	0.7264	0.6162	0.1103	Type2_PartialTrunc	1	615	3	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000073417	ENST00000561024.1	28326	39	GO:0005515	protein binding	0.7239	0.5968	0.127	Type2_PartialTrunc	1	181	3	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000269825	BambuTx1924	705	3	GO:0000978	RNA polymerase II cis-regulatory region sequence-specific DNA binding	0.7186	0.6948	0.0238	Type2_PartialTrunc	1	291	4	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000181722	ENST00000704360.1	35959	39	GO:0005515	protein binding	0.7161	0.7142	0.002	Type2_PartialTrunc	1	541	7	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000177200	ENST00000219084.10	2071	9	GO:0003682	chromatin binding	0.7113	0.4115	0.2998	Type2_PartialTrunc	3	1995	8	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000170144	ENST00000676762.1	33531	16	GO:0003729	mRNA binding	0.7075	0.4577	0.2498	Type2_PartialTrunc	1	186	11	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000115361	ENST00000652584.1	32694	62	GO:0042802	identical protein binding	0.7068	0.7089	-0.0022	Type2_PartialTrunc	1	289	3	novel_GO	Type2_PartialTrunc + pred>0.6
+ENSG00000182141	ENST00000601295.2	29969	4	GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	0.704	0.7215	-0.0175	Type2_PartialTrunc	1	499	3	novel_GO	Type2_PartialTrunc + pred>0.6

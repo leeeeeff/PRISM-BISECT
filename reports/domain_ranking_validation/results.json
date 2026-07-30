@@ -1,0 +1,147 @@
+{
+  "analysis": "per_locus_domain_ranking_auc",
+  "n_brain_isoforms": 36748,
+  "n_multi_isoform_genes": 8569,
+  "n_genes_with_domain_variation": 1656,
+  "interpro_coverage_pct": 37.234679438336784,
+  "results": {
+    "PRISM_v17f*": {
+      "domain_ranking_auc": 0.6296261535343247,
+      "n_pairs": 3542,
+      "bootstrap_auc": 0.6292580024170615,
+      "bootstrap_ci_lo": 0.6134476912424507,
+      "bootstrap_ci_hi": 0.6457900631118486
+    },
+    "Gene_mean_oracle": {
+      "domain_ranking_auc": 0.5,
+      "n_pairs": 3542,
+      "bootstrap_auc": 0.5,
+      "bootstrap_ci_lo": 0.5,
+      "bootstrap_ci_hi": 0.5
+    },
+    "BLAST_GOA": {
+      "domain_ranking_auc": 0.7229479341427968,
+      "n_pairs": 3542,
+      "bootstrap_auc": 0.7222169028408468,
+      "bootstrap_ci_lo": 0.701672513512149,
+      "bootstrap_ci_hi": 0.7448828777396834
+    },
+    "kNN_ESM2": {
+      "domain_ranking_auc": 0.60207068531742,
+      "n_pairs": 3542
+    },
+    "Random": {
+      "domain_ranking_auc": 0.5039278238634268,
+      "n_pairs": 3542
+    }
+  },
+  "top_genes": [
+    {
+      "gene": "RECK",
+      "n_isoforms": 3,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 1
+    },
+    {
+      "gene": "RALGPS1",
+      "n_isoforms": 4,
+      "domain_range": "0-2",
+      "mean_auc": 1.0,
+      "n_terms": 2
+    },
+    {
+      "gene": "ARRDC1",
+      "n_isoforms": 2,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 4
+    },
+    {
+      "gene": "NEURL1",
+      "n_isoforms": 4,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 3
+    },
+    {
+      "gene": "ZDHHC24",
+      "n_isoforms": 4,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 1
+    },
+    {
+      "gene": "PARP11",
+      "n_isoforms": 4,
+      "domain_range": "1-2",
+      "mean_auc": 1.0,
+      "n_terms": 1
+    },
+    {
+      "gene": "VSIG10",
+      "n_isoforms": 5,
+      "domain_range": "0-2",
+      "mean_auc": 1.0,
+      "n_terms": 1
+    },
+    {
+      "gene": "ENOX1",
+      "n_isoforms": 4,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 3
+    },
+    {
+      "gene": "GRTP1",
+      "n_isoforms": 2,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 1
+    },
+    {
+      "gene": "LRR1",
+      "n_isoforms": 3,
+      "domain_range": "0-1",
+      "mean_auc": 1.0,
+      "n_terms": 1
+    }
+  ],
+  "bottom_genes": [
+    {
+      "gene": "PTPN3",
+      "n_isoforms": 7,
+      "domain_range": "2-5",
+      "mean_auc": 0.0,
+      "n_terms": 1
+    },
+    {
+      "gene": "WDR77",
+      "n_isoforms": 5,
+      "domain_range": "0-1",
+      "mean_auc": 0.0,
+      "n_terms": 3
+    },
+    {
+      "gene": "FBXL14",
+      "n_isoforms": 3,
+      "domain_range": "0-1",
+      "mean_auc": 0.0,
+      "n_terms": 2
+    },
+    {
+      "gene": "ZNF641",
+      "n_isoforms": 4,
+      "domain_range": "0-2",
+      "mean_auc": 0.0,
+      "n_terms": 3
+    },
+    {
+      "gene": "CERS5",
+      "n_isoforms": 3,
+      "domain_range": "0-1",
+      "mean_auc": 0.0,
+      "n_terms": 2
+    }
+  ]
+}

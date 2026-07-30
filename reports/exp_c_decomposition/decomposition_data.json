@@ -1,0 +1,62 @@
+{
+  "All MF": {
+    "prism": 0.5962,
+    "v17e_layer": 0.6817131542429057,
+    "rand_delta": 0.6416,
+    "v17f": 0.7173,
+    "delta_layer_signal": 0.08551315424290573,
+    "tpsi_capacity": 0.045399999999999996,
+    "v17f_gain": 0.1211000000000001,
+    "synergy": -0.00981315424290563
+  },
+  "L2_Structural": {
+    "prism": 0.31265757575757575,
+    "v17e_layer": 0.5526621276050653,
+    "rand_delta": 0.5143990750453816,
+    "v17f": 0.6219257717878991,
+    "delta_layer_signal": 0.24000455184748953,
+    "tpsi_capacity": 0.20174149928780588,
+    "v17f_gain": 0.30926819603032335,
+    "synergy": -0.13247785510497206
+  },
+  "L2_Structural*": {
+    "prism": 0.5051923076923077,
+    "v17e_layer": NaN,
+    "rand_delta": 0.6500266827752991,
+    "v17f": 0.7135125215567678,
+    "delta_layer_signal": NaN,
+    "tpsi_capacity": 0.14483437508299135,
+    "v17f_gain": 0.2083202138644601,
+    "synergy": NaN
+  },
+  "L4_CellState": {
+    "prism": 0.30385,
+    "v17e_layer": 0.5315966669825958,
+    "rand_delta": 0.4820868558793202,
+    "v17f": 0.5763733314102133,
+    "delta_layer_signal": 0.22774666698259577,
+    "tpsi_capacity": 0.1782368558793202,
+    "v17f_gain": 0.2725233314102133,
+    "synergy": -0.13346019145170268
+  },
+  "L1_Generic_mid": {
+    "prism": 0.6714999999999999,
+    "v17e_layer": NaN,
+    "rand_delta": 0.7484509190875377,
+    "v17f": 0.7873177177474705,
+    "delta_layer_signal": NaN,
+    "tpsi_capacity": 0.07695091908753782,
+    "v17f_gain": 0.11581771774747063,
+    "synergy": NaN
+  },
+  "L1_Generic_high": {
+    "prism": 0.8223105263157894,
+    "v17e_layer": NaN,
+    "rand_delta": 0.8460669503806886,
+    "v17f": 0.85930270032295,
+    "delta_layer_signal": NaN,
+    "tpsi_capacity": 0.023756424064899195,
+    "v17f_gain": 0.036992174007160594,
+    "synergy": NaN
+  }
+}

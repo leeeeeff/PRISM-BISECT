@@ -1,0 +1,28 @@
+gene	iso_a	iso_b	go_term	direction	score_a	score_b	gap	correct	note
+EGFR	P00533-1	P00533-4	GO:0004713	A_only	0.9759	0.9648	0.011099999999999999	True	sEGFR iso4 lacks TK domain (no kinase domain)
+FGFR1	P11362-1	P11362-11	GO:0004713	A_only	0.9903	0.9193	0.07099999999999995	True	iso11 lacks IgIII domain, reduced kinase signalling
+NTRK1	P04629-1	P04629-2	GO:0004713	A_only	0.9788	0.9787	9.999999999998899e-05	True	iso2 (TrkA-I) lacks 6aa in kinase domain
+VEGFR2	P35968-1	P35968-2	GO:0004713	A_only	0.9472	0.4347	0.5125000000000001	True	sVEGFR2 (iso2) is soluble decoy, lacks TK domain
+CDK4	P11802-1	P11802-2	GO:0004674	A_only	0.9362	0.9701	0.03389999999999993	False	iso2 has internal deletion reducing kinase competency
+BCL2	P10415-1	P10415-2	GO:0046982	A_only	0.3571	0.4023	0.04520000000000002	False	iso2 lacks TM anchor; BCL2 homo/heterodimer requires membran
+MCL1	Q07820-1	Q07820-2	GO:0046982	B_only	0.0094	0.0083	0.0011000000000000003	False	MCL1-S (iso2) retains BH3 only, loses BH1-2; heterodimerizes
+BCL2L1	Q07817-1	Q07817-2	GO:0046982	A_only	0.1555	0.0388	0.1167	True	Bcl-xL (iso1) heterodimerizes anti-apoptotically; Bcl-xS (is
+CASP9	P55211-1	P55211-2	GO:0003824	A_only	0.0003	0.012	0.0117	False	CASP9b (iso2) lacks catalytic domain, acts as dominant-negat
+BRCA1	P38398-1	P38398-2	GO:0003677	A_only	0.4168	0.0006	0.4162	True	iso2 (63aa) lacks all functional domains including DNA-bindi
+TP53	P04637-1	P04637-9	GO:0003700	A_only	0.9931	0.9969	0.0038000000000000256	False	Δ40p53 (iso9) lacks N-terminal TA domain; cannot transactiva
+CDKN2A_p16	P42771-1	P42771-2	GO:0019901	A_only	0.8482	0.6591	0.18909999999999993	True	p16INK4a binds CDK4/6; p14ARF has different sequence, no CDK
+FGF2	P09038-1	P09038-4	GO:0008083	A_only	0.9014	0.9014	0.0	False	HMW FGF2 (iso4) is nuclear; LMW (iso1) is secreted growth fa
+APP	P05067-1	P05067-7	GO:0005178	A_only	0.7001	0.6681	0.03199999999999992	True	APP-695 lacks Kunitz/OX-2 domains; iso-7 (770) has integrin 
+HNRNPA1	P09651-1	P09651-2	GO:0003729	A_only	0.1827	0.2429	0.060200000000000004	False	A1b (iso2) lacks C-terminal RGG box → reduced mRNA binding
+SRSF1	Q07955-1	Q07955-3	GO:0003723	A_only	0.9975	0.999	0.0014999999999999458	False	SRSF1-3 lacks RRM2 → impaired RNA binding
+RBFOX1	O43251-1	O43251-3	GO:0003723	A_only	0.993	0.9808	0.012199999999999989	True	RBFOX1 iso3 (26aa) lacks RRM; cannot bind RNA
+RUNX1	Q01196-1	Q01196-2	GO:0003700	A_only	0.89	0.8769	0.0131	True	RUNX1b (iso1) has full Runt+TA domains; RUNX1a (iso2) lacks 
+TP63	Q9H3D4-1	Q9H3D4-5	GO:0003700	A_only	0.9839	0.9912	0.007299999999999973	False	TAp63 (iso1) full TA domain; ΔNp63 (iso5) represses p53 targ
+TP73	O15350-1	O15350-3	GO:0003700	A_only	0.988	0.986	0.0020000000000000018	True	TAp73 (iso1) transactivates; ΔNp73 (iso3) is dominant-negati
+ACTN1	P12814-1	P12814-2	GO:0003779	A_only	0.5182	0.5323	0.014100000000000001	False	Smooth muscle iso2 has lower actin binding affinity than non
+FLNB	O75369-1	O75369-5	GO:0051015	A_only	0.9413	0.9413	0.0	False	iso5 lacks exon 30B in hinge-1 → altered actin filament bind
+MAPT	P10636-1	P10636-5	GO:0008017	A_only	0.7341	0.792	0.05790000000000006	False	2N4R tau (iso1) has 2 extra N inserts+4R; more MT binding th
+PARK2	O60260-1	O60260-3	GO:0004842	A_only	0.8691	0.2237	0.6454	True	iso3 lacks UBL domain → reduced E3 ubiquitin ligase activity
+DLG4	P78352-1	P78352-2	GO:0005515	A_only	0.9963	0.9961	0.00019999999999997797	True	PSD-95 (iso1) has full PDZ+SH3+GuK scaffold; iso2 lacks PDZ1
+SNAP25	P60880-1	P60880-2	GO:0046982	A_only	0.0001	0.0	0.0001	True	SNAP25b (iso2, adult) slightly different SNARE assembly than
+IGF1	P05019-1	P05019-2	GO:0048018	A_only	0.9186	0.8824	0.03620000000000001	True	IGF1 iso2 lacks N-terminal signal → intracellular retention,

@@ -1,0 +1,17 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:24.896601
+#Origin: asimov
+#Type: tsv
+#NumInstances: 11
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI000625"	"TRG"	"TRG_Golgi_diPhe_1"	"EMP24_YEAST"	"P32803"	"P32803 D6VTV4"	"189"	"203"	"9472029"	"not specified"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI000501"	"TRG"	"TRG_Golgi_diPhe_1"	"ERP5_YEAST"	"P38819"	"P38819 D3DL60"	"198"	"212"	"10359606"	"knock out; sequence based prediction"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI000502"	"TRG"	"TRG_Golgi_diPhe_1"	"ERP6_YEAST"	"P53198"	"P53198 D6VUD6 E9P916"	"202"	"216"	"10359606"	"knock out; sequence based prediction"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI000499"	"TRG"	"TRG_Golgi_diPhe_1"	"Q91841_XENLA"	"Q91841"	"Q91841"	"190"	"205"	"7492314"	"sequence based prediction"	"true positive"	""	"Xenopus laevis"
+"ELMI000623"	"TRG"	"TRG_Golgi_diPhe_1"	"TMD11_CANFA"	"P27869"	"P27869"	"201"	"215"	"9472029"	"not specified"	"true positive"	""	"Canis lupus familiaris"
+"ELMI000627"	"TRG"	"TRG_Golgi_diPhe_1"	"TMED2_CRIGR"	"P49020"	"P49020"	"182"	"196"	"9472029"	"not specified"	"true positive"	""	"Cricetulus griseus"
+"ELMI000498"	"TRG"	"TRG_Golgi_diPhe_1"	"TMED2_HUMAN"	"Q15363"	"Q15363"	"187"	"201"	"9472029"	"affinity chromatography technology; classical fluorescence spectroscopy; colocalization; electron microscopy; mutation analysis; subcellular preparation"	"true positive"	""	"Homo sapiens"
+"ELMI000626"	"TRG"	"TRG_Golgi_diPhe_1"	"TMED2_RAT"	"Q63524"	"Q63524"	"187"	"201"	"9472029"	"not specified"	"true positive"	""	"Rattus norvegicus"
+"ELMI000497"	"TRG"	"TRG_Golgi_diPhe_1"	"TMED9_HUMAN"	"Q9BVK6"	"Q9BVK6 Q14437 Q8WZ61"	"221"	"235"	"9472029"	"affinity chromatography technology; classical fluorescence spectroscopy; colocalization; electron microscopy; mutation analysis; subcellular preparation"	"true positive"	""	"Homo sapiens"
+"ELMI000495"	"TRG"	"TRG_Golgi_diPhe_1"	"TMEDA_HUMAN"	"P49755"	"P49755 B2R605 Q15602 Q16536 Q86TC2 Q86TS5"	"204"	"219"	"9472029"	"affinity chromatography technology; classical fluorescence spectroscopy; colocalization; electron microscopy; mutation analysis; subcellular preparation"	"true positive"	""	"Homo sapiens"
+"ELMI000624"	"TRG"	"TRG_Golgi_diPhe_1"	"TMEDA_RABIT"	"Q28735"	"Q28735"	"204"	"219"	"9472029"	"not specified"	"true positive"	""	"Oryctolagus cuniculus"

@@ -1,0 +1,81 @@
+{
+  "DeepFRI": {
+    "point_all": 0.11141175202077117,
+    "ci_all": [
+      0.10767668900014807,
+      0.11646723606211329
+    ],
+    "point_l2": 0.025644123877608588,
+    "ci_l2": [
+      0.023869629076160862,
+      0.02813696233189353
+    ],
+    "note": "CNN-LM seq-only, 65/81 valid MF terms in vocab; uncovered terms set to 0"
+  },
+  "kNN_ESM2": {
+    "point_all": 0.6364174024376124,
+    "ci_all": [
+      0.620674368960082,
+      0.6517116265851047
+    ],
+    "point_l2": 0.5426648885006015,
+    "ci_l2": [
+      0.5187172348747942,
+      0.5673846383345058
+    ],
+    "note": "k=5 cosine, L30 ESM-2, isoform-level retrieval"
+  },
+  "PRISM_zero_shot": {
+    "point_all": 0.5962,
+    "ci_all": null,
+    "point_l2": 0.3127,
+    "ci_l2": null,
+    "note": "v15d trained on 18 GO-BP terms, zero-shot transfer to 82 MF terms"
+  },
+  "D0_ESM2_MLP": {
+    "point_all": 0.6596784343641396,
+    "ci_all": [
+      0.654089564985343,
+      0.6655148374236985
+    ],
+    "point_l2": 0.5206621145402333,
+    "ci_l2": [
+      0.5123826836682452,
+      0.5297727664847333
+    ],
+    "note": "ESM-2 L30 frozen + MLP Dense(256)\u2192BN\u2192Drop(0.3)\u2192Dense(128)\u2192Drop(0.2)\u2192sigmoid, focal \u03b3=2, 5-seed"
+  },
+  "D1_FineTuned_MLP": {
+    "point_all": 0.6601006303348563,
+    "ci_all": [
+      0.646871950969772,
+      0.6733046325070091
+    ],
+    "point_l2": 0.5196074826012538,
+    "ci_l2": [
+      0.497082182588119,
+      0.5392145092421687
+    ],
+    "note": "ESM-2 L30 fine-tuned (GO-MF supervised) + MLP Dense(256)\u2192BN\u2192Drop(0.3)\u2192Dense(128)\u2192Drop(0.2)\u2192sigmoid, focal \u03b3=2, 5-seed"
+  },
+  "v17f_star": {
+    "point_all": 0.7342647055270506,
+    "ci_all": [
+      0.7227227015260705,
+      0.7469815419329098
+    ],
+    "point_l2": 0.6366440441279345,
+    "ci_l2": [
+      0.6168865195035728,
+      0.6542923738775044
+    ],
+    "note": "delta(L30-L15) concat L30 \u2192 Dense(256)\u2192BN\u2192Drop(0.2)\u2192Dense(128)\u2192sigmoid, focal \u03b3=2, 5-seed ensemble"
+  },
+  "Domain_LR": {
+    "point_all": 0.1625,
+    "ci_all": null,
+    "point_l2": null,
+    "ci_l2": null,
+    "note": "Pfam domain features + LogisticRegression; gene-level annotation transfer"
+  }
+}

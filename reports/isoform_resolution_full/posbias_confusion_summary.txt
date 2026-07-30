@@ -1,0 +1,24 @@
+
+pos_bias & Gene-Label Confusion Analysis (Feature Type별)
+==========================================================
+
+[pos_bias per Feature Type]
+              type  n_iso  n_terms  mean_pos_bias  median_pos_bias  n_sig  n_total_terms
+  Type1_DomainLoss   3800       80       3.119267         2.764035     78             80
+Type2_PartialTrunc    938       76       2.344457         2.067599     67             76
+  Type3_SameDomain  12745       81       2.458744         2.269391     73             81
+    Type0_NoDomain  19265       81       3.594591         3.272282     80             81
+
+[Canonical-Confusion (Reversal Rate)]
+Type1_DomainLoss   : mean=0.4376 (n=3800)
+Type2_PartialTrunc : mean=0.4535 (n=938)
+Type3_SameDomain   : mean=0.3476 (n=10998)
+Type1 > Type3? MWU p=6.5907e-70
+Type2 > Type3? MWU p=3.7621e-32
+
+[Gene-Label Confusion (Inherited GO Labels)]
+Type1 with >=1 GO label : 93.7% (domain_loss isoform gets gene-level label)
+Type3 with >=1 GO label : 93.0%
+Type1 mean labels/isoform: 3.32
+Type3 mean labels/isoform: 3.23
+Type1 < Type3 labels? MWU p=9.8908e-01

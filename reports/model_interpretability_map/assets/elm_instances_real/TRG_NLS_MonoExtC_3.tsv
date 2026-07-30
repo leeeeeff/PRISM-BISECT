@@ -1,0 +1,29 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:12:53.159663
+#Origin: asimov
+#Type: tsv
+#NumInstances: 23
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI003753"	"TRG"	"TRG_NLS_MonoExtC_3"	"A0A1B4JR46_BURTH"	"A0A1B4JR46"	"A0A1B4JR46"	"155"	"160"	"23797873"	"green fluorescent protein tag; knock out; phenotype-based detection assay"	"true positive"	""	"Burkholderia thailandensis"
+"ELMI001379"	"TRG"	"TRG_NLS_MonoExtC_3"	"APC_HUMAN"	"P25054"	"P25054 D3DT03 Q15162 Q15163 Q93042"	"2048"	"2053"	"11050185"	"colocalization; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI003777"	"TRG"	"TRG_NLS_MonoExtC_3"	"AVRB3_XANEU"	"P14727"	"P14727"	"1020"	"1025"	"8980236"	"fusion protein; mutation analysis; necessary binding site"	"true positive"	""	"Xanthomonas euvesicatoria"
+"ELMI003755"	"TRG"	"TRG_NLS_MonoExtC_3"	"AVRB3_XANEU"	"P14727"	"P14727"	"1066"	"1072"	"8980236"	"fusion protein; mutation analysis; necessary binding site"	"true positive"	""	"Xanthomonas euvesicatoria"
+"ELMI001376"	"TRG"	"TRG_NLS_MonoExtC_3"	"BRCA1_HUMAN"	"P38398"	"P38398 O15129 Q3LRJ0 Q7KYU9"	"502"	"507"	"8955125"	"colocalization; mutation analysis; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI002401"	"TRG"	"TRG_NLS_MonoExtC_3"	"BRCA1_HUMAN"	"P38398"	"P38398 O15129 Q3LRJ0 Q7KYU9"	"503"	"508"	"8955125"	"colocalization; mutation analysis; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI003778"	"TRG"	"TRG_NLS_MonoExtC_3"	"D2KNN0_ANAPH"	"D2KNN0"	"D2KNN0"	"1059"	"1064"	"19543390"	"phenotype-based detection assay; sequence based prediction"	"true positive"	""	"Anaplasma phagocytophilum"
+"ELMI001372"	"TRG"	"TRG_NLS_MonoExtC_3"	"E1A_ADE05"	"P03255"	"P03255 P06438 Q64825 Q64826"	"284"	"289"	"3614197"	"colocalization; mutation analysis"	"true positive"	""	"Human adenovirus 5"
+"ELMI001852"	"TRG"	"TRG_NLS_MonoExtC_3"	"GAG_HV1H2"	"P04591"	"P04591"	"25"	"30"	"9918876"	"mutation analysis"	"true positive"	""	"HIV-1 M:B_HXB2R"
+"ELMI001361"	"TRG"	"TRG_NLS_MonoExtC_3"	"H2B1_YEAST"	"P02293"	"P02293 D6VSK6"	"30"	"35"	"3123916"	"colocalization; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI001346"	"TRG"	"TRG_NLS_MonoExtC_3"	"JARD2_MOUSE"	"Q62315"	"Q62315 Q3TPU4 Q3UHS7 Q99LD1"	"105"	"110"	"12890668"	"colocalization; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI001357"	"TRG"	"TRG_NLS_MonoExtC_3"	"JUN_AVIS1"	"P05411"	"P05411"	"225"	"231"	"1584763"	"colocalization; mutation analysis"	"true positive"	""	"Avian sarcoma virus 17"
+"ELMI001353"	"TRG"	"TRG_NLS_MonoExtC_3"	"JUN_CHICK"	"P18870"	"P18870"	"252"	"258"	"1584763"	"colocalization; mutation analysis"	"true positive"	""	"Gallus gallus"
+"ELMI001370"	"TRG"	"TRG_NLS_MonoExtC_3"	"LT_POVMA"	"P03073"	"P03073"	"191"	"196"	"3000623"	"colocalization; mutation analysis"	"true positive"	""	"Murine polyomavirus strain A2"
+"ELMI001358"	"TRG"	"TRG_NLS_MonoExtC_3"	"LT_SV40"	"P03070"	"P03070"	"127"	"133"	"6096007 12852786"	"colocalization; mutation analysis; x-ray crystallography"	"true positive"	"1Q1T"	"Simian virus 40"
+"ELMI001382"	"TRG"	"TRG_NLS_MonoExtC_3"	"MYC_HUMAN"	"P01106"	"P01106 A8WFE7 P01107 Q14026"	"322"	"328"	"3054508 10745017"	"colocalization; mutation analysis; x-ray crystallography"	"true positive"	"1EE4"	"Homo sapiens"
+"ELMI001351"	"TRG"	"TRG_NLS_MonoExtC_3"	"NFKB1_HUMAN"	"P19838"	"P19838 Q68D84 Q86V43 Q8N4X7 Q9NZC0"	"360"	"365"	"12399470"	"colocalization; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI002163"	"TRG"	"TRG_NLS_MonoExtC_3"	"PHO4_YEAST"	"P07270"	"P07270 D6VTR7"	"156"	"161"	"9732266"	"coimmunoprecipitation; mutation analysis; western blot"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI003752"	"TRG"	"TRG_NLS_MonoExtC_3"	"Q5ZUS4_LEGPH"	"Q5ZUS4"	"Q5ZUS4"	"53"	"58"	"23797873"	"chromatin immunoprecipitation assay; deletion analysis; fluorescence microscopy; green fluorescent protein tag; necessary binding site; phenotype-based detection assay"	"true positive"	""	"Legionella pneumophila subsp. pneumophila str. Philadelphia 1"
+"ELMI001855"	"TRG"	"TRG_NLS_MonoExtC_3"	"REX_HTL1A"	"P0C205"	"P0C205"	"12"	"17"	"9891056"	"classical fluorescence spectroscopy; competition binding; immunodepleted coimmunoprecipitation; mutation analysis"	"true positive"	""	"Human T-cell lymphotrophic virus type 1 (strain ATK)"
+"ELMI002162"	"TRG"	"TRG_NLS_MonoExtC_3"	"TF65_HUMAN"	"Q04206"	"Q04206 Q6GTV1 Q6SLK1"	"301"	"307"	"1340770"	"coimmunoprecipitation; fluorescence technology; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001364"	"TRG"	"TRG_NLS_MonoExtC_3"	"VIRD2_RHIRD"	"P06668"	"P06668"	"31"	"37"	"8391110"	"colocalization; mutation analysis"	"true positive"	""	"Agrobacterium tumefaciens"
+"ELMI001367"	"TRG"	"TRG_NLS_MonoExtC_3"	"VP2_POVMA"	"P03096"	"P03096 Q85070"	"313"	"318"	"1333132"	"colocalization; mutation analysis"	"true positive"	""	"Murine polyomavirus strain A2"

@@ -1,0 +1,7 @@
+model	n_layers	dim	L_final	L_mid	layer_ratio_pct	plain_last	plain_last_std	delta_only	delta_only_std	concat_delta	concat_delta_std	delta_gain	status
+ESM-2 150M	30	640	30	15	50	0.6082	0.0014	0.6303	0.0018	0.6693	0.003	0.0611	OK
+ESM-2 650M	33	1280	33	16	50	0.6793	0.0039	0.701	0.0008	0.7339	0.0025	0.0546	OK
+ESM-2 3B													MISSING
+ProtT5-XL	24	1024	24	12	50	0.6922	0.003	0.6744	0.0019	0.7288	0.0015	0.0366	OK
+ESM3 sm													MISSING
+Ankh-base	48	768	48	24	50	0.6734	0.0036	0.6638	0.0017	0.7126	0.0014	0.0392	OK

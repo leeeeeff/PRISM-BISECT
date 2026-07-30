@@ -1,0 +1,3 @@
+brain pairs n=33802 genes=9958 domain_prev=0.253
+peak AUROC layer = L9 (0.8154); L1=0.7656 L15=0.7976 L30=0.7872
+phi30=0.7872 delta_layer=0.7959 concat=0.8031 B2a_incremental=+0.0159

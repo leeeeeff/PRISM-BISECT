@@ -1,0 +1,19 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:17.857727
+#Origin: asimov
+#Type: tsv
+#NumInstances: 13
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI000014"	"TRG"	"TRG_ER_KDEL_1"	"ABP1_MAIZE"	"P13689"	"P13689 Q41193"	"198"	"201"	"1383243"	"colocalization"	"true positive"	""	"Zea mays"
+"ELMI000015"	"TRG"	"TRG_ER_KDEL_1"	"CALR_EUGGR"	"Q9ZNY3"	"Q9ZNY3"	"398"	"401"	"9627991"	"sequence based prediction"	"true positive"	""	"Euglena gracilis"
+"ELMI000013"	"TRG"	"TRG_ER_KDEL_1"	"CALR_HUMAN"	"P27797"	"P27797 Q6IAT4 Q9UDG2"	"414"	"417"	"3545499"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI000489"	"TRG"	"TRG_ER_KDEL_1"	"CHTA_VIBCH"	"P01555"	"P01555 Q56634 Q9JPV1"	"255"	"258"	"9813083"	"classical fluorescence spectroscopy; protein microinjection; radiolabel"	"true positive"	""	"Vibrio cholerae"
+"ELMI003763"	"TRG"	"TRG_ER_KDEL_1"	"E2AA_ECOLX"	"P13810"	"P13810"	"256"	"259"	"7490296"	"mutation analysis; phenotype-based detection assay"	"true positive"	""	"Escherichia coli"
+"ELMI000490"	"TRG"	"TRG_ER_KDEL_1"	"ENPL_PIG"	"Q29092"	"Q29092 O19070 Q29091"	"801"	"804"	"7957217"	"sequence based prediction"	"true positive"	""	"Sus scrofa"
+"ELMI000493"	"TRG"	"TRG_ER_KDEL_1"	"EST5_RAT"	"Q63010"	"Q63010 Q6AYA3 Q9QUX6"	"558"	"561"	""	"sequence based prediction"	"true positive"	""	"Rattus norvegicus"
+"ELMI000006"	"TRG"	"TRG_ER_KDEL_1"	"GRP78_HUMAN"	"P11021"	"P11021 B0QZ61 Q2EF78 Q9NPF1 Q9UK02"	"651"	"654"	"3545499"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI000021"	"TRG"	"TRG_ER_KDEL_1"	"GRP78_SCHPO"	"P36604"	"P36604 O13906"	"660"	"663"	"1373379"	"colocalization; mutation analysis"	"true positive"	""	"Schizosaccharomyces pombe"
+"ELMI000487"	"TRG"	"TRG_ER_KDEL_1"	"MESD_DROME"	"Q8T9B6"	"Q8T9B6 A1Z712"	"177"	"180"	"12581524"	"classical fluorescence spectroscopy"	"true positive"	""	"Drosophila melanogaster"
+"ELMI000488"	"TRG"	"TRG_ER_KDEL_1"	"PDIA1_MOUSE"	"P09103"	"P09103 Q922C8"	"506"	"509"	"2295602"	"mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI000491"	"TRG"	"TRG_ER_KDEL_1"	"RCN1_HUMAN"	"Q15293"	"Q15293 D3DR00"	"328"	"331"	"8586628 8034671"	"mutation analysis; sequence based prediction"	"true positive"	""	"Homo sapiens"
+"ELMI000492"	"TRG"	"TRG_ER_KDEL_1"	"SERPH_RAT"	"P29457"	"P29457"	"414"	"417"	"1654327"	"sequence based prediction"	"true positive"	""	"Rattus norvegicus"

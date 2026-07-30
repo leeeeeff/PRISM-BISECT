@@ -1,0 +1,19 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:19.522023
+#Origin: asimov
+#Type: tsv
+#NumInstances: 13
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI002827"	"DEG"	"DEG_Kelch_Keap1_1"	"AMER1_HUMAN"	"Q5JTC6"	"Q5JTC6 A2IB86 Q8N885"	"286"	"291"	"22215675"	"affinity chromatography technology; alanine scanning; competition binding; mutation analysis; nuclear magnetic resonance; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI002830"	"DEG"	"DEG_Kelch_Keap1_1"	"BPTF_HUMAN"	"Q12830"	"Q12830 Q6NX67 Q7Z7D6 Q9UIG2"	"729"	"734"	"23892546"	"isothermal titration calorimetry; sequence based prediction"	"true positive"	""	"Homo sapiens"
+"ELMI002822"	"DEG"	"DEG_Kelch_Keap1_1"	"CNC_DROME"	"P20482"	"P20482 A4V398 C7LAC2 O96506 Q1WWD8 Q9TZS3 Q9VCP6 Q9VCP8 Q9VCP9"	"458"	"463"	"12167159"	"sequence based prediction"	"true positive"	""	"Drosophila melanogaster"
+"ELMI002826"	"DEG"	"DEG_Kelch_Keap1_1"	"IKKB_HUMAN"	"O14920"	"O14920 B4DZ30 B4E0U4 O75327"	"34"	"39"	"19818716"	"coimmunoprecipitation; mutation analysis; pull down; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI002829"	"DEG"	"DEG_Kelch_Keap1_1"	"MYO7A_HUMAN"	"Q13402"	"Q13402 B9A011 F8VUN5 P78427 Q13321 Q14785 Q92821 Q92822"	"1636"	"1641"	"23892546"	"sequence based prediction"	"true positive"	""	"Homo sapiens"
+"ELMI002821"	"DEG"	"DEG_Kelch_Keap1_1"	"NF2L1_HUMAN"	"Q14494"	"Q14494 D3DTU3 D3DTU5 Q12877 Q96FN6"	"231"	"236"	"12167159"	"sequence based prediction"	"true positive"	""	"Homo sapiens"
+"ELMI002820"	"DEG"	"DEG_Kelch_Keap1_1"	"NF2L2_HUMAN"	"Q16236"	"Q16236 B2RBU2 B4E338 E9PGJ7 Q53RW6 Q59HH2 Q96F71"	"77"	"82"	"16888629"	"alanine scanning; coimmunoprecipitation; competition binding; x-ray crystallography"	"true positive"	"2FLU 3ZGC"	"Homo sapiens"
+"ELMI002819"	"DEG"	"DEG_Kelch_Keap1_1"	"NF2L2_MOUSE"	"Q60795"	"Q60795 Q3UQK0"	"77"	"82"	"16507366 12167159"	"alanine scanning; green fluorescent protein tag; isothermal titration calorimetry; mutation analysis; two hybrid; x-ray crystallography"	"true positive"	"1X2J 1X2R"	"Mus musculus"
+"ELMI002828"	"DEG"	"DEG_Kelch_Keap1_1"	"PALB2_HUMAN"	"Q86YC2"	"Q86YC2 A6NIE1 Q8N7Y6 Q8ND31 Q9H6W1"	"89"	"94"	"22331464"	"affinity chromatography technology; coimmunoprecipitation; mutation analysis; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI002824"	"DEG"	"DEG_Kelch_Keap1_1"	"PGAM5_HUMAN"	"Q96HS1-1"	"Q96HS1 A9LN06 C9IZY7 Q96JB0"	"77"	"82"	"17046835"	"alanine scanning; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI002825"	"DEG"	"DEG_Kelch_Keap1_1"	"PTMA_MOUSE"	"P26350"	"P26350 Q3UQV6"	"41"	"46"	"18391415 23318954"	"coimmunoprecipitation; isothermal titration calorimetry; nuclear magnetic resonance; peptide array; two hybrid; x-ray crystallography"	"true positive"	"2Z32"	"Mus musculus"
+"ELMI002823"	"DEG"	"DEG_Kelch_Keap1_1"	"SQSTM_HUMAN"	"Q13501"	"Q13501 A6NFN7 B2R661 B3KUW5 Q13446 Q9BUV7 Q9BVS6 Q9UEU1"	"347"	"352"	"20452972"	"coimmunoprecipitation; glutathione s tranferase tag; mutation analysis; pull down"	"true positive"	""	"Homo sapiens"
+"ELMI002831"	"DEG"	"DEG_Kelch_Keap1_1"	"SQSTM_MOUSE"	"Q64337"	"Q64337 Q99JM8"	"349"	"354"	"20173742"	"alanine scanning; coimmunoprecipitation; competition binding; glutathione s tranferase tag; isothermal titration calorimetry; pull down; x-ray crystallography"	"true positive"	"3ADE"	"Mus musculus"

@@ -1,0 +1,19 @@
+{
+  "n_pairs": 178,
+  "var_mean": 7.1828999519348145,
+  "var_scram": 12.98371696472168,
+  "var_region": 13.415787696838379,
+  "region_minus_scram": 0.4320707321166992,
+  "ci_region_minus_scram": [
+    -2.5134743213653565,
+    3.542939257621765
+  ],
+  "ci_scram_minus_mean": [
+    3.8224040031433106,
+    8.06279616355896
+  ],
+  "noise_signature_scram": -0.24598877017780046,
+  "noise_signature_region": -0.19171447813007636,
+  "pooling_noise_share_of_excess": 0.9306789040565491,
+  "verdict": "H_noise (region variance not distinguishable from length-matched pooling-noise floor)"
+}

@@ -1,0 +1,31 @@
+{
+  "method_aucs": {
+    "PRISM v17f*": 0.6296261535343247,
+    "Gene-mean oracle": 0.5,
+    "ESM-2 centroid sim": 0.6377942097610726,
+    "ESM-2 L2-norm": 0.37433695489513924,
+    "Sequence length": 0.5
+  },
+  "bootstrap_cis": {
+    "PRISM v17f*": {
+      "mean": 0.6292580024170615,
+      "lo": 0.6134476912424507,
+      "hi": 0.6457900631118486
+    },
+    "Gene-mean oracle": {
+      "mean": 0.5,
+      "lo": 0.5,
+      "hi": 0.5
+    },
+    "ESM-2 centroid sim": {
+      "mean": 0.6375773143825412,
+      "lo": 0.618073367759689,
+      "hi": 0.6570052739516904
+    },
+    "Sequence length": {
+      "mean": 0.5,
+      "lo": 0.5,
+      "hi": 0.5
+    }
+  }
+}

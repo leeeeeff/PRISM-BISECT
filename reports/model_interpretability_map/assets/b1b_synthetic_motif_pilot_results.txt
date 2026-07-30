@@ -1,0 +1,2 @@
+n=286 backbones=143
+mono=0.5000 mono_dipep=0.5000 ec=0.7587 mono_ec=0.7586

@@ -1,0 +1,24 @@
+PRISM Feature Type 전수조사 (36,748 아이소폼)
+============================================================
+
+[ Feature Type 분포 ]
+  Type1_DomainLoss: 3,800 (10.3%)
+  Type2_PartialTrunc: 938 (2.6%)
+  Type3_SameDomain: 12,745 (34.7%)
+  Type0_NoDomain: 19,265 (52.4%)
+
+[ Feature Type별 Macro AUPRC ]
+  Type1_DomainLoss: 0.6412 [0.6245,0.6568] n=3,800
+  Type2_PartialTrunc: 0.6493 [0.6253,0.6831] n=938
+  Type3_SameDomain: 0.7841 [0.7767,0.7927] n=12,745
+  Type0_NoDomain: 0.7077 [0.6966,0.7194] n=19,265
+  Overall: 0.7343 [0.7290,0.7415]
+
+[ Within-Gene Gap 분석 ]
+  Multi-isoform genes: 8,569
+  With domain variation: 1,655 (19.3%)
+  Gap (domain var):  mean=0.0411
+  Gap (no dom var):  mean=0.0150
+  MWU p=2.0053e-262
+
+[ Fisher's Exact: High-Gap와 Feature Type ]

@@ -1,0 +1,17 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:26.610857
+#Origin: asimov
+#Type: tsv
+#NumInstances: 11
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI004596"	"DEG"	"DEG_Kelch_KLHL12_1"	"CPSF6_HUMAN"	"Q16630"	"Q16630 A8K7K9 Q53ES1 Q9BSJ7 Q9BW18"	"222"	"227"	""	"inferred by curator"	"unknown"	""	"Homo sapiens"
+"ELMI004554"	"DEG"	"DEG_Kelch_KLHL12_1"	"CPSF6_HUMAN"	"Q16630"	"Q16630 A8K7K9 Q53ES1 Q9BSJ7 Q9BW18"	"347"	"352"	""	"inferred by curator"	"unknown"	""	"Homo sapiens"
+"ELMI004552"	"DEG"	"DEG_Kelch_KLHL12_1"	"DAAM1_HUMAN"	"Q9Y4D1"	"Q9Y4D1 Q86U34 Q8N1Z8 Q8TB39"	"570"	"575"	""	"inferred by curator"	"unknown"	""	"Homo sapiens"
+"ELMI004553"	"DEG"	"DEG_Kelch_KLHL12_1"	"DAAM2_HUMAN"	"Q86T65"	"Q86T65 G5EA45 Q5T4T8 Q5T4U0 Q9NQI5 Q9Y4G0"	"568"	"573"	""	"inferred by curator"	"unknown"	""	"Homo sapiens"
+"ELMI004557"	"DEG"	"DEG_Kelch_KLHL12_1"	"DVL1_HUMAN"	"O14640"	"O14640 Q5TA33 Q5TA35"	"657"	"662"	"32574548"	"alanine scanning; anti tag coimmunoprecipitation; deletion analysis; fluorescence polarization spectroscopy; mutation analysis; mutation decreasing interaction; mutation disrupting interaction; peptide array; ubiquitinase assay; x-ray crystallography"	"true positive"	"6TTK"	"Homo sapiens"
+"ELMI004556"	"DEG"	"DEG_Kelch_KLHL12_1"	"DVL2_HUMAN"	"O14641"	"O14641 D3DTN3 Q53XM0"	"698"	"703"	"22826439 35509083 32574548"	"anti bait coimmunoprecipitation; by homology; inferred by author; peptide array"	"true positive"	""	"Homo sapiens"
+"ELMI004555"	"DEG"	"DEG_Kelch_KLHL12_1"	"DVL3_HUMAN"	"Q92997"	"Q92997 B4E3E5 D3DNT0 O14642 Q13531 Q8N5E9 Q92607"	"678"	"683"	"22826439 16547521 32032490 32574548"	"Identification by mass spectrometry; alanine scanning; anti bait coimmunoprecipitation; by homology; deletion analysis; fluorescence polarization spectroscopy; inferred by author; mutation analysis; mutation decreasing interaction; mutation disrupting interaction; nuclear magnetic resonance; peptide array; tandem affinity purification; ubiquitinase assay; x-ray crystallography"	"true positive"	"6V7O"	"Homo sapiens"
+"ELMI004600"	"DEG"	"DEG_Kelch_KLHL12_1"	"LNP_HUMAN"	"Q9C0E8-2"	"Q9C0E8-2"	"198"	"203"	"32433973"	"alanine scanning; anti tag coimmunoprecipitation; deletion analysis; mutation disrupting interaction"	"true positive"	""	"Homo sapiens"
+"ELMI004597"	"DEG"	"DEG_Kelch_KLHL12_1"	"PEF1_HUMAN"	"Q9UBV8"	"Q9UBV8"	"17"	"22"	"27716508 32574548"	"Identification by mass spectrometry; affinity chromatography technology; deletion analysis; inferred by author; pull down; rna interference; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI004599"	"DEG"	"DEG_Kelch_KLHL12_1"	"PKHA4_HUMAN"	"Q9H4M7"	"Q9H4M7 Q8N4M8 Q8N658"	"176"	"181"	"31091453 32574548"	"Identification by mass spectrometry; anti tag coimmunoprecipitation; colocalization; inferred by author; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI004598"	"DEG"	"DEG_Kelch_KLHL12_1"	"SC31A_HUMAN"	"O94979"	"O94979 B4DIW6 B7ZKZ7 B7ZL00 H7C2W3 Q17RR5 Q5H9P6 Q5XG74 Q659G7 Q6ZU90 Q7LCX9 Q86TJ0 Q8IZH4 Q9P048 Q9P0A6 Q9UM05 Q9UM06"	"957"	"962"	"22358839 32574548"	"Identification by mass spectrometry; affinity chromatography technology; anti tag coimmunoprecipitation; deletion analysis; inferred by author; pull down; ubiquitinase assay"	"true positive"	""	"Homo sapiens"

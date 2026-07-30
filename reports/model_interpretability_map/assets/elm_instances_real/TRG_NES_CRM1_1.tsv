@@ -1,0 +1,24 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:03.517358
+#Origin: asimov
+#Type: tsv
+#NumInstances: 18
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI000913"	"TRG"	"TRG_NES_CRM1_1"	"APC_HUMAN"	"P25054"	"P25054 D3DT03 Q15162 Q15163 Q93042"	"67"	"78"	"11035805"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI000914"	"TRG"	"TRG_NES_CRM1_1"	"APC_HUMAN"	"P25054"	"P25054 D3DT03 Q15162 Q15163 Q93042"	"163"	"176"	"12070164 11035805"	"competition binding; mutation analysis; x-ray crystallography"	"true positive"	"1M5I"	"Homo sapiens"
+"ELMI000916"	"TRG"	"TRG_NES_CRM1_1"	"CCNB1_XENLA"	"P13350"	"P13350 Q5HZN2"	"106"	"121"	"9679058"	"competition binding; mutation analysis"	"true positive"	""	"Xenopus laevis"
+"ELMI000915"	"TRG"	"TRG_NES_CRM1_1"	"CTND1_HUMAN"	"O60716"	"O60716 A8K939 O15088 O60713 O60714 O60715 O60935 Q6DHZ7 Q6RBX8 Q9UP71 Q9UP72 Q9UP73"	"942"	"956"	"10393933"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI000921"	"TRG"	"TRG_NES_CRM1_1"	"IPKA_HUMAN"	"P61925"	"P61925 P04541 Q6IAV2"	"37"	"51"	"7634336"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001205"	"TRG"	"TRG_NES_CRM1_1"	"MAPK2_HUMAN"	"P49137"	"P49137 Q5SY30 Q5SY41 Q8IYD6"	"354"	"368"	"9628873 12171911"	"competition binding; mutation analysis; x-ray crystallography"	"true positive"	"1KWP"	"Homo sapiens"
+"ELMI001206"	"TRG"	"TRG_NES_CRM1_1"	"MP2K1_XENLA"	"Q05116"	"Q05116 Q5D0B8"	"31"	"44"	"8702720"	"competition binding; mutation analysis"	"true positive"	""	"Xenopus laevis"
+"ELMI002160"	"TRG"	"TRG_NES_CRM1_1"	"MPIP3_HUMAN"	"P30307"	"P30307 D3DQB8 Q96PL3 Q9H168 Q9H2E8 Q9H2E9 Q9H2F1"	"189"	"203"	"11897663"	"alanine scanning; inhibitor"	"true positive"	""	"Homo sapiens"
+"ELMI001849"	"TRG"	"TRG_NES_CRM1_1"	"NEP_I34A1"	"P03508"	"P03508 A4GXG8 Q20N33 Q67266 Q71QT4"	"10"	"22"	"15331747"	"classical fluorescence spectroscopy; competition binding; mutation analysis"	"true positive"	""	"Influenza A virus (A/Puerto Rico/8/1934(H1N1))"
+"ELMI002299"	"TRG"	"TRG_NES_CRM1_1"	"NEP_I34A1"	"P03508"	"P03508 A4GXG8 Q20N33 Q67266 Q71QT4"	"11"	"22"	"15331747"	"classical fluorescence spectroscopy; competition binding; mutation analysis"	"true positive"	""	"Influenza A virus (A/Puerto Rico/8/1934(H1N1))"
+"ELMI000923"	"TRG"	"TRG_NES_CRM1_1"	"P53_HUMAN"	"P04637"	"P04637 Q15086 Q15087 Q15088 Q16535 Q16807 Q16808 Q16809 Q16810 Q16811 Q16848 Q2XN98 Q3LRW1 Q3LRW2 Q3LRW3 Q3LRW4 Q3LRW5 Q86UG1 Q8J016 Q99659 Q9BTM4 Q9HAQ8 Q9NP68 Q9NPJ2 Q9NZD0 Q9UBI2 Q9UQ61"	"339"	"352"	"12944468"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI000920"	"TRG"	"TRG_NES_CRM1_1"	"P73_HUMAN"	"O15350"	"O15350 B7Z9C1 O15351 Q17RN8 Q5TBV5 Q5TBV6 Q8NHW9 Q8TDY5 Q8TDY6 Q9NTK8"	"366"	"379"	"11847229"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI000918"	"TRG"	"TRG_NES_CRM1_1"	"PER1_MOUSE"	"O35973"	"O35973 B1ASX0"	"488"	"499"	"11591712"	"competition binding; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI000917"	"TRG"	"TRG_NES_CRM1_1"	"PER2_MOUSE"	"O54943"	"O54943 O54954"	"459"	"470"	"11591712"	"competition binding; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI000922"	"TRG"	"TRG_NES_CRM1_1"	"REV_HV1C4"	"P05865"	"P05865"	"74"	"87"	"7543368"	"competition binding; mutation analysis"	"true positive"	""	"Human immunodeficiency virus type 1 (CDC-451 ISOLATE)"
+"ELMI001850"	"TRG"	"TRG_NES_CRM1_1"	"REX_HTL1A"	"P0C205"	"P0C205"	"80"	"93"	"8709278"	"affinity chromatography technology; classical fluorescence spectroscopy; mutation analysis"	"true positive"	""	"Human T-cell lymphotrophic virus type 1 (strain ATK)"
+"ELMI001255"	"TRG"	"TRG_NES_CRM1_1"	"SPN1_HUMAN"	"O95149"	"O95149 A6NE34 A8K0B0 D3DW76"	"2"	"17"	"19389996 19339969"	"mutation analysis; pull down; x-ray crystallography"	"true positive"	"3GB8 3GJX"	"Homo sapiens"
+"ELMI000919"	"TRG"	"TRG_NES_CRM1_1"	"STK4_HUMAN"	"Q13043"	"Q13043 B2RCR8 Q15802 Q4G156 Q5H982 Q6PD60 Q9BR32 Q9NTZ4"	"359"	"374"	"11805089"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"

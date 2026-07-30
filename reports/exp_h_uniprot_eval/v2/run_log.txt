@@ -1,0 +1,98 @@
+=================================================================
+  PRISM UniProt Benchmark v2 (51 pairs + permutation test)
+  device=cuda
+=================================================================
+
+[1] Loading benchmark v2...
+  51 pairs from 50 genes
+
+[2] Fetching 100 sequences...
+  [WARN] Failed P15692-7: HTTP Error 404: Not Found
+  [WARN] Failed Q15303-8: HTTP Error 404: Not Found
+  [WARN] Failed Q15365-2: HTTP Error 404: Not Found
+  [WARN] Missing: ['P15692-7', 'Q15303-8', 'Q15365-2']
+  Embedded 97 isoforms
+
+[3] Computing ESM-2 delta embeddings...
+  Embeddings: 97 isoforms
+
+[4] Loading training data...
+  Loading train embeddings...
+  X_tr: (31668, 1280)
+  82 MF GO terms
+  Y_tr: (31668, 82)  pos rate: 0.0306
+
+[5] Training v17f* (5 seeds)...
+  Predictions: (97, 82)
+
+[6] Evaluating direction accuracy...
+  Direction accuracy: 0.542 (26/48)
+  Mean gap: 0.0962
+
+[7] Permutation test (n=10000)...
+  Permutation p-value (one-sided, H0: acc=0.5): 0.3264
+  Binomial p-value: 0.3327
+
+[8] Stratified analysis by gap threshold:
+  gap >= 0.05: 13/14 = 0.929  perm_p=0.0011  binom_p=0.0009
+  gap >= 0.10: 11/11 = 1.000  perm_p=0.0007  binom_p=0.0005
+  gap >= 0.15: 8/8 = 1.000  perm_p=0.0035  binom_p=0.0039
+  gap >= 0.20: 7/7 = 1.000  perm_p=0.0071  binom_p=0.0078
+
+[9] Per-pair results:
+  ✓ EGFR       GO_0004714      A_only  a=0.8901  b=0.7535  gap=0.1366  OK
+  ✓ FGFR1      GO_0005007      A_only  a=0.8476  b=0.655  gap=0.1926  OK
+  ✗ NTRK1      GO_0004714      A_only  a=0.7962  b=0.7972  gap=0.001  OK
+  ✓ VEGFR2     GO_0004714      A_only  a=0.4881  b=0.1139  gap=0.3742  OK
+  ✓ CDK4       GO_0004693      A_only  a=0.9368  b=0.9258  gap=0.011  OK
+  ✗ BCL2       GO_0097553      A_only  a=0.0479  b=0.0988  gap=0.0508  OK
+  ✗ MCL1       GO_0097553      B_only  a=0.0063  b=0.0036  gap=0.0027  OK
+  ✓ BCL2L1     GO_0046982      A_only  a=0.0259  b=0.0087  gap=0.0172  OK
+  ✓ CASP9      GO_0004197      A_only  a=0.0106  b=0.0086  gap=0.0021  OK
+  ✓ BRCA1      GO_0006281      A_only  a=0.25  b=0.0015  gap=0.2485  OK
+  ✗ TP53       GO_0006977      A_only  a=0.9667  b=0.9667  gap=0.0  OK
+  ✓ CDKN2A     GO_0008285      A_only  a=0.2898  b=0.1622  gap=0.1276  OK
+  ✗ CDKN2A     GO_0006977      B_only  a=0.0029  b=0.0023  gap=0.0005  OK
+  — VEGFA      GO_0005178      A_only  a=None  b=None  gap=None  sequence not embedded
+  ✗ IGF1       GO_0005158      A_only  a=0.4893  b=0.4909  gap=0.0016  OK
+  ✓ FGF2       GO_0008083      both    a=0.4548  b=0.4548  gap=0.0  OK
+  — PCBP1      GO_0003723      A_only  a=None  b=None  gap=None  sequence not embedded
+  ✗ HNRNPA1    GO_0003729      A_only  a=0.5363  b=0.5763  gap=0.0399  OK
+  ✗ SRSF1      GO_0000398      A_only  a=0.9944  b=0.997  gap=0.0025  OK
+  ✓ RBFOX1     GO_0000398      A_only  a=0.99  b=0.9799  gap=0.0101  OK
+  ✓ RUNX1      GO_0006357      A_only  a=0.8669  b=0.852  gap=0.0149  OK
+  ✗ TP63       GO_0006357      A_only  a=0.9635  b=0.976  gap=0.0125  OK
+  ✗ TP73       GO_0006977      A_only  a=0.9615  b=0.9649  gap=0.0034  OK
+  ✗ ACTN1      GO_0005200      A_only  a=0.4506  b=0.4617  gap=0.0111  OK
+  ✗ FLNB       GO_0005200      A_only  a=0.4503  b=0.4503  gap=0.0  OK
+  ✗ APP        GO_0005178      A_only  a=0.4441  b=0.4463  gap=0.0022  OK
+  ✗ MAPT       GO_0008017      A_only  a=0.4828  b=0.5239  gap=0.0411  OK
+  ✓ PARK2      GO_0004842      A_only  a=0.7268  b=0.2899  gap=0.4369  OK
+  ✓ DLG4       GO_0007399      A_only  a=0.996  b=0.9954  gap=0.0006  OK
+  ✓ SNAP25     GO_0016079      A_only  a=0.0069  b=0.0063  gap=0.0006  OK
+  ✓ FLT1       GO_0004714      A_only  a=0.3731  b=0.0765  gap=0.2966  OK
+  ✓ NTRK2      GO_0004714      A_only  a=0.8751  b=0.2144  gap=0.6608  OK
+  ✓ NTRK3      GO_0004714      A_only  a=0.8686  b=0.1994  gap=0.6692  OK
+  ✗ AXL        GO_0004714      A_only  a=0.6799  b=0.6892  gap=0.0093  OK
+  ✓ MDM2       GO_0004842      both    a=0.4652  b=0.5661  gap=0.1008  OK
+  ✗ WT1        GO_0003677      A_only  a=0.4867  b=0.5175  gap=0.0308  OK
+  ✓ CEBPA      GO_0003700      A_only  a=0.9377  b=0.9359  gap=0.0017  OK
+  ✓ TIA1       GO_0003723      A_only  a=0.9966  b=0.9964  gap=0.0002  OK
+  ✗ PTBP1      GO_0003723      A_only  a=0.9958  b=0.9959  gap=0.0001  OK
+  — ERBB4      GO_0004714      A_only  a=None  b=None  gap=None  sequence not embedded
+  ✓ FGFR2      GO_0004714      A_only  a=0.8555  b=0.0151  gap=0.8404  OK
+  ✗ KIT        GO_0004714      A_only  a=0.8738  b=0.8744  gap=0.0006  OK
+  ✓ RUNX2      GO_0003700      A_only  a=0.8989  b=0.8987  gap=0.0002  OK
+  ✗ HIF1A      GO_0003700      A_only  a=0.894  b=0.9165  gap=0.0225  OK
+  ✗ BIRC5      GO_0005515      B_only  a=0.9734  b=0.9608  gap=0.0126  OK
+  ✓ STAT3      GO_0003700      A_only  a=0.8164  b=0.7758  gap=0.0407  OK
+  ✓ CEBPB      GO_0001228      A_only  a=0.7611  b=0.6681  gap=0.093  OK
+  ✓ PIK3R1     GO_0005515      A_only  a=0.9463  b=0.9438  gap=0.0025  OK
+  ✓ DNMT3A     GO_0042393      A_only  a=0.3591  b=0.2947  gap=0.0644  OK
+  ✗ SMN1       GO_0005515      A_only  a=0.9518  b=0.9716  gap=0.0198  OK
+  ✗ RAC1       GO_0003924      A_only  a=0.9616  b=0.9706  gap=0.009  OK
+
+  Saved: ../../reports/exp_h_uniprot_eval/v2/pairwise_eval_v2.tsv
+  Saved: ../../reports/exp_h_uniprot_eval/v2/summary_v2.json
+
+[DONE]

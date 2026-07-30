@@ -1,0 +1,39 @@
+{
+  "n_pairs": 51,
+  "n_eval": 48,
+  "n_correct": 26,
+  "acc": 0.5417,
+  "mean_gap": 0.0962,
+  "perm_p": 0.3264,
+  "binom_p": 0.3327,
+  "strat": {
+    "gap05": {
+      "n": 14,
+      "correct": 13,
+      "acc": 0.9286,
+      "perm_p": 0.0006,
+      "binom_p": 0.0009
+    },
+    "gap10": {
+      "n": 11,
+      "correct": 11,
+      "acc": 1.0,
+      "perm_p": 0.0004,
+      "binom_p": 0.0005
+    },
+    "gap15": {
+      "n": 8,
+      "correct": 8,
+      "acc": 1.0,
+      "perm_p": 0.0046,
+      "binom_p": 0.0039
+    },
+    "gap20": {
+      "n": 7,
+      "correct": 7,
+      "acc": 1.0,
+      "perm_p": 0.0078,
+      "binom_p": 0.0078
+    }
+  }
+}

@@ -1,0 +1,30 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:12:49.262467
+#Origin: asimov
+#Type: tsv
+#NumInstances: 24
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI003624"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"GBP_PLAF7"	"Q8I6U8"	"Q8I6U8"	"84"	"88"	"25850860 15591203"	"Identification by mass spectrometry; mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003622"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"GBP_PLAFG"	"P02895"	"P02895"	"84"	"88"	"19055692 15591202"	"Identification by mass spectrometry; mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum FCR-3/Gambia"
+"ELMI003627"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"HRP1_PLAFA"	"P05227"	"P05227"	"45"	"49"	"15591203"	"mutation disrupting interaction; tag visualisation by fluorescence"	"true positive"	""	"Plasmodium falciparum"
+"ELMI003621"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"KNOB_PLAFG"	"P09346"	"P09346 P13818"	"54"	"58"	"15591202"	"mutation disrupting interaction; tag visualisation by fluorescence"	"true positive"	""	"Plasmodium falciparum FCR-3/Gambia"
+"ELMI003635"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"O97336_PLAF7"	"O97336"	"O97336"	"86"	"90"	"19055692 25850860"	"Identification by mass spectrometry; mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003643"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I0U6_PLAF7"	"Q8I0U6"	"Q8I0U6"	"86"	"91"	"23387285"	"Identification by mass spectrometry; affinity chromatography technology; mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003630"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I202_PLAF7"	"Q8I202"	"Q8I202"	"59"	"63"	"19055692"	"Identification by mass spectrometry; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003629"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I298_PLAF7"	"Q8I298"	"Q8I298"	"61"	"65"	"19055692"	"Identification by mass spectrometry; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003640"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I2B3_PLAF7"	"Q8I2B3"	"Q8I2B3"	"82"	"86"	"25850860"	"tag visualisation by fluorescence"	"true negative"	""	"Plasmodium falciparum 3D7"
+"ELMI003623"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I2C7_PLAF7"	"Q8I2C7"	"Q8I2C7"	"36"	"40"	"23387285 15591202"	"Identification by mass spectrometry; affinity chromatography technology; mutation disrupting interaction; tag visualisation by fluorescence"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003632"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I2F2_PLAF7"	"Q8I2F2"	"Q8I2F2"	"57"	"61"	"19055692 25850860"	"Identification by mass spectrometry; mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003642"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I2F7_PLAF7"	"Q8I2F7"	"Q8I2F7"	"46"	"50"	"25850860"	"Identification by mass spectrometry; mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003626"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I489_PLAF7"	"Q8I489"	"Q8I489"	"60"	"64"	"15591203"	"tag visualisation by fluorescence"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003631"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I490_PLAF7"	"Q8I490"	"Q8I490"	"89"	"93"	"19055692"	"Identification by mass spectrometry; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003625"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I492_PLAF7"	"Q8I492"	"Q8I492"	"75"	"79"	"15591203"	"tag visualisation by fluorescence"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003639"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I631_PLAF7"	"Q8I631"	"Q8I631"	"51"	"55"	"25850860"	"tag visualisation by fluorescence"	"true negative"	""	"Plasmodium falciparum 3D7"
+"ELMI003636"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I636_PLAF7"	"Q8I636"	"Q8I636"	"71"	"75"	"25850860"	"tag visualisation by fluorescence"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003638"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8I637_PLAF7"	"Q8I637"	"Q8I637"	"46"	"50"	"25850860"	"tag visualisation by fluorescence"	"true negative"	""	"Plasmodium falciparum 3D7"
+"ELMI003634"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8IDG9_PLAF7"	"Q8IDG9"	"Q8IDG9"	"86"	"90"	"19055692"	"Identification by mass spectrometry; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003641"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8IEQ3_PLAF7"	"Q8IEQ3"	"Q8IEQ3"	"70"	"74"	"25850860"	"tag visualisation by fluorescence"	"true negative"	""	"Plasmodium falciparum 3D7"
+"ELMI003633"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q8IK20_PLAF7"	"Q8IK20"	"Q8IK20"	"86"	"90"	"19055692"	"Identification by mass spectrometry; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003628"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q9TY99_PLAF7"	"Q9TY99"	"Q9TY99"	"54"	"58"	"19055692 25850860"	"mutation disrupting interaction; tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003637"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q9U0N3_PLAF7"	"Q9U0N3"	"Q9U0N3"	"48"	"52"	"25850860"	"tag visualisation by fluorescence; western blot"	"true positive"	""	"Plasmodium falciparum 3D7"
+"ELMI003644"	"TRG"	"TRG_Pf-PMV_PEXEL_1"	"Q9U5L9_PLAF7"	"Q9U5L9"	"Q9U5L9"	"48"	"52"	"23387285"	"Identification by mass spectrometry; affinity chromatography technology"	"true positive"	""	"Plasmodium falciparum 3D7"

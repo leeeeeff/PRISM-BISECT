@@ -1,0 +1,142 @@
+{
+  "tissue": "muscle_heldout",
+  "n_pairs_2iso_mapped": 1683,
+  "n_splicing_pairs": 1683,
+  "domain_affecting": 901,
+  "domain_preserving_nondomain": 782,
+  "nondomain_rate": 0.46464646464646464,
+  "observed_domain_affecting_rate": 0.5353535353535354,
+  "random_placement_null_rate": 0.4943410860231891,
+  "nondomain_position": {
+    "N_terminal_<=60aa": 478,
+    "C_terminal_last60": 148,
+    "internal": 156
+  },
+  "disorder_nondomain_median": 0.1448125,
+  "disorder_domainaffecting_median": 0.10506249999999999,
+  "splice_size_nondomain_median": 42.0,
+  "splice_size_domainaffecting_median": 105.0,
+  "ieval_max": 0.01,
+  "examples_nondomain": [
+    {
+      "gene": "BambuGene36248",
+      "changed_aa": 26,
+      "start": 0,
+      "end": 32,
+      "len": 321,
+      "disorder": 0.247
+    },
+    {
+      "gene": "ENSG00000000005.6",
+      "changed_aa": 63,
+      "start": 0,
+      "end": 63,
+      "len": 317,
+      "disorder": 0.073
+    },
+    {
+      "gene": "ENSG00000002933.9",
+      "changed_aa": 201,
+      "start": 0,
+      "end": 201,
+      "len": 428,
+      "disorder": 0.285
+    },
+    {
+      "gene": "ENSG00000003096.15",
+      "changed_aa": 106,
+      "start": 0,
+      "end": 106,
+      "len": 719,
+      "disorder": 0.182
+    },
+    {
+      "gene": "ENSG00000004766.17",
+      "changed_aa": 37,
+      "start": 2,
+      "end": 34,
+      "len": 964,
+      "disorder": 0.193
+    },
+    {
+      "gene": "ENSG00000005059.16",
+      "changed_aa": 88,
+      "start": 0,
+      "end": 88,
+      "len": 336,
+      "disorder": 0.142
+    },
+    {
+      "gene": "ENSG00000005175.10",
+      "changed_aa": 47,
+      "start": 395,
+      "end": 429,
+      "len": 665,
+      "disorder": 0.187
+    },
+    {
+      "gene": "ENSG00000005243.10",
+      "changed_aa": 29,
+      "start": 199,
+      "end": 212,
+      "len": 212,
+      "disorder": -0.131
+    },
+    {
+      "gene": "ENSG00000006016.12",
+      "changed_aa": 28,
+      "start": 406,
+      "end": 422,
+      "len": 422,
+      "disorder": 0.172
+    },
+    {
+      "gene": "ENSG00000006744.19",
+      "changed_aa": 40,
+      "start": 187,
+      "end": 227,
+      "len": 826,
+      "disorder": 0.369
+    },
+    {
+      "gene": "ENSG00000008118.10",
+      "changed_aa": 29,
+      "start": 0,
+      "end": 29,
+      "len": 505,
+      "disorder": 0.187
+    },
+    {
+      "gene": "ENSG00000008128.23",
+      "changed_aa": 11,
+      "start": 108,
+      "end": 109,
+      "len": 770,
+      "disorder": -0.884
+    },
+    {
+      "gene": "ENSG00000009844.16",
+      "changed_aa": 27,
+      "start": 233,
+      "end": 260,
+      "len": 307,
+      "disorder": 0.122
+    },
+    {
+      "gene": "ENSG00000010282.15",
+      "changed_aa": 77,
+      "start": 0,
+      "end": 77,
+      "len": 581,
+      "disorder": 0.246
+    },
+    {
+      "gene": "ENSG00000011451.21",
+      "changed_aa": 133,
+      "start": 215,
+      "end": 348,
+      "len": 965,
+      "disorder": 0.175
+    }
+  ]
+}

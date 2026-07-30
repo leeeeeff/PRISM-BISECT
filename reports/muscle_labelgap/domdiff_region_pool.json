@@ -1,0 +1,24 @@
+{
+  "n_pairs": 178,
+  "orientation": "toward domain-complete (curated structural label)",
+  "prediction": "H_seal: region-pool raises domain-aligned axis << non-domain label-free axis",
+  "meanpool": {
+    "acc": 0.7078651685393257,
+    "sd": 0.0029011111207546047
+  },
+  "nterm_window": {
+    "acc": 0.7258426966292136,
+    "sd": 0.0070168516835937235
+  },
+  "changed_region": {
+    "acc": 0.844007490636704,
+    "sd": 0.0023761381161890543
+  },
+  "bootstrap_region_minus_mean": {
+    "delta": 0.1348314606741573,
+    "ci95": [
+      0.07303370786516854,
+      0.1911516853932583
+    ]
+  }
+}

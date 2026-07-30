@@ -1,0 +1,55 @@
+======================================================================
+FLUID TRAJECTORY SIDE-BRANCH BIO-VALIDATION (EXPANDED REFERENCE)
+Timestamp: 20260707_1215
+Candidates (unique iso): 181
+Background (unique pilot ENST not in candidates): 25926
+======================================================================
+
+    APPRIS-ALTERNATIVE | all                      OR= 0.85  p=0.7525  cand=13/181  bg=2165/25926
+    APPRIS-ALTERNATIVE | GO-neg only              OR= 0.70  p=0.8741  cand=8/133  bg=2165/25926
+    APPRIS-ALTERNATIVE | type=early               OR= 0.61  p=0.8093  cand=1/19  bg=2165/25926
+    APPRIS-ALTERNATIVE | type=mid                 OR= 0.00  p=1.0000  cand=0/17  bg=2165/25926
+    APPRIS-ALTERNATIVE | type=late                OR= 0.73  p=0.7523  cand=1/16  bg=2165/25926
+    APPRIS-ALTERNATIVE | type=flat                OR= 1.02  p=0.5171  cand=11/129  bg=2165/25926
+    APPRIS-ALTERNATIVE | peak=L1-10               OR= 1.35  p=0.2642  cand=8/73  bg=2165/25926
+    APPRIS-ALTERNATIVE | peak=L11-20              OR= 0.67  p=0.8461  cand=4/70  bg=2165/25926
+    APPRIS-ALTERNATIVE | peak=L21-30              OR= 0.30  p=0.9636  cand=1/38  bg=2165/25926
+    APPRIS-ALTERNATIVE | top25%_sb                OR= 1.65  p=0.1832  cand=6/46  bg=2165/25926
+    nonMANE-dominant | all                        OR= 0.71  p=0.9665  cand=30/181  bg=5652/25926
+    nonMANE-dominant | GO-neg only                OR= 0.79  p=0.8769  cand=24/133  bg=5652/25926
+    nonMANE-dominant | type=early                 OR= 0.96  p=0.6206  cand=4/19  bg=5652/25926
+    nonMANE-dominant | type=mid                   OR= 1.10  p=0.5254  cand=4/17  bg=5652/25926
+    nonMANE-dominant | type=late                  OR= 1.20  p=0.4737  cand=4/16  bg=5652/25926
+    nonMANE-dominant | type=flat                  OR= 0.58  p=0.9910  cand=18/129  bg=5652/25926
+    nonMANE-dominant | peak=L1-10                 OR= 0.57  p=0.9710  cand=10/73  bg=5652/25926
+    nonMANE-dominant | peak=L11-20                OR= 0.60  p=0.9580  cand=10/70  bg=5652/25926
+    nonMANE-dominant | peak=L21-30                OR= 1.28  p=0.3068  cand=10/38  bg=5652/25926
+    nonMANE-dominant | top25%_sb                  OR= 0.44  p=0.9827  cand=5/46  bg=5652/25926
+    TierA∩B | all                                 OR= 0.54  p=0.9160  cand=3/181  bg=791/25926
+    TierA∩B | GO-neg only                         OR= 0.73  p=0.7747  cand=3/133  bg=791/25926
+    TierA∩B | type=early                          OR= 0.00  p=1.0000  cand=0/19  bg=791/25926
+    TierA∩B | type=mid                            OR= 0.00  p=1.0000  cand=0/17  bg=791/25926
+    TierA∩B | type=late                           OR= 0.00  p=1.0000  cand=0/16  bg=791/25926
+    TierA∩B | type=flat                           OR= 0.76  p=0.7569  cand=3/129  bg=791/25926
+    TierA∩B | peak=L1-10                          OR= 0.44  p=0.8958  cand=1/73  bg=791/25926
+    TierA∩B | peak=L11-20                         OR= 0.46  p=0.8857  cand=1/70  bg=791/25926
+    TierA∩B | peak=L21-30                         OR= 0.86  p=0.6921  cand=1/38  bg=791/25926
+    TierA∩B | top25%_sb                           OR= 0.00  p=1.0000  cand=0/46  bg=791/25926
+    TierA∪B | all                                 OR= 0.76  p=0.9469  cand=40/181  bg=7026/25926
+    TierA∪B | GO-neg only                         OR= 0.75  p=0.9317  cand=29/133  bg=7026/25926
+    TierA∪B | type=early                          OR= 0.96  p=0.6168  cand=5/19  bg=7026/25926
+    TierA∪B | type=mid                            OR= 0.83  p=0.7169  cand=4/17  bg=7026/25926
+    TierA∪B | type=late                           OR= 1.22  p=0.4462  cand=5/16  bg=7026/25926
+    TierA∪B | type=flat                           OR= 0.68  p=0.9723  cand=26/129  bg=7026/25926
+    TierA∪B | peak=L1-10                          OR= 0.82  p=0.8047  cand=17/73  bg=7026/25926
+    TierA∪B | peak=L11-20                         OR= 0.61  p=0.9633  cand=13/70  bg=7026/25926
+    TierA∪B | peak=L21-30                         OR= 0.96  p=0.6044  cand=10/38  bg=7026/25926
+    TierA∪B | top25%_sb                           OR= 0.84  p=0.7377  cand=11/46  bg=7026/25926
+
+Significant (p<0.05, one-sided Fisher): 0 / 40
+
+Tier definitions:
+  Tier A: APPRIS ALTERNATIVE:1/2 (curated functional-alternative)
+  Tier B: non-MANE Select + gene-dominant in >=1 muscle sample
+  Tier C: Tier A ∩ Tier B (highest confidence)
+  Tier U: Tier A ∪ Tier B (broadest)

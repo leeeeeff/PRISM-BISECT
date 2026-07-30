@@ -1,0 +1,28 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:12:57.401610
+#Origin: asimov
+#Type: tsv
+#NumInstances: 22
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI002495"	"DEG"	"DEG_APCC_TPR_1"	"AMA1_YEAST"	"P50082"	"P50082 D6VV07 Q96VQ3"	"591"	"593"	"21118994"	"mutation analysis; western blot"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI002494"	"DEG"	"DEG_APCC_TPR_1"	"APC10_HUMAN"	"Q9UM13"	"Q9UM13 D3DNZ7 Q2V500 Q9UG51 Q9Y5R0"	"183"	"185"	"11524682"	"coimmunoprecipitation; mutation analysis; mutation disrupting interaction; pull down"	"true positive"	""	"Homo sapiens"
+"ELMI002492"	"DEG"	"DEG_APCC_TPR_1"	"CDC20_HUMAN"	"Q12834"	"Q12834 B2R6Z6 D3DPJ1 Q5JUY4 Q9BW56 Q9UQI9"	"497"	"499"	"12956947"	"competition binding; pull down; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI002490"	"DEG"	"DEG_APCC_TPR_1"	"CDC20_YEAST"	"P26309"	"P26309 D6VU31"	"608"	"610"	"21118994 15916961 19362536 12574115"	"alanine scanning; anti tag coimmunoprecipitation; comigration in non denaturing gel electrophoresis; mutation analysis; mutation disrupting interaction; pull down; radiolabel; tandem affinity purification; ubiquitinase assay"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI002491"	"DEG"	"DEG_APCC_TPR_1"	"CDH1_YEAST"	"P53197"	"P53197 D6VUD5"	"564"	"566"	"15916961 19362536 12574115"	"alanine scanning; comigration in non denaturing gel electrophoresis; mutation analysis; mutation disrupting interaction; pull down; radiolabel; tandem affinity purification; ubiquitinase assay"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI002496"	"DEG"	"DEG_APCC_TPR_1"	"CORT_DROME"	"Q960N3"	"Q960N3 Q9VMA1"	"481"	"483"	"18020708"	"coimmunoprecipitation; knock out; western blot"	"true positive"	""	"Drosophila melanogaster"
+"ELMI002488"	"DEG"	"DEG_APCC_TPR_1"	"FZR2_ARATH"	"Q8L3Z8"	"Q8L3Z8 O82740"	"481"	"483"	"17944809"	"interologs; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002489"	"DEG"	"DEG_APCC_TPR_1"	"FZR3_ARATH"	"Q8LPL5"	"Q8LPL5 Q9FFY8"	"479"	"481"	"17944809"	"interologs; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002493"	"DEG"	"DEG_APCC_TPR_1"	"FZR_HUMAN"	"Q9UM11"	"Q9UM11 O75869 Q86U66 Q96NW8 Q9UI96 Q9ULH8 Q9UM10 Q9UNQ1 Q9Y2T8"	"494"	"496"	"15916961 12956947"	"competition binding; cross linking study; mutation analysis; mutation disrupting interaction; pull down; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI002482"	"DEG"	"DEG_APCC_TPR_1"	"KI18A_HUMAN"	"Q8NI77"	"Q8NI77 Q4VPE3 Q86VS5 Q9H0F3"	"896"	"898"	"23288039"	"coimmunoprecipitation; fluorescence microscopy; mutation analysis; mutation disrupting interaction; rna interference; ubiquitinase assay; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI002484"	"DEG"	"DEG_APCC_TPR_1"	"MES1_SCHPO"	"P41005"	"P41005"	"99"	"101"	"22844260"	"sequence based prediction"	"unknown"	""	"Schizosaccharomyces pombe 972h-"
+"ELMI002497"	"DEG"	"DEG_APCC_TPR_1"	"MFR1_SCHPO"	"O94423"	"O94423"	"419"	"421"	"12956947"	"sequence based prediction"	"unknown"	""	"Schizosaccharomyces pombe 972h-"
+"ELMI002481"	"DEG"	"DEG_APCC_TPR_1"	"NEK2_HUMAN"	"P51955"	"P51955 Q53FD6 Q5I1Z9 Q5VXZ1 Q6NZX8 Q7Z634 Q86XH2 Q96QN9"	"443"	"445"	"23288039 16648845"	"coimmunoprecipitation; competition binding; fluorescence microscopy; immunodepleted coimmunoprecipitation; mutation analysis; mutation disrupting interaction; rna interference; ubiquitinase assay; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI002487"	"DEG"	"DEG_APCC_TPR_1"	"Q3E906_ARATH"	"Q3E906"	"Q3E906"	"447"	"449"	"17944809"	"interologs; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002501"	"DEG"	"DEG_APCC_TPR_1"	"Q6UZ79_MEDTR"	"Q6UZ79"	"Q6UZ79"	"469"	"471"	"14742878"	"interologs; sequence based prediction"	"unknown"	""	"Medicago truncatula"
+"ELMI002483"	"DEG"	"DEG_APCC_TPR_1"	"Q9M2R1_ARATH"	"Q9M2R1"	"Q9M2R1"	"241"	"243"	"22844260"	"mutation analysis; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002500"	"DEG"	"DEG_APCC_TPR_1"	"Q9M7I2_MEDTR"	"Q9M7I2"	"Q9M7I2"	"473"	"475"	"14742878"	"mutation analysis; pull down"	"true positive"	""	"Medicago truncatula"
+"ELMI002485"	"DEG"	"DEG_APCC_TPR_1"	"Q9S7I8_ARATH"	"Q9S7I8"	"Q9S7I8"	"445"	"447"	"21687678 17944809"	"interologs; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002486"	"DEG"	"DEG_APCC_TPR_1"	"Q9SZA4_ARATH"	"Q9SZA4"	"Q9SZA4"	"455"	"457"	"21687678 17944809"	"interologs; two hybrid"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI002498"	"DEG"	"DEG_APCC_TPR_1"	"Q9W1F6_DROME"	"Q9W1F6"	"Q9W1F6"	"449"	"451"	"16763193"	"interologs; sequence based prediction"	"unknown"	""	"Drosophila melanogaster"
+"ELMI002502"	"DEG"	"DEG_APCC_TPR_1"	"SLP1_SCHPO"	"P78972"	"P78972"	"486"	"488"	"18082611"	"interologs; sequence based prediction"	"unknown"	""	"Schizosaccharomyces pombe 972h-"
+"ELMI002499"	"DEG"	"DEG_APCC_TPR_1"	"SRW1_SCHPO"	"O13286"	"O13286 A7VJ97"	"554"	"556"	"9736616"	"interologs; sequence based prediction"	"unknown"	""	"Schizosaccharomyces pombe 972h-"

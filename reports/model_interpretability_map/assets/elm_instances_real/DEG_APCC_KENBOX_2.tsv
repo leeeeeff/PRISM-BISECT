@@ -1,0 +1,22 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:11.348216
+#Origin: asimov
+#Type: tsv
+#NumInstances: 16
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI002431"	"DEG"	"DEG_APCC_KENBOX_2"	"ACM1_YEAST"	"Q08981"	"Q08981 D6W3A3"	"97"	"101"	"18596038"	"anti tag coimmunoprecipitation; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI001016"	"DEG"	"DEG_APCC_KENBOX_2"	"AURKB_HUMAN"	"Q96GD4"	"Q96GD4 D3DTR4 O14630 O60446 O95083 Q96DV5 Q9UQ46"	"3"	"7"	"17726374 15923616"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI002601"	"DEG"	"DEG_APCC_KENBOX_2"	"BUB1B_HUMAN"	"O60566"	"O60566 B2R6U0 B4DL09 B4DLG3 O60501 O60627 O60758 O75389 Q59HH6 Q8WV50 Q96KM4"	"25"	"29"	"23091007"	"mutation analysis; pull down; x-ray crystallography"	"true positive"	"4GGD"	"Homo sapiens"
+"ELMI002600"	"DEG"	"DEG_APCC_KENBOX_2"	"BUB1B_HUMAN"	"O60566"	"O60566 B2R6U0 B4DL09 B4DLG3 O60501 O60627 O60758 O75389 Q59HH6 Q8WV50 Q96KM4"	"303"	"307"	"22193957"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001010"	"DEG"	"DEG_APCC_KENBOX_2"	"BUB1_HUMAN"	"O43683"	"O43683 O43430 O43643 O60626"	"534"	"538"	"17158872"	"mutation analysis; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001011"	"DEG"	"DEG_APCC_KENBOX_2"	"BUB1_HUMAN"	"O43683"	"O43683 O43430 O43643 O60626"	"624"	"628"	"17158872"	"mutation analysis; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001006"	"DEG"	"DEG_APCC_KENBOX_2"	"CDC20_HUMAN"	"Q12834"	"Q12834 B2R6Z6 D3DPJ1 Q5JUY4 Q9BW56 Q9UQI9"	"96"	"100"	"10733526"	"alanine scanning; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001009"	"DEG"	"DEG_APCC_KENBOX_2"	"CDC6_HUMAN"	"Q99741"	"Q99741 Q8TB30"	"80"	"84"	"10995389"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001015"	"DEG"	"DEG_APCC_KENBOX_2"	"CDCA5_HUMAN"	"Q96FF9"	"Q96FF9 A8K625"	"87"	"91"	"15837422"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001008"	"DEG"	"DEG_APCC_KENBOX_2"	"CG22_YEAST"	"P24869"	"P24869 D6W4B8"	"99"	"103"	"11719221"	"mutation analysis; western blot"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI001014"	"DEG"	"DEG_APCC_KENBOX_2"	"CIN8_YEAST"	"P27895"	"P27895 D3DLI9"	"931"	"935"	"11694576"	"mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI001017"	"DEG"	"DEG_APCC_KENBOX_2"	"CKAP2_HUMAN"	"Q8WWK9"	"Q8WWK9 A2BDE0 A5YM58 Q3KRA5 Q5VXB4 Q8IWV5 Q8IWV6 Q96FH9 Q9H012 Q9H0D0 Q9H988 Q9HC49 Q9NVG4"	"80"	"84"	"17376772"	"mutation analysis; ubiquitinase assay"	"true positive"	""	"Homo sapiens"
+"ELMI001007"	"DEG"	"DEG_APCC_KENBOX_2"	"HSL1_YEAST"	"P34244"	"P34244 A2NP40 D6VXI6"	"774"	"778"	"11562348"	"coimmunoprecipitation; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI001012"	"DEG"	"DEG_APCC_KENBOX_2"	"MPIP3_HUMAN"	"P30307"	"P30307 D3DQB8 Q96PL3 Q9H168 Q9H2E8 Q9H2E9 Q9H2F1"	"150"	"154"	"11842186"	"competition binding; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001013"	"DEG"	"DEG_APCC_KENBOX_2"	"PTTG1_HUMAN"	"O95997"	"O95997"	"8"	"12"	"11179223"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001720"	"DEG"	"DEG_APCC_KENBOX_2"	"VE1_BPV1"	"P03116"	"P03116 Q9WMH1"	"27"	"31"	"14963168"	"mutation analysis"	"true positive"	""	"Bovine papillomavirus type 1"

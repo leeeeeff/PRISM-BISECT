@@ -1,0 +1,24 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:01.645116
+#Origin: asimov
+#Type: tsv
+#NumInstances: 18
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI001851"	"TRG"	"TRG_NLS_MonoCore_2"	"2B_CMVQ"	"Q66125"	"Q66125"	"21"	"26"	"10747034"	"alanine scanning; confocal microscopy; green fluorescent protein tag; mutation analysis"	"true positive"	""	"Cucumber mosaic virus (strain Q)"
+"ELMI001380"	"TRG"	"TRG_NLS_MonoCore_2"	"APC_HUMAN"	"P25054"	"P25054 D3DT03 Q15162 Q15163 Q93042"	"2048"	"2053"	"11050185"	"colocalization; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001400"	"TRG"	"TRG_NLS_MonoCore_2"	"ATX1_HUMAN"	"P54253"	"P54253 Q17S02 Q9UJG2 Q9Y4J1"	"769"	"774"	"9778246"	"colocalization; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI003922"	"TRG"	"TRG_NLS_MonoCore_2"	"AVRB3_XANEU"	"P14727"	"P14727"	"1103"	"1108"	"8980236"	"fusion protein; mutation analysis; necessary binding site"	"true positive"	""	"Xanthomonas euvesicatoria"
+"ELMI001377"	"TRG"	"TRG_NLS_MonoCore_2"	"BRCA1_HUMAN"	"P38398"	"P38398 O15129 Q3LRJ0 Q7KYU9"	"502"	"507"	"8955125"	"colocalization; mutation analysis; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI002400"	"TRG"	"TRG_NLS_MonoCore_2"	"BRCA1_HUMAN"	"P38398"	"P38398 O15129 Q3LRJ0 Q7KYU9"	"503"	"508"	"8955125"	"colocalization; mutation analysis; two hybrid"	"true positive"	""	"Homo sapiens"
+"ELMI001373"	"TRG"	"TRG_NLS_MonoCore_2"	"E1A_ADE05"	"P03255"	"P03255 P06438 Q64825 Q64826"	"284"	"289"	"3614197"	"colocalization; mutation analysis"	"true positive"	""	"Human adenovirus 5"
+"ELMI002452"	"TRG"	"TRG_NLS_MonoCore_2"	"FBXW7_HUMAN"	"Q969H0"	"Q969H0 B7ZLP9 Q68DR0 Q96A16 Q96LE0 Q96RI2 Q9NUX6"	"10"	"15"	"15498494"	"fluorescence microscopy; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001347"	"TRG"	"TRG_NLS_MonoCore_2"	"JARD2_MOUSE"	"Q62315"	"Q62315 Q3TPU4 Q3UHS7 Q99LD1"	"106"	"111"	"12890668"	"colocalization; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI001359"	"TRG"	"TRG_NLS_MonoCore_2"	"JUN_AVIS1"	"P05411"	"P05411"	"225"	"230"	"1584763"	"colocalization; mutation analysis"	"true positive"	""	"Avian sarcoma virus 17"
+"ELMI001355"	"TRG"	"TRG_NLS_MonoCore_2"	"JUN_CHICK"	"P18870"	"P18870"	"252"	"257"	"1584763"	"colocalization; mutation analysis"	"true positive"	""	"Gallus gallus"
+"ELMI001366"	"TRG"	"TRG_NLS_MonoCore_2"	"LT_POVMA"	"P03073"	"P03073"	"191"	"196"	"3000623"	"colocalization; mutation analysis"	"true positive"	""	"Murine polyomavirus strain A2"
+"ELMI001354"	"TRG"	"TRG_NLS_MonoCore_2"	"LT_SV40"	"P03070"	"P03070"	"127"	"132"	"6096007 12852786"	"colocalization; mutation analysis; x-ray crystallography"	"true positive"	"1Q1T"	"Simian virus 40"
+"ELMI002161"	"TRG"	"TRG_NLS_MonoCore_2"	"MAPK3_HUMAN"	"Q16644"	"Q16644 B5BU67"	"363"	"368"	"11157753"	"coimmunoprecipitation; glutathione s tranferase tag; mutation analysis; pull down"	"true positive"	""	"Homo sapiens"
+"ELMI001854"	"TRG"	"TRG_NLS_MonoCore_2"	"REV_EIAVY"	"P20919"	"P20919"	"158"	"163"	"16571801"	"alanine scanning; competition binding; mutation analysis"	"true positive"	""	"Equine infectious anemia virus (ISOLATE WYOMING)"
+"ELMI001856"	"TRG"	"TRG_NLS_MonoCore_2"	"TAT_HV1H2"	"P04608"	"P04608 O09778"	"49"	"54"	"9430704 9891055"	"affinity chromatography technology; mutation analysis; nuclear translocation assay"	"true positive"	""	"HIV-1 M:B_HXB2R"
+"ELMI001368"	"TRG"	"TRG_NLS_MonoCore_2"	"VP2_POVMA"	"P03096"	"P03096 Q85070"	"314"	"319"	"1333132"	"colocalization; mutation analysis"	"true positive"	""	"Murine polyomavirus strain A2"
+"ELMI001857"	"TRG"	"TRG_NLS_MonoCore_2"	"VPRL_FIVSD"	"P69469"	"P69469 P19033 P69468"	"47"	"52"	"15246256"	"green fluorescent protein tag; mutation analysis"	"true positive"	""	"Feline immunodeficiency virus (isolate San Diego)"

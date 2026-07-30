@@ -1,0 +1,21 @@
+domain_matrix v3 build log
+===========================
+source: /home/welcome1/sw1686/DIFFUSE/hMuscle/data/domain/domain_list.txt
+isoform list: /home/welcome1/sw1686/DIFFUSE/hMuscle/model/my_isoform_list_fixed.npy (36748 entries)
+
+Matching stats:
+  versioned_hit: 35,184
+  base_hit (version-agnostic): 0
+  miss: 14
+  BambuTx hit: 1,243
+  BambuTx miss: 307
+
+Result:
+  With domain: 25,549/36,748 (69.5%)  ← v2 was 37.2%
+  Unique Pfam: 6597
+  Top-512 selected
+
+Files:
+  /home/welcome1/sw1686/DIFFUSE/hMuscle/results_isoform/features/domain_matrix_proper_test_v3.npy
+  /home/welcome1/sw1686/DIFFUSE/hMuscle/results_isoform/features/domain_pfam_vocab_v3.txt
+  /home/welcome1/sw1686/DIFFUSE/hMuscle/results_isoform/features/domain_delta_proper_test_v3.npy

@@ -1,0 +1,17 @@
+{
+  "t30_150M": {
+    "dr_auc": 0.6286517532848077,
+    "n_term_pairs": 3540,
+    "dr_gene_mean_null": 0.5
+  },
+  "prot_t5_xl": {
+    "dr_auc": 0.6258878232553622,
+    "n_term_pairs": 3540,
+    "dr_gene_mean_null": 0.5
+  },
+  "ankh_base": {
+    "dr_auc": 0.6299921743580129,
+    "n_term_pairs": 3540,
+    "dr_gene_mean_null": 0.5
+  }
+}

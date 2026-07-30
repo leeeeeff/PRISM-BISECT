@@ -1,0 +1,2 @@
+cell_type	cluster	subtype	n_total	AD_mean_pct	CT_mean_pct	AC_mean_pct	delta_pct	n_AD	n_CT	MWU_p	sig
+Lymphocyte	29	NK_cell	171	100.0	100.0	100.0	0.0	13	8		ns

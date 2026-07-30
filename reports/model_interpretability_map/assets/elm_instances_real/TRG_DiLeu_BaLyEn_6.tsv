@@ -1,0 +1,24 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:07.309693
+#Origin: asimov
+#Type: tsv
+#NumInstances: 18
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI004289"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"AT2B1_HUMAN"	"P20020"	"P20020 Q12992 Q12993 Q13819 Q13820 Q13821 Q16504 Q93082"	"1157"	"1162"	"16803870"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004290"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"AT2B2_HUMAN"	"Q01814"	"Q01814 O00766 Q12994 Q16818"	"1180"	"1185"	"16803870"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004291"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"CADH1_HUMAN"	"P12830"	"P12830 Q13799 Q14216 Q15855 Q16194 Q4PJ14"	"737"	"742"	"11312273"	"confocal microscopy; fusion protein; mutation analysis"	"unknown"	""	"Homo sapiens"
+"ELMI004295"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"CASR_HUMAN"	"P41180"	"P41180 Q13912 Q16108 Q16109 Q16110 Q16379 Q2M1T0 Q4PJ19"	"1009"	"1014"	"23222959"	"elisa; fluorescence technology; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004293"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"CD4_HUMAN"	"P01730"	"P01730 B2R737 D3DUS5 Q4ZGK2 Q5U066 Q9UDE5"	"434"	"439"	"19140243 10069811"	"functional association; mutation analysis; phenotype-based detection assay; radiolabel; surface plasmon resonance; x-ray crystallography"	"true positive"	"2JKR"	"Homo sapiens"
+"ELMI004285"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"IL6RB_HUMAN"	"P40189"	"P40189 A0N0L4 Q9UQ41"	"782"	"787"	"16274960"	"monoclonal antibody western blot; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004287"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"LRFN2_HUMAN"	"Q9ULH4"	"Q9ULH4 A5PKU3 Q5SYP9"	"694"	"699"	"22174418"	"confocal microscopy; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004296"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"NOTC1_MOUSE"	"Q01705"	"Q01705 Q06007 Q3TZW2 Q3U3Y2 Q61905 Q7TQ50 Q7TQ51 Q7TQ52 Q8K428 Q99JC2 Q9QW58 Q9R0X7"	"2098"	"2103"	"23171551"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI004300"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"NRAM4_ARATH"	"Q9FN18"	"Q9FN18 Q0WWH0 Q9SNV8"	"6"	"11"	"29573093"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI004294"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"OPRD_HUMAN"	"P41143"	"P41143 B5B0B8"	"241"	"246"	"12851402"	"confocal microscopy; fusion protein; mutation analysis"	"unknown"	""	"Homo sapiens"
+"ELMI004292"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"Q91CB6_ADE09"	"Q91CB6"	"Q91CB6"	"400"	"405"	"26841862"	"confocal microscopy; mutation analysis; radiolabel"	"unknown"	""	"Human adenovirus 9"
+"ELMI004288"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"S12A2_HUMAN"	"P55011"	"P55011 Q8N713 Q8WWH7"	"985"	"990"	"18667527"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004297"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"S17A5_HUMAN"	"Q9NRA2"	"Q9NRA2 Q5SZ76 Q8NBR5 Q9UGH0"	"18"	"23"	"15510212"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI004299"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"SNA4_YEAST"	"Q07549"	"Q07549 D6VRM7"	"114"	"119"	"19168755"	"fluorescence microscopy; fusion protein; mutation analysis"	"true positive"	""	"Saccharomyces cerevisiae S288c"
+"ELMI004301"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"TDT_ARATH"	"Q8LG88"	"Q8LG88 Q9FEH9 Q9FGK1 Q9MAW4"	"14"	"19"	"21815974"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI004302"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"TPC1_ARATH"	"Q94KI8"	"Q94KI8 Q948T1 Q9ZT83"	"1"	"6"	"22490017"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Arabidopsis thaliana"
+"ELMI004286"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"TPC1_MOUSE"	"Q9EQJ0"	"Q9EQJ0 Q3V2Z6 Q6ZPW5"	"7"	"12"	"22490017"	"confocal microscopy; fusion protein; mutation analysis"	"true positive"	""	"Mus musculus"
+"ELMI004298"	"TRG"	"TRG_DiLeu_BaLyEn_6"	"TYRP1_HUMAN"	"P17643"	"P17643 P78468 P78469 Q13721 Q15679"	"510"	"515"	"7642699"	"confocal microscopy; electron microscopy; fusion protein"	"true positive"	""	"Homo sapiens"

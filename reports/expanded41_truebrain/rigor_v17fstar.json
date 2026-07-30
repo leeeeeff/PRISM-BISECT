@@ -1,0 +1,28 @@
+{
+  "arch": "v17fstar",
+  "n_go": 41,
+  "macro_auprc": 0.6228029323553896,
+  "macro_auprc_gene_mean_oracle": 0.7398949738207087,
+  "pos_bias_n_sig_q05": 41,
+  "pos_bias_n_evaluable": 41,
+  "domain_ranking_auc": {
+    "v17fstar": {
+      "auc": 0.8047409086291981,
+      "n_pairs": 2409,
+      "bootstrap_mean": 0.8046934848830549,
+      "bootstrap_ci_lo": 0.7935862851324154,
+      "bootstrap_ci_hi": 0.8167191557049504
+    },
+    "gene_mean_oracle": {
+      "auc": 0.5,
+      "n_pairs": 2409,
+      "bootstrap_mean": 0.5,
+      "bootstrap_ci_lo": 0.5,
+      "bootstrap_ci_hi": 0.5
+    },
+    "random": {
+      "auc": 0.48642378032767325,
+      "n_pairs": 2409
+    }
+  }
+}

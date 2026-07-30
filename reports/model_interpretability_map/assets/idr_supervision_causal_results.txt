@@ -1,0 +1,4 @@
+n=499 genes=465 pos=180 neg=319
+comp=0.5707 pooled=0.5971 editcore=0.5560 oracle=0.6357 comp+oracle=0.5982
+editcore-oracle=-0.0797
+null_mean=0.6026 null_sd=0.0147 z=-3.17

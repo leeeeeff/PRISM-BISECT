@@ -1,0 +1,39 @@
+{
+  "n": 282,
+  "subset": "clean internal (both edited regions non-empty)",
+  "prediction": "H_gap: no proxy aligns (internal stays undescribable)",
+  "disorder": {
+    "raw": {
+      "rho": -0.0011967902582931838,
+      "p": 0.9840367784958495
+    },
+    "partial_len": {
+      "rho": -0.023258008594165238,
+      "p": 0.6978755024074126
+    }
+  },
+  "net_charge": {
+    "raw": {
+      "rho": -0.1428913377393546,
+      "p": 0.01634006105804116
+    },
+    "partial_len": {
+      "rho": -0.13108516015283644,
+      "p": 0.028014616461847556
+    }
+  },
+  "hydrophobicity": {
+    "raw": {
+      "rho": -0.12468103653327345,
+      "p": 0.036382812237403236
+    },
+    "partial_len": {
+      "rho": -0.12240705106550237,
+      "p": 0.040316970083885594
+    }
+  },
+  "proj_vs_dLen": {
+    "rho": 0.3737560846904525,
+    "p": 8.867624627308825e-11
+  }
+}

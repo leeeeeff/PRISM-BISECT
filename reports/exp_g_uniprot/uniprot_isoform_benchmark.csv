@@ -1,0 +1,46 @@
+gene,accession,iso_a,iso_b,go_term,direction,evidence,domain,note
+EGFR,P00533,P00533-1,P00533-4,GO_0004714,A_only,experimental_lit,curated,
+FGFR1,P11362,P11362-1,P11362-11,GO_0005007,A_only,experimental_lit,curated,
+NTRK1,P04629,P04629-1,P04629-2,GO_0004714,A_only,experimental_lit,curated,
+VEGFR2,P35968,P35968-1,P35968-2,GO_0004714,A_only,experimental_lit,curated,
+CDK4,P11802,P11802-1,P11802-2,GO_0004693,A_only,experimental_lit,curated,
+BCL2,P10415,P10415-1,P10415-2,GO_0097553,A_only,experimental_lit,curated,
+MCL1,Q07820,Q07820-1,Q07820-2,GO_0097553,B_only,experimental_lit,curated,
+BCL2L1,Q07817,Q07817-1,Q07817-2,GO_0046982,A_only,experimental_lit,curated,BCL-xL (iso1) has BH4+BH3+BH1+BH2 domains; BCL-xS (iso2) lacks BH4+BH1 — BCL-xL has broader heterodimerization capacity with BAX/BAK
+CASP9,P55211,P55211-1,P55211-2,GO_0004197,A_only,experimental_lit,curated,
+BRCA1,P38398,P38398-1,P38398-2,GO_0006281,A_only,experimental_lit,curated,
+TP53,P04637,P04637-1,P04637-9,GO_0006977,A_only,experimental_lit,curated,
+CDKN2A,P42771,P42771-1,P42771-2,GO_0008285,A_only,experimental_lit,curated,
+CDKN2A,P42771,P42771-2,P42771-1,GO_0006977,B_only,experimental_lit,curated,
+VEGFA,P15692,P15692-1,P15692-7,GO_0005178,A_only,experimental_lit,curated,
+IGF1,P05019,P05019-1,P05019-2,GO_0005158,A_only,experimental_lit,curated,
+FGF2,P09038,P09038-1,P09038-4,GO_0008083,both,experimental_lit,curated,
+PCBP1,Q15365,Q15365-1,Q15365-2,GO_0003723,A_only,experimental_lit,curated,
+HNRNPA1,P09651,P09651-1,P09651-2,GO_0003729,A_only,experimental_lit,curated,
+SRSF1,Q07955,Q07955-1,Q07955-3,GO_0000398,A_only,experimental_lit,curated,
+RBFOX1,O43251,O43251-1,O43251-3,GO_0000398,A_only,experimental_lit,curated,
+RUNX1,Q01196,Q01196-1,Q01196-2,GO_0006357,A_only,experimental_lit,curated,
+TP63,Q9H3D4,Q9H3D4-1,Q9H3D4-5,GO_0006357,A_only,experimental_lit,curated,
+TP73,O15350,O15350-1,O15350-3,GO_0006977,A_only,experimental_lit,curated,
+ACTN1,P12814,P12814-1,P12814-2,GO_0005200,A_only,experimental_lit,curated,
+FLNB,O75369,O75369-1,O75369-5,GO_0005200,A_only,experimental_lit,curated,
+APP,P05067,P05067-1,P05067-7,GO_0005178,A_only,experimental_lit,curated,
+MAPT,P10636,P10636-1,P10636-5,GO_0008017,A_only,experimental_lit,curated,
+PARK2,O60260,O60260-1,O60260-3,GO_0004842,A_only,experimental_lit,curated,
+DLG4,P78352,P78352-1,P78352-2,GO_0007399,A_only,experimental_lit,curated,
+SNAP25,P60880,P60880-1,P60880-2,GO_0016079,A_only,experimental_lit,curated,
+FLT1,P17948,P17948-1,P17948-2,GO_0004714,A_only,experimental_lit,curated,sFLT1 (iso2) is soluble decoy lacking TK domain; analogous to sVEGFR2
+NTRK2,P15209,P15209-1,P15209-2,GO_0004714,A_only,experimental_lit,curated,TrkB-T1 (iso2) lacks intracellular kinase domain
+NTRK3,Q16288,Q16288-1,Q16288-2,GO_0004714,A_only,experimental_lit,curated,TrkC-T1 (iso2) lacks C-terminal kinase domain (residues 613-839 missing; 227aa truncation)
+AXL,P30530,P30530-1,P30530-2,GO_0004714,A_only,experimental_lit,curated,sAXL (iso2) is soluble extracellular ectodomain only
+MDM2,Q00987,Q00987-1,Q00987-2,GO_0004842,A_only,experimental_lit,curated,MDM2 iso2 lacks RING domain; no ubiquitin ligase activity toward p53
+WT1,P19544,P19544-3,P19544-4,GO_0003677,A_only,experimental_lit,curated,-KTS (iso3) has stronger dsDNA binding; +KTS (iso4) shifts to RNA binding
+CEBPA,P49715,P49715-1,P49715-2,GO_0003700,A_only,experimental_lit,curated,p42 (iso1) has both TA domains; p30 (iso2) lacks TA1 domain
+TIA1,P31483,P31483-1,P31483-2,GO_0003723,A_only,experimental_lit,curated,TIA1 iso2 lacks RRM3; reduced RNA binding affinity
+PTBP1,P26599,P26599-1,P26599-2,GO_0003723,A_only,experimental_lit,curated,PTBP1 iso2 (PTB4) lacks RRM2; altered RNA binding specificity
+ERBB4,Q15303,Q15303-1,Q15303-8,GO_0004714,A_only,experimental_lit,curated,ErbB4 iso8 lacks kinase domain
+FGFR2,P21802,P21802-1,P21802-14,GO_0004714,A_only,experimental_lit,curated,FGFR2 iso14 is soluble secreted form lacking kinase
+KIT,P10721,P10721-1,P10721-2,GO_0004714,A_only,experimental_lit,curated,KIT iso2 has internal deletion in kinase domain activation loop
+RUNX2,Q13950,Q13950-1,Q13950-2,GO_0003700,A_only,experimental_lit,curated,RUNX2 iso1 (MASNS) has both TA+Runt; iso2 (MRIPV) lacks N-terminal TA region
+HIF1A,Q16665,Q16665-1,Q16665-2,GO_0003700,A_only,experimental_lit,curated,HIF1A iso2 lacks C-terminal TAD; reduced transcription activation
+BIRC5,O15392,O15392-1,O15392-3,GO_0005515,B_only,experimental_lit,curated,Survivin-2B (iso3) has extended loop altering BIR-domain protein binding

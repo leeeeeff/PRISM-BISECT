@@ -1,0 +1,882 @@
+{
+  "pilot_N": 15000,
+  "n_bundles": 32,
+  "n_candidates": 640,
+  "unique_side_branch_genes": 135,
+  "enrichment": {
+    "uniprot": {
+      "n_hit": 2,
+      "n_side": 135,
+      "n_ref_in_pilot": 29,
+      "odds_ratio": 3.2698412698412698,
+      "p": 0.13657729440416674
+    },
+    "bisect": {
+      "n_hit": 0,
+      "n_side": 135,
+      "n_ref_in_pilot": 7,
+      "odds_ratio": 0.0,
+      "p": 1.0
+    },
+    "target": {
+      "n_hit": 0,
+      "n_side": 135,
+      "n_ref_in_pilot": 8,
+      "odds_ratio": 0.0,
+      "p": 1.0
+    },
+    "combined": {
+      "n_hit": 2,
+      "n_side": 135,
+      "n_ref_in_pilot": 44,
+      "odds_ratio": 2.096670247046187,
+      "p": 0.25843677845503366
+    }
+  },
+  "per_type": {
+    "mid": {
+      "n": 180,
+      "any_known": 4
+    },
+    "flat": {
+      "n": 300,
+      "any_known": 3
+    },
+    "late": {
+      "n": 100,
+      "any_known": 2
+    },
+    "early": {
+      "n": 60,
+      "any_known": 0
+    }
+  },
+  "top50": [
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 1,
+      "iso": "ENST00000634348.1",
+      "gene": "SRSF4",
+      "sb_score": 13.7664213180542,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 2,
+      "iso": "ENST00000691479.1",
+      "gene": "SRSF4",
+      "sb_score": 13.7664213180542,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 3,
+      "iso": "ENST00000691479.1",
+      "gene": "SRSF4",
+      "sb_score": 13.7664213180542,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 4,
+      "iso": "ENST00000485841.5",
+      "gene": "SRSF10",
+      "sb_score": 12.239002227783203,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 5,
+      "iso": "ENST00000373795.7",
+      "gene": "SRSF4",
+      "sb_score": 10.99866771697998,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 6,
+      "iso": "ENST00000555547.5",
+      "gene": "SRSF5",
+      "sb_score": 10.07573413848877,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 7,
+      "iso": "ENST00000555547.5",
+      "gene": "SRSF5",
+      "sb_score": 10.07573413848877,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 8,
+      "iso": "ENST00000301730.12",
+      "gene": "RNPS1",
+      "sb_score": 9.028623580932617,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 9,
+      "iso": "ENST00000568631.5",
+      "gene": "RNPS1",
+      "sb_score": 9.028623580932617,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 10,
+      "iso": "ENST00000320225.10",
+      "gene": "RNPS1",
+      "sb_score": 9.028623580932617,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 11,
+      "iso": "ENST00000397086.6",
+      "gene": "RNPS1",
+      "sb_score": 9.028623580932617,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 12,
+      "iso": "ENST00000566458.5",
+      "gene": "RNPS1",
+      "sb_score": 8.729424476623535,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 13,
+      "iso": "ENST00000687381.1",
+      "gene": "SRSF11",
+      "sb_score": 8.720672607421875,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 14,
+      "iso": "ENST00000687381.1",
+      "gene": "SRSF11",
+      "sb_score": 8.720672607421875,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 15,
+      "iso": "ENST00000484162.5",
+      "gene": "SRSF11",
+      "sb_score": 8.59109115600586,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 16,
+      "iso": "ENST00000324170.7",
+      "gene": "ZCCHC10",
+      "sb_score": 8.39797306060791,
+      "peak_layer": 6,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0007015",
+      "go_name": "Actin filament org",
+      "cluster": 0,
+      "rank": 1,
+      "iso": "ENST00000648200.2",
+      "gene": "LINC00632",
+      "sb_score": 8.303566932678223,
+      "peak_layer": 26,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0007015",
+      "go_name": "Actin filament org",
+      "cluster": 0,
+      "rank": 2,
+      "iso": "ENST00000658451.1",
+      "gene": "LINC00632",
+      "sb_score": 8.303566932678223,
+      "peak_layer": 26,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0030048",
+      "go_name": "Actin-based movement",
+      "cluster": 0,
+      "rank": 1,
+      "iso": "ENST00000648200.2",
+      "gene": "LINC00632",
+      "sb_score": 8.303566932678223,
+      "peak_layer": 26,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0030048",
+      "go_name": "Actin-based movement",
+      "cluster": 0,
+      "rank": 2,
+      "iso": "ENST00000658451.1",
+      "gene": "LINC00632",
+      "sb_score": 8.303566932678223,
+      "peak_layer": 26,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0045214",
+      "go_name": "Sarcomere organization",
+      "cluster": 0,
+      "rank": 1,
+      "iso": "ENST00000648200.2",
+      "gene": "LINC00632",
+      "sb_score": 8.303566932678223,
+      "peak_layer": 26,
+      "is_go_pos": false,
+      "type": "early"
+    },
+    {
+      "go": "GO:0045214",
+      "go_name": "Sarcomere organization",
+      "cluster": 0,
+      "rank": 2,
+      "iso": "ENST00000658451.1",
+      "gene": "LINC00632",
+      "sb_score": 8.303566932678223,
+      "peak_layer": 26,
+      "is_go_pos": false,
+      "type": "early"
+    },
+    {
+      "go": "GO:0035556",
+      "go_name": "Intracellular signal",
+      "cluster": 4,
+      "rank": 1,
+      "iso": "ENST00000465376.7",
+      "gene": "JAK1",
+      "sb_score": 8.0294771194458,
+      "peak_layer": 23,
+      "is_go_pos": true,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0000165",
+      "go_name": "MAPK cascade",
+      "cluster": 4,
+      "rank": 1,
+      "iso": "ENST00000465376.7",
+      "gene": "JAK1",
+      "sb_score": 8.0294771194458,
+      "peak_layer": 23,
+      "is_go_pos": true,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0007265",
+      "go_name": "Ras signaling",
+      "cluster": 4,
+      "rank": 1,
+      "iso": "ENST00000465376.7",
+      "gene": "JAK1",
+      "sb_score": 8.0294771194458,
+      "peak_layer": 23,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0006470",
+      "go_name": "Dephosphorylation",
+      "cluster": 4,
+      "rank": 1,
+      "iso": "ENST00000465376.7",
+      "gene": "JAK1",
+      "sb_score": 8.0294771194458,
+      "peak_layer": 23,
+      "is_go_pos": false,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 17,
+      "iso": "ENST00000466448.4",
+      "gene": "SRSF4",
+      "sb_score": 7.752639293670654,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006417",
+      "go_name": "Regulation of translation",
+      "cluster": 15,
+      "rank": 1,
+      "iso": "ENST00000262126.9",
+      "gene": "ANKRD12",
+      "sb_score": 7.725759983062744,
+      "peak_layer": 1,
+      "is_go_pos": false,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0032465",
+      "go_name": "Cytokinesis",
+      "cluster": 15,
+      "rank": 1,
+      "iso": "ENST00000262126.9",
+      "gene": "ANKRD12",
+      "sb_score": 7.725759983062744,
+      "peak_layer": 1,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006402",
+      "go_name": "mRNA catabolism",
+      "cluster": 8,
+      "rank": 1,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006402",
+      "go_name": "mRNA catabolism",
+      "cluster": 8,
+      "rank": 2,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006418",
+      "go_name": "tRNA aminoacylation",
+      "cluster": 8,
+      "rank": 1,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0006418",
+      "go_name": "tRNA aminoacylation",
+      "cluster": 8,
+      "rank": 2,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0006754",
+      "go_name": "ATP biosynthesis",
+      "cluster": 8,
+      "rank": 1,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0006754",
+      "go_name": "ATP biosynthesis",
+      "cluster": 8,
+      "rank": 2,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0006635",
+      "go_name": "FA beta-oxidation",
+      "cluster": 8,
+      "rank": 1,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0006635",
+      "go_name": "FA beta-oxidation",
+      "cluster": 8,
+      "rank": 2,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0006096",
+      "go_name": "Glycolysis",
+      "cluster": 8,
+      "rank": 1,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006096",
+      "go_name": "Glycolysis",
+      "cluster": 8,
+      "rank": 2,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006099",
+      "go_name": "TCA cycle",
+      "cluster": 8,
+      "rank": 1,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006099",
+      "go_name": "TCA cycle",
+      "cluster": 8,
+      "rank": 2,
+      "iso": "ENST00000318217.10",
+      "gene": "MYO1D",
+      "sb_score": 7.662555694580078,
+      "peak_layer": 14,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 18,
+      "iso": "ENST00000470472.5",
+      "gene": "SFPQ",
+      "sb_score": 7.496736526489258,
+      "peak_layer": 5,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0043161",
+      "go_name": "Proteasome-UPS",
+      "cluster": 3,
+      "rank": 1,
+      "iso": "ENST00000342272.3",
+      "gene": "JPH2",
+      "sb_score": 7.423740386962891,
+      "peak_layer": 6,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 19,
+      "iso": "ENST00000323848.14",
+      "gene": "SRRM1",
+      "sb_score": 7.298612594604492,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0000398",
+      "go_name": "mRNA splicing",
+      "cluster": 14,
+      "rank": 20,
+      "iso": "ENST00000705681.1",
+      "gene": "SRRM1",
+      "sb_score": 7.292757511138916,
+      "peak_layer": 1,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006508",
+      "go_name": "Proteolysis",
+      "cluster": 1,
+      "rank": 1,
+      "iso": "ENST00000532234.5",
+      "gene": "PRSS23",
+      "sb_score": 7.209253311157227,
+      "peak_layer": 12,
+      "is_go_pos": true,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0005975",
+      "go_name": "Carbohydrate metabolism",
+      "cluster": 1,
+      "rank": 1,
+      "iso": "ENST00000532234.5",
+      "gene": "PRSS23",
+      "sb_score": 7.209253311157227,
+      "peak_layer": 12,
+      "is_go_pos": false,
+      "type": "late"
+    },
+    {
+      "go": "GO:0006816",
+      "go_name": "Ca2+ transport",
+      "cluster": 1,
+      "rank": 1,
+      "iso": "ENST00000532234.5",
+      "gene": "PRSS23",
+      "sb_score": 7.209253311157227,
+      "peak_layer": 12,
+      "is_go_pos": false,
+      "type": "mid"
+    },
+    {
+      "go": "GO:0006486",
+      "go_name": "Protein glycosylation",
+      "cluster": 1,
+      "rank": 1,
+      "iso": "ENST00000532234.5",
+      "gene": "PRSS23",
+      "sb_score": 7.209253311157227,
+      "peak_layer": 12,
+      "is_go_pos": false,
+      "type": "flat"
+    },
+    {
+      "go": "GO:0006836",
+      "go_name": "Neurotransmitter transp",
+      "cluster": 1,
+      "rank": 1,
+      "iso": "ENST00000532234.5",
+      "gene": "PRSS23",
+      "sb_score": 7.209253311157227,
+      "peak_layer": 12,
+      "is_go_pos": false,
+      "type": "flat"
+    }
+  ],
+  "bundle_map": {
+    "GO:0035556": {
+      "cluster": 4,
+      "ratio": 3.8453389830508473,
+      "frac": 0.3076271186440678,
+      "n_members": 1180,
+      "K_pos": 1200
+    },
+    "GO:0006508": {
+      "cluster": 1,
+      "ratio": 2.9912122577737716,
+      "frac": 0.13958990536277602,
+      "n_members": 1268,
+      "K_pos": 700
+    },
+    "GO:0043161": {
+      "cluster": 3,
+      "ratio": 4.6638384229218035,
+      "frac": 0.38367844092570036,
+      "n_members": 821,
+      "K_pos": 1234
+    },
+    "GO:0000226": {
+      "cluster": 12,
+      "ratio": 7.287997362439049,
+      "frac": 0.48635235732009924,
+      "n_members": 403,
+      "K_pos": 1001
+    },
+    "GO:0005975": {
+      "cluster": 1,
+      "ratio": 3.4167390127128474,
+      "frac": 0.167192429022082,
+      "n_members": 1268,
+      "K_pos": 734
+    },
+    "GO:0055074": {
+      "cluster": 9,
+      "ratio": 4.084880917128474,
+      "frac": 0.16775244299674266,
+      "n_members": 614,
+      "K_pos": 616
+    },
+    "GO:0000165": {
+      "cluster": 4,
+      "ratio": 3.4308838191308433,
+      "frac": 0.19830508474576272,
+      "n_members": 1180,
+      "K_pos": 867
+    },
+    "GO:0000398": {
+      "cluster": 14,
+      "ratio": 11.942057756133876,
+      "frac": 0.7380191693290735,
+      "n_members": 313,
+      "K_pos": 927
+    },
+    "GO:0006417": {
+      "cluster": 15,
+      "ratio": 2.611284654431863,
+      "frac": 0.1371794871794872,
+      "n_members": 780,
+      "K_pos": 788
+    },
+    "GO:0007015": {
+      "cluster": 0,
+      "ratio": 4.110203268234356,
+      "frac": 0.15865384615384615,
+      "n_members": 208,
+      "K_pos": 579
+    },
+    "GO:0007204": {
+      "cluster": 9,
+      "ratio": 7.372357034095947,
+      "frac": 0.16612377850162866,
+      "n_members": 614,
+      "K_pos": 338
+    },
+    "GO:0007059": {
+      "cluster": 12,
+      "ratio": 3.86491830458917,
+      "frac": 0.1141439205955335,
+      "n_members": 403,
+      "K_pos": 443
+    },
+    "GO:0007265": {
+      "cluster": 4,
+      "ratio": 4.503398018504872,
+      "frac": 0.1864406779661017,
+      "n_members": 1180,
+      "K_pos": 621
+    },
+    "GO:0007018": {
+      "cluster": 12,
+      "ratio": 5.102183065213149,
+      "frac": 0.1513647642679901,
+      "n_members": 403,
+      "K_pos": 445
+    },
+    "GO:0006816": {
+      "cluster": 1,
+      "ratio": 3.4353090669996083,
+      "frac": 0.09779179810725552,
+      "n_members": 1268,
+      "K_pos": 427
+    },
+    "GO:0006888": {
+      "cluster": 12,
+      "ratio": 2.4355921195063863,
+      "frac": 0.0967741935483871,
+      "n_members": 403,
+      "K_pos": 596
+    },
+    "GO:0006402": {
+      "cluster": 8,
+      "ratio": 2.012430975337572,
+      "frac": 0.07070340826686004,
+      "n_members": 2758,
+      "K_pos": 527
+    },
+    "GO:0006486": {
+      "cluster": 1,
+      "ratio": 5.7728706624605675,
+      "frac": 0.1443217665615142,
+      "n_members": 1268,
+      "K_pos": 375
+    },
+    "GO:0006914": {
+      "cluster": 11,
+      "ratio": 2.3801433535498595,
+      "frac": 0.07410179640718563,
+      "n_members": 1336,
+      "K_pos": 467
+    },
+    "GO:0006470": {
+      "cluster": 4,
+      "ratio": 3.1999843425842567,
+      "frac": 0.0923728813559322,
+      "n_members": 1180,
+      "K_pos": 433
+    },
+    "GO:0006836": {
+      "cluster": 1,
+      "ratio": 4.73186119873817,
+      "frac": 0.06782334384858044,
+      "n_members": 1268,
+      "K_pos": 215
+    },
+    "GO:0006414": {
+      "cluster": 6,
+      "ratio": 6.643970725325889,
+      "frac": 0.09257265877287406,
+      "n_members": 929,
+      "K_pos": 209
+    },
+    "GO:0030048": {
+      "cluster": 0,
+      "ratio": 6.229235880398671,
+      "frac": 0.125,
+      "n_members": 208,
+      "K_pos": 301
+    },
+    "GO:0032465": {
+      "cluster": 15,
+      "ratio": 3.06577480490524,
+      "frac": 0.04230769230769231,
+      "n_members": 780,
+      "K_pos": 207
+    },
+    "GO:0006906": {
+      "cluster": 11,
+      "ratio": 5.569569522372577,
+      "frac": 0.04715568862275449,
+      "n_members": 1336,
+      "K_pos": 127
+    },
+    "GO:0006418": {
+      "cluster": 8,
+      "ratio": 4.418963016678753,
+      "frac": 0.03299492385786802,
+      "n_members": 2758,
+      "K_pos": 112
+    },
+    "GO:0006754": {
+      "cluster": 8,
+      "ratio": 3.811076470308009,
+      "frac": 0.03480783176214648,
+      "n_members": 2758,
+      "K_pos": 137
+    },
+    "GO:0006635": {
+      "cluster": 8,
+      "ratio": 4.527205772136719,
+      "frac": 0.05402465554749819,
+      "n_members": 2758,
+      "K_pos": 179
+    },
+    "GO:0006120": {
+      "cluster": 6,
+      "ratio": 4.613255420575119,
+      "frac": 0.02583423035522067,
+      "n_members": 929,
+      "K_pos": 84
+    },
+    "GO:0045214": {
+      "cluster": 0,
+      "ratio": 7.211538461538462,
+      "frac": 0.0625,
+      "n_members": 208,
+      "K_pos": 130
+    },
+    "GO:0006096": {
+      "cluster": 8,
+      "ratio": 4.460975629629027,
+      "frac": 0.026468455402465556,
+      "n_members": 2758,
+      "K_pos": 89
+    },
+    "GO:0006099": {
+      "cluster": 8,
+      "ratio": 4.269652260543669,
+      "frac": 0.030456852791878174,
+      "n_members": 2758,
+      "K_pos": 107
+    }
+  }
+}

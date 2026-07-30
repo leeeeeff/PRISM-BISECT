@@ -1,0 +1,94 @@
+{
+  "n_observed_pairs": 104,
+  "n_caseA": 40,
+  "n_caseB": 64,
+  "manual_headline_rate": 0.22115384615384615,
+  "observed_primary_rate": 0.0673076923076923,
+  "observed_primary_count": 7,
+  "observed_reg_rate": 0.08653846153846154,
+  "observed_reg_count": 9,
+  "observed_loose_rate": 0.7692307692307693,
+  "observed_loose_count": 80,
+  "B_resample": 2000,
+  "result_primary": {
+    "observed": 0.0673076923076923,
+    "null_mean": 0.0048125,
+    "null_sd": 0.006677265854614215,
+    "null_ci": [
+      0.0,
+      0.019230769230769232
+    ],
+    "lift": 13.986013986013985,
+    "z": 9.35939854251962,
+    "p_emp": 0.0004997501249375312
+  },
+  "result_reg": {
+    "observed": 0.08653846153846154,
+    "null_mean": 0.009302884615384616,
+    "null_sd": 0.009161890952504047,
+    "null_ci": [
+      0.0,
+      0.028846153846153848
+    ],
+    "lift": 9.302325581395348,
+    "z": 8.430091268655362,
+    "p_emp": 0.0004997501249375312
+  },
+  "result_loose": {
+    "observed": 0.7692307692307693,
+    "null_mean": 0.6417355769230769,
+    "null_sd": 0.0441258052154238,
+    "null_ci": [
+      0.5576923076923077,
+      0.7307692307692307
+    ],
+    "lift": 1.1986724702392102,
+    "z": 2.889356730948164,
+    "p_emp": 0.0014992503748125937
+  },
+  "verdict": "ENRICHED -> Table 1 stays MAIN",
+  "observed_supported_primary": [
+    {
+      "case": "A",
+      "gene": "DYNC2I2",
+      "go": "GO:0007018",
+      "name": "MT-based movement"
+    },
+    {
+      "case": "A",
+      "gene": "HACE1",
+      "go": "GO:0043161",
+      "name": "Proteasome-UPS"
+    },
+    {
+      "case": "A",
+      "gene": "DNAAF11",
+      "go": "GO:0000226",
+      "name": "MT cytoskeleton org"
+    },
+    {
+      "case": "A",
+      "gene": "FBXO38",
+      "go": "GO:0043161",
+      "name": "Proteasome-UPS"
+    },
+    {
+      "case": "A",
+      "gene": "TAFAZZIN",
+      "go": "GO:0007005",
+      "name": "Mitochondrion org"
+    },
+    {
+      "case": "B",
+      "gene": "CCL2",
+      "go": "GO:0055074",
+      "name": "Ca2+ homeostasis"
+    },
+    {
+      "case": "B",
+      "gene": "PKP2",
+      "go": "GO:0007268",
+      "name": "Synaptic transmission"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "centroid_sim_macro_AUPRC": 0.09909982712508843,
+  "v17f_star_macro_AUPRC_sanity": 0.7342647055270506,
+  "n_terms": 81,
+  "reference": {
+    "knn_retrieval": 0.636,
+    "gene_mean_retrieval": 0.465,
+    "v17f_star_manuscript": 0.734,
+    "centroid_DR_AUC": 0.638,
+    "prism_DR_AUC": 0.63
+  }
+}

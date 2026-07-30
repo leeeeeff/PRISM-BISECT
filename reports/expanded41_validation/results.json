@@ -1,0 +1,810 @@
+{
+  "model": "prism_v15d_expanded41",
+  "n_go": 41,
+  "n_brain_isoforms": 63994,
+  "macro_auprc_prism": 0.6724372287337024,
+  "macro_auprc_gene_mean_oracle": 0.8126994127867685,
+  "per_term_auprc": {
+    "GO:0007204": {
+      "name": "positive regulation of cytosolic calcium ion concentration",
+      "source": "existing_18",
+      "auprc_prism": 0.5984515737656023,
+      "auprc_oracle": 0.678070194480052,
+      "n_pos_te": 551
+    },
+    "GO:0045214": {
+      "name": "Sarcomere organization",
+      "source": "existing_18",
+      "auprc_prism": 0.6969945022163978,
+      "auprc_oracle": 0.836656391669603,
+      "n_pos_te": 108
+    },
+    "GO:0006941": {
+      "name": "striated muscle contraction",
+      "source": "existing_18",
+      "auprc_prism": 0.5911596443104575,
+      "auprc_oracle": 0.7540964172506749,
+      "n_pos_te": 593
+    },
+    "GO:0006914": {
+      "name": "autophagy",
+      "source": "existing_18",
+      "auprc_prism": 0.5571599857996288,
+      "auprc_oracle": 0.7283779957584571,
+      "n_pos_te": 780
+    },
+    "GO:0043161": {
+      "name": "proteasome-mediated ubiquitin-dependent protein catabolic process",
+      "source": "existing_18",
+      "auprc_prism": 0.6888206317135406,
+      "auprc_oracle": 0.8371170769410925,
+      "n_pos_te": 1822
+    },
+    "GO:0007519": {
+      "name": "Skeletal muscle dev",
+      "source": "existing_18",
+      "auprc_prism": 0.6330445687706809,
+      "auprc_oracle": 0.8542224647746488,
+      "n_pos_te": 199
+    },
+    "GO:0042692": {
+      "name": "Muscle cell diff",
+      "source": "existing_18",
+      "auprc_prism": 0.5733811070875593,
+      "auprc_oracle": 0.7031476633156303,
+      "n_pos_te": 482
+    },
+    "GO:0055074": {
+      "name": "calcium ion homeostasis",
+      "source": "existing_18",
+      "auprc_prism": 0.5975828595095708,
+      "auprc_oracle": 0.7162713832249277,
+      "n_pos_te": 1007
+    },
+    "GO:0007005": {
+      "name": "mitochondrion organization",
+      "source": "existing_18",
+      "auprc_prism": 0.5587392523643507,
+      "auprc_oracle": 0.6957452150808617,
+      "n_pos_te": 1591
+    },
+    "GO:0007517": {
+      "name": "muscle organ development",
+      "source": "existing_18",
+      "auprc_prism": 0.6393483207416598,
+      "auprc_oracle": 0.7913497921665158,
+      "n_pos_te": 520
+    },
+    "GO:0032006": {
+      "name": "TOR signaling",
+      "source": "existing_18",
+      "auprc_prism": 0.5447848367134963,
+      "auprc_oracle": 0.7424827186020394,
+      "n_pos_te": 367
+    },
+    "GO:0030048": {
+      "name": "Actin-based movement",
+      "source": "existing_18",
+      "auprc_prism": 0.6495775566168338,
+      "auprc_oracle": 0.8058690302360908,
+      "n_pos_te": 479
+    },
+    "GO:0006096": {
+      "name": "Glycolysis",
+      "source": "existing_18",
+      "auprc_prism": 0.7396649711243323,
+      "auprc_oracle": 0.856041408297525,
+      "n_pos_te": 122
+    },
+    "GO:0007268": {
+      "name": "chemical synaptic transmission",
+      "source": "existing_18",
+      "auprc_prism": 0.698062895557259,
+      "auprc_oracle": 0.8189091508403206,
+      "n_pos_te": 1449
+    },
+    "GO:0007018": {
+      "name": "microtubule-based movement",
+      "source": "existing_18",
+      "auprc_prism": 0.6648778642265989,
+      "auprc_oracle": 0.854576095746915,
+      "n_pos_te": 1042
+    },
+    "GO:0031175": {
+      "name": "neuron projection development",
+      "source": "existing_18",
+      "auprc_prism": 0.6325169105912778,
+      "auprc_oracle": 0.7774770083123166,
+      "n_pos_te": 2007
+    },
+    "GO:0030182": {
+      "name": "neuron differentiation",
+      "source": "existing_18",
+      "auprc_prism": 0.5991645636017542,
+      "auprc_oracle": 0.7193830803269956,
+      "n_pos_te": 2740
+    },
+    "GO:0000226": {
+      "name": "microtubule cytoskeleton organization",
+      "source": "existing_18",
+      "auprc_prism": 0.5760133666751511,
+      "auprc_oracle": 0.6916730526458492,
+      "n_pos_te": 2046
+    },
+    "GO:0007156": {
+      "name": "homophilic cell-cell adhesion",
+      "source": "new_23",
+      "auprc_prism": 0.8442793839648168,
+      "auprc_oracle": 0.9551723278988008,
+      "n_pos_te": 495
+    },
+    "GO:0006813": {
+      "name": "potassium ion transport",
+      "source": "new_23",
+      "auprc_prism": 0.7799151000866916,
+      "auprc_oracle": 0.932117113923747,
+      "n_pos_te": 465
+    },
+    "GO:0055085": {
+      "name": "transmembrane transport",
+      "source": "new_23",
+      "auprc_prism": 0.8086508364296048,
+      "auprc_oracle": 0.9246844519653311,
+      "n_pos_te": 1465
+    },
+    "GO:0006812": {
+      "name": "monoatomic cation transport",
+      "source": "new_23",
+      "auprc_prism": 0.7122132151808326,
+      "auprc_oracle": 0.8342354821129984,
+      "n_pos_te": 2367
+    },
+    "GO:0006820": {
+      "name": "monoatomic anion transport",
+      "source": "new_23",
+      "auprc_prism": 0.7629015086047405,
+      "auprc_oracle": 0.8730745325441293,
+      "n_pos_te": 1344
+    },
+    "GO:0006468": {
+      "name": "protein phosphorylation",
+      "source": "new_23",
+      "auprc_prism": 0.7466462977708757,
+      "auprc_oracle": 0.8747536778048,
+      "n_pos_te": 3342
+    },
+    "GO:0016311": {
+      "name": "dephosphorylation",
+      "source": "new_23",
+      "auprc_prism": 0.7363251095500138,
+      "auprc_oracle": 0.9004230805055143,
+      "n_pos_te": 962
+    },
+    "GO:0043408": {
+      "name": "regulation of MAPK cascade",
+      "source": "new_23",
+      "auprc_prism": 0.6426110823447818,
+      "auprc_oracle": 0.7362479913089021,
+      "n_pos_te": 1979
+    },
+    "GO:0007186": {
+      "name": "G protein-coupled receptor signaling pathway",
+      "source": "new_23",
+      "auprc_prism": 0.7863058721410079,
+      "auprc_oracle": 0.9144004590459404,
+      "n_pos_te": 1101
+    },
+    "GO:0006357": {
+      "name": "regulation of transcription by RNA polymerase II",
+      "source": "new_23",
+      "auprc_prism": 0.7584641460633474,
+      "auprc_oracle": 0.8479272058277025,
+      "n_pos_te": 4544
+    },
+    "GO:0016567": {
+      "name": "protein ubiquitination",
+      "source": "new_23",
+      "auprc_prism": 0.71075041477382,
+      "auprc_oracle": 0.8632997549340518,
+      "n_pos_te": 2453
+    },
+    "GO:0006511": {
+      "name": "ubiquitin-dependent protein catabolic process",
+      "source": "new_23",
+      "auprc_prism": 0.6730924306353089,
+      "auprc_oracle": 0.8256496729474522,
+      "n_pos_te": 1928
+    },
+    "GO:0006508": {
+      "name": "proteolysis",
+      "source": "new_23",
+      "auprc_prism": 0.7491951356451034,
+      "auprc_oracle": 0.8975235114173223,
+      "n_pos_te": 1254
+    },
+    "GO:0000398": {
+      "name": "mRNA splicing, via spliceosome",
+      "source": "new_23",
+      "auprc_prism": 0.6505492165288964,
+      "auprc_oracle": 0.8029473337814725,
+      "n_pos_te": 1479
+    },
+    "GO:0006397": {
+      "name": "mRNA processing",
+      "source": "new_23",
+      "auprc_prism": 0.6693364827489169,
+      "auprc_oracle": 0.8278868609823767,
+      "n_pos_te": 1760
+    },
+    "GO:0032543": {
+      "name": "mitochondrial translation",
+      "source": "new_23",
+      "auprc_prism": 0.6621079983635618,
+      "auprc_oracle": 0.8468836815173246,
+      "n_pos_te": 400
+    },
+    "GO:0045664": {
+      "name": "regulation of neuron differentiation",
+      "source": "new_23",
+      "auprc_prism": 0.5977690547984911,
+      "auprc_oracle": 0.7100253550918932,
+      "n_pos_te": 1838
+    },
+    "GO:0006836": {
+      "name": "neurotransmitter transport",
+      "source": "new_23",
+      "auprc_prism": 0.7629097627980465,
+      "auprc_oracle": 0.908124146937238,
+      "n_pos_te": 527
+    },
+    "GO:0007411": {
+      "name": "axon guidance",
+      "source": "new_23",
+      "auprc_prism": 0.6896245693543172,
+      "auprc_oracle": 0.8520098102906899,
+      "n_pos_te": 1031
+    },
+    "GO:0007155": {
+      "name": "cell adhesion",
+      "source": "new_23",
+      "auprc_prism": 0.6955719235849864,
+      "auprc_oracle": 0.7948132146525239,
+      "n_pos_te": 2314
+    },
+    "GO:0006913": {
+      "name": "nucleocytoplasmic transport",
+      "source": "new_23",
+      "auprc_prism": 0.6197723746945696,
+      "auprc_oracle": 0.8026271593644959,
+      "n_pos_te": 1144
+    },
+    "GO:0006753": {
+      "name": "nucleoside phosphate metabolic process",
+      "source": "new_23",
+      "auprc_prism": 0.6265326914291048,
+      "auprc_oracle": 0.7464999570921037,
+      "n_pos_te": 1852
+    },
+    "GO:0016071": {
+      "name": "mRNA metabolic process",
+      "source": "new_23",
+      "auprc_prism": 0.6450563592038092,
+      "auprc_oracle": 0.7878830026401794,
+      "n_pos_te": 2589
+    }
+  },
+  "pos_bias_per_term": [
+    {
+      "go_id": "GO:0007204",
+      "name": "positive regulation of cytosolic calcium ion concentration",
+      "source": "existing_18",
+      "n_pos_genes": 105,
+      "obs_pos_bias": 2.250555839305589,
+      "shuf_floor": 0.16837922397193908,
+      "boot_ci_lo": 0.11298814744235504,
+      "boot_ci_hi": 0.24771770002504084,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0045214",
+      "name": "Sarcomere organization",
+      "source": "existing_18",
+      "n_pos_genes": 16,
+      "obs_pos_bias": 4.540923904007155,
+      "shuf_floor": 0.16258050115238817,
+      "boot_ci_lo": 0.05933648749886871,
+      "boot_ci_hi": 0.4240562558277167,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006941",
+      "name": "striated muscle contraction",
+      "source": "existing_18",
+      "n_pos_genes": 86,
+      "obs_pos_bias": 3.069145523910272,
+      "shuf_floor": 0.16962737948632037,
+      "boot_ci_lo": 0.10483844839015097,
+      "boot_ci_hi": 0.2736151491381153,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006914",
+      "name": "autophagy",
+      "source": "existing_18",
+      "n_pos_genes": 152,
+      "obs_pos_bias": 2.5877822637050847,
+      "shuf_floor": 0.23301225080223117,
+      "boot_ci_lo": 0.17482411758863328,
+      "boot_ci_hi": 0.309985391920956,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0043161",
+      "name": "proteasome-mediated ubiquitin-dependent protein catabolic process",
+      "source": "existing_18",
+      "n_pos_genes": 331,
+      "obs_pos_bias": 1.6600197026642487,
+      "shuf_floor": 0.18354718173007134,
+      "boot_ci_lo": 0.14491115458787024,
+      "boot_ci_hi": 0.22555895288970734,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007519",
+      "name": "Skeletal muscle dev",
+      "source": "existing_18",
+      "n_pos_genes": 27,
+      "obs_pos_bias": 4.436449166635998,
+      "shuf_floor": 0.17479172345800056,
+      "boot_ci_lo": 0.08673675352523348,
+      "boot_ci_hi": 0.3759973915044869,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0042692",
+      "name": "Muscle cell diff",
+      "source": "existing_18",
+      "n_pos_genes": 63,
+      "obs_pos_bias": 2.764169527514511,
+      "shuf_floor": 0.19844711610333854,
+      "boot_ci_lo": 0.12722109485463043,
+      "boot_ci_hi": 0.3014877653402617,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0055074",
+      "name": "calcium ion homeostasis",
+      "source": "existing_18",
+      "n_pos_genes": 173,
+      "obs_pos_bias": 1.8626764648505478,
+      "shuf_floor": 0.20493092829030088,
+      "boot_ci_lo": 0.1590373086811425,
+      "boot_ci_hi": 0.2665357371400985,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007005",
+      "name": "mitochondrion organization",
+      "source": "existing_18",
+      "n_pos_genes": 306,
+      "obs_pos_bias": 1.5999374711430887,
+      "shuf_floor": 0.264344796727485,
+      "boot_ci_lo": 0.22301101198564666,
+      "boot_ci_hi": 0.3109728006360897,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007517",
+      "name": "muscle organ development",
+      "source": "existing_18",
+      "n_pos_genes": 81,
+      "obs_pos_bias": 2.416641326690388,
+      "shuf_floor": 0.19460333549652611,
+      "boot_ci_lo": 0.13109964595540088,
+      "boot_ci_hi": 0.2832598268384138,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0032006",
+      "name": "TOR signaling",
+      "source": "existing_18",
+      "n_pos_genes": 70,
+      "obs_pos_bias": 3.7133858161443154,
+      "shuf_floor": 0.228037240688529,
+      "boot_ci_lo": 0.15072106917827832,
+      "boot_ci_hi": 0.35820600725172586,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0030048",
+      "name": "Actin-based movement",
+      "source": "existing_18",
+      "n_pos_genes": 58,
+      "obs_pos_bias": 3.076281781191113,
+      "shuf_floor": 0.1373026855884442,
+      "boot_ci_lo": 0.07628366761951166,
+      "boot_ci_hi": 0.24566139856211264,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006096",
+      "name": "Glycolysis",
+      "source": "existing_18",
+      "n_pos_genes": 23,
+      "obs_pos_bias": 4.4527098375184515,
+      "shuf_floor": 0.13332281587835165,
+      "boot_ci_lo": 0.06019689829186333,
+      "boot_ci_hi": 0.27619157329214833,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007268",
+      "name": "chemical synaptic transmission",
+      "source": "existing_18",
+      "n_pos_genes": 224,
+      "obs_pos_bias": 1.5497729777844227,
+      "shuf_floor": 0.17296014904900178,
+      "boot_ci_lo": 0.13369458595601771,
+      "boot_ci_hi": 0.2189885926998923,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007018",
+      "name": "microtubule-based movement",
+      "source": "existing_18",
+      "n_pos_genes": 155,
+      "obs_pos_bias": 2.1211331984391917,
+      "shuf_floor": 0.19593751869387388,
+      "boot_ci_lo": 0.14417820754692004,
+      "boot_ci_hi": 0.25642549872699055,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0031175",
+      "name": "neuron projection development",
+      "source": "existing_18",
+      "n_pos_genes": 334,
+      "obs_pos_bias": 1.5535099233782421,
+      "shuf_floor": 0.19489803762547261,
+      "boot_ci_lo": 0.15914135886430453,
+      "boot_ci_hi": 0.2345645501702916,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0030182",
+      "name": "neuron differentiation",
+      "source": "existing_18",
+      "n_pos_genes": 443,
+      "obs_pos_bias": 1.262092483732286,
+      "shuf_floor": 0.22852589001942597,
+      "boot_ci_lo": 0.1974709305639874,
+      "boot_ci_hi": 0.2621966395395896,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0000226",
+      "name": "microtubule cytoskeleton organization",
+      "source": "existing_18",
+      "n_pos_genes": 320,
+      "obs_pos_bias": 1.2982702736294,
+      "shuf_floor": 0.23280668147081524,
+      "boot_ci_lo": 0.19785213666669937,
+      "boot_ci_hi": 0.2725113167311001,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007156",
+      "name": "homophilic cell-cell adhesion",
+      "source": "new_23",
+      "n_pos_genes": 125,
+      "obs_pos_bias": 1.7985880935002543,
+      "shuf_floor": 0.10471885695935097,
+      "boot_ci_lo": 0.06525608828168973,
+      "boot_ci_hi": 0.1725147932974898,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006813",
+      "name": "potassium ion transport",
+      "source": "new_23",
+      "n_pos_genes": 85,
+      "obs_pos_bias": 2.8301495443227456,
+      "shuf_floor": 0.11862887916912133,
+      "boot_ci_lo": 0.07434053269588833,
+      "boot_ci_hi": 0.2169582768002588,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0055085",
+      "name": "transmembrane transport",
+      "source": "new_23",
+      "n_pos_genes": 307,
+      "obs_pos_bias": 1.3200952965147004,
+      "shuf_floor": 0.1293786574561292,
+      "boot_ci_lo": 0.09722375736624159,
+      "boot_ci_hi": 0.16832973431883044,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006812",
+      "name": "monoatomic cation transport",
+      "source": "new_23",
+      "n_pos_genes": 415,
+      "obs_pos_bias": 1.1594902100662592,
+      "shuf_floor": 0.1745604478040462,
+      "boot_ci_lo": 0.14547456749567816,
+      "boot_ci_hi": 0.20782509799713297,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006820",
+      "name": "monoatomic anion transport",
+      "source": "new_23",
+      "n_pos_genes": 288,
+      "obs_pos_bias": 1.5303509880282573,
+      "shuf_floor": 0.16846930439683133,
+      "boot_ci_lo": 0.13403823993852262,
+      "boot_ci_hi": 0.2085682732923962,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006468",
+      "name": "protein phosphorylation",
+      "source": "new_23",
+      "n_pos_genes": 586,
+      "obs_pos_bias": 1.0448405920256036,
+      "shuf_floor": 0.18924390971835273,
+      "boot_ci_lo": 0.16554677785040173,
+      "boot_ci_hi": 0.21619938616256962,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0016311",
+      "name": "dephosphorylation",
+      "source": "new_23",
+      "n_pos_genes": 192,
+      "obs_pos_bias": 2.049835927954444,
+      "shuf_floor": 0.24740304997909804,
+      "boot_ci_lo": 0.19882931016244068,
+      "boot_ci_hi": 0.30194110516669753,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0043408",
+      "name": "regulation of MAPK cascade",
+      "source": "new_23",
+      "n_pos_genes": 369,
+      "obs_pos_bias": 1.010915047382668,
+      "shuf_floor": 0.26157821322109204,
+      "boot_ci_lo": 0.23128411004264499,
+      "boot_ci_hi": 0.2955651748820068,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007186",
+      "name": "G protein-coupled receptor signaling pathway",
+      "source": "new_23",
+      "n_pos_genes": 219,
+      "obs_pos_bias": 1.5710953078096015,
+      "shuf_floor": 0.16417117137635318,
+      "boot_ci_lo": 0.1250246167057689,
+      "boot_ci_hi": 0.21428281829215823,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006357",
+      "name": "regulation of transcription by RNA polymerase II",
+      "source": "new_23",
+      "n_pos_genes": 885,
+      "obs_pos_bias": 0.7478586913580296,
+      "shuf_floor": 0.20299453746202242,
+      "boot_ci_lo": 0.1827348088767709,
+      "boot_ci_hi": 0.22255515295076117,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0016567",
+      "name": "protein ubiquitination",
+      "source": "new_23",
+      "n_pos_genes": 482,
+      "obs_pos_bias": 1.3938925509224185,
+      "shuf_floor": 0.20510456080269904,
+      "boot_ci_lo": 0.1713569292734304,
+      "boot_ci_hi": 0.24203645000520563,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006511",
+      "name": "ubiquitin-dependent protein catabolic process",
+      "source": "new_23",
+      "n_pos_genes": 360,
+      "obs_pos_bias": 1.6421242057190086,
+      "shuf_floor": 0.19639422949487373,
+      "boot_ci_lo": 0.15643580966951934,
+      "boot_ci_hi": 0.2444626594578631,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006508",
+      "name": "proteolysis",
+      "source": "new_23",
+      "n_pos_genes": 220,
+      "obs_pos_bias": 1.9831869389868233,
+      "shuf_floor": 0.17600561746396937,
+      "boot_ci_lo": 0.13565522063237387,
+      "boot_ci_hi": 0.22815071003223938,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0000398",
+      "name": "mRNA splicing, via spliceosome",
+      "source": "new_23",
+      "n_pos_genes": 256,
+      "obs_pos_bias": 2.1275022175350657,
+      "shuf_floor": 0.15433928663293575,
+      "boot_ci_lo": 0.10730811891132391,
+      "boot_ci_hi": 0.21237486902777714,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006397",
+      "name": "mRNA processing",
+      "source": "new_23",
+      "n_pos_genes": 306,
+      "obs_pos_bias": 1.9413562855489865,
+      "shuf_floor": 0.16252352882819474,
+      "boot_ci_lo": 0.12012970758355687,
+      "boot_ci_hi": 0.2163314082294754,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0032543",
+      "name": "mitochondrial translation",
+      "source": "new_23",
+      "n_pos_genes": 86,
+      "obs_pos_bias": 3.426418921011517,
+      "shuf_floor": 0.1739691484729548,
+      "boot_ci_lo": 0.09609134200534528,
+      "boot_ci_hi": 0.2895291506004901,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0045664",
+      "name": "regulation of neuron differentiation",
+      "source": "new_23",
+      "n_pos_genes": 271,
+      "obs_pos_bias": 1.2009245857297135,
+      "shuf_floor": 0.24660602786535582,
+      "boot_ci_lo": 0.21200692944998004,
+      "boot_ci_hi": 0.2831062119864425,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006836",
+      "name": "neurotransmitter transport",
+      "source": "new_23",
+      "n_pos_genes": 88,
+      "obs_pos_bias": 2.7112530350919393,
+      "shuf_floor": 0.1455612830339091,
+      "boot_ci_lo": 0.09076857461218497,
+      "boot_ci_hi": 0.23340672655793984,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007411",
+      "name": "axon guidance",
+      "source": "new_23",
+      "n_pos_genes": 165,
+      "obs_pos_bias": 2.0624971185154366,
+      "shuf_floor": 0.14594670551401828,
+      "boot_ci_lo": 0.10055796243804926,
+      "boot_ci_hi": 0.20929252250286548,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0007155",
+      "name": "cell adhesion",
+      "source": "new_23",
+      "n_pos_genes": 441,
+      "obs_pos_bias": 1.0249081528359212,
+      "shuf_floor": 0.19217410422762976,
+      "boot_ci_lo": 0.1664792446935861,
+      "boot_ci_hi": 0.2236463026616076,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006913",
+      "name": "nucleocytoplasmic transport",
+      "source": "new_23",
+      "n_pos_genes": 192,
+      "obs_pos_bias": 2.128755158727252,
+      "shuf_floor": 0.22280906618084498,
+      "boot_ci_lo": 0.17035542369315634,
+      "boot_ci_hi": 0.28631436951726275,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0006753",
+      "name": "nucleoside phosphate metabolic process",
+      "source": "new_23",
+      "n_pos_genes": 344,
+      "obs_pos_bias": 1.2959958116868853,
+      "shuf_floor": 0.24751733612357296,
+      "boot_ci_lo": 0.2098892343664678,
+      "boot_ci_hi": 0.2879642011652992,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    },
+    {
+      "go_id": "GO:0016071",
+      "name": "mRNA metabolic process",
+      "source": "new_23",
+      "n_pos_genes": 468,
+      "obs_pos_bias": 1.5552054839576996,
+      "shuf_floor": 0.19901961255454279,
+      "boot_ci_lo": 0.1644608770974084,
+      "boot_ci_hi": 0.23928429127379003,
+      "p_vs_shuffled": 0.0,
+      "q_BH": 0.0
+    }
+  ],
+  "domain_ranking_auc": {
+    "PRISM_expanded41": {
+      "auc": 0.8390787835370264,
+      "n_pairs": 2409,
+      "bootstrap_mean": 0.839025699379736,
+      "bootstrap_ci_lo": 0.8271612590862706,
+      "bootstrap_ci_hi": 0.8507396904523472
+    },
+    "Gene_mean_oracle": {
+      "auc": 0.5,
+      "n_pairs": 2409,
+      "bootstrap_mean": 0.5,
+      "bootstrap_ci_lo": 0.5,
+      "bootstrap_ci_hi": 0.5
+    },
+    "Random": {
+      "auc": 0.5081851497198336,
+      "n_pairs": 2409
+    }
+  }
+}

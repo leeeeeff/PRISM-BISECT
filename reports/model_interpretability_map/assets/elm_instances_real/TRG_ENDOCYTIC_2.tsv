@@ -1,0 +1,21 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:13.133489
+#Origin: asimov
+#Type: tsv
+#NumInstances: 15
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI000292"	"TRG"	"TRG_ENDOCYTIC_2"	"ASGR1_HUMAN"	"P07306"	"P07306"	"5"	"8"	""	""	"true positive"	""	"Homo sapiens"
+"ELMI000291"	"TRG"	"TRG_ENDOCYTIC_2"	"CTLA4_HUMAN"	"P16410"	"P16410 A0N1S0 E9PDH0 Q0PP65 Q52MC1 Q53TD5 Q5S005 Q8WXJ1 Q96P43 Q9UKN9"	"201"	"204"	""	""	"true positive"	""	"Homo sapiens"
+"ELMI002109"	"TRG"	"TRG_ENDOCYTIC_2"	"CTLA4_MOUSE"	"P09793"	"P09793 Q9QZZ7"	"201"	"204"	"9175836"	"coimmunoprecipitation; competition binding; mutation analysis; two hybrid"	"true positive"	""	"Mus musculus"
+"ELMI000289"	"TRG"	"TRG_ENDOCYTIC_2"	"EGFR_HUMAN"	"P00533"	"P00533 O00688 O00732 P06268 Q14225 Q68GS5 Q92795 Q9BZS2 Q9GZX1 Q9H2C9 Q9H3C9 Q9UMD7 Q9UMD8 Q9UMG5"	"998"	"1001"	""	""	"true positive"	""	"Homo sapiens"
+"ELMI001838"	"TRG"	"TRG_ENDOCYTIC_2"	"ENV_BLV"	"P51519"	"P51519 Q85488 Q85489"	"487"	"490"	"15254202"	"mutation analysis"	"unknown"	""	"Bovine leukemia virus"
+"ELMI001839"	"TRG"	"TRG_ENDOCYTIC_2"	"ENV_HTLV2"	"P03383"	"P03383 P03382"	"477"	"480"	"20463077"	"mutation analysis; rna interference"	"true positive"	""	"Human T-lymphotropic virus 2"
+"ELMI001840"	"TRG"	"TRG_ENDOCYTIC_2"	"ENV_HV1H2"	"P04578"	"P04578 O09779"	"712"	"715"	"9882340 12768012"	"confocal microscopy; fluorescence-activated cell sorting; mutation analysis; two hybrid; western blot"	"true positive"	""	"HIV-1 M:B_HXB2R"
+"ELMI001841"	"TRG"	"TRG_ENDOCYTIC_2"	"ENV_SIVMK"	"P05884"	"P05884"	"723"	"726"	"11208154"	"alanine scanning; surface plasmon resonance"	"true positive"	""	"Simian immunodeficiency virus - mac K6W"
+"ELMI001842"	"TRG"	"TRG_ENDOCYTIC_2"	"GE_VZVO"	"Q9J3M8"	"Q9J3M8"	"582"	"585"	"9847342 8947032"	"alanine scanning; classical fluorescence spectroscopy; mutation analysis; sequence based prediction"	"true positive"	""	"Human herpesvirus 3 strain Oka vaccine"
+"ELMI000293"	"TRG"	"TRG_ENDOCYTIC_2"	"L1CAM_HUMAN"	"P32004"	"P32004 A0AV65 B2RMU7 Q8TA87"	"1176"	"1179"	""	""	"true positive"	""	"Homo sapiens"
+"ELMI000294"	"TRG"	"TRG_ENDOCYTIC_2"	"LAMP1_HUMAN"	"P11279"	"P11279 Q8WU33 Q96I40 Q9BRD2 Q9NP13"	"414"	"417"	""	""	"true positive"	""	"Homo sapiens"
+"ELMI002180"	"TRG"	"TRG_ENDOCYTIC_2"	"PPAL_HUMAN"	"P11117"	"P11117 Q561W5 Q9BTU7"	"413"	"416"	"11044456 8509395"	"chromatography technology; competition binding; mutation analysis; surface plasmon resonance; western blot"	"true positive"	""	"Homo sapiens"
+"ELMI000290"	"TRG"	"TRG_ENDOCYTIC_2"	"TFR1_HUMAN"	"P02786"	"P02786 D3DXB0 Q1HE24 Q59G55 Q9UCN0 Q9UCU5 Q9UDF9 Q9UK21"	"20"	"23"	"1918016"	"mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001099"	"TRG"	"TRG_ENDOCYTIC_2"	"TGON3_RAT"	"P19814"	"P19814 Q4G0B6"	"350"	"353"	"9812899"	"x-ray crystallography"	"true positive"	"1BXX"	"Rattus norvegicus"
+"ELMI001843"	"TRG"	"TRG_ENDOCYTIC_2"	"VGLG_VSIVA"	"P03522"	"P03522"	"501"	"504"	"10637287"	"alanine scanning"	"unknown"	""	"Vesicular stomatitis Indiana virus strain San Juan"

@@ -1,0 +1,35 @@
+=== UniProt Isoform Benchmark Stats ===
+
+Total records:   30
+Unique genes:    29
+Unique GO terms: 21
+
+By evidence:
+  experimental_lit                         30
+
+By direction:
+  A_only               26
+  B_only               3
+  both                 1
+
+Top GO terms:
+  GO_0004714           3
+  GO_0006977           3
+  GO_0097553           2
+  GO_0005178           2
+  GO_0000398           2
+  GO_0006357           2
+  GO_0005200           2
+  GO_0005007           1
+  GO_0004693           1
+  GO_0005244           1
+  GO_0004197           1
+  GO_0006281           1
+  GO_0008285           1
+  GO_0005158           1
+  GO_0008083           1
+  GO_0003723           1
+  GO_0003729           1
+  GO_0008017           1
+  GO_0004842           1
+  GO_0007399           1

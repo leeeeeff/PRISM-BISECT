@@ -1,0 +1,4 @@
+n=475 genes=447 pos=168 neg=307
+comp=0.6076 pooled=0.5897 editcore=0.5747 discard=0.6284 pool+discard=0.6083 oracle=0.6264 comp+oracle=0.6400
+discard-oracle=+0.0020
+null_mean=0.6147 null_sd=0.0157 z=+0.87

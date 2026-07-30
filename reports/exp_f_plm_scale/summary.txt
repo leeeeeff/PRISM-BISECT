@@ -1,0 +1,9 @@
+PLM Generalization Experiment — δ_layer AUPRC
+==================================================
+
+ESM-2 150M: plain=0.6082  δ_only=0.6303  concat=0.6693  gain=+0.0611
+ESM-2 650M: plain=0.6793  δ_only=0.7010  concat=0.7339  gain=+0.0546
+ESM-2 3B: MISSING
+ProtT5-XL: plain=0.6922  δ_only=0.6744  concat=0.7288  gain=+0.0366
+ESM3 sm: MISSING
+Ankh-base: plain=0.6734  δ_only=0.6638  concat=0.7126  gain=+0.0392

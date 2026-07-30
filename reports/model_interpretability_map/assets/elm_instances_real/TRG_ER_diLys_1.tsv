@@ -1,0 +1,20 @@
+#ELM_Instance_Download_Version: 1.4
+#ELM_Instance_Download_Date: 2026-07-24 10:13:15.971634
+#Origin: asimov
+#Type: tsv
+#NumInstances: 14
+"Accession"	"ELMType"	"ELMIdentifier"	"ProteinName"	"Primary_Acc"	"Accessions"	"Start"	"End"	"References"	"Methods"	"InstanceLogic"	"PDB"	"Organism"
+"ELMI001844"	"TRG"	"TRG_ER_diLys_1"	"E3GL_ADE02"	"P68978"	"P68978 P03251"	"156"	"159"	"2527615"	"classical fluorescence spectroscopy; coimmunoprecipitation; fluorescence-activated cell sorting; mutation analysis"	"true positive"	""	"Human adenovirus 2"
+"ELMI000361"	"TRG"	"TRG_ER_diLys_1"	"EMP47_YEAST"	"P43555"	"P43555 D6VTI2"	"441"	"445"	"14699056"	"glutathione s tranferase tag; molecular sieving; mutation analysis; pull down; radiolabel; two hybrid; western blot"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI000366"	"TRG"	"TRG_ER_diLys_1"	"FCERA_RAT"	"P12371"	"P12371 P12840"	"242"	"245"	"7744968"	"mutation analysis"	"true positive"	""	"Rattus norvegicus"
+"ELMI000365"	"TRG"	"TRG_ER_diLys_1"	"HMDH_HUMAN"	"P04035"	"P04035 Q8N190"	"885"	"888"	"2120038"	"colocalization; fluorescence-activated cell sorting; mutation analysis; radiolabel"	"true positive"	""	"Homo sapiens"
+"ELMI000363"	"TRG"	"TRG_ER_diLys_1"	"LMAN1_HUMAN"	"P49257"	"P49257 Q12895 Q8N5I7 Q9UQG1 Q9UQG2 Q9UQG3 Q9UQG4 Q9UQG5 Q9UQG6 Q9UQG7 Q9UQG8 Q9UQG9 Q9UQH0 Q9UQH1 Q9UQH2"	"507"	"510"	"10329713"	"alanine scanning; confocal microscopy; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001845"	"TRG"	"TRG_ER_diLys_1"	"NS7A_CVHSA"	"P59635"	"P59635 Q7TA11 Q7TA17"	"118"	"122"	"15220404"	"classical fluorescence spectroscopy; mutation analysis"	"true positive"	""	"SARS coronavirus"
+"ELMI000360"	"TRG"	"TRG_ER_diLys_1"	"OSTB_YEAST"	"P33767"	"P33767 D3DLP5"	"427"	"430"	"14699056"	"glutathione s tranferase tag; molecular sieving; mutation analysis; pull down; radiolabel; two hybrid; western blot"	"true positive"	""	"Saccharomyces cerevisiae"
+"ELMI000362"	"TRG"	"TRG_ER_diLys_1"	"Q40235_SOLPI"	"Q40235"	"Q40235"	"860"	"863"	"10899983"	"classical fluorescence spectroscopy; confocal microscopy; field flow fractionation; green fluorescent protein tag; mutation analysis; radiolabel; western blot"	"true positive"	""	"Solanum pimpinellifolium"
+"ELMI000500"	"TRG"	"TRG_ER_diLys_1"	"Q91841_XENLA"	"Q91841"	"Q91841"	"201"	"205"	"7492314"	"sequence based prediction"	"true positive"	""	"Xenopus laevis"
+"ELMI002596"	"TRG"	"TRG_ER_diLys_1"	"S35A2_HUMAN"	"P78381"	"P78381 A8K2L9 A8K9V1 Q8IV21 Q92553"	"392"	"396"	"15932921"	"fluorescence microscopy; mutation analysis"	"true positive"	""	"Homo sapiens"
+"ELMI001846"	"TRG"	"TRG_ER_diLys_1"	"SPIKE_IBVB"	"P11223"	"P11223 P05134 Q4ZJS1"	"1159"	"1162"	"15140989"	"classical fluorescence spectroscopy; mutation analysis"	"true positive"	""	"Avian infectious bronchitis virus (strain Beaudette)"
+"ELMI000496"	"TRG"	"TRG_ER_diLys_1"	"TMED9_HUMAN"	"Q9BVK6"	"Q9BVK6 Q14437 Q8WZ61"	"232"	"235"	"9472029"	"affinity chromatography technology; classical fluorescence spectroscopy; colocalization; electron microscopy; mutation analysis; subcellular preparation"	"true positive"	""	"Homo sapiens"
+"ELMI000494"	"TRG"	"TRG_ER_diLys_1"	"TMEDA_HUMAN"	"P49755"	"P49755 B2R605 Q15602 Q16536 Q86TC2 Q86TS5"	"215"	"219"	"9472029"	"affinity chromatography technology; classical fluorescence spectroscopy; colocalization; electron microscopy; mutation analysis; subcellular preparation"	"true positive"	""	"Homo sapiens"
+"ELMI000364"	"TRG"	"TRG_ER_diLys_1"	"UD11_HUMAN"	"P22309"	"P22309"	"529"	"533"	"2120038"	"colocalization; fluorescence-activated cell sorting; mutation analysis; radiolabel"	"true positive"	""	"Homo sapiens"

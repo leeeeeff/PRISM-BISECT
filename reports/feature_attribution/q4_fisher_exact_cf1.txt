@@ -1,0 +1,10 @@
+Q4: Fisher's exact test (domain_loss vs regulatory direction accuracy)
+  domain_loss:  12/13 = 92.3%  [95% CI: 0.640-0.998]
+  regulatory:    4/13 = 30.8%
+  Fisher OR = 27.0,  p = 0.0018
+  Interpretation: domain_loss cases have significantly higher PRISM direction
+  accuracy than regulatory cases (pre-specified category comparison, no gap threshold).
+  This addresses the post-hoc threshold concern: the 92.3% accuracy holds
+  regardless of gap threshold, for ALL 13 pre-specified domain_loss cases.
+
+Fisher OR=27.0, p=0.0018

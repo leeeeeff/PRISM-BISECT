@@ -1,0 +1,1357 @@
+[
+  {
+    "accession": "A0A1B0GTW7",
+    "gene": "CIROP",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "A0JNW5",
+    "gene": "BLTP3B",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "A0JP26",
+    "gene": "POTEB3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "A1A519",
+    "gene": "FAM170A",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "A2A2Y4",
+    "gene": "FRMD3",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "A2RUB6",
+    "gene": "CCDC66",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "A2RUC4",
+    "gene": "TYW5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "A3KN83",
+    "gene": "SBNO1",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "A4D1B5",
+    "gene": "GSAP",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "A4GXA9",
+    "gene": "EME2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "A5D8V7",
+    "gene": "ODAD3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "A5PLL7",
+    "gene": "PEDS1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "A6BM72",
+    "gene": "MEGF11",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "A6H8Y1",
+    "gene": "BDP1",
+    "n_isoforms": 8
+  },
+  {
+    "accession": "A6NKB5",
+    "gene": "PCNX2",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "A6QL63",
+    "gene": "ABTB3",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "A7E2V4",
+    "gene": "ZSWIM8",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "A7MCY6",
+    "gene": "TBKBP1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "A9UHW6",
+    "gene": "MIF4GD",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "B1AK53",
+    "gene": "ESPN",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "B2RUY7",
+    "gene": "VWC2L",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "B3KU38",
+    "gene": "IQCJ-SCHIP1",
+    "n_isoforms": 9
+  },
+  {
+    "accession": "B6A8C7",
+    "gene": "TARM1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "C9JRZ8",
+    "gene": "AKR1B15",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00115",
+    "gene": "DNASE2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00159",
+    "gene": "MYO1C",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O00161",
+    "gene": "SNAP23",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00165",
+    "gene": "HAX1",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O00214",
+    "gene": "LGALS8",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00254",
+    "gene": "F2RL2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00291",
+    "gene": "HIP1",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O00322",
+    "gene": "UPK1A",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00329",
+    "gene": "PIK3CD",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00330",
+    "gene": "PDHX",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O00337",
+    "gene": "SLC28A1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00409",
+    "gene": "FOXN3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00422",
+    "gene": "SAP18",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00444",
+    "gene": "PLK4",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O00453",
+    "gene": "LST1",
+    "n_isoforms": 13
+  },
+  {
+    "accession": "O00478",
+    "gene": "BTN3A3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00506",
+    "gene": "STK25",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O00507",
+    "gene": "USP9Y",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00560",
+    "gene": "SDCBP",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O00624",
+    "gene": "SLC17A2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O00712",
+    "gene": "NFIB",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O00746",
+    "gene": "NME4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O00748",
+    "gene": "CES2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O00762",
+    "gene": "UBE2C",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O14497",
+    "gene": "ARID1A",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O14519",
+    "gene": "CDK2AP1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14524",
+    "gene": "NEMP1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14628",
+    "gene": "ZNF195",
+    "n_isoforms": 8
+  },
+  {
+    "accession": "O14640",
+    "gene": "DVL1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14744",
+    "gene": "PRMT5",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O14757",
+    "gene": "CHEK1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O14763",
+    "gene": "TNFRSF10B",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O14788",
+    "gene": "TNFSF11",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O14908",
+    "gene": "GIPC1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14926",
+    "gene": "FSCN2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14933",
+    "gene": "UBE2L6",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14939",
+    "gene": "PLD2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O14958",
+    "gene": "CASQ2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14967",
+    "gene": "CLGN",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14975",
+    "gene": "SLC27A2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O14979",
+    "gene": "HNRNPDL",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O15119",
+    "gene": "TBX3",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O15120",
+    "gene": "AGPAT2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15156",
+    "gene": "ZBTB7B",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15162",
+    "gene": "PLSCR1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15169",
+    "gene": "AXIN1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15230",
+    "gene": "LAMA5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15232",
+    "gene": "MATN3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15245",
+    "gene": "SLC22A1",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O15259",
+    "gene": "NPHP1",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O15260",
+    "gene": "SURF4",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O15265",
+    "gene": "ATXN7",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O15266",
+    "gene": "SHOX",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15269",
+    "gene": "SPTLC1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15297",
+    "gene": "PPM1D",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15400",
+    "gene": "STX7",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15446",
+    "gene": "POLR1G",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15488",
+    "gene": "GYG2",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O15511",
+    "gene": "ARPC5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O15533",
+    "gene": "TAPBP",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O15540",
+    "gene": "FABP7",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43166",
+    "gene": "SIPA1L1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O43172",
+    "gene": "PRPF4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43196",
+    "gene": "MSH5",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O43237",
+    "gene": "DYNC1LI2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43264",
+    "gene": "ZW10",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43294",
+    "gene": "TGFB1I1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43310",
+    "gene": "CTIF",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43395",
+    "gene": "PRPF3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43439",
+    "gene": "CBFA2T2",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O43464",
+    "gene": "HTRA2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O43474",
+    "gene": "KLF4",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O43521",
+    "gene": "BCL2L11",
+    "n_isoforms": 20
+  },
+  {
+    "accession": "O43525",
+    "gene": "KCNQ3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43526",
+    "gene": "KCNQ2",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O43548",
+    "gene": "TGM5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43556",
+    "gene": "SGCE",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O43566",
+    "gene": "RGS14",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O43581",
+    "gene": "SYT7",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O43593",
+    "gene": "HR",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43598",
+    "gene": "DNPH1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43826",
+    "gene": "SLC37A4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43854",
+    "gene": "EDIL3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43865",
+    "gene": "AHCYL1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43897",
+    "gene": "TLL1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43903",
+    "gene": "GAS2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43913",
+    "gene": "ORC5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O43914",
+    "gene": "TYROBP",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O60245",
+    "gene": "PCDH7",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60266",
+    "gene": "ADCY3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60281",
+    "gene": "ZNF292",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60315",
+    "gene": "ZEB2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60381",
+    "gene": "HBP1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O60393",
+    "gene": "NOBOX",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60449",
+    "gene": "LY75",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O60469",
+    "gene": "DSCAM",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60481",
+    "gene": "ZIC3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60502",
+    "gene": "OGA",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O60636",
+    "gene": "TSPAN2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60667",
+    "gene": "FCMR",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O60678",
+    "gene": "PRMT3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60706",
+    "gene": "ABCC9",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60729",
+    "gene": "CDC14B",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O60759",
+    "gene": "CYTIP",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60784",
+    "gene": "TOM1",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O60879",
+    "gene": "DIAPH2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O60909",
+    "gene": "B4GALT2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O60921",
+    "gene": "HUS1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O60941",
+    "gene": "DTNB",
+    "n_isoforms": 7
+  },
+  {
+    "accession": "O60942",
+    "gene": "RNGTT",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O75019",
+    "gene": "LILRA1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75022",
+    "gene": "LILRB3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75072",
+    "gene": "FKTN",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75077",
+    "gene": "ADAM23",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75177",
+    "gene": "SS18L1",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O75190",
+    "gene": "DNAJB6",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O75191",
+    "gene": "XYLB",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75309",
+    "gene": "CDH16",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O75319",
+    "gene": "DUSP11",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75334",
+    "gene": "PPFIA2",
+    "n_isoforms": 8
+  },
+  {
+    "accession": "O75344",
+    "gene": "FKBP6",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75365",
+    "gene": "PTP4A3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75367",
+    "gene": "MACROH2A1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75369",
+    "gene": "FLNB",
+    "n_isoforms": 9
+  },
+  {
+    "accession": "O75376",
+    "gene": "NCOR1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75379",
+    "gene": "VAMP4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75438",
+    "gene": "NDUFB1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75449",
+    "gene": "KATNA1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75469",
+    "gene": "NR1I2",
+    "n_isoforms": 7
+  },
+  {
+    "accession": "O75475",
+    "gene": "PSIP1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75486",
+    "gene": "SUPT3H",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75554",
+    "gene": "WBP4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75564",
+    "gene": "JRK",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75618",
+    "gene": "DEDD",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75638",
+    "gene": "CTAG2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75648",
+    "gene": "TRMU",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "O75674",
+    "gene": "TOM1L1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75679",
+    "gene": "RFPL3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75781",
+    "gene": "PALM",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75807",
+    "gene": "PPP1R15A",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75815",
+    "gene": "BCAR3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75838",
+    "gene": "CIB2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O75864",
+    "gene": "PPP1R37",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75882",
+    "gene": "ATRN",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75884",
+    "gene": "RBBP9",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75897",
+    "gene": "SULT1C4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O75928",
+    "gene": "PIAS2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75935",
+    "gene": "DCTN3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O75952",
+    "gene": "CABYR",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O76039",
+    "gene": "CDKL5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O76074",
+    "gene": "PDE5A",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O76075",
+    "gene": "DFFB",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O94762",
+    "gene": "RECQL5",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O94810",
+    "gene": "RGS11",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O94818",
+    "gene": "NOL4",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O94876",
+    "gene": "TMCC1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O94889",
+    "gene": "KLHL18",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O94901",
+    "gene": "SUN1",
+    "n_isoforms": 8
+  },
+  {
+    "accession": "O94964",
+    "gene": "MTCL2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O94983",
+    "gene": "CAMTA2",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "O94985",
+    "gene": "CLSTN1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O94993",
+    "gene": "SOX30",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95049",
+    "gene": "TJP3",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O95125",
+    "gene": "ZNF202",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95139",
+    "gene": "NDUFB6",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95153",
+    "gene": "TSPOAP1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95155",
+    "gene": "UBE4B",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O95169",
+    "gene": "NDUFB8",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95208",
+    "gene": "EPN2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O95248",
+    "gene": "SBF1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95260",
+    "gene": "ATE1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95294",
+    "gene": "RASAL1",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O95298",
+    "gene": "NDUFC2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O95352",
+    "gene": "ATG7",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95361",
+    "gene": "TRIM16",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95394",
+    "gene": "PGM3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95415",
+    "gene": "BRI3",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95429",
+    "gene": "BAG4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95466",
+    "gene": "FMNL1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95479",
+    "gene": "H6PD",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95544",
+    "gene": "NADK",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95622",
+    "gene": "ADCY5",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95630",
+    "gene": "STAMBP",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95670",
+    "gene": "ATP6V1G2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95674",
+    "gene": "CDS2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95741",
+    "gene": "CPNE6",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95758",
+    "gene": "PTBP3",
+    "n_isoforms": 7
+  },
+  {
+    "accession": "O95782",
+    "gene": "AP2A1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95793",
+    "gene": "STAU1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95835",
+    "gene": "LATS1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95843",
+    "gene": "GUCA1C",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O95876",
+    "gene": "WDPCP",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95905",
+    "gene": "ECD",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95944",
+    "gene": "NCR2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O95990",
+    "gene": "FAM107A",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "O95996",
+    "gene": "APC2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "O96000",
+    "gene": "NDUFB10",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "O96005",
+    "gene": "CLPTM1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P00338",
+    "gene": "LDHA",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "P00374",
+    "gene": "DHFR",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P00505",
+    "gene": "GOT2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P00519",
+    "gene": "ABL1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P01011",
+    "gene": "SERPINA3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P01308",
+    "gene": "INS",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P01732",
+    "gene": "CD8A",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P01877",
+    "gene": "IGHA2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P02679",
+    "gene": "FGG",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P02774",
+    "gene": "GC",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P03951",
+    "gene": "F11",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P04062",
+    "gene": "GBA1",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "P04090",
+    "gene": "RLN2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P04179",
+    "gene": "SOD2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "P04275",
+    "gene": "VWF",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P04406",
+    "gene": "GAPDH",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P04626",
+    "gene": "ERBB2",
+    "n_isoforms": 6
+  },
+  {
+    "accession": "P04844",
+    "gene": "RPN2",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P05106",
+    "gene": "ITGB3",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P05386",
+    "gene": "RPLP1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P05787",
+    "gene": "KRT8",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P05813",
+    "gene": "CRYBA1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P05976",
+    "gene": "MYL1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P06028",
+    "gene": "GYPB",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P06454",
+    "gene": "PTMA",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P06756",
+    "gene": "ITGAV",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P06865",
+    "gene": "HEXA",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P07197",
+    "gene": "NEFM",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P07305",
+    "gene": "H1-0",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P07492",
+    "gene": "GRP",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P07510",
+    "gene": "CHRNG",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P07902",
+    "gene": "GALT",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P07910",
+    "gene": "HNRNPC",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "P08253",
+    "gene": "MMP2",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P08620",
+    "gene": "FGF4",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P08621",
+    "gene": "SNRNP70",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "P08887",
+    "gene": "IL6R",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P09038",
+    "gene": "FGF2",
+    "n_isoforms": 4
+  },
+  {
+    "accession": "P09086",
+    "gene": "POU2F2",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "P09466",
+    "gene": "PAEP",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P09493",
+    "gene": "TPM1",
+    "n_isoforms": 10
+  },
+  {
+    "accession": "P09496",
+    "gene": "CLTA",
+    "n_isoforms": 5
+  },
+  {
+    "accession": "P09525",
+    "gene": "ANXA4",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P09543",
+    "gene": "CNP",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P09603",
+    "gene": "CSF1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P09912",
+    "gene": "IFI6",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P09914",
+    "gene": "IFIT1",
+    "n_isoforms": 2
+  },
+  {
+    "accession": "P09936",
+    "gene": "UCHL1",
+    "n_isoforms": 3
+  },
+  {
+    "accession": "P0C024",
+    "gene": "NUDT7",
+    "n_isoforms": 3
+  }
+]

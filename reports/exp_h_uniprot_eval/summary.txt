@@ -1,0 +1,56 @@
+PRISM v17f* UniProt Isoform Benchmark
+=============================================
+
+Benchmark pairs:          45
+Evaluable pairs:          42
+PRISM direction accuracy: 0.619 (26/42)
+Gene-mean baseline:       0.500 (random)
+PRISM lift over baseline: +0.119
+Mean score gap:           0.0939
+
+Per-pair results:
+  ✓ EGFR     GO_0004714      A_only  a=0.9759  b=0.9648  OK
+  ✓ FGFR1    GO_0005007      A_only  a=0.9903  b=0.9193  OK
+  ✓ NTRK1    GO_0004714      A_only  a=0.9788  b=0.9787  OK
+  ✓ VEGFR2   GO_0004714      A_only  a=0.9472  b=0.4347  OK
+  ✗ CDK4     GO_0004693      A_only  a=0.9362  b=0.9701  OK
+  ✗ BCL2     GO_0097553      A_only  a=0.3571  b=0.4023  OK
+  ✗ MCL1     GO_0097553      B_only  a=0.0094  b=0.0083  OK
+  ✓ BCL2L1   GO_0046982      A_only  a=0.1555  b=0.0388  OK
+  ✗ CASP9    GO_0004197      A_only  a=0.0003  b= 0.012  OK
+  ✓ BRCA1    GO_0006281      A_only  a=0.4168  b=0.0006  OK
+  ✗ TP53     GO_0006977      A_only  a=0.9931  b=0.9969  OK
+  ✓ CDKN2A   GO_0008285      A_only  a=0.8482  b=0.6591  OK
+  ✗ CDKN2A   GO_0006977      B_only  a=0.0003  b=0.0001  OK
+  — VEGFA    GO_0005178      A_only  a=N/A     b=N/A     sequence not embedded
+  ✓ IGF1     GO_0005158      A_only  a=0.9186  b=0.8824  OK
+  ✓ FGF2     GO_0008083      both    a=0.9014  b=0.9014  OK
+  — PCBP1    GO_0003723      A_only  a=N/A     b=N/A     sequence not embedded
+  ✗ HNRNPA1  GO_0003729      A_only  a=0.1827  b=0.2429  OK
+  ✗ SRSF1    GO_0000398      A_only  a=0.9975  b= 0.999  OK
+  ✓ RBFOX1   GO_0000398      A_only  a= 0.993  b=0.9808  OK
+  ✓ RUNX1    GO_0006357      A_only  a=  0.89  b=0.8769  OK
+  ✗ TP63     GO_0006357      A_only  a=0.9839  b=0.9912  OK
+  ✓ TP73     GO_0006977      A_only  a= 0.988  b= 0.986  OK
+  ✗ ACTN1    GO_0005200      A_only  a=0.5182  b=0.5323  OK
+  ✗ FLNB     GO_0005200      A_only  a=0.6523  b=0.6523  OK
+  ✓ APP      GO_0005178      A_only  a=0.7001  b=0.6681  OK
+  ✗ MAPT     GO_0008017      A_only  a=0.7341  b= 0.792  OK
+  ✓ PARK2    GO_0004842      A_only  a=0.8691  b=0.2237  OK
+  ✓ DLG4     GO_0007399      A_only  a=0.9963  b=0.9961  OK
+  ✓ SNAP25   GO_0016079      A_only  a=0.0001  b=   0.0  OK
+  ✓ FLT1     GO_0004714      A_only  a=0.9338  b=0.7061  OK
+  ✓ NTRK2    GO_0004714      A_only  a=0.9925  b=0.8002  OK
+  ✓ NTRK3    GO_0004714      A_only  a=0.9925  b= 0.854  OK
+  ✓ AXL      GO_0004714      A_only  a=0.9441  b=0.9437  OK
+  ✓ MDM2     GO_0004842      A_only  a=0.8561  b=0.8073  OK
+  ✗ WT1      GO_0003677      A_only  a=0.4905  b=0.5267  OK
+  ✓ CEBPA    GO_0003700      A_only  a=0.9856  b=0.9837  OK
+  ✓ TIA1     GO_0003723      A_only  a=0.9998  b=0.9998  OK
+  ✗ PTBP1    GO_0003723      A_only  a=0.9994  b=0.9995  OK
+  — ERBB4    GO_0004714      A_only  a=N/A     b=N/A     sequence not embedded
+  ✓ FGFR2    GO_0004714      A_only  a=0.9873  b=0.0031  OK
+  ✓ KIT      GO_0004714      A_only  a=0.9907  b=0.9906  OK
+  ✗ RUNX2    GO_0003700      A_only  a=0.9074  b=0.9128  OK
+  ✗ HIF1A    GO_0003700      A_only  a=0.9801  b=0.9856  OK
+  ✓ BIRC5    GO_0005515      B_only  a=0.9899  b=0.9958  OK

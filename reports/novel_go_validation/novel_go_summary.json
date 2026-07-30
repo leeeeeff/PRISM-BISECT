@@ -1,0 +1,36 @@
+{
+  "novel_go_total": 17230,
+  "novel_go_pred_gt05": 7680,
+  "novel_go_pred_gt05_genes": 2134,
+  "novel_go_pred_gt06": 3011,
+  "bisect_overlap": 0,
+  "both_spec_and_novel": 557,
+  "priority_list_size": 55,
+  "top_novel_go_terms": [
+    {
+      "go_id": "GO:0005515",
+      "go_name": "protein binding",
+      "novel_rate": 0.53107
+    },
+    {
+      "go_id": "GO:0000978",
+      "go_name": "RNA polymerase II cis-regulatory region sequence-specific DN",
+      "novel_rate": 0.01037
+    },
+    {
+      "go_id": "GO:0042802",
+      "go_name": "identical protein binding",
+      "novel_rate": 0.00911
+    },
+    {
+      "go_id": "GO:0003723",
+      "go_name": "RNA binding",
+      "novel_rate": 0.00901
+    },
+    {
+      "go_id": "GO:0000981",
+      "go_name": "DNA-binding transcription factor activity, RNA polymerase II",
+      "novel_rate": 0.00843
+    }
+  ]
+}

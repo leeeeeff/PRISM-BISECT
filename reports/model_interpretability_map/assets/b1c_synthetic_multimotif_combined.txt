@@ -1,0 +1,1 @@
+n=1152 mono=0.5000 mono_dipep=0.5000 editcore=0.7450 pooled=0.5729

@@ -1,0 +1,54 @@
+{
+  "true_same_length": {
+    "n_pairs": 33306,
+    "frac_of_all_type3": 0.6347,
+    "mean_gap": 0.002968,
+    "median_gap": 0.0,
+    "p95_gap": 0.01592,
+    "high_gap_n": 353,
+    "high_gap_frac": 0.0106
+  },
+  "esm2_cosine_within_len50": {
+    "high_gap_mean": 0.081871,
+    "low_gap_mean": 0.001184,
+    "spearman_rho": 0.8748,
+    "spearman_p": 0.0
+  },
+  "slim_differences": {
+    "n_genes_with_slim_diff": 58,
+    "by_slim": {
+      "KFERQ_autophagy": {
+        "n_pairs": 5,
+        "mean_abs_diff": 1.0
+      },
+      "NES_leucine_rich": {
+        "n_pairs": 39,
+        "mean_abs_diff": 1.0
+      },
+      "NLS_basic_cluster": {
+        "n_pairs": 135,
+        "mean_abs_diff": 1.38
+      },
+      "PXXP_SH3_binding": {
+        "n_pairs": 155,
+        "mean_abs_diff": 2.0
+      },
+      "RGD_integrin": {
+        "n_pairs": 21,
+        "mean_abs_diff": 1.05
+      },
+      "phospho_CDK": {
+        "n_pairs": 28,
+        "mean_abs_diff": 1.0
+      },
+      "phospho_CK2": {
+        "n_pairs": 143,
+        "mean_abs_diff": 2.15
+      },
+      "phospho_PKA": {
+        "n_pairs": 215,
+        "mean_abs_diff": 1.47
+      }
+    }
+  }
+}

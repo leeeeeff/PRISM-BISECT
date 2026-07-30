@@ -1,0 +1,22 @@
+{
+  "rna_before_bw_test": 2.3502221769869434,
+  "rna_after_bw_test": 6.657275657542725e-14,
+  "loc_before_bw_test": 3.233146572115267,
+  "loc_after_bw_test": 4.0008969187219324e-14,
+  "rna_delta_test_shape": [
+    36748,
+    9
+  ],
+  "loc_delta_test_shape": [
+    36748,
+    8
+  ],
+  "rna_delta_train_shape": [
+    31668,
+    9
+  ],
+  "loc_delta_train_shape": [
+    31668,
+    8
+  ]
+}

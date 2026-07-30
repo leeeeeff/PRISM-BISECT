@@ -1,0 +1,13 @@
+{
+  "n_isoforms": 63994,
+  "rna_coverage": 0.4654,
+  "loc_coverage": 0.4654,
+  "rna_shape": [
+    63994,
+    9
+  ],
+  "loc_shape": [
+    63994,
+    8
+  ]
+}
